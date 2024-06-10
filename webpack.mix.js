@@ -12,6 +12,10 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .react()
+    .react() 
     .extract(["react"])
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .postCss('resources/css/app.css', 'public/css')
+    .postCss('resources/css/navBar.css', 'public/css')
+    .postCss('resources/css/bootstrap/bootstrap.css', 'public/css')
+    .postCss('resources/css/bootstrap/bootstrap.min.css', 'public/css')

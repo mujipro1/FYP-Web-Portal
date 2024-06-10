@@ -1,0 +1,16 @@
+.navbar{
+    padding:10px 5px;
+    background-color: white;
+    
+}
+
+.navlink{
+    color: black;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.contact{
+    transform: translateY(-6px);
+}
+

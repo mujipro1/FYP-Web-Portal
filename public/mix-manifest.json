@@ -2,5 +2,8 @@
     "/js/app.js": "/js/app.js",
     "/js/manifest.js": "/js/manifest.js",
     "/css/app.css": "/css/app.css",
+    "/css/bootstrap.min.css": "/css/bootstrap.min.css",
+    "/css/bootstrap.css": "/css/bootstrap.css",
+    "/css/navBar.css": "/css/navBar.css",
     "/js/vendor.js": "/js/vendor.js"
 }
