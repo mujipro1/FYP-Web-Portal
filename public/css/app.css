@@ -12111,3 +12111,14 @@ body{
   background-color: rgba(245, 245, 245, 0.795);
   border-radius: 20px;
 }
+
+
+.box-cont{
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  min-height: 200px;
+  margin:20px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+

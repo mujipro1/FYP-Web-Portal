@@ -19,5 +19,10 @@ Route::get('/', function () {
 
 
 Route::fallback(function() {
-    return view(welcome);
+    return view('welcome');
+});
+
+
+Route::get('/superadmin', function () {
+    return view('SuperAdmin');
 });
