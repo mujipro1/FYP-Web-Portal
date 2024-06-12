@@ -26,3 +26,4 @@ Route::fallback(function() {
 Route::get('/superadmin', function () {
     return view('SuperAdmin');
 });
+

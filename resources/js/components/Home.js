@@ -3,7 +3,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavBar  from './NavBar';
 import Footer  from './Footer';
-import Option1 from './SideBarComponents';
+import { Link } from 'react-router-dom';
+
 
 function Home() {
   return (
@@ -48,7 +49,7 @@ function Home() {
 
     <div id='filler'></div>
     
-    <Signup/>
+    <Login/>
 
     <div id='filler'></div>
 
@@ -80,7 +81,7 @@ function Stats(props){
 }
 
 
-function Signup(){
+function Login(){
   return (
     <Container className='section signup-cont'>
       <Row>
@@ -112,7 +113,9 @@ function Signup(){
             </div>
 
             <div className=' text-center'>
-              Don't have an account? <a className='text-dark' href='#'>Sign Up</a>
+              Don't have an account?<Link to="/signup">
+        Sign Up
+      </Link>
             </div>
           </form>
         </Col>
