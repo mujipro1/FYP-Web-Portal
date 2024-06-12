@@ -15,11 +15,10 @@ function Footer() {
               <Col md="3" lg="4" xl="3" className='mx-auto mb-4'>
                 <h6 className='text-uppercase fw-bold mb-4'>
                  
-                  Company name
+                  Cultivating Profits
                 </h6>
                 <p>
-                  Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
-                  consectetur adipisicing elit.
+                  A personalized platform for farmers to get recommendations on what to plant, when to plant and how to plant, with AI Chatbot support.
                 </p>
               </Col>
   
@@ -27,22 +26,17 @@ function Footer() {
                 <h6 className='text-uppercase fw-bold mb-4'>Products</h6>
                 <p>
                   <a href='#!' className='text-reset'>
-                    Angular
+                    AI Chatbot
                   </a>
                 </p>
                 <p>
                   <a href='#!' className='text-reset'>
-                    React
+                    Farm Management Portal
                   </a>
                 </p>
                 <p>
                   <a href='#!' className='text-reset'>
-                    Vue
-                  </a>
-                </p>
-                <p>
-                  <a href='#!' className='text-reset'>
-                    Laravel
+                    Recommendation System
                   </a>
                 </p>
               </Col>
@@ -51,22 +45,22 @@ function Footer() {
                 <h6 className='text-uppercase fw-bold mb-4'>Useful links</h6>
                 <p>
                   <a href='#!' className='text-reset'>
-                    Pricing
+                    Home
                   </a>
                 </p>
                 <p>
                   <a href='#!' className='text-reset'>
-                    Settings
+                    About
                   </a>
                 </p>
                 <p>
                   <a href='#!' className='text-reset'>
-                    Orders
+                    Contact
                   </a>
                 </p>
                 <p>
                   <a href='#!' className='text-reset'>
-                    Help
+                    Login
                   </a>
                 </p>
               </Col>
@@ -75,11 +69,11 @@ function Footer() {
                 <h6 className='text-uppercase fw-bold mb-4'>Contact</h6>
                 <p>
                   <i className='fas fa-home me-3'></i>
-                  New York, NY 10012, US
+                 MachVis Lab, SEECS
                 </p>
                 <p>
                   <i className='fas fa-home me-3'></i>
-                  info@example.com
+                  vision@seecs.edu.pk
                 </p>
                 <p>
                   <i className='fas fa-home me-3'></i>
@@ -95,7 +89,7 @@ function Footer() {
         <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
           © 2021 Copyright:
           <a className='text-reset fw-bold' href='https://mdbootstrap.com/'>
-            MDBootstrap.com
+            MachVis Lab, SEECS
           </a>
         </div>
       </div>

@@ -12031,10 +12031,11 @@ body{
     width: 150px;
     border-radius: 10px;
     box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    transition: all 1s ease-in-out;
     }
 
 .btn-brown:hover{
-    background:linear-gradient(180deg, #713002, #000000);
+    background:linear-gradient(45deg, #8a3b02, #461e01);
     box-shadow: 0 2px 8px rgba(0,0,0,0.8);
 
 }
@@ -12084,6 +12085,10 @@ body{
   font-weight: 600;
 }
 
+svg{
+  fill : #713002;
+  display: block;
+}
 
 #signup-image{
   background-image: url('https://images.unsplash.com/photo-1594771804886-a933bb2d609b?q=80&w=1782&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
@@ -12112,13 +12117,4 @@ body{
   border-radius: 20px;
 }
 
-
-.box-cont{
-  background-color: white;
-  border-radius: 20px;
-  padding: 20px;
-  min-height: 200px;
-  margin:20px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
 

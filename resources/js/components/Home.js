@@ -3,7 +3,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavBar  from './NavBar';
 import Footer  from './Footer';
-import Option1 from './SideBarComponents';
 
 function Home() {
   return (
@@ -25,9 +24,43 @@ function Home() {
     <Container className="back-grey my-5 px-5 section">
           <h3 className='services'>Our Services</h3>
         <Row className='h-100 p-3'>
-          <ServiceCard title='AI Driven Chatbot' description='With our AI chatbot, you can get real-time weather updates for your farm location.' />
-          <ServiceCard title='Farm Management Portal' description='Manage your resources, expenses and all farming data in one place.' />
-          <ServiceCard title='Recommender System' description='Get personalized recommendations on what to plant, when to plant and how to plant.' />
+          <Col className='text-center service-card'>
+              <svg width="131" height="104" viewBox="0 0 131 104">
+              <rect width="131" height="104" fill="url(#pattern0_14_74)" fill-opacity="0.46"/>
+              <defs>
+              <pattern id="pattern0_14_74" patternContentUnits="objectBoundingBox" width="1" height="1">
+              </pattern>
+              </defs>
+              </svg>
+            <h4 className='px-5 h-20 p-2 text-center gradient-fill'><b>AI Driven Chatbot</b></h4>
+            <p className='px-4'>With our AI chatbot, you can get real-time weather updates for your farm location</p>
+          </Col>
+
+          <Col className='text-center service-card'>
+            
+            <svg width="152" height="104" viewBox="0 0 152 104" >
+            <rect width="152" height="104" fill="url(#pattern0_16_75)" fill-opacity="0.46"/>
+            <defs>
+            <pattern id="pattern0_16_75" patternContentUnits="objectBoundingBox" width="1" height="1">
+            </pattern>
+            </defs>
+            </svg>
+
+            <h4 className='px-5 h-20 p-2 text-center gradient-fill'><b>Farm Management Portal</b></h4>
+            <p className='px-4'>Manage your resources, expenses and all farming data in one place</p>
+          </Col>
+
+          <Col className='text-center service-card'>
+              <svg width="120" height="147" viewBox="0 0 120 147" >
+              <rect width="120" height="147" fill="url(#pattern0_33_28)" fill-opacity="0.5"/>
+              <defs>
+              <pattern id="pattern0_33_28" patternContentUnits="objectBoundingBox" width="1" height="1">
+              </pattern>
+              </defs>
+              </svg>
+            <h4 className='px-5 h-20 p-2 text-center gradient-fill'><b>Recommender System</b></h4>
+            <p className='px-4'>Get personalized recommendations on what to plant, when to plant and how to plant</p>
+          </Col>
         </Row>
     </Container>
 
@@ -55,19 +88,6 @@ function Home() {
     <Footer />
     </>    
 );
-}
-
-
-function ServiceCard(props) {
-  return (
-    <Col className='text-center service-card'>
-      <svg className='text-center'>
-        <path d='M 10 10 L 100 0 L 90 90 L 0 100 Z' />
-      </svg>
-      <h4 className='px-5 h-20 p-2 text-center gradient-fill'><b>{props.title}</b></h4>
-      <p className='px-4'>{props.description}</p>
-    </Col>
-  );
 }
 
 function Stats(props){

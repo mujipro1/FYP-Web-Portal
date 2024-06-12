@@ -5,8 +5,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
-import Option1 from './SideBarComponents';
+import CreateFarm from './CreateFarm';
 import { Container, Col, Row } from 'react-bootstrap';
+
 
 function SuperAdmin() {
     return (
@@ -16,14 +17,18 @@ function SuperAdmin() {
             <Row>
                 
                 <Router>
-                <Col xs={2}>
-                    <Sidebar />
-                    </Col>
-                <Col>
-                    <Routes>
-                        <Route path="/option1" element={<Option1/>} />
-                    </Routes>
-                </Col>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-3 mt-3 sidebarcol">
+                                <Sidebar />
+                            </div>
+                            <div className="col-md-9 ">
+                                <Routes>
+                                    <Route path="/superadmin/createfarm" element={<CreateFarm/>} />
+                                </Routes>
+                            </div>
+                        </div>
+                    </div>
                     </Router> 
             <Footer />
             </Row>
@@ -31,6 +36,9 @@ function SuperAdmin() {
         </>
     );
 }
+
+
+
 
 export default SuperAdmin;
 
