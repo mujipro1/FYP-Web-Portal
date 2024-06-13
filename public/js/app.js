@@ -35007,6 +35007,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/signup.css":
+/*!**********************************!*\
+  !*** ./resources/css/signup.css ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -70256,7 +70269,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["css/app","css/bootstrap","css/navBar","css/superadmin","css/bootstrap.min","/js/vendor"], () => (__webpack_exec__("./resources/js/app.js"), __webpack_exec__("./resources/sass/app.scss"), __webpack_exec__("./resources/css/app.css"), __webpack_exec__("./resources/css/superadmin.css"), __webpack_exec__("./resources/css/navBar.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.min.css")));
+/******/ __webpack_require__.O(0, ["css/app","css/bootstrap","css/navBar","css/superadmin","css/signup","css/bootstrap.min","/js/vendor"], () => (__webpack_exec__("./resources/js/app.js"), __webpack_exec__("./resources/sass/app.scss"), __webpack_exec__("./resources/css/app.css"), __webpack_exec__("./resources/css/superadmin.css"), __webpack_exec__("./resources/css/navBar.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.min.css"), __webpack_exec__("./resources/css/signup.css")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
