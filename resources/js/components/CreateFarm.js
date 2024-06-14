@@ -1,28 +1,93 @@
 // Option1.js
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useState } from "react";
-import FarmMap from "./Map";
+import { useState,useEffect  } from "react";
+import { Link } from "react-router-dom";
+import crops from './cropdata'; // Import an array of crop data with names and image paths
 
-function CreateFarm() {
+
+
+const CreateFarm = () => {
     const [crops, setCrops] = useState(["Maize", "Wheat", "Rice"]);
-    const [miscExpenses, setMiscExpenses] = useState([]);
+    const [stage, setStage] = useState(1);
+    const [initialDetails, setInitialDetails] = useState({});
+    const [cropDetails, setCropDetails] = useState({});
+    const [expenseDetails, setExpenseDetails] = useState({});
 
-    return (
+    const nextStage = () => setStage(prev => prev + 1);
+    const prevStage = () => setStage(prev => prev - 1);
+
+    const handleInitialDetailsSubmit = (data) => {
+        setInitialDetails(data);
+        nextStage();
+    };
+
+    const handleCropDetailsSubmit = (data) => {
+        setCropDetails(data);
+        nextStage();
+    };
+
+    const handleExpenseDetailsSubmit = (data) => {
+        setExpenseDetails(data);
+        // Here you can handle the final submission logic
+        console.log('Initial Details:', initialDetails);
+        console.log('Crop Details:', cropDetails);
+        console.log('Expense Details:', expenseDetails);
+    };
+
+    switch(stage) {
+        case 1:
+            return <InitialDetails onSubmit={handleInitialDetailsSubmit} />;
+        case 2:
+            return <CropDetails initialValues={initialDetails} onSubmit={handleCropDetailsSubmit} prevStage={prevStage} />;
+        // case 3:
+        //     return <ExpenseDetails initialValues={cropDetails} onSubmit={handleExpenseDetailsSubmit} prevStage={prevStage} />;
+        // default:
+        //     return <div>Error: Invalid stage</div>;
+    }
+};
+
+
+
+const InitialDetails = ({ onSubmit }) => {
+
+    const [data, setData] = useState({
+        farmName: '',
+        location: '',
+        area: '',
+        address: '',
+
+        // other initial details fields
+    });
+
+    const handleChange = (e) => {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSubmit(data);
+    };
+
+    return(
         <div>
+
             <Container className="p-3 mt-3 section ">
                 <Row>
                     <Col className="text-center mb-1">
                         <h4>Create Farm</h4>
                     </Col>
 
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="container px-3">
                             <div className="row px-3">
                                 <div className="col-md-6">
                                     <div className=" p-3 mb-3">
                                         <div className="box-cont">
-                                            <div class="text-center">
+                                            <div className="text-center">
                                                 Request Status
                                             </div>
 
@@ -71,6 +136,7 @@ function CreateFarm() {
                                             <input
                                                 type="text"
                                                 className="form-control ml-3"
+                                                value={data.farmName}
                                             />
                                         </div>
 
@@ -79,6 +145,7 @@ function CreateFarm() {
                                             <input
                                                 type="text"
                                                 className="form-control ml-3"
+                                                value={data.location}
                                             />
                                         </div>
 
@@ -87,6 +154,7 @@ function CreateFarm() {
                                             <input
                                                 type="text"
                                                 className="form-control ml-3"
+                                                value={data.area}
                                             />
                                         </div>
 
@@ -95,15 +163,21 @@ function CreateFarm() {
                                             <input
                                                 type="text"
                                                 className="form-control ml-3"
+                                                value={data.address}
                                             />
                                         </div>
+
+                                        <div className="text-center ">
+                                            <button className="btn text-light btn-brown" type="submit">Next</button>
+                                        </div>
+
                                     </div>
                                 </div>
 
                                 <div className="col-md-6 p-3  mb-3">
                                         <div className="box-cont ">
-                                        <div class="text-center">
-                                            Message
+                                        <div className="text-center">
+                                            Request
                                         </div>
 
                                         <div className="overflow-y mt-4 light pt-3 px-4">
@@ -124,24 +198,18 @@ function CreateFarm() {
 
                             </div>
 
-                            <EntryComponent
+                            {/* <EntryComponent
                                 title="Crop"
                                 initialEntries={crops}
                                 onEntriesChange={setCrops}
                             />
-                            <ExpenseComponent crops={crops} />
 
                             <EntryComponent
                                 title="Misc. Expenses"
                                 initialEntries={miscExpenses}
                                 onEntriesChange={setMiscExpenses}
-                            />
+                            /> */}
 
-                            <div className="row px-3 mt-3">
-                                <div className="box-cont p-3">
-                                    <FarmMap />
-                                </div>
-                            </div>
                         </div>
                     </form>
                 </Row>
@@ -150,7 +218,7 @@ function CreateFarm() {
     );
 }
 
-const EntryComponent = ({ title, initialEntries, onEntriesChange }) => {
+const CropDestails = ({ title, initialEntries, onEntriesChange }) => {
     const [entryName, setEntryName] = useState("");
     const [entries, setEntries] = useState(initialEntries);
 
@@ -224,6 +292,112 @@ const EntryComponent = ({ title, initialEntries, onEntriesChange }) => {
                     </div>
                 </div>
             </div>
+        </div>
+    );
+};
+
+const CropDetails = ({ initialValues, onSubmit, prevStage }) => {
+    const [data, setData] = useState({
+        ...initialValues,
+        crops: []
+    });
+
+    const handleSelectCrop = (crop) => {
+        // check if crop already exists
+        if (data.crops.some(c => c.name === crop.name)) {
+            return;
+        }
+        setData(prevData => ({
+            ...prevData,
+            crops: [...prevData.crops, crop]
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSubmit(data);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-10 p-4 offset-md-1">
+                        <div className="my-3 text-center">
+                            <h3>Select Crops</h3>
+                        </div>
+                        <CropDropdown onSelectCrop={handleSelectCrop} />
+                        <div className="box-cont selected-crops my-4 p-3">
+                            <p className='light'>Selected Crops</p>
+                                {data.crops.map((crop, index) => (
+                                        <div key={index} className="selected-crop">
+                                            <img src={crop.image} alt={crop.name} className="selected-crop-image" />
+                                            <div className="d-flex justify-content-between"> 
+                                            <span className="mx-2">{crop.name}</span>
+                                            <button className="cross btn" type="button" onClick={() => setData(prevData => ({ ...prevData, crops: prevData.crops.filter(c => c.name !== crop.name) }))}>
+                                                &times;
+                                            </button>
+                                            </div>
+                                        </div>
+                                ))}
+                        </div>
+                        {/* other input fields */}
+
+                        <div className="d-flex my-3 justify-content-center align-items-center">
+                            <button className='mx-2 btn btn-brown text-light' type="button" onClick={prevStage}>Back</button>
+                            <button className='mx-2 btn btn-brown text-light' type="submit">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    );
+};
+
+const CropDropdown = ({ onSelectCrop }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredCrops, setFilteredCrops] = useState(crops);
+    // outpit the filtered crops
+
+    const handleChange = (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        if (term.length > 0) {
+            setFilteredCrops(crops.filter(crop => crop.name.toLowerCase().includes(term.toLowerCase())));
+        } else {
+            setFilteredCrops(crops);
+        }
+    };
+
+    const handleSelectCrop = (crop) => {
+        onSelectCrop(crop);
+        setSearchTerm('');
+        setFilteredCrops(crops);
+    };
+
+    return (
+
+       
+
+        <div className="dropdown">
+            <input
+            className="form-control "
+                type="text"
+                value={searchTerm}
+                onChange={handleChange}
+                placeholder="Type to search crops..."
+            />
+            {searchTerm.length > 0 &&
+
+                <div className="dropdown-box">
+                    {filteredCrops.map(crop => (
+                        <div key={crop.name} className="dd-item" onClick={() => handleSelectCrop(crop)}>
+                            <img src={crop.image} alt={crop.name} className="crop-image" />
+                            <span className="mx-4">{crop.name}</span>
+                        </div>
+                    ))}
+                </div>
+                }
         </div>
     );
 };

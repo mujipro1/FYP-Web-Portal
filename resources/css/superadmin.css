@@ -112,3 +112,56 @@
   overflow-y: auto;
   height: 60vh;
 }
+
+
+.selected-crops{
+  height: 40vh;
+  overflow-y: auto;
+  padding:10px;
+}
+
+.selected-crop{
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #efefef;
+  border-radius: 10px;
+  margin: 5px;
+  min-height: 150px;
+  width: 130px;
+
+}
+
+.selected-crop img{
+  width: 110px;
+  height: 110px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+
+.dropdown-box{
+  position: absolute;
+  width: 98%;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 5px;
+  border: 1px solid #c0c0c093;
+  padding: 4px 6px;
+}
+.dropdown-box img{
+  width: 60px;
+  height: 60px;
+  margin-right: 5px;
+  border-radius: 5px;
+  margin: 0px 5px 0px 0px;
+}
+
+.dd-item{
+  margin: 3px 0px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+}
+.dd-item:hover{
+  background-color: #dadada;
+}
