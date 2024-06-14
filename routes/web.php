@@ -27,3 +27,8 @@ Route::get('/superadmin', function () {
     return view('SuperAdmin');
 });
 
+
+Route::get('/expensefarmer', function () {
+    return view('expensefarmer');
+});
+
