@@ -107,3 +107,8 @@
   bottom: 0;
   right: 0;
 }
+
+.overflow-y{
+  overflow-y: auto;
+  height: 60vh;
+}
