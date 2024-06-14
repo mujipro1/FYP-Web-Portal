@@ -1,11 +1,14 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/SuperAdmin.js": "/js/SuperAdmin.js",
+    "/js/expensefarmer.js": "/js/expensefarmer.js",
     "/js/manifest.js": "/js/manifest.js",
     "/css/app.css": "/css/app.css",
     "/css/bootstrap.css": "/css/bootstrap.css",
     "/css/navBar.css": "/css/navBar.css",
     "/css/superadmin.css": "/css/superadmin.css",
+    "/css/expensefarmer.css": "/css/expensefarmer.css",
+    "/css/signup.css": "/css/signup.css",
     "/css/bootstrap.min.css": "/css/bootstrap.min.css",
     "/js/vendor.js": "/js/vendor.js"
 }
