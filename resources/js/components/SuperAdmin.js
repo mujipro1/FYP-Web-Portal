@@ -9,7 +9,6 @@ import CreateFarm from './CreateFarm';
 import { Container, Col, Row } from 'react-bootstrap';
 import  RequestComponent from './Requests';
 import { useState } from 'react';
-import ExpenseComponent from './ExpenseComponent';
 
 function SuperAdmin() {
   const [crops, setCrops] = useState(['Maize', 'Wheat', 'Rice']);
@@ -30,8 +29,6 @@ function SuperAdmin() {
                                 <Routes>
                                     <Route path="/superadmin/createfarm" element={<CreateFarm/>} />
                                     <Route path="/superadmin/requests" element={<RequestComponent/>} />
-                                    <Route path="/superadmin/expenses" element={<ExpenseComponent  crops={crops}  />} />
-
                                 </Routes>
                             </div>
                         </div>
