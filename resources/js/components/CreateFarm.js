@@ -2,9 +2,8 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useState,useEffect  } from "react";
-import { Link } from "react-router-dom";
 import crops from './cropdata'; // Import an array of crop data with names and image paths
-
+import ExpenseDetails from "./ExpenseComponent";
 
 
 const CreateFarm = () => {
@@ -40,8 +39,8 @@ const CreateFarm = () => {
             return <InitialDetails onSubmit={handleInitialDetailsSubmit} />;
         case 2:
             return <CropDetails initialValues={initialDetails} onSubmit={handleCropDetailsSubmit} prevStage={prevStage} />;
-        // case 3:
-        //     return <ExpenseDetails initialValues={cropDetails} onSubmit={handleExpenseDetailsSubmit} prevStage={prevStage} />;
+        case 3:
+            return <ExpenseDetails initialValues={cropDetails} onSubmit={handleExpenseDetailsSubmit} prevStage={prevStage} />;
         // default:
         //     return <div>Error: Invalid stage</div>;
     }
@@ -180,12 +179,11 @@ const InitialDetails = ({ onSubmit }) => {
                                             Request
                                         </div>
 
-                                        <div className="overflow-y mt-4 light pt-3 px-4">
+                                        <div className="overflow-y text-justify mt-4 light pt-3 px-4">
                                                 Lorem ipsum dolor sit amet,consectetur adipiscing elit.
                                                 Sed do eiusmod tempor incididunt ut labore et
                                                 dolore magna aliqua. Sed do eiusmod tempor incididunt ut
                                                 labore et dolore magna aliqua. Sed do eiusmod
-                                                tempor incididunt ut laboreet dolore magna aliqua. Sed
                                                 tempor incididunt ut laboreet dolore magna aliqua. Sed
                                                 tempor incididunt ut laboreet dolore magna aliqua. Sed
                                                 tempor incididunt ut laboreet dolore magna aliqua. Sed
@@ -302,6 +300,8 @@ const CropDetails = ({ initialValues, onSubmit, prevStage }) => {
         crops: []
     });
 
+    const popularCrops = crops.slice(0, 3);
+
     const handleSelectCrop = (crop) => {
         // check if crop already exists
         if (data.crops.some(c => c.name === crop.name)) {
@@ -326,17 +326,34 @@ const CropDetails = ({ initialValues, onSubmit, prevStage }) => {
                         <div className="my-3 text-center">
                             <h3>Select Crops</h3>
                         </div>
+
                         <CropDropdown onSelectCrop={handleSelectCrop} />
-                        <div className="box-cont selected-crops my-4 p-3">
+
+                        <div className="box-cont my-4 p-3">
+                            <p className='light'>Popular Crops</p>
+                            <div className="">
+                                {popularCrops.map((crop, index) => (
+                                    <div key={index} className="popular-crop">
+                                        <span className="mx-3">{crop.name}</span>
+                                        <button className="btn cross" onClick={() => handleSelectCrop(crop)} type="button">+</button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="box-cont row selected-crops my-4 p-3">
                             <p className='light'>Selected Crops</p>
                                 {data.crops.map((crop, index) => (
-                                        <div key={index} className="selected-crop">
+                                        <div key={index} className="col-md-4">
+                                            <div className="selected-crop">
+
                                             <img src={crop.image} alt={crop.name} className="selected-crop-image" />
                                             <div className="d-flex justify-content-between"> 
                                             <span className="mx-2">{crop.name}</span>
                                             <button className="cross btn" type="button" onClick={() => setData(prevData => ({ ...prevData, crops: prevData.crops.filter(c => c.name !== crop.name) }))}>
                                                 &times;
                                             </button>
+                                            </div>
                                             </div>
                                         </div>
                                 ))}
@@ -375,10 +392,7 @@ const CropDropdown = ({ onSelectCrop }) => {
         setFilteredCrops(crops);
     };
 
-    return (
-
-       
-
+    return ( 
         <div className="dropdown">
             <input
             className="form-control "
@@ -388,7 +402,6 @@ const CropDropdown = ({ onSelectCrop }) => {
                 placeholder="Type to search crops..."
             />
             {searchTerm.length > 0 &&
-
                 <div className="dropdown-box">
                     {filteredCrops.map(crop => (
                         <div key={crop.name} className="dd-item" onClick={() => handleSelectCrop(crop)}>
@@ -401,8 +414,5 @@ const CropDropdown = ({ onSelectCrop }) => {
         </div>
     );
 };
-
-
-
 
 export default CreateFarm;

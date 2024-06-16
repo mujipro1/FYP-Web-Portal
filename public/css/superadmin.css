@@ -122,17 +122,25 @@
 
 .selected-crop{
   display: inline-block;
-  padding: 5px 10px;
+  padding: 10px;
   background-color: #efefef;
   border-radius: 10px;
   margin: 5px;
   min-height: 150px;
-  width: 130px;
+  width: 100%;
+}
 
+.popular-crop{
+  padding: 5px 10px;
+  background-color: #efefef;
+  border-radius: 10px;
+  margin: 5px;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .selected-crop img{
-  width: 110px;
+  width: 100%;
   height: 110px;
   margin-right: 5px;
   border-radius: 5px;
@@ -165,3 +173,22 @@
 .dd-item:hover{
   background-color: #dadada;
 }
+
+
+
+
+
+
+
+
+.addedcrops {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+
+
