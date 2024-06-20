@@ -1,75 +1,55 @@
 import React, { useState } from 'react';
-import NavBar  from './NavBar';
-import Footer  from './Footer';
+import NavBar from './NavBar';
+import Footer from './Footer';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 const SignupForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    contact: '',
-  });
+  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would usually handle the form submission, e.g., sending the data to a server
-    console.log('Form Data Submitted:', formData);
+  const handleGetStartedClick = () => {
+    setShowQuestionnaire(true);
   };
 
   return (
     <>
-    <NavBar/>
+      <NavBar />
+      <div className="container my-5">
+        <div className="row box-cont">
+          <div className="col-md-6">
+            <img src='images/bgimage.jpg' alt="Farm Background" id='signup-image' />
+          </div>
+          <div className="col-md-6 d-flex justify-content-center align-items-center">
+            <div className="text-center">  
+              {!showQuestionnaire ? (
+                <GetStarted onGetStartedClick={handleGetStartedClick} />
+              ) : (
+                <Questionnaire />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
+};
 
-    <div className="container my-5">
-      <div className="row">
-        <div className="col-md-6 box-cont offset-md-3">
+const GetStarted = ({ onGetStartedClick }) => {
+  return (
+    <>
+      <h3 className=''>Get Registered!</h3>
+      <p className='p-3'>Register your farm with us by answering some short questions by our agent Hina!</p>
+      <button onClick={onGetStartedClick} className="text-light btn-brown">Start</button>
+    </>
+  );
+};
 
-      <div className='my-4 mb-5 text-center'>
-        <h3>Signup with us!</h3>
-      </div>
-       
-
-    <form onSubmit={handleSubmit}>
-      <div className=" labelcontainer mt-3 mx-5">
-        <label for="name">Name</label>
-        <input type="text" className="form-control" id="name" value={formData.name}
-          onChange={handleChange} required/>
-      </div>
-
-      <div className=" labelcontainer mx-5">
-        <label for="exampleInputEmail1">Email</label>
-        <input type="email" className="form-control" id="exampleInputEmail1" value={formData.email}
-          onChange={handleChange} required />
-      </div>
-
-      <div className=" labelcontainer mx-5"> 
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" className="form-control" id="exampleInputPassword1" value={formData.password}
-          onChange={handleChange} required />
-      </div>
-      
-      <div className=" labelcontainer mx-5">
-        <label for="contact">Contact</label>
-        <input type="text" className="form-control" id="contact" value={formData.contact}
-          onChange={handleChange} required />
-      </div>
-
-      <div className="text-center">
-        <button className='btn-brown my-3' type="submit">Sign Up</button>
-      </div>
-    </form>
-    </div>
-      </div>
-    </div>
-    <Footer/>
+const Questionnaire = () => {
+  return (
+    <>
+      <h3>Questionnaire</h3>
+      <p>Please answer the following questions:</p>
+      {/* Add your questionnaire form here */}
     </>
   );
 };
