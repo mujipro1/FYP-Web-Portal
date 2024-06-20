@@ -1,12 +1,19 @@
 // Option1.js
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { useLocation } from 'react-router-dom';
 import { useState,useEffect  } from "react";
 import crops from './cropdata'; // Import an array of crop data with names and image paths
 import ExpenseDetails from "./ExpenseComponent";
 
 
 const CreateFarm = () => {
+
+    const location = useLocation();
+    const { request } = location.state || {};
+
+    console.log(request)
+
     const [stage, setStage] = useState(1);
     const [initialDetails, setInitialDetails] = useState({});
     const [cropDetails, setCropDetails] = useState({});
@@ -112,11 +119,7 @@ const InitialDetails = ({ onSubmit }) => {
                                                     20-02-24
                                                 </label>
                                             </div>
-                                            <div className="d-flex justify-content-between light px-4">
-                                                <label className="">Existing Farm</label>
-                                                <label className="">
-                                                </label>
-                                            </div>
+                                      
                                            
                                         </div>
                                     </div>

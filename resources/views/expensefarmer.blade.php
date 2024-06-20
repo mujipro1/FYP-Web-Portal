@@ -21,7 +21,7 @@
     </head>
     <body>
         <div id="expensefarmer"></div>
-        <script src="{{ mix('js/expensefarmer.js') }}"></script>
+        <script src="{{ mix('js/ExpenseFarmer.js') }}"></script>
     </body>
 
 </html>

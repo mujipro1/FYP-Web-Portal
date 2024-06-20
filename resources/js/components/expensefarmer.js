@@ -76,5 +76,5 @@ function Expensefarmer() {
 export default expensefarmer;
 
 if (document.getElementById('expensefarmer')) {
-    ReactDOM.render(<Expensefarmer />, document.getElementById('expensefarmer'));
+    ReactDOM.render(<AddExpenses />, document.getElementById('expensefarmer'));
 }

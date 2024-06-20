@@ -13,7 +13,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/components/SuperAdmin.js', 'public/js')
-    .js('resources/js/components/expensefarmer.js', 'public/js')
+    .js('resources/js/components/ExpenseFarmer.js', 'public/js')
+    .js('resources/js/components/Manager.js', 'public/js')
     .react() 
     .extract(["react"])
     .sass('resources/sass/app.scss', 'public/css')

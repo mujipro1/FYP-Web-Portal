@@ -32,3 +32,8 @@ Route::get('/expensefarmer', function () {
     return view('expensefarmer');
 });
 
+
+Route::get('/manager', function () {
+    return view('manager');
+});
+

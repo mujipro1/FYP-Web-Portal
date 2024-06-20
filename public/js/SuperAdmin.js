@@ -6918,9 +6918,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _cropdata__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cropdata */ "./resources/js/components/cropdata.js");
 /* harmony import */ var _ExpenseComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ExpenseComponent */ "./resources/js/components/ExpenseComponent.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
@@ -6944,10 +6945,15 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
  // Import an array of crop data with names and image paths
 
 
 var CreateFarm = function CreateFarm() {
+  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useLocation)();
+  var _ref = location.state || {},
+    request = _ref.request;
+  console.log(request);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState2 = _slicedToArray(_useState, 2),
     stage = _useState2[0],
@@ -7010,8 +7016,8 @@ var CreateFarm = function CreateFarm() {
     //     return <div>Error: Invalid stage</div>;
   }
 };
-var InitialDetails = function InitialDetails(_ref) {
-  var onSubmit = _ref.onSubmit;
+var InitialDetails = function InitialDetails(_ref2) {
+  var onSubmit = _ref2.onSubmit;
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       farmName: '',
       location: '',
@@ -7032,10 +7038,10 @@ var InitialDetails = function InitialDetails(_ref) {
     onSubmit(data);
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
       className: "p-3 mt-3 section ",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
           className: "text-center mb-1",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
             children: "Create Farm"
@@ -7081,14 +7087,6 @@ var InitialDetails = function InitialDetails(_ref) {
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                         className: "",
                         children: "20-02-24"
-                      })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                      className: "d-flex justify-content-between light px-4",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                        className: "",
-                        children: "Existing Farm"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                        className: ""
                       })]
                     })]
                   })
@@ -7207,10 +7205,10 @@ var InitialDetails = function InitialDetails(_ref) {
     })
   });
 };
-var CropDestails = function CropDestails(_ref2) {
-  var title = _ref2.title,
-    initialEntries = _ref2.initialEntries,
-    onEntriesChange = _ref2.onEntriesChange;
+var CropDestails = function CropDestails(_ref3) {
+  var title = _ref3.title,
+    initialEntries = _ref3.initialEntries,
+    onEntriesChange = _ref3.onEntriesChange;
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState12 = _slicedToArray(_useState11, 2),
     entryName = _useState12[0],
@@ -7301,10 +7299,10 @@ var CropDestails = function CropDestails(_ref2) {
     })
   });
 };
-var CropDetails = function CropDetails(_ref3) {
-  var initialValues = _ref3.initialValues,
-    onSubmit = _ref3.onSubmit,
-    prevStage = _ref3.prevStage;
+var CropDetails = function CropDetails(_ref4) {
+  var initialValues = _ref4.initialValues,
+    onSubmit = _ref4.onSubmit,
+    prevStage = _ref4.prevStage;
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_objectSpread(_objectSpread({}, initialValues), {}, {
       crops: []
     })),
@@ -7426,8 +7424,8 @@ var CropDetails = function CropDetails(_ref3) {
     })
   });
 };
-var CropDropdown = function CropDropdown(_ref4) {
-  var onSelectCrop = _ref4.onSelectCrop;
+var CropDropdown = function CropDropdown(_ref5) {
+  var onSelectCrop = _ref5.onSelectCrop;
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState18 = _slicedToArray(_useState17, 2),
     searchTerm = _useState18[0],
@@ -7921,9 +7919,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -7931,15 +7930,23 @@ var RequestModal = function RequestModal(_ref) {
   var show = _ref.show,
     onHide = _ref.onHide,
     request = _ref.request;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  var handleCreateFarm = function handleCreateFarm() {
+    navigate('/superadmin/createfarm', {
+      state: {
+        request: request
+      }
+    });
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
     show: show,
     onHide: onHide,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Header, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Header, {
       closeButton: true,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Title, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Title, {
         children: "Request Details"
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Body, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Body, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
           children: "Name:"
@@ -7957,15 +7964,13 @@ var RequestModal = function RequestModal(_ref) {
           children: "Status:"
         }), " ", request.status.charAt(0).toUpperCase() + request.status.slice(1)]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Footer, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        className: "btn text-light btn-brown",
-        onClick: function onClick() {
-          return alert('Create Farm clicked!');
-        },
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Footer, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        className: "text-light btn-brown",
+        onClick: handleCreateFarm,
         children: "Create Farm"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        className: "btn text-light btn-brown",
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        className: "text-light btn-brown",
         onClick: onHide,
         children: "Close"
       })]
@@ -8023,9 +8028,9 @@ function RequestComponent() {
     setSelectedRequest(null);
   };
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
-      name: "M M Fraz",
+      name: "Hassan Ali",
       date: "19-feb-1913",
-      desc: "I am a poor farmer and I need help (in general)",
+      desc: "Make my Farm, I need assistance with irrigation equipment.",
       status: "pending"
     }, {
       name: "Ayesha Bibi",
@@ -8053,66 +8058,86 @@ function RequestComponent() {
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "container m-2",
+      className: "container ",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        className: "text-center",
+        className: "text-center py-4",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
           children: "Requests"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "row px-3 mt-3",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "row",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "col-md-6",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-              className: "mt-4 labelcontainer",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-                className: "w-50",
-                children: "Status"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("select", {
-                className: "form-control ml-3",
-                value: status,
-                onChange: handleChange,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
-                  value: "pending",
-                  children: "Pending"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
-                  value: "completed",
-                  children: "Completed"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
-                  value: "all",
-                  children: "All"
-                })]
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "col-md-5 offset-md-1 px-3",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "mx-4 labelcontainer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+              className: "w-25",
+              children: "Status"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("select", {
+              className: "form-control ml-3",
+              value: status,
+              onChange: handleChange,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                value: "pending",
+                children: "Pending"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                value: "completed",
+                children: "Completed"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                value: "all",
+                children: "All"
               })]
-            })
+            })]
           })
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "col-md-5 px-3",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "mx-4 labelcontainer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+              className: "w-25",
+              children: "Year"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("select", {
+              className: "form-control ml-3",
+              value: status,
+              onChange: handleChange,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                value: "pending",
+                children: "Pending"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                value: "completed",
+                children: "Completed"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                value: "all",
+                children: "All"
+              })]
+            })]
+          })
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "row p-3",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "col-md-10 p-3 offset-md-1",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "request-list",
+            className: "request-list ",
             children: [(status == "all" ? requests : requests.filter(function (e) {
               return e.status === status;
             })).map(function (request, index) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                style: {
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                },
-                className: "box-cont p-3 request-cont m-3 d-flex justify-content-between align-items-center",
+                className: "box-cont row my-4",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                  className: "col-md-9",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
+                    className: "px-3 pt-3",
                     children: request.name
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                    className: " px-3 light",
                     children: request.date
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                    className: "px-3",
                     children: request.desc
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "col-md-3 py-4 text-center",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                     children: request.status.charAt(0).toUpperCase() + request.status.slice(1)
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
@@ -8286,23 +8311,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var crops = [{
-  name: 'Sugarcane',
-  image: '/images/crops/sugarcane.jpg'
+  name: 'Almond',
+  image: '/images/crops/Almond.jpg'
 }, {
-  name: 'Peanuts',
-  image: '/images/crops/peanuts.jpg'
+  name: 'Apple',
+  image: '/images/crops/Apple.jpg'
 }, {
-  name: 'Rice',
-  image: '/images/crops/rice.jpg'
+  name: 'Apricot',
+  image: '/images/crops/Apricot.jpg'
 }, {
-  name: 'Maize',
-  image: '/images/crops/maize.jpg'
-}, {
-  name: 'Carrot',
-  image: '/images/crops/carrot.jpg'
+  name: 'Arum',
+  image: '/images/crops/Arum.jpg'
 }, {
   name: 'Bajra',
   image: '/images/crops/bajra.jpg'
+}, {
+  name: 'Banana',
+  image: '/images/crops/Banana.jpg'
 }, {
   name: 'Barley',
   image: '/images/crops/barley.jpg'
@@ -8310,14 +8335,56 @@ var crops = [{
   name: 'Beetroot',
   image: '/images/crops/beetroot.jpg'
 }, {
+  name: 'Ber',
+  image: '/images/crops/Ber.jpg'
+}, {
+  name: 'Bitter gourd',
+  image: '/images/crops/Bitter Gourd.jpg'
+}, {
+  name: 'Bottle gourd',
+  image: '/images/crops/Bottle Gourd.jpg'
+}, {
+  name: 'Brinjal',
+  image: '/images/crops/Brinjal.jpg'
+}, {
+  name: 'Cabbage',
+  image: '/images/crops/Cabbage.jpg'
+}, {
+  name: 'Carrot',
+  image: '/images/crops/carrot.jpg'
+}, {
+  name: 'Cauliflower',
+  image: '/images/crops/Cauliflower.jpg'
+}, {
+  name: 'Chikoo',
+  image: '/images/crops/Chikoo.jpg'
+}, {
+  name: 'Coconut',
+  image: '/images/crops/Coconut.jpg'
+}, {
   name: 'Coffee',
   image: '/images/crops/coffee.jpg'
 }, {
   name: 'Corn',
   image: '/images/crops/corn.jpg'
 }, {
+  name: 'Corriander',
+  image: '/images/crops/Corriander.jpg'
+}, {
   name: 'Cotton',
   image: '/images/crops/cotton.jpg'
+}, {
+  name: 'Cucumber',
+  image: '/images/crops/Cucumber.jpg'
+}, {
+  name: 'Dates',
+  image: '/images/crops/Dates.jpg'
+}, {
+  name: 'Falsa',
+  image: '/images/crops/Falsa.jpg'
+}, {
+  name: 'Figs',
+  image: '/images/crops/Figs.jpg'
 }, {
   name: 'Garlic',
   image: '/images/crops/garlic.jpg'
@@ -8325,20 +8392,86 @@ var crops = [{
   name: 'Goldwheat',
   image: '/images/crops/goldwheat.jpg'
 }, {
+  name: 'Grapefruit',
+  image: '/images/crops/Grapefruit.jpg'
+}, {
+  name: 'Green grapes',
+  image: '/images/crops/Green Grapes.jpg'
+}, {
   name: 'Greenwheat',
   image: '/images/crops/greenwheat.jpg'
+}, {
+  name: 'Guava',
+  image: '/images/crops/Guava.jpg'
 }, {
   name: 'Jowar',
   image: '/images/crops/jowar.jpg'
 }, {
+  name: 'Lemon',
+  image: '/images/crops/Lemon.jpg'
+}, {
+  name: 'Lettuce',
+  image: '/images/crops/Lettuce.jpg'
+}, {
+  name: 'Lichi',
+  image: '/images/crops/Lichi.jpg'
+}, {
   name: 'Linseed',
   image: '/images/crops/linseed.jpg'
+}, {
+  name: 'Long melon',
+  image: '/images/crops/Long Melon.jpg'
+}, {
+  name: 'Loquat',
+  image: '/images/crops/Loquat.jpg'
+}, {
+  name: 'Luffa',
+  image: '/images/crops/Luffa.jpg'
+}, {
+  name: 'Maize',
+  image: '/images/crops/maize.jpg'
+}, {
+  name: 'Mandarine',
+  image: '/images/crops/Mandarine.jpg'
+}, {
+  name: 'Mango',
+  image: '/images/crops/Mango.jpg'
+}, {
+  name: 'Masoor',
+  image: '/images/crops/Masoor.jpg'
+}, {
+  name: 'Mulberry',
+  image: '/images/crops/Mulberry.jpg'
+}, {
+  name: 'Mung',
+  image: '/images/crops/Mung.jpg'
+}, {
+  name: 'Musk melon',
+  image: '/images/crops/Musk Melon.jpg'
 }, {
   name: 'Mustard',
   image: '/images/crops/mustard.jpg'
 }, {
+  name: 'Musubi',
+  image: '/images/crops/Musubi.jpg'
+}, {
   name: 'Onion',
   image: '/images/crops/onion.jpg'
+}, {
+  name: 'Orange',
+  image: '/images/crops/Orange.jpg'
+}, {
+  name: 'Papaya',
+  image: '/images/crops/Papaya.jpg'
+}, {
+  name: 'Peaches',
+  image: '/images/crops/Peaches.jpg'
+}, {
+  name: 'Peanuts',
+  image: '/images/crops/peanuts.jpg'
+}, {
+  name: 'Pear',
+  image: '/images/crops/Pear.jpg'
 }, {
   name: 'Peas',
   image: '/images/crops/peas.jpg'
@@ -8346,23 +8479,89 @@ var crops = [{
   name: 'Pineapple',
   image: '/images/crops/pineapple.jpg'
 }, {
+  name: 'Plums',
+  image: '/images/crops/Plums.jpg'
+}, {
+  name: 'Pomegrante',
+  image: '/images/crops/Pomegrante.jpg'
+}, {
   name: 'Potato',
   image: '/images/crops/potato.jpg'
+}, {
+  name: 'Pumpkin',
+  image: '/images/crops/Pumpkin.jpg'
+}, {
+  name: 'Radish',
+  image: '/images/crops/Radish.jpg'
+}, {
+  name: 'Red chilli',
+  image: '/images/crops/Red Chilli.jpg'
+}, {
+  name: 'Red grapes',
+  image: '/images/crops/Red Grapes.jpg'
 }, {
   name: 'Redbellpeppers',
   image: '/images/crops/redbellpeppers.jpg'
 }, {
+  name: 'Rice',
+  image: '/images/crops/rice.jpg'
+}, {
+  name: 'Safflower',
+  image: '/images/crops/Safflower.jpg'
+}, {
+  name: 'Seasamum',
+  image: '/images/crops/Seasamum.jpg'
+}, {
+  name: 'Sour lime',
+  image: '/images/crops/Sour Lime.jpg'
+}, {
+  name: 'Sour orange',
+  image: '/images/crops/Sour Orange.jpg'
+}, {
+  name: 'Soyabean',
+  image: '/images/crops/Soyabean.jpg'
+}, {
   name: 'Soybean',
   image: '/images/crops/soybean.jpg'
+}, {
+  name: 'Spinach',
+  image: '/images/crops/Spinach.jpg'
 }, {
   name: 'Strawberry',
   image: '/images/crops/strawberry.jpg'
 }, {
+  name: 'Sugarcane',
+  image: '/images/crops/sugarcane.jpg'
+}, {
   name: 'Sunflower',
   image: '/images/crops/sunflower.jpg'
 }, {
+  name: 'Sweet lime',
+  image: '/images/crops/Sweet Lime.jpg'
+}, {
+  name: 'Sweet potato',
+  image: '/images/crops/Sweet Potato.jpg'
+}, {
+  name: 'Tobacco',
+  image: '/images/crops/Tobacco.jpg'
+}, {
   name: 'Tomato',
   image: '/images/crops/tomato.jpg'
+}, {
+  name: 'Turmeric',
+  image: '/images/crops/Turmeric.jpg'
+}, {
+  name: 'Turnip',
+  image: '/images/crops/Turnip.jpg'
+}, {
+  name: 'Walnut',
+  image: '/images/crops/Walnut.jpg'
+}, {
+  name: 'Watermelon',
+  image: '/images/crops/Watermelon.jpg'
+}, {
+  name: 'Wheat',
+  image: '/images/crops/Wheat.jpg'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (crops);
 

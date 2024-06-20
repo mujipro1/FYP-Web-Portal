@@ -1,7 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/SuperAdmin.js": "/js/SuperAdmin.js",
-    "/js/expensefarmer.js": "/js/expensefarmer.js",
+    "/js/ExpenseFarmer.js": "/js/ExpenseFarmer.js",
+    "/js/Manager.js": "/js/Manager.js",
     "/js/manifest.js": "/js/manifest.js",
     "/css/app.css": "/css/app.css",
     "/css/bootstrap.css": "/css/bootstrap.css",
