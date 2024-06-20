@@ -12513,7 +12513,7 @@ function NavBar() {
           className: "ms-auto",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
             className: "navlink",
-            href: "#home",
+            href: "/",
             children: "Home"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
             className: "navlink",

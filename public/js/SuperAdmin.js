@@ -6948,26 +6948,22 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 var CreateFarm = function CreateFarm() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["Maize", "Wheat", "Rice"]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState2 = _slicedToArray(_useState, 2),
-    crops = _useState2[0],
-    setCrops = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    stage = _useState2[0],
+    setStage = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState4 = _slicedToArray(_useState3, 2),
-    stage = _useState4[0],
-    setStage = _useState4[1];
+    initialDetails = _useState4[0],
+    setInitialDetails = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState6 = _slicedToArray(_useState5, 2),
-    initialDetails = _useState6[0],
-    setInitialDetails = _useState6[1];
+    cropDetails = _useState6[0],
+    setCropDetails = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState8 = _slicedToArray(_useState7, 2),
-    cropDetails = _useState8[0],
-    setCropDetails = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState10 = _slicedToArray(_useState9, 2),
-    expenseDetails = _useState10[0],
-    setExpenseDetails = _useState10[1];
+    expenseDetails = _useState8[0],
+    setExpenseDetails = _useState8[1];
   var nextStage = function nextStage() {
     return setStage(function (prev) {
       return prev + 1;
@@ -7016,17 +7012,18 @@ var CreateFarm = function CreateFarm() {
 };
 var InitialDetails = function InitialDetails(_ref) {
   var onSubmit = _ref.onSubmit;
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       farmName: '',
       location: '',
       area: '',
-      address: ''
-
-      // other initial details fields
+      address: '',
+      farmDate: new Date().getFullYear(),
+      sowingMonth: '',
+      harvestMonth: ''
     }),
-    _useState12 = _slicedToArray(_useState11, 2),
-    data = _useState12[0],
-    setData = _useState12[1];
+    _useState10 = _slicedToArray(_useState9, 2),
+    data = _useState10[0],
+    setData = _useState10[1];
   var handleChange = function handleChange(e) {
     setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.name, e.target.value)));
   };
@@ -7089,19 +7086,9 @@ var InitialDetails = function InitialDetails(_ref) {
                       className: "d-flex justify-content-between light px-4",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                         className: "",
-                        children: "Date"
+                        children: "Existing Farm"
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                        className: "",
-                        children: "20-02-24"
-                      })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                      className: "d-flex justify-content-between light px-4",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                        className: "",
-                        children: "Date"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                        className: "",
-                        children: "20-02-24"
+                        className: ""
                       })]
                     })]
                   })
@@ -7148,7 +7135,51 @@ var InitialDetails = function InitialDetails(_ref) {
                       value: data.address
                     })]
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                    className: "text-center ",
+                    className: "text-center mb-2 light",
+                    children: "Configure Date"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    className: "labelcontainer",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      className: "",
+                      children: "Year"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("select", {
+                      className: "form-control ml-3",
+                      value: data.farmDate,
+                      onChange: handleChange,
+                      name: "farmDate",
+                      children: Array.from({
+                        length: new Date().getFullYear() - 1970 + 1
+                      }, function (_, i) {
+                        return 1970 + i;
+                      }).map(function (year) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                          value: year,
+                          children: year
+                        }, year);
+                      })
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    className: "labelcontainer",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      className: "",
+                      children: "Sowing Month"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      onChange: handleChange,
+                      type: "month",
+                      className: "form-control ml-3"
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    className: "labelcontainer",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      className: "",
+                      children: "Harvest Month"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                      onChange: handleChange,
+                      type: "month",
+                      className: "form-control ml-3"
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    className: "text-center mt-3 ",
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                       className: "btn text-light btn-brown",
                       type: "submit",
@@ -7180,14 +7211,14 @@ var CropDestails = function CropDestails(_ref2) {
   var title = _ref2.title,
     initialEntries = _ref2.initialEntries,
     onEntriesChange = _ref2.onEntriesChange;
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState12 = _slicedToArray(_useState11, 2),
+    entryName = _useState12[0],
+    setEntryName = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialEntries),
     _useState14 = _slicedToArray(_useState13, 2),
-    entryName = _useState14[0],
-    setEntryName = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialEntries),
-    _useState16 = _slicedToArray(_useState15, 2),
-    entries = _useState16[0],
-    setEntries = _useState16[1];
+    entries = _useState14[0],
+    setEntries = _useState14[1];
   var handleInputChange = function handleInputChange(e) {
     setEntryName(e.target.value);
   };
@@ -7274,13 +7305,13 @@ var CropDetails = function CropDetails(_ref3) {
   var initialValues = _ref3.initialValues,
     onSubmit = _ref3.onSubmit,
     prevStage = _ref3.prevStage;
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_objectSpread(_objectSpread({}, initialValues), {}, {
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_objectSpread(_objectSpread({}, initialValues), {}, {
       crops: []
     })),
-    _useState18 = _slicedToArray(_useState17, 2),
-    data = _useState18[0],
-    setData = _useState18[1];
-  var popularCrops = _cropdata__WEBPACK_IMPORTED_MODULE_1__["default"].slice(0, 3);
+    _useState16 = _slicedToArray(_useState15, 2),
+    data = _useState16[0],
+    setData = _useState16[1];
+  var popularCrops = _cropdata__WEBPACK_IMPORTED_MODULE_1__["default"].slice(0, 6);
   var handleSelectCrop = function handleSelectCrop(crop) {
     // check if crop already exists
     if (data.crops.some(function (c) {
@@ -7337,43 +7368,46 @@ var CropDetails = function CropDetails(_ref3) {
                 }, index);
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "box-cont row selected-crops my-4 p-3",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-              className: "light",
-              children: "Selected Crops"
-            }), data.crops.map(function (crop, index) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "col-md-4",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "selected-crop",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-                    src: crop.image,
-                    alt: crop.name,
-                    className: "selected-crop-image"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                    className: "d-flex justify-content-between",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                      className: "mx-2",
-                      children: crop.name
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                      className: "cross btn",
-                      type: "button",
-                      onClick: function onClick() {
-                        return setData(function (prevData) {
-                          return _objectSpread(_objectSpread({}, prevData), {}, {
-                            crops: prevData.crops.filter(function (c) {
-                              return c.name !== crop.name;
-                            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "box-cont container selected-crops my-4 p-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "row",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                className: "light",
+                children: "Selected Crops"
+              }), data.crops.map(function (crop, index) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  className: "col-md-4 my-2",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    className: "selected-crop",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+                      src: crop.image,
+                      alt: crop.name,
+                      className: "selected-crop-image"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                      className: "d-flex justify-content-between",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                        className: "mx-2",
+                        children: crop.name
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                        className: "cross btn",
+                        type: "button",
+                        onClick: function onClick() {
+                          return setData(function (prevData) {
+                            return _objectSpread(_objectSpread({}, prevData), {}, {
+                              crops: prevData.crops.filter(function (c) {
+                                return c.name !== crop.name;
+                              })
+                            });
                           });
-                        });
-                      },
-                      children: "\xD7"
+                        },
+                        children: "\xD7"
+                      })]
                     })]
-                  })]
-                })
-              }, index);
-            })]
+                  })
+                }, index);
+              })]
+            })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "d-flex my-3 justify-content-center align-items-center",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
@@ -7394,14 +7428,14 @@ var CropDetails = function CropDetails(_ref3) {
 };
 var CropDropdown = function CropDropdown(_ref4) {
   var onSelectCrop = _ref4.onSelectCrop;
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState18 = _slicedToArray(_useState17, 2),
+    searchTerm = _useState18[0],
+    setSearchTerm = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_cropdata__WEBPACK_IMPORTED_MODULE_1__["default"]),
     _useState20 = _slicedToArray(_useState19, 2),
-    searchTerm = _useState20[0],
-    setSearchTerm = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_cropdata__WEBPACK_IMPORTED_MODULE_1__["default"]),
-    _useState22 = _slicedToArray(_useState21, 2),
-    filteredCrops = _useState22[0],
-    setFilteredCrops = _useState22[1];
+    filteredCrops = _useState20[0],
+    setFilteredCrops = _useState20[1];
   // outpit the filtered crops
 
   var handleChange = function handleChange(e) {
@@ -7848,7 +7882,7 @@ function NavBar() {
           className: "ms-auto",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
             className: "navlink",
-            href: "#home",
+            href: "/",
             children: "Home"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
             className: "navlink",

@@ -12074,6 +12074,9 @@ body{
   background-color: white;
 }
 
+.light{
+  color: #aaaaaa;
+}
 
 .grey-gradient{
   background:linear-gradient(0deg, #f5f5f5, #e1e1e1);

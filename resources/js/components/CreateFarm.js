@@ -7,7 +7,6 @@ import ExpenseDetails from "./ExpenseComponent";
 
 
 const CreateFarm = () => {
-    const [crops, setCrops] = useState(["Maize", "Wheat", "Rice"]);
     const [stage, setStage] = useState(1);
     const [initialDetails, setInitialDetails] = useState({});
     const [cropDetails, setCropDetails] = useState({});
@@ -55,8 +54,9 @@ const InitialDetails = ({ onSubmit }) => {
         location: '',
         area: '',
         address: '',
-
-        // other initial details fields
+        farmDate: new Date().getFullYear(),
+        sowingMonth: '',
+        harvestMonth: '',
     });
 
     const handleChange = (e) => {
@@ -113,17 +113,11 @@ const InitialDetails = ({ onSubmit }) => {
                                                 </label>
                                             </div>
                                             <div className="d-flex justify-content-between light px-4">
-                                                <label className="">Date</label>
+                                                <label className="">Existing Farm</label>
                                                 <label className="">
-                                                    20-02-24
                                                 </label>
                                             </div>
-                                            <div className="d-flex justify-content-between light px-4">
-                                                <label className="">Date</label>
-                                                <label className="">
-                                                    20-02-24
-                                                </label>
-                                            </div>
+                                           
                                         </div>
                                     </div>
 
@@ -166,7 +160,40 @@ const InitialDetails = ({ onSubmit }) => {
                                             />
                                         </div>
 
-                                        <div className="text-center ">
+                                        <div className="text-center mb-2 light">Configure Date</div>
+                                        <div className="labelcontainer">
+                                            <label className="">Year</label>
+                                            <select  className="form-control ml-3" value={data.farmDate} onChange={handleChange} name="farmDate">
+                                                 {Array.from({length: new Date().getFullYear() - 1970 + 1}, (_, i) => 1970 + i).map(year => (
+                                                    <option key={year} value={year}>{year}</option>
+                                                ))}
+                                                </select>
+                                                
+                                                 
+                                        </div>
+                                        
+
+                                        <div className="labelcontainer">
+                                            <label className="">Sowing Month</label>
+                                            <input
+                                                onChange={handleChange}
+                                                type="month"
+                                                className="form-control ml-3"
+                                            />
+
+                                        </div>
+
+                                        <div className="labelcontainer">
+                                            <label className="">Harvest Month</label>
+
+                                            <input
+                                                onChange={handleChange}
+                                                type="month"
+                                                className="form-control ml-3"
+                                            />
+                                        </div>
+
+                                        <div className="text-center mt-3 ">
                                             <button className="btn text-light btn-brown" type="submit">Next</button>
                                         </div>
 
@@ -192,22 +219,7 @@ const InitialDetails = ({ onSubmit }) => {
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
-
-                            {/* <EntryComponent
-                                title="Crop"
-                                initialEntries={crops}
-                                onEntriesChange={setCrops}
-                            />
-
-                            <EntryComponent
-                                title="Misc. Expenses"
-                                initialEntries={miscExpenses}
-                                onEntriesChange={setMiscExpenses}
-                            /> */}
-
                         </div>
                     </form>
                 </Row>
@@ -300,7 +312,7 @@ const CropDetails = ({ initialValues, onSubmit, prevStage }) => {
         crops: []
     });
 
-    const popularCrops = crops.slice(0, 3);
+    const popularCrops = crops.slice(0, 6);
 
     const handleSelectCrop = (crop) => {
         // check if crop already exists
@@ -341,10 +353,12 @@ const CropDetails = ({ initialValues, onSubmit, prevStage }) => {
                             </div>
                         </div>
 
-                        <div className="box-cont row selected-crops my-4 p-3">
+                        <div className="box-cont container selected-crops my-4 p-3">
+                            <div className="row">
+
                             <p className='light'>Selected Crops</p>
                                 {data.crops.map((crop, index) => (
-                                        <div key={index} className="col-md-4">
+                                    <div key={index} className="col-md-4 my-2">
                                             <div className="selected-crop">
 
                                             <img src={crop.image} alt={crop.name} className="selected-crop-image" />
@@ -357,6 +371,7 @@ const CropDetails = ({ initialValues, onSubmit, prevStage }) => {
                                             </div>
                                         </div>
                                 ))}
+                            </div>
                         </div>
                         {/* other input fields */}
 
