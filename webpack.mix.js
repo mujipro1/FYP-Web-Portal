@@ -23,3 +23,4 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/bootstrap/bootstrap.css', 'public/css')
     .postCss('resources/css/bootstrap/bootstrap.min.css', 'public/css')
     .postCss('resources/css/expensefarmer.css', 'public/css')
+
