@@ -9,6 +9,7 @@
         <title>Laravel</title>
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('css/navBar.css') }}" rel="stylesheet">
+        <link href="{{ mix('css/questionaire.css') }}" rel="stylesheet">
         <link href="{{ mix('css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ mix('css/bootstrap.min.css') }}" rel="stylesheet">
 

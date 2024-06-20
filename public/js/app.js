@@ -12555,13 +12555,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NavBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar */ "./resources/js/components/NavBar.js");
 /* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Footer */ "./resources/js/components/Footer.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
 
 
 
@@ -12587,13 +12596,10 @@ var SignupForm = function SignupForm() {
             id: "signup-image"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "col-md-6 d-flex justify-content-center align-items-center",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "text-center",
-            children: !showQuestionnaire ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(GetStarted, {
-              onGetStartedClick: handleGetStartedClick
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Questionnaire, {})
-          })
+          className: "col-md-6 ",
+          children: !showQuestionnaire ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(GetStarted, {
+            onGetStartedClick: handleGetStartedClick
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(ChatStyleQuestionnaire, {})
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], {})]
@@ -12601,27 +12607,162 @@ var SignupForm = function SignupForm() {
 };
 var GetStarted = function GetStarted(_ref) {
   var onGetStartedClick = _ref.onGetStartedClick;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-      className: "",
-      children: "Get Registered!"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-      className: "p-3",
-      children: "Register your farm with us by answering some short questions by our agent Hina!"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-      onClick: onGetStartedClick,
-      className: "text-light btn-brown",
-      children: "Start"
-    })]
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      className: "d-flex justify-content-center align-items-center flex-column min-height",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+        className: "",
+        children: "Get Registered!"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+        className: "text-center p-3",
+        children: "Register your farm with us by answering some short questions by our agent Hina!"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        onClick: onGetStartedClick,
+        className: "text-light btn-brown",
+        children: "Start"
+      })]
+    })
   });
 };
-var Questionnaire = function Questionnaire() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-      children: "Questionnaire"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-      children: "Please answer the following questions:"
-    })]
+var questions = [{
+  id: 1,
+  question: "Could you please tell us your name?",
+  key: "farmerName"
+}, {
+  id: 2,
+  question: "What is the name of your farm?",
+  key: "farmName"
+}, {
+  id: 3,
+  question: "Which city is your farm located in?",
+  key: "farmCity"
+}, {
+  id: 4,
+  question: "Could you provide the complete address of your farm?",
+  key: "farmAddress"
+}, {
+  id: 5,
+  question: "What is the total area of your farm in square meters?",
+  key: "farmArea"
+}, {
+  id: 6,
+  question: "For which year are we recording the crop details?",
+  key: "cropYear"
+}, {
+  id: 7,
+  question: "When did you sow the crops? (Please provide the date)",
+  key: "sowingDate"
+}, {
+  id: 8,
+  question: "When did you harvest the crops? (Please provide the date)",
+  key: "harvestingDate"
+}, {
+  id: 9,
+  question: "Can you list the names of the crops that are currently planted on your farm?",
+  key: "cropNames"
+}, {
+  id: 10,
+  question: "For each crop, please provide the details of expenses such as labor, machinery, rent, etc. For example: Wheat got the expenses of Labour, machinery and rent.",
+  key: "cropExpenses"
+}];
+var ChatStyleQuestionnaire = function ChatStyleQuestionnaire() {
+  var _questions$currentQue;
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState4 = _slicedToArray(_useState3, 2),
+    currentQuestionIndex = _useState4[0],
+    setCurrentQuestionIndex = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState6 = _slicedToArray(_useState5, 2),
+    answers = _useState6[0],
+    setAnswers = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([0]),
+    _useState8 = _slicedToArray(_useState7, 2),
+    showQuestions = _useState8[0],
+    setShowQuestions = _useState8[1];
+  var chatContainerRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var handleAnswerChange = function handleAnswerChange(e) {
+    setAnswers(_objectSpread(_objectSpread({}, answers), {}, _defineProperty({}, questions[currentQuestionIndex].key, e.target.value)));
+  };
+  var handleNextQuestion = function handleNextQuestion(e) {
+    e.preventDefault();
+    if (answers[questions[currentQuestionIndex].key]) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setShowQuestions([].concat(_toConsumableArray(showQuestions), [currentQuestionIndex + 1]));
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // Scroll to the bottom of the chat container whenever a new question/answer is added
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [showQuestions]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    className: "container",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      className: "row ",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "d-flex justify-content-start mb-3  align-items-center",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+          src: "images/farm1.jpg",
+          alt: "Hina",
+          id: "profile-image"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h6", {
+          className: "mx-3 mt-2",
+          children: "Hina"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "questionnaire",
+        ref: chatContainerRef,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "d-flex justify-content-start",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+            className: "question",
+            children: "Hello, I am Hina and I will be asking you some questions, So lets get started!"
+          })
+        }), showQuestions.map(function (index) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "d-flex justify-content-start",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                className: "question",
+                children: questions[index].question
+              })
+            }), index < currentQuestionIndex && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "d-flex justify-content-end",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+                className: "answer",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                  children: answers[questions[index].key]
+                })
+              })
+            })]
+          }, questions[index].id);
+        }), currentQuestionIndex === questions.length && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+            children: "All questions answered!"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            onClick: function onClick() {
+              return console.log(answers);
+            },
+            children: "Submit"
+          })]
+        })]
+      }), currentQuestionIndex < questions.length && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+        onSubmit: handleNextQuestion,
+        className: "fixed-form",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+          type: "text",
+          value: answers[(_questions$currentQue = questions[currentQuestionIndex]) === null || _questions$currentQue === void 0 ? void 0 : _questions$currentQue.key] || '',
+          onChange: handleAnswerChange,
+          autoFocus: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          type: "submit",
+          className: "next-button",
+          children: "Next"
+        })]
+      })]
+    })
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SignupForm);
@@ -34976,6 +35117,19 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./resources/css/bootstrap/bootstrap.css":
+/*!***********************************************!*\
+  !*** ./resources/css/bootstrap/bootstrap.css ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/css/bootstrap/bootstrap.min.css":
 /*!***************************************************!*\
   !*** ./resources/css/bootstrap/bootstrap.min.css ***!
@@ -35041,10 +35195,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/navBar.css":
-/*!**********************************!*\
-  !*** ./resources/css/navBar.css ***!
-  \**********************************/
+/***/ "./resources/css/questionaire.css":
+/*!****************************************!*\
+  !*** ./resources/css/questionaire.css ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -35054,10 +35208,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/bootstrap/bootstrap.css":
-/*!***********************************************!*\
-  !*** ./resources/css/bootstrap/bootstrap.css ***!
-  \***********************************************/
+/***/ "./resources/css/navBar.css":
+/*!**********************************!*\
+  !*** ./resources/css/navBar.css ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -70251,7 +70405,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["css/app","css/bootstrap","css/navBar","css/superadmin","css/expensefarmer","css/bootstrap.min","/js/vendor"], () => (__webpack_exec__("./resources/js/app.js"), __webpack_exec__("./resources/sass/app.scss"), __webpack_exec__("./resources/css/app.css"), __webpack_exec__("./resources/css/superadmin.css"), __webpack_exec__("./resources/css/navBar.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.min.css"), __webpack_exec__("./resources/css/expensefarmer.css")));
+/******/ __webpack_require__.O(0, ["css/app","css/navBar","css/questionaire","css/superadmin","css/expensefarmer","css/bootstrap.min","css/bootstrap","/js/vendor"], () => (__webpack_exec__("./resources/js/app.js"), __webpack_exec__("./resources/sass/app.scss"), __webpack_exec__("./resources/css/app.css"), __webpack_exec__("./resources/css/superadmin.css"), __webpack_exec__("./resources/css/questionaire.css"), __webpack_exec__("./resources/css/navBar.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.css"), __webpack_exec__("./resources/css/bootstrap/bootstrap.min.css"), __webpack_exec__("./resources/css/expensefarmer.css")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
