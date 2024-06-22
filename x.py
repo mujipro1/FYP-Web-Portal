@@ -1,5 +1,34 @@
 import os
 
+def capitalize_first_letter_of_images(directory):
+    # Supported image extensions
+    supported_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff')
+
+    # List all files in the directory
+    for filename in os.listdir(directory):
+        # Check if the file is an image
+        if filename.lower().endswith(supported_extensions):
+            # Get the full file path
+            old_filepath = os.path.join(directory, filename)
+            
+            # Capitalize the first letter of the filename
+            new_filename = filename.capitalize()
+            new_filepath = os.path.join(directory, new_filename)
+
+            # Rename the file
+            os.rename(old_filepath, new_filepath)
+            print(f'Renamed: {old_filepath} -> {new_filepath}')
+
+# Example usage
+image_folder = 'public/images/crops'  # Replace with the path to your image folder
+capitalize_first_letter_of_images(image_folder)
+
+
+
+
+
+
+
 def create_js_file(image_folder, js_file):
     crops = []
 
@@ -16,7 +45,7 @@ def create_js_file(image_folder, js_file):
         file.write('];\n\n')
         file.write('export default crops;\n')
 
-if __name__ == "__main__":
-    image_folder = 'public/images/crops'  # Replace with the path to your image folder
-    js_file = 'resources/js/components/cropdata.js'  # Replace with the path to your output JS file
-    create_js_file(image_folder, js_file)
+js_file = 'resources/js/components/cropdata.js'  # Replace with the path to your output JS file
+create_js_file(image_folder, js_file)
+
+

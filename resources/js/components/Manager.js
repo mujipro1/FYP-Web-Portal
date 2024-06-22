@@ -4,14 +4,38 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './NavBar';
 import Footer from './Footer';
+import { useNavigate } from 'react-router-dom';
 import { Container, Col, Row } from 'react-bootstrap'
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import ManagerFarmDetails from './ManagerFarmDetails';
+import ManagerWorkers from './ManagerWorkers';
+
 
 function Manager() {
     return (
         <>
-            <NavBar />
-            <ChatStyleQuestionnaire/>
+          <NavBar />
+          <Container fluid>
+          <Row>
+          <Router>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-2 mt-3 sidebarcol">
+                        <ManagerSidebar />
+                    </div>
+                    <div className="col-md-10 ">
+                         <Routes>
+                            <Route path="/manager/" element={<ManagerHome/>} />
+                            <Route path="/manager/farms" element={<ManagerFarms/>} />
+                            <Route path="/manager/farms/:farmId" element={<ManagerFarmDetails />} />
+                            <Route path="/manager/workers/:workerId" element={<ManagerWorkers />} />
+                        </Routes>
+                    </div>
+                </div>
+            </div>
+            </Router> 
+            </Row>
+            </Container>
           <Footer />
         </>
     );
@@ -19,88 +43,96 @@ function Manager() {
 
 
 
-
-const questions = [
-  { id: 1, question: "Could you please tell us your name?", key: "farmerName" },
-  { id: 2, question: "What is the name of your farm?", key: "farmName" },
-  { 
-    id: 3, 
-    question: "Which city is your farm located in?", 
-    key: "farmCity" 
-  },
-  { 
-    id: 4, 
-    question: "Could you provide the complete address of your farm?", 
-    key: "farmAddress" 
-  },
-  { id: 5, question: "What is the total area of your farm in square meters?", key: "farmArea" },
-  { id: 6, question: "For which year are we recording the crop details?", key: "cropYear" },
-  { id: 7, question: "When did you sow the crops? (Please provide the date)", key: "sowingDate" },
-  { id: 8, question: "When did you harvest the crops? (Please provide the date)", key: "harvestingDate" },
-  { id: 9, question: "Can you list the names of the crops that are currently planted on your farm?", key: "cropNames" },
-  { 
-    id: 10, 
-    question: "For each crop, please provide the details of expenses such as labor, machinery, rent, etc. For example: Wheat got the expenses of Labour, machinery and rent.", 
-    key: "cropExpenses" 
-  }
-];
-
-
-const ChatStyleQuestionnaire = () => {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState({});
-    const [showQuestions, setShowQuestions] = useState([0]);
-  
-    const handleAnswerChange = (e) => {
-      setAnswers({
-        ...answers,
-        [questions[currentQuestionIndex].key]: e.target.value,
-      });
-    };
-  
-    const handleNextQuestion = (e) => {
-      e.preventDefault();
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setShowQuestions([...showQuestions, currentQuestionIndex + 1]);
-    };
-  
-    return (
-      <div className='container'>
-        <div className="row">
-
-        <h2>Farm Questionnaire</h2>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {showQuestions.map((index) => (
-            <div key={questions[index].id} style={{ margin: '10px 0' }}>
-              <p>{questions[index].question}</p>
-              {index === currentQuestionIndex ? (
-                <form onSubmit={handleNextQuestion}>
-                  <input
-                    type="text"
-                    value={answers[questions[index].key] || ''}
-                    onChange={handleAnswerChange}
-                    autoFocus
-                  />
-                  <button type="submit" style={{ marginLeft: '10px' }}>
-                    Next
-                  </button>
-                </form>
-              ) : (
-                  <p><strong>{answers[questions[index].key]}</strong></p>
-              )}
-            </div>
-          ))}
-          {currentQuestionIndex === questions.length && (
-            <div>
-              <h3>All questions answered!</h3>
-              <button onClick={() => console.log(answers)}>Submit</button>
-            </div>
-          )}
-        </div>
+function ManagerSidebar() {
+  return (
+      <div className="sidebar">
+          <ul>
+              <li><Link to="/manager/home">Home</Link></li>
+              <li><Link to="/manager/farms">Farms</Link></li>
+              <li><Link to="/manager/workers">Workers</Link></li>
+              <li><Link to="/manager/option2">Analytics</Link></li>
+          </ul>
       </div>
-    </div>
+  );
+}
+
+const ManagerHome = () => {
+    return (
+        <>
+        <row>
+            <Col>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12 my-3">
+                            <div className="text-center">
+                                <h2 className='mx-4'>Welcome Hassan!</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Col>
+        </row>
+        </>
     );
-  };
+};
+
+
+const ManagerFarms = () => {
+  const farms = [
+    {
+      name: 'Farm 1',
+      image: '/images/farm1.jpg',
+      city: 'Lahore',
+      crops: ['Wheat', 'Soybean', 'Cotton']
+    },
+    {
+      name: 'Farm 2',
+      image: '/images/farm2.avif',
+      city : 'Karachi',
+      crops: ['Wheat', 'Rice', 'Corn']
+    },
+    {
+      name: 'Farm 3',
+      image: '/images/farm3.jpg',
+      city: 'Islamabad',
+      crops: ['Wheat', 'Soybean', 'Cotton']
+    },
+    {
+      name: 'Farm 4',
+      image: '/images/farm1.jpg',
+      city: 'Lahore',
+      crops: ['Corn', 'Soybean', 'Cotton']
+    },
+  ];
+      const navigate = useNavigate();
+    
+      const handleFarmClick = (farm) => {
+        navigate(`/manager/farms/${farm.name}`, { state: { farm } });
+      };
+    
+      return (
+        <>
+          <div className="container">
+            <div className="row">
+              <div className='text-center my-3'><h3>Farms</h3></div>
+              <div className="row">
+                {farms.map(farm => (
+                  <div className="col-md-4 my-2" key={farm.name} onClick={() => handleFarmClick(farm)}>
+                    <div className="selected-farm">
+                      <img src={farm.image} className="selected-farm-image" />
+                      <h5 className='mt-3 mx-2'>{farm.name}</h5>
+                      <div className='mx-2 light fsmall'>{farm.city}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    };
+
+
 
 
 if (document.getElementById('Manager')) {

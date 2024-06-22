@@ -146,6 +146,34 @@
   border-radius: 5px;
 }
 
+.selected-farm-image{
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+
+}
+
+
+.selected-farm{
+  display: inline-block;
+  padding: 10px;
+  background-color: #efefef;
+  border-radius: 10px;
+  margin: 5px;
+  min-height: 200px;
+  width: 100%;
+  cursor: pointer;
+}
+
+
+.selected-farm img{
+  width: 100%;
+  height: 150px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
 
 .dropdown-box{
   position: absolute;
@@ -174,15 +202,8 @@
   background-color: #dadada;
 }
 
-
-
-
-
-
-
-
 .addedcrops {
-  display: flex;
+  display: inline-block;
   justify-content: space-between;
   padding: 5px;
   border: 1px solid #ccc;
@@ -191,3 +212,25 @@
 }
 
 
+
+.fsmall{
+  font-size: small;
+  transform: translateY(-5px);
+}
+
+.piccont{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 205px;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.piccont img{
+  width: 100%;
+  height: auto;
+  object-fit:cover;
+  border-radius: 20px;
+}

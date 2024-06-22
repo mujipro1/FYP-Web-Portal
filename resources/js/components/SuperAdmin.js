@@ -22,12 +22,12 @@ function SuperAdmin() {
                 <Router>
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-3 mt-3 sidebarcol">
+                            <div className="col-md-2 mt-3 sidebarcol">
                                 <Sidebar />
                             </div>
-                            <div className="col-md-9 ">
+                            <div className="col-md-10 ">
                                 <Routes>
-                                    <Route path="/superadmin/home" element={<SuperAdminHome/>} />
+                                    <Route path="/superadmin/" element={<SuperAdminHome/>} />
                                     <Route path="/superadmin/createfarm" element={<CreateFarm/>} />
                                     <Route path="/superadmin/requests" element={<RequestComponent/>} />
                                 </Routes>
@@ -50,7 +50,7 @@ const SuperAdminHome = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12 my-3">
-                            <div className="box-cont">
+                            <div className="text-center">
                                 <h2 className='mx-4'>Welcome Hassan!</h2>
                             </div>
                         </div>

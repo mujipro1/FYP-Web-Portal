@@ -12,12 +12,10 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-              <Nav.Link className="navlink" href="/">Home</Nav.Link>
-              <Nav.Link className="navlink" href="#home">About</Nav.Link>
-              <Nav.Link className="navlink" href="#link">Services</Nav.Link>
-              <Nav.Link className="navlink" href="#link">
-                <Button className="btn btn-dark contact">Contact</Button>
-              </Nav.Link>
+              <Nav.Link className="mx-2 navlink" href="/">Home</Nav.Link>
+              <Nav.Link className="mx-2 navlink" href="#home">About</Nav.Link>
+              <Nav.Link className="mx-2 navlink" href="#link">Services</Nav.Link>
+              <Nav.Link className="mx-2 navlink" href="#link">Contact</Nav.Link>
           </Nav> 
         </Navbar.Collapse>
       </Container>

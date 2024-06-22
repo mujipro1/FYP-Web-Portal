@@ -12263,6 +12263,11 @@ function Home() {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
             className: "btn-brown",
+            onClick: function onClick() {
+              document.getElementById('signup').scrollIntoView({
+                behavior: 'smooth'
+              });
+            },
             children: "Get Started"
           })
         })]
@@ -12405,66 +12410,72 @@ function Stats(props) {
   });
 }
 function Login() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    className: "section signup-cont",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        id: "signup-image",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("image", {
-          src: "https://via.placeholder.com/150"
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        className: "p-4",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: "text-center",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-            className: "my-3 text-center",
-            children: "Login or Signup"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "mt-5",
-            children: "Login with Email"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            children: "or Create an account"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
-          className: "p-5",
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    className: "pt-4",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      className: "section signup-cont",
+      id: "signup",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          id: "signup-image",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("image", {
+            src: "https://via.placeholder.com/150"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          className: "p-4",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "form-group mx-5",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-              "for": "exampleInputEmail1",
-              children: "Email address"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "email",
-              className: "form-control",
-              id: "exampleInputEmail1",
-              "aria-describedby": "emailHelp"
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "form-group mx-5 mt-3  ",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-              "for": "exampleInputPassword1",
-              children: "Password"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "password",
-              className: "form-control",
-              id: "exampleInputPassword1"
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "text-center",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-              type: "submit",
-              className: "btn btn-dark w-75 m-5",
-              children: "Submit"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: " text-center",
-            children: ["Don't have an account?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
-              to: "/signup",
-              children: "Sign Up"
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
+              className: "my-3 text-center",
+              children: "Login or Signup"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "mt-5",
+              children: "Login with Email"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "light",
+              children: "or "
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              children: "Send us a request"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+            className: "p-5",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "form-group mx-5",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                "for": "exampleInputEmail1",
+                children: "Email address"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                type: "email",
+                className: "form-control",
+                autocomplete: "new-email"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "form-group mx-5 mt-3  ",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+                "for": "exampleInputPassword1",
+                children: "Password"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                type: "password",
+                className: "form-control",
+                autocomplete: "new-password"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "text-center",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                type: "submit",
+                className: "btn btn-dark w-75  my-4 mx-5",
+                children: "Submit"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: " text-center",
+              children: ["Don't have an account?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                to: "/signup",
+                children: "Sign Up"
+              })]
             })]
           })]
         })]
-      })]
+      })
     })
   });
 }
@@ -12483,7 +12494,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap/Container */ "./node_modules/react-bootstrap/esm/Container.js");
 /* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
 /* harmony import */ var react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap/Navbar */ "./node_modules/react-bootstrap/esm/Navbar.js");
@@ -12512,24 +12522,21 @@ function NavBar() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"], {
           className: "ms-auto",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "/",
             children: "Home"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "#home",
             children: "About"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "#link",
             children: "Services"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "#link",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
-              className: "btn btn-dark contact",
-              children: "Contact"
-            })
+            children: "Contact"
           })]
         })
       })]
@@ -12554,7 +12561,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _NavBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar */ "./resources/js/components/NavBar.js");
 /* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Footer */ "./resources/js/components/Footer.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _citydata__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./citydata */ "./resources/js/components/citydata.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -12575,6 +12583,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 var SignupForm = function SignupForm() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -12583,45 +12592,26 @@ var SignupForm = function SignupForm() {
   var handleGetStartedClick = function handleGetStartedClick() {
     setShowQuestionnaire(true);
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "container my-5",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "row box-cont",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "col-md-6",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
             src: "images/bgimage.jpg",
             alt: "Farm Background",
             id: "signup-image"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "col-md-6 ",
-          children: !showQuestionnaire ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(GetStarted, {
+          children: !showQuestionnaire ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(GetStarted, {
             onGetStartedClick: handleGetStartedClick
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(ChatStyleQuestionnaire, {})
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(ChatStyleQuestionnaire, {})
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], {})]
-  });
-};
-var GetStarted = function GetStarted(_ref) {
-  var onGetStartedClick = _ref.onGetStartedClick;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      className: "d-flex justify-content-center align-items-center flex-column min-height",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-        className: "",
-        children: "Get Registered!"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-        className: "text-center p-3",
-        children: "Register your farm with us by answering some short questions by our agent Hina!"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-        onClick: onGetStartedClick,
-        className: "text-light btn-brown",
-        children: "Start"
-      })]
-    })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], {})]
   });
 };
 var questions = [{
@@ -12635,7 +12625,8 @@ var questions = [{
 }, {
   id: 3,
   question: "Which city is your farm located in?",
-  key: "farmCity"
+  key: "farmCity",
+  type: "dropdown"
 }, {
   id: 4,
   question: "Could you provide the complete address of your farm?",
@@ -12643,19 +12634,23 @@ var questions = [{
 }, {
   id: 5,
   question: "What is the total area of your farm in square meters?",
-  key: "farmArea"
+  key: "farmArea",
+  type: "number"
 }, {
   id: 6,
   question: "For which year are we recording the crop details?",
-  key: "cropYear"
+  key: "cropYear",
+  type: "number"
 }, {
   id: 7,
   question: "When did you sow the crops? (Please provide the date)",
-  key: "sowingDate"
+  key: "sowingDate",
+  type: "date"
 }, {
   id: 8,
   question: "When did you harvest the crops? (Please provide the date)",
-  key: "harvestingDate"
+  key: "harvestingDate",
+  type: "date"
 }, {
   id: 9,
   question: "Can you list the names of the crops that are currently planted on your farm?",
@@ -12666,7 +12661,6 @@ var questions = [{
   key: "cropExpenses"
 }];
 var ChatStyleQuestionnaire = function ChatStyleQuestionnaire() {
-  var _questions$currentQue;
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState4 = _slicedToArray(_useState3, 2),
     currentQuestionIndex = _useState4[0],
@@ -12696,67 +12690,105 @@ var ChatStyleQuestionnaire = function ChatStyleQuestionnaire() {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [showQuestions]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+  var renderInputField = function renderInputField() {
+    var question = questions[currentQuestionIndex];
+    var key = question.key,
+      type = question.type;
+    if (type === "date") {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+        type: "date",
+        value: answers[key] || '',
+        onChange: handleAnswerChange,
+        autoFocus: true
+      });
+    } else if (type === "number") {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+        type: "number",
+        value: answers[key] || '',
+        onChange: handleAnswerChange,
+        autoFocus: true
+      });
+    } else if (type === "dropdown") {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+        className: "form-control",
+        value: answers[key] || '',
+        onChange: handleAnswerChange,
+        autoFocus: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+          value: "",
+          children: "Select City"
+        }), _citydata__WEBPACK_IMPORTED_MODULE_3__["default"].map(function (city, index) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+            value: city,
+            children: city
+          }, index);
+        })]
+      });
+    } else {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+        type: "text",
+        value: answers[key] || '',
+        onChange: handleAnswerChange,
+        autoFocus: true
+      });
+    }
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
     className: "container",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: "row ",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "d-flex justify-content-start mb-3  align-items-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-          src: "images/farm1.jpg",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+          src: "images/profile.jpg",
           alt: "Hina",
           id: "profile-image"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h6", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h6", {
           className: "mx-3 mt-2",
           children: "Hina"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "questionnaire",
         ref: chatContainerRef,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "d-flex justify-content-start",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
             className: "question",
             children: "Hello, I am Hina and I will be asking you some questions, So lets get started!"
           })
         }), showQuestions.map(function (index) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
             className: "",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               className: "d-flex justify-content-start",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
                 className: "question",
                 children: questions[index].question
               })
-            }), index < currentQuestionIndex && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            }), index < currentQuestionIndex && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               className: "d-flex justify-content-end",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
                 className: "answer",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
                   children: answers[questions[index].key]
                 })
               })
             })]
           }, questions[index].id);
-        }), currentQuestionIndex === questions.length && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+        }), currentQuestionIndex === questions.length && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
             children: "All questions answered!"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
             onClick: function onClick() {
               return console.log(answers);
             },
             children: "Submit"
           })]
         })]
-      }), currentQuestionIndex < questions.length && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+      }), currentQuestionIndex < questions.length && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
         onSubmit: handleNextQuestion,
         className: "fixed-form",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-          type: "text",
-          value: answers[(_questions$currentQue = questions[currentQuestionIndex]) === null || _questions$currentQue === void 0 ? void 0 : _questions$currentQue.key] || '',
-          onChange: handleAnswerChange,
-          autoFocus: true
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        children: [renderInputField(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
           type: "submit",
           className: "next-button",
           children: "Next"
@@ -12766,6 +12798,41 @@ var ChatStyleQuestionnaire = function ChatStyleQuestionnaire() {
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SignupForm);
+var GetStarted = function GetStarted(_ref) {
+  var onGetStartedClick = _ref.onGetStartedClick;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "d-flex justify-content-center align-items-center flex-column min-height",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+        className: "",
+        children: "Get Registered!"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+        className: "text-center p-3",
+        children: "Register your farm with us by answering some short questions by our agent Hina!"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+        onClick: onGetStartedClick,
+        className: "text-light btn-brown",
+        children: "Start"
+      })]
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/components/citydata.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/citydata.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var citydata = ["Abbottabad", "Adilpur", "Ahmadpur Sial", "Ahmedpur East", "Akora", "Alik Ghund", "Alipur Chatha", "Alizai", "Aman Garh", "Amirabad", "Arifwala", "Ashanagro Koto", "Attock Tehsil", "Awārān District", "Baddomalhi", "Badin", "Baffa", "Bagarji", "Bahawalnagar", "Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal", "Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram", "Battagram District", "Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan", "Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala", "Bozdar Wada", "Bulri", "Buner District", "Burewala", "Bārkhān District", "Chak", "Chak Azam Saffo", "Chak Jhumra", "Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left", "Chak Two Hundred Forty-Nine TDA", "Chakwal", "Chaman", "Chamber", "Charsadda", "Chawinda", "Cherat Cantonement", "Chhor", "Chichawatni", "Chiniot", "Chishtian", "Chitral", "Choa Saidanshah", "Chowki Jamali", "Chuhar Jamali", "Chuhar Kana", "Chunian", "Chāgai District", "Dadhar", "Dadu", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS", "Daromehar", "Darya Khan", "Darya Khan Marri", "Daska", "Daud Khel", "Daulatpur", "Daultala", "Daur", "Dera Bugti", "Dera Bugti District", "Dera Ghazi Khan", "Dera Ismail Khan", "Dera Ismāīl Khān District", "Dhanot", "Dhaunkal", "Dhok Awan", "Dhoro Naro", "Digri", "Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo", "Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur", "Eminabad", "Faisalabad", "Faqirwali", "Faruka", "Fazilpur", "Ferozewala", "Fort Abbas", "Gadani", "Gambat", "Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Gharo", "Ghauspur", "Ghotki", "Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan", "Gujar Khan", "Gujranwala", "Gujranwala Division", "Gujrat", "Gulishah Kach", "Gwadar", "Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai", "Harnoli", "Harunabad", "Hasan Abdal", "Hasilpur", "Haveli Lakha", "Havelian", "Hazro", "Hingorja", "Hujra Shah Muqeem", "Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah", "Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand", "Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali", "Jauharabad", "Jhal Magsi District", "Jhang", "Jhang Sadar", "Jhawarian", "Jhelum", "Jhol", "Jiwani", "Johi", "Jāfarābād District", "Jām Sāhib", "Kabirwala", "Kadhan", "Kahna Nau", "Kahuta", "Kakad Wari Dir Upper", "Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar", "Kalur Kot", "Kalāt District", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke", "Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi", "Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur", "Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur", "Khairpur Mir’s", "Khairpur Nathan Shah", "Khairpur Tamiwali", "Khalabat", "Khandowa", "Khanewal", "Khanga Dogran", "Khangarh", "Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra", "Khurrianwala", "Khushab", "Khuzdar", "Khuzdār District", "Khārān District", "Kohat", "Kohlu", "Kohror Pakka", "Kot Addu Tehsil", "Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar", "Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba", "Kot Sultan", "Kotli", "Kotli District", "Kotli Loharan", "Kotri", "Kulachi", "Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich", "Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal", "Larkana", "Lasbela District", "Layyah", "Layyah District", "Liliani", "Lodhran", "Loralai", "Loralai District", "Mach", "Madeji", "Mailsi", "Malakwal", "Malakwal City", "Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin", "Mandi Bahauddin District", "Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Mastung District", "Matiari", "Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun", "Mianke Mor", "Mianwali", "Minchinabad", "Mingora", "Miran Shah", "Miro Khan", "Mirpur Bhtoro", "Mirpur District", "Mirpur Khas", "Mirpur Mathelo", "Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro", "Moza Shahwala", "Multan", "Multan District", "Muridke", "Murree", "Mustafabad", "Muzaffargarh", "Muzaffarābād", "Mūsa Khel District", "Nabisar", "Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Nasīrābād District", "Naudero", "Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah", "Nazir Town", "New Bādāh", "New Mirpur", "Noorabad", "North Wazīristān Agency", "Nowshera", "Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi", "Pad Idan", "Paharpur", "Pakki Shagwanwali", "Pakpattan", "Panjgūr District", "Pano Aqil", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia", "Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth", "Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Didar Singh", "Qila Saifullāh District", "Quetta", "Quetta District", "Rabwah", "Rahim Yar Khan", "Rahimyar Khan District", "Raiwind", "Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar", "Ratodero", "Rawala Kot", "Rawalpindi", "Rawalpindi District", "Renala Khurd", "Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Sadiqabad", "Sahiwal", "Sakrand", "Samaro", "Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann", "Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha", "Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur", "Shahkot Tehsil", "Shahpur", "Shahpur Chakar", "Shahr Sultan", "Shakargarh", "Sharqpur", "Sheikhupura", "Shikarpur", "Shingli Bala", "Shinpokh", "Shorkot", "Shorkot", "Shujaabad", "Sialkot", "Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhra", "Sohbatpur", "South Wazīristān Agency", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur", "Swabi", "Sīta Road", "Talagang", "Talamba", "Talhar", "Tandlianwala", "Tando Adam", "Tando Allahyar", "Tando Bago", "Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi", "Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta", "Thul", "Toba Tek Singh", "Topi", "Turbat", "Ubauro", "Umarkot", "Umerkot", "Umerkot District", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai", "Vihari", "Wah", "Wana", "Warah", "Warburton", "Wazirabad", "West Punjab", "Yazman", "Zafarwal", "Zahir Pir", "Zaida", "Zhob", "Zhob District", "Ziarat", "Ziārat District"];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (citydata);
 
 /***/ }),
 
@@ -36541,62 +36608,6 @@ function getSharedManager(options) {
   return sharedManager;
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BootstrapModalManager);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/Button.js":
-/*!****************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/Button.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_ui_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @restart/ui/Button */ "./node_modules/@restart/ui/esm/Button.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-"use client";
-
-
-
-
-
-
-const Button = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
-  as,
-  bsPrefix,
-  variant = 'primary',
-  size,
-  active = false,
-  disabled = false,
-  className,
-  ...props
-}, ref) => {
-  const prefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'btn');
-  const [buttonProps, {
-    tagName
-  }] = (0,_restart_ui_Button__WEBPACK_IMPORTED_MODULE_4__.useButtonProps)({
-    tagName: as,
-    disabled,
-    ...props
-  });
-  const Component = tagName;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, {
-    ...buttonProps,
-    ...props,
-    ref: ref,
-    disabled: disabled,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, prefix, active && 'active', variant && `${prefix}-${variant}`, size && `${prefix}-${size}`, props.href && disabled && 'disabled')
-  });
-});
-Button.displayName = 'Button';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
 /***/ }),
 

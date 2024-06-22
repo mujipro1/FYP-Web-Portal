@@ -16,7 +16,12 @@ function Home() {
         <h1><b>Welcome!</b></h1>
         <p>Cultivating Profits! A smart Farm Management Platform</p>
         <Col>
-          <button className="btn-brown">Get Started</button>
+          <button className="btn-brown"
+          onClick={() => {
+            document.getElementById('signup').scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+          >Get Started</button>
         </Col>
       </Row>
     </Container>
@@ -104,33 +109,39 @@ function Stats(props){
 
 function Login(){
   return (
-    <Container className='section signup-cont'>
+    <div className="pt-4">
+
+    <Container className='section signup-cont' id='signup'>
       <Row>
         <Col id='signup-image'>
         <image src='https://via.placeholder.com/150' />
         </Col>
 
-        <Col className='p-4'>
+        <Col className='p-4' >
 
         <div className="text-center">
           <h4 className='my-3 text-center'>Login or Signup</h4>
           <div className='mt-5'>Login with Email</div>
-          <div>or Create an account</div>
+          <div className='light'>or </div>
+          <div>Send us a request</div>
         </div>
 
           <form className='p-5'>
             <div className="form-group mx-5">
               <label for="exampleInputEmail1">Email address</label>
-              <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+              <input type="email" className="form-control"
+              autocomplete="new-email"/>
             </div>
 
             <div className="form-group mx-5 mt-3  ">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword1" />
+              <input type="password" className="form-control" 
+              autocomplete="new-password"
+              />
             </div>
 
             <div className="text-center">
-             <button type="submit" className="btn btn-dark w-75 m-5">Submit</button>
+             <button type="submit" className="btn btn-dark w-75  my-4 mx-5">Submit</button>
             </div>
 
             <div className=' text-center'>
@@ -142,6 +153,7 @@ function Login(){
         </Col>
       </Row>
     </Container>
+</div>
   )
 }
 

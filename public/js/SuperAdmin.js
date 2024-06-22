@@ -6918,13 +6918,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _cropdata__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cropdata */ "./resources/js/components/cropdata.js");
-/* harmony import */ var _ExpenseComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ExpenseComponent */ "./resources/js/components/ExpenseComponent.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _citydata__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./citydata */ "./resources/js/components/citydata.js");
+/* harmony import */ var _ExpenseComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ExpenseComponent */ "./resources/js/components/ExpenseComponent.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -6945,12 +6946,12 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-
+ // Import an array of crop data with names and image paths
  // Import an array of crop data with names and image paths
 
 
 var CreateFarm = function CreateFarm() {
-  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useLocation)();
+  var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useLocation)();
   var _ref = location.state || {},
     request = _ref.request;
   console.log(request);
@@ -6997,27 +6998,31 @@ var CreateFarm = function CreateFarm() {
   };
   switch (stage) {
     case 1:
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(InitialDetails, {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(InitialDetails, {
+        request: request,
         onSubmit: handleInitialDetailsSubmit
       });
     case 2:
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(CropDetails, {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(CropDetails, {
         initialValues: initialDetails,
         onSubmit: handleCropDetailsSubmit,
         prevStage: prevStage
       });
     case 3:
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_ExpenseComponent__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ExpenseComponent__WEBPACK_IMPORTED_MODULE_3__["default"], {
         initialValues: cropDetails,
         onSubmit: handleExpenseDetailsSubmit,
         prevStage: prevStage
       });
-    // default:
-    //     return <div>Error: Invalid stage</div>;
+    default:
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        children: "Error: Invalid stage"
+      });
   }
 };
 var InitialDetails = function InitialDetails(_ref2) {
-  var onSubmit = _ref2.onSubmit;
+  var request = _ref2.request,
+    onSubmit = _ref2.onSubmit;
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       farmName: '',
       location: '',
@@ -7033,168 +7038,218 @@ var InitialDetails = function InitialDetails(_ref2) {
   var handleChange = function handleChange(e) {
     setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.name, e.target.value)));
   };
+  var isValid = function isValid() {
+    return data.farmName && data.location && data.area && data.address && data.sowingMonth && data.harvestMonth;
+  };
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(data);
+    if (isValid()) {
+      onSubmit(data);
+    } else {
+      alert("Please fill in all fields.");
+    }
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
       className: "p-3 mt-3 section ",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
           className: "text-center mb-1",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h4", {
             children: "Create Farm"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("form", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("form", {
           onSubmit: handleSubmit,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "container px-3",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "row px-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "my-4 px-5",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "progress",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                    className: "progress-bar progress-bar-striped active",
+                    role: "progressbar",
+                    "aria-valuenow": "33",
+                    "aria-valuemin": "0",
+                    "aria-valuemax": "100",
+                    style: {
+                      width: "33%"
+                    },
+                    children: "33%"
+                  })
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "col-md-6",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: " p-3 mb-3",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "box-cont",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                       className: "text-center",
                       children: "Request Status"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "d-flex justify-content-between light pt-3 px-4",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                         className: "",
                         children: "Request ID"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                         className: "",
                         children: "KS3240234"
                       })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "d-flex justify-content-between light px-4",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
                         className: "",
                         children: ["Farmer", " "]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                         className: "",
-                        children: "Ali Hassan"
+                        children: request.name
                       })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "d-flex justify-content-between light px-4",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                         className: "",
                         children: "Date"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                         className: "",
-                        children: "20-02-24"
+                        children: request.date
                       })]
                     })]
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                   className: "",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "labelcontainer",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                       className: "",
                       children: "Farm Name"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                       type: "text",
                       className: "form-control ml-3",
-                      value: data.farmName
+                      name: "farmName",
+                      value: data.farmName,
+                      onChange: handleChange
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "labelcontainer",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                       className: "",
                       children: "City"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      type: "text",
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
                       className: "form-control ml-3",
-                      value: data.location
+                      name: "location",
+                      value: data.location,
+                      onChange: handleChange,
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                        value: "",
+                        children: "Select City"
+                      }), _citydata__WEBPACK_IMPORTED_MODULE_2__["default"].map(function (city, index) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                          value: city,
+                          children: city
+                        }, index);
+                      })]
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "labelcontainer",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                       className: "",
                       children: "Area"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                       type: "text",
                       className: "form-control ml-3",
-                      value: data.area
+                      name: "area",
+                      value: data.area,
+                      onChange: handleChange
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "labelcontainer mb-3",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                       className: "",
                       children: "Address"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                       type: "text",
                       className: "form-control ml-3",
-                      value: data.address
+                      name: "address",
+                      value: data.address,
+                      onChange: handleChange
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: "text-center mb-2 light",
                     children: "Configure Date"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "labelcontainer",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                       className: "",
                       children: "Year"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("select", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("select", {
                       className: "form-control ml-3",
+                      name: "farmDate",
                       value: data.farmDate,
                       onChange: handleChange,
-                      name: "farmDate",
                       children: Array.from({
                         length: new Date().getFullYear() - 1970 + 1
                       }, function (_, i) {
                         return 1970 + i;
                       }).map(function (year) {
-                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                           value: year,
                           children: year
                         }, year);
                       })
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "labelcontainer",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                       className: "",
                       children: "Sowing Month"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: handleChange,
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                       type: "month",
-                      className: "form-control ml-3"
+                      className: "form-control ml-3",
+                      name: "sowingMonth",
+                      value: data.sowingMonth,
+                      onChange: handleChange
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "labelcontainer",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
                       className: "",
                       children: "Harvest Month"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: handleChange,
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                       type: "month",
-                      className: "form-control ml-3"
+                      className: "form-control ml-3",
+                      name: "harvestMonth",
+                      value: data.harvestMonth,
+                      onChange: handleChange
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: "text-center mt-3 ",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                       className: "btn text-light btn-brown",
                       type: "submit",
                       children: "Next"
                     })
                   })]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "col-md-6 p-3  mb-3",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                   className: "box-cont ",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: "text-center",
                     children: "Request"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: "overflow-y text-justify mt-4 light pt-3 px-4",
-                    children: "Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut laboreet dolore magna aliqua. Sed tempor incididunt ut laboreet dolore magna aliqua. Sed tempor incididunt ut laboreet dolore magna aliqua. Sed tempor incididunt ut laboreet dolore magna aliqua. Sed tempor incididunt ut laboreet dolore magna aliqua. Sed"
+                    children: request ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+                        children: request.desc
+                      })
+                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      className: "text-center",
+                      children: "No request data found"
+                    })
                   })]
                 })
               })]
@@ -7205,111 +7260,17 @@ var InitialDetails = function InitialDetails(_ref2) {
     })
   });
 };
-var CropDestails = function CropDestails(_ref3) {
-  var title = _ref3.title,
-    initialEntries = _ref3.initialEntries,
-    onEntriesChange = _ref3.onEntriesChange;
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState12 = _slicedToArray(_useState11, 2),
-    entryName = _useState12[0],
-    setEntryName = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialEntries),
-    _useState14 = _slicedToArray(_useState13, 2),
-    entries = _useState14[0],
-    setEntries = _useState14[1];
-  var handleInputChange = function handleInputChange(e) {
-    setEntryName(e.target.value);
-  };
-  var handleAddEntry = function handleAddEntry(e) {
-    e.preventDefault();
-    if (entryName.trim() !== "") {
-      var updatedEntries = [].concat(_toConsumableArray(entries), [entryName]);
-      setEntries(updatedEntries);
-      setEntryName("");
-      onEntriesChange(updatedEntries); // Save selected crops to shared state
-    }
-  };
-  var handleDeleteEntry = function handleDeleteEntry(indexToRemove) {
-    var updatedEntries = entries.filter(function (_, index) {
-      return index !== indexToRemove;
-    });
-    setEntries(updatedEntries);
-    onEntriesChange(updatedEntries); // Update selected crops in shared state
-  };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    className: "row px-3 mt-3",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      className: "box-cont p-3",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "text-center",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("h5", {
-          children: ["Add ", title]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "row",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "col-md-6",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "mt-4 labelcontainer",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-              className: "w-50",
-              children: [title, " Name"]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              type: "text",
-              className: "form-control ml-3",
-              value: entryName,
-              onChange: handleInputChange
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "mt-3 text-end mx-1",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-              type: "button",
-              className: "btn text-light btn-brown",
-              onClick: handleAddEntry,
-              children: "Add"
-            })
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "col-md-6 p-3",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "box-cont",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-              className: "text-center",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("h5", {
-                children: ["Added ", title, "s"]
-              })
-            }), entries.map(function (entry, index) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "addedcrops  px-3",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  children: entry
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                  type: "button",
-                  className: "btn cross",
-                  onClick: function onClick() {
-                    return handleDeleteEntry(index);
-                  },
-                  children: "\xD7"
-                })]
-              }, index);
-            })]
-          })
-        })]
-      })]
-    })
-  });
-};
-var CropDetails = function CropDetails(_ref4) {
-  var initialValues = _ref4.initialValues,
-    onSubmit = _ref4.onSubmit,
-    prevStage = _ref4.prevStage;
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_objectSpread(_objectSpread({}, initialValues), {}, {
+var CropDetails = function CropDetails(_ref3) {
+  var initialValues = _ref3.initialValues,
+    onSubmit = _ref3.onSubmit,
+    prevStage = _ref3.prevStage;
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_objectSpread(_objectSpread({}, initialValues), {}, {
       crops: []
     })),
-    _useState16 = _slicedToArray(_useState15, 2),
-    data = _useState16[0],
-    setData = _useState16[1];
-  var popularCrops = _cropdata__WEBPACK_IMPORTED_MODULE_1__["default"].slice(0, 6);
+    _useState12 = _slicedToArray(_useState11, 2),
+    data = _useState12[0],
+    setData = _useState12[1];
+  var popularCrops = _cropdata__WEBPACK_IMPORTED_MODULE_1__["default"].slice(0, 4);
   var handleSelectCrop = function handleSelectCrop(crop) {
     // check if crop already exists
     if (data.crops.some(function (c) {
@@ -7325,69 +7286,65 @@ var CropDetails = function CropDetails(_ref4) {
   };
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(data);
+    if (data.crops.length > 0) {
+      onSubmit(data);
+    } else {
+      alert("Please add at least one crop.");
+    }
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("form", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("form", {
     onSubmit: handleSubmit,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "container",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "row",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "col-md-10 p-4 offset-md-1",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "my-3 text-center",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-              children: "Select Crops"
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "row px-3",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "my-3 text-center",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+            children: "Select Crops"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "my-4 px-5",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "progress",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "progress-bar progress-bar-striped active",
+              role: "progressbar",
+              "aria-valuenow": "66",
+              "aria-valuemin": "0",
+              "aria-valuemax": "100",
+              style: {
+                width: "66%"
+              },
+              children: "66%"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(CropDropdown, {
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "col-md-9 p-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(CropDropdown, {
             onSelectCrop: handleSelectCrop
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "box-cont my-4 p-3",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-              className: "light",
-              children: "Popular Crops"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-              className: "",
-              children: popularCrops.map(function (crop, index) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "popular-crop",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "mx-3",
-                    children: crop.name
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                    className: "btn cross",
-                    onClick: function onClick() {
-                      return handleSelectCrop(crop);
-                    },
-                    type: "button",
-                    children: "+"
-                  })]
-                }, index);
-              })
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "box-cont container selected-crops my-4 p-3",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "row",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
                 className: "light",
                 children: "Selected Crops"
               }), data.crops.map(function (crop, index) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "col-md-4 my-2",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "selected-crop",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                       src: crop.image,
                       alt: crop.name,
                       className: "selected-crop-image"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "d-flex justify-content-between",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                         className: "mx-2",
                         children: crop.name
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                         className: "cross btn",
                         type: "button",
                         onClick: function onClick() {
@@ -7406,36 +7363,59 @@ var CropDetails = function CropDetails(_ref4) {
                 }, index);
               })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
             className: "d-flex my-3 justify-content-center align-items-center",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
               className: "mx-2 btn btn-brown text-light",
               type: "button",
               onClick: prevStage,
               children: "Back"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
               className: "mx-2 btn btn-brown text-light",
               type: "submit",
               children: "Next"
             })]
           })]
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "col-md-3  my-4 p-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            className: "light",
+            children: "Popular Crops"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "",
+            children: popularCrops.map(function (crop, index) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "popular-crop",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "mx-3",
+                  children: crop.name
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  className: "btn cross",
+                  onClick: function onClick() {
+                    return handleSelectCrop(crop);
+                  },
+                  type: "button",
+                  children: "+"
+                })]
+              }, index);
+            })
+          })]
+        })]
       })
     })
   });
 };
-var CropDropdown = function CropDropdown(_ref5) {
-  var onSelectCrop = _ref5.onSelectCrop;
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState18 = _slicedToArray(_useState17, 2),
-    searchTerm = _useState18[0],
-    setSearchTerm = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_cropdata__WEBPACK_IMPORTED_MODULE_1__["default"]),
-    _useState20 = _slicedToArray(_useState19, 2),
-    filteredCrops = _useState20[0],
-    setFilteredCrops = _useState20[1];
-  // outpit the filtered crops
-
+var CropDropdown = function CropDropdown(_ref4) {
+  var onSelectCrop = _ref4.onSelectCrop;
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState14 = _slicedToArray(_useState13, 2),
+    searchTerm = _useState14[0],
+    setSearchTerm = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_cropdata__WEBPACK_IMPORTED_MODULE_1__["default"]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    filteredCrops = _useState16[0],
+    setFilteredCrops = _useState16[1];
+  var dropdownRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var handleChange = function handleChange(e) {
     var term = e.target.value;
     setSearchTerm(term);
@@ -7452,27 +7432,40 @@ var CropDropdown = function CropDropdown(_ref5) {
     setSearchTerm('');
     setFilteredCrops(_cropdata__WEBPACK_IMPORTED_MODULE_1__["default"]);
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+  var handleClickOutside = function handleClickOutside(event) {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setSearchTerm('');
+      setFilteredCrops(_cropdata__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    document.addEventListener('mousedown', handleClickOutside);
+    return function () {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     className: "dropdown",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-      className: "form-control ",
+    ref: dropdownRef,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+      className: "form-control",
       type: "text",
       value: searchTerm,
       onChange: handleChange,
       placeholder: "Type to search crops..."
-    }), searchTerm.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    }), searchTerm.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "dropdown-box",
       children: filteredCrops.map(function (crop) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "dd-item",
           onClick: function onClick() {
             return handleSelectCrop(crop);
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
             src: crop.image,
             alt: crop.name,
             className: "crop-image"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
             className: "mx-4",
             children: crop.name
           })]
@@ -7497,7 +7490,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _RequestModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RequestModal */ "./resources/js/components/RequestModal.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7515,6 +7509,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
+ // Adjust the import path as needed
 
 var predefinedExpenses = ['Labour', 'Machine', 'Fertilizer', 'Seed', 'Fuel', 'Electricity', 'Pesticides', 'Travels', 'Miscellaneous'];
 var ExpenseDetails = function ExpenseDetails(_ref) {
@@ -7527,14 +7522,26 @@ var ExpenseDetails = function ExpenseDetails(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     data = _useState2[0],
     setData = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState4 = _slicedToArray(_useState3, 2),
-    selectedCrop = _useState4[0],
-    setSelectedCrop = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    newExpense = _useState4[0],
+    setNewExpense = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState6 = _slicedToArray(_useState5, 2),
-    selectedExpense = _useState6[0],
-    setSelectedExpense = _useState6[1];
+    showInput = _useState6[0],
+    setShowInput = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    showModal = _useState8[0],
+    setShowModal = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      crop: '',
+      index: -1,
+      name: ''
+    }),
+    _useState10 = _slicedToArray(_useState9, 2),
+    expenseToDelete = _useState10[0],
+    setExpenseToDelete = _useState10[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var initialCropExpenses = {};
     initialValues.crops.forEach(function (crop) {
@@ -7546,147 +7553,185 @@ var ExpenseDetails = function ExpenseDetails(_ref) {
       });
     });
   }, [initialValues.crops]);
-  var handleCropChange = function handleCropChange(e) {
-    setSelectedCrop(e.target.value);
+  var handleNewExpenseChange = function handleNewExpenseChange(e, crop) {
+    setNewExpense(_objectSpread(_objectSpread({}, newExpense), {}, _defineProperty({}, crop, e.target.value)));
   };
-  var handleSelectExpense = function handleSelectExpense(e) {
-    var expense = e.target.value;
-    if (expense.trim() !== '') {
-      var updatedExpenses = _objectSpread({}, data.cropExpenses);
-      if (selectedCrop === 'All crops') {
-        initialValues.crops.forEach(function (crop) {
-          if (!updatedExpenses[crop.name].includes(expense)) {
-            updatedExpenses[crop.name] = [].concat(_toConsumableArray(updatedExpenses[crop.name]), [expense]);
-          }
-        });
-      } else if (selectedCrop !== '') {
-        if (!updatedExpenses[selectedCrop].includes(expense)) {
-          updatedExpenses[selectedCrop] = [].concat(_toConsumableArray(updatedExpenses[selectedCrop]), [expense]);
-        }
+  var isDuplicateExpense = function isDuplicateExpense(expense, crop) {
+    return data.cropExpenses[crop].some(function (existingExpense) {
+      return existingExpense.toLowerCase() === expense.toLowerCase();
+    });
+  };
+  var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+  var isEntirelyNumber = function isEntirelyNumber(string) {
+    return /^\d+$/.test(string);
+  };
+  var handleAddExpense = function handleAddExpense(crop) {
+    var expense = newExpense[crop];
+    if (expense && expense.trim() !== '') {
+      expense = capitalizeFirstLetter(expense.trim());
+      if (isEntirelyNumber(expense)) {
+        alert("Expense cannot be entirely a number.");
+        return;
+      }
+      if (isDuplicateExpense(expense, crop)) {
+        alert("Expense already exists.");
+        return;
       }
       setData(function (prevData) {
+        var updatedExpenses = _objectSpread({}, prevData.cropExpenses);
+        updatedExpenses[crop] = [].concat(_toConsumableArray(updatedExpenses[crop]), [expense]);
         return _objectSpread(_objectSpread({}, prevData), {}, {
           cropExpenses: updatedExpenses
         });
       });
+      setNewExpense(_objectSpread(_objectSpread({}, newExpense), {}, _defineProperty({}, crop, '')));
+      setShowInput(_objectSpread(_objectSpread({}, showInput), {}, _defineProperty({}, crop, false)));
     }
   };
-  var handleDeleteEntry = function handleDeleteEntry(indexToRemove, crop) {
-    var updatedExpenses = data.cropExpenses[crop].filter(function (_, index) {
-      return index !== indexToRemove;
+  var handleDeleteEntry = function handleDeleteEntry() {
+    var crop = expenseToDelete.crop,
+      index = expenseToDelete.index;
+    var updatedExpenses = data.cropExpenses[crop].filter(function (_, idx) {
+      return idx !== index;
     });
     setData(function (prevData) {
       return _objectSpread(_objectSpread({}, prevData), {}, {
         cropExpenses: _objectSpread(_objectSpread({}, prevData.cropExpenses), {}, _defineProperty({}, crop, updatedExpenses))
       });
     });
+    setShowModal(false);
+  };
+  var toggleInput = function toggleInput(crop) {
+    setShowInput(function (prevState) {
+      return _objectSpread(_objectSpread({}, prevState), {}, _defineProperty({}, crop, !prevState[crop]));
+    });
   };
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
     onSubmit(data);
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
-    onSubmit: handleSubmit,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "row px-3 mt-3",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-        className: " p-3",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-          className: "text-center",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h5", {
-            children: "Add Expenses"
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-          className: "row",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-            className: "col-md-6",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-              className: "mt-4 labelcontainer",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
-                className: "w-50",
-                children: "Select Crop"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("select", {
-                className: "form-control ml-3",
-                value: selectedCrop,
-                onChange: handleCropChange,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
-                  value: "",
-                  children: "Select a crop"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
-                  value: "All crops",
-                  children: "All crops"
-                }), initialValues.crops.map(function (crop, index) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
-                    value: crop.name,
-                    children: crop.name
-                  }, index);
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-              className: "mt-4 labelcontainer",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
-                className: "w-50 ml-2",
-                children: "Expenses"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("select", {
-                className: "form-control",
-                value: selectedExpense,
-                onChange: handleSelectExpense,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
-                  value: "",
-                  children: "Select an expense"
-                }), predefinedExpenses.map(function (expense, index) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
-                    value: expense,
-                    children: expense
-                  }, index);
-                })]
-              })]
-            })]
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-          className: "row mt-3",
-          children: initialValues.crops.map(function (crop, index) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-              className: "col-md-6 p-3 mb-3",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-                className: "box-cont p-3",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-                  className: "text-center ",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("h5", {
-                    children: ["Expenses for ", crop.name]
-                  })
-                }), data.cropExpenses[crop.name] && data.cropExpenses[crop.name].map(function (expense, idx) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-                    className: "addedcrops px-3",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-                      children: expense
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
-                      type: "button",
-                      className: "btn cross",
-                      onClick: function onClick() {
-                        return handleDeleteEntry(idx, crop.name);
-                      },
-                      children: "\xD7"
-                    })]
-                  }, idx);
-                })]
+  var confirmDelete = function confirmDelete(crop, index) {
+    setExpenseToDelete({
+      crop: crop,
+      index: index,
+      name: data.cropExpenses[crop][index]
+    });
+    setShowModal(true);
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+      onSubmit: handleSubmit,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "row px-3 mt-3",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: " p-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "text-center",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
+              children: "Expenses Details"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "my-4 px-5",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "progress",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "progress-bar progress-bar-striped active",
+                role: "progressbar",
+                "aria-valuenow": "100",
+                "aria-valuemin": "0",
+                "aria-valuemax": "100",
+                style: {
+                  width: "100%"
+                },
+                children: "100%"
               })
-            }, index);
-          })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "row mt-3",
+            children: initialValues.crops.map(function (crop, index) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "col-md-6 p-3 mb-3",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "box-cont p-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    className: "text-center ",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h5", {
+                      children: ["Expenses for ", crop.name]
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    className: "display-block",
+                    children: showInput[crop.name] ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                      className: "my-3 mx-2 d-flex justify-content-center",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+                        type: "text",
+                        className: "form-control",
+                        value: newExpense[crop.name] || '',
+                        onChange: function onChange(e) {
+                          return handleNewExpenseChange(e, crop.name);
+                        },
+                        placeholder: "Add new expense"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                        type: "button",
+                        className: "plusBtn",
+                        onClick: function onClick() {
+                          return handleAddExpense(crop.name);
+                        },
+                        children: "\u2714"
+                      })]
+                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                      type: "button",
+                      className: "plusBtn my-3",
+                      onClick: function onClick() {
+                        return toggleInput(crop.name);
+                      },
+                      children: "+"
+                    })
+                  }), data.cropExpenses[crop.name] && data.cropExpenses[crop.name].map(function (expense, idx) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                      className: "addedcrops px-3 max-width",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                        className: "wordbreak",
+                        children: expense
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                        type: "button",
+                        className: "btn cross",
+                        onClick: function onClick() {
+                          return confirmDelete(crop.name, idx);
+                        },
+                        children: "\xD7"
+                      })]
+                    }, idx);
+                  })]
+                })
+              }, index);
+            })
+          })]
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "d-flex my-3 justify-content-center align-items-center",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "mx-2 btn btn-brown text-light",
+          type: "button",
+          onClick: prevStage,
+          children: "Back"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "mx-2 btn btn-brown text-light",
+          type: "submit",
+          children: "Submit"
         })]
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-      className: "d-flex my-3 justify-content-center align-items-center",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
-        className: "mx-2 btn btn-brown text-light",
-        type: "button",
-        onClick: prevStage,
-        children: "Back"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
-        className: "mx-2 btn btn-brown text-light",
-        type: "submit",
-        children: "Submit"
       })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_RequestModal__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      show: showModal,
+      onHide: function onHide() {
+        return setShowModal(false);
+      },
+      onConfirm: handleDeleteEntry,
+      confirmMessage: "Are you sure you want to delete this expense",
+      modalType: "delete",
+      cropName: expenseToDelete.crop,
+      expenseName: expenseToDelete.name
     })]
   });
 };
@@ -7850,7 +7895,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap/Container */ "./node_modules/react-bootstrap/esm/Container.js");
 /* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
 /* harmony import */ var react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap/Navbar */ "./node_modules/react-bootstrap/esm/Navbar.js");
@@ -7879,24 +7923,21 @@ function NavBar() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"], {
           className: "ms-auto",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "/",
             children: "Home"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "#home",
             children: "About"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "#link",
             children: "Services"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_3__["default"].Link, {
-            className: "navlink",
+            className: "mx-2 navlink",
             href: "#link",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
-              className: "btn btn-dark contact",
-              children: "Contact"
-            })
+            children: "Contact"
           })]
         })
       })]
@@ -7929,7 +7970,12 @@ __webpack_require__.r(__webpack_exports__);
 var RequestModal = function RequestModal(_ref) {
   var show = _ref.show,
     onHide = _ref.onHide,
-    request = _ref.request;
+    request = _ref.request,
+    onConfirm = _ref.onConfirm,
+    confirmMessage = _ref.confirmMessage,
+    modalType = _ref.modalType,
+    cropName = _ref.cropName,
+    expenseName = _ref.expenseName;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   var handleCreateFarm = function handleCreateFarm() {
     navigate('/superadmin/createfarm', {
@@ -7938,37 +7984,52 @@ var RequestModal = function RequestModal(_ref) {
       }
     });
   };
+  var handleConfirm = function handleConfirm() {
+    if (modalType === 'delete') {
+      onConfirm();
+    } else {
+      handleCreateFarm();
+    }
+  };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
     show: show,
     onHide: onHide,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Header, {
       closeButton: true,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Title, {
-        children: "Request Details"
+        children: modalType === 'delete' ? 'Confirm Delete' : 'Request Details'
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Body, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
-          children: "Name:"
-        }), " ", request.name]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
-          children: "Date:"
-        }), " ", request.date]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
-          children: "Description:"
-        }), " ", request.desc]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
-          children: "Status:"
-        }), " ", request.status.charAt(0).toUpperCase() + request.status.slice(1)]
-      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Body, {
+      children: modalType === 'delete' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
+        children: [confirmMessage, " for ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+          children: expenseName
+        }), " in ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+          children: cropName
+        }), "?"]
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+            children: "Name:"
+          }), " ", request.name]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+            children: "Date:"
+          }), " ", request.date]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+            children: "Description:"
+          }), " ", request.desc]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+            children: "Status:"
+          }), " ", request.status.charAt(0).toUpperCase() + request.status.slice(1)]
+        })]
+      })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Footer, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
         className: "text-light btn-brown",
-        onClick: handleCreateFarm,
-        children: "Create Farm"
+        onClick: handleConfirm,
+        children: modalType === 'delete' ? 'Delete' : 'Create Farm'
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
         className: "text-light btn-brown",
         onClick: onHide,
@@ -8138,8 +8199,28 @@ function RequestComponent() {
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-md-3 py-4 text-center",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-                    children: request.status.charAt(0).toUpperCase() + request.status.slice(1)
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                    className: "d-flex justify-content-center",
+                    children: [request.status === 'pending' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("svg", {
+                      className: "mb-3 mx-2",
+                      xmlns: "http://www.w3.org/2000/svg",
+                      id: "Layer_1",
+                      "data-name": "Layer 1",
+                      viewBox: "0 0 24 24",
+                      width: "512",
+                      height: "512",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+                        d: "M12,24C5.383,24,0,18.617,0,12S5.383,0,12,0s12,5.383,12,12-5.383,12-12,12Zm0-22C6.486,2,2,6.486,2,12s4.486,10,10,10,10-4.486,10-10S17.514,2,12,2Zm5,10c0-.553-.447-1-1-1h-3V6c0-.553-.448-1-1-1s-1,.447-1,1v6c0,.553,.448,1,1,1h4c.553,0,1-.447,1-1Z"
+                      })
+                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                      className: "mx-2",
+                      style: {
+                        color: "brown"
+                      },
+                      children: "\u2714"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                      children: request.status.charAt(0).toUpperCase() + request.status.slice(1)
+                    })]
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
                     type: "button",
                     className: "btn text-light btn-brown",
@@ -8191,11 +8272,6 @@ function Sidebar() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
           to: "/superadmin/home",
           children: "Home"
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("li", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-          to: "/superadmin/createfarm",
-          children: "Create Farm"
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("li", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
@@ -8272,13 +8348,13 @@ function SuperAdmin() {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
               className: "row",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-                className: "col-md-3 mt-3 sidebarcol",
+                className: "col-md-2 mt-3 sidebarcol",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {})
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-                className: "col-md-9 ",
+                className: "col-md-10 ",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-                    path: "/superadmin/home",
+                    path: "/superadmin/",
                     element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(SuperAdminHome, {})
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
                     path: "/superadmin/createfarm",
@@ -8307,7 +8383,7 @@ var SuperAdminHome = function SuperAdminHome() {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
               className: "col-md-12 my-3",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-                className: "box-cont",
+                className: "text-center",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h2", {
                   className: "mx-4",
                   children: "Welcome Hassan!"
@@ -8324,6 +8400,22 @@ var SuperAdminHome = function SuperAdminHome() {
 if (document.getElementById('SuperAdmin')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(SuperAdmin, {}), document.getElementById('SuperAdmin'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/citydata.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/citydata.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var citydata = ["Abbottabad", "Adilpur", "Ahmadpur Sial", "Ahmedpur East", "Akora", "Alik Ghund", "Alipur Chatha", "Alizai", "Aman Garh", "Amirabad", "Arifwala", "Ashanagro Koto", "Attock Tehsil", "Awārān District", "Baddomalhi", "Badin", "Baffa", "Bagarji", "Bahawalnagar", "Bahawalpur", "Bakhri Ahmad Khan", "Bandhi", "Bannu", "Barishal", "Barkhan", "Basirpur", "Basti Dosa", "Bat Khela", "Battagram", "Battagram District", "Begowala", "Bela", "Berani", "Bhag", "Bhakkar", "Bhalwal", "Bhan", "Bhawana", "Bhera", "Bhimbar", "Bhiria", "Bhit Shah", "Bhopalwala", "Bozdar Wada", "Bulri", "Buner District", "Burewala", "Bārkhān District", "Chak", "Chak Azam Saffo", "Chak Jhumra", "Chak One Hundred Twenty Nine Left", "Chak Thirty-one -Eleven Left", "Chak Two Hundred Forty-Nine TDA", "Chakwal", "Chaman", "Chamber", "Charsadda", "Chawinda", "Cherat Cantonement", "Chhor", "Chichawatni", "Chiniot", "Chishtian", "Chitral", "Choa Saidanshah", "Chowki Jamali", "Chuhar Jamali", "Chuhar Kana", "Chunian", "Chāgai District", "Dadhar", "Dadu", "Daira Din Panah", "Dajal", "Dalbandin", "Dandot RS", "Daromehar", "Darya Khan", "Darya Khan Marri", "Daska", "Daud Khel", "Daulatpur", "Daultala", "Daur", "Dera Bugti", "Dera Bugti District", "Dera Ghazi Khan", "Dera Ismail Khan", "Dera Ismāīl Khān District", "Dhanot", "Dhaunkal", "Dhok Awan", "Dhoro Naro", "Digri", "Dijkot", "Dinan Bashnoian Wala", "Dinga", "Dipalpur", "Diplo", "Doaba", "Dokri", "Duki", "Dullewala", "Dunga Bunga", "Dunyapur", "Eminabad", "Faisalabad", "Faqirwali", "Faruka", "Fazilpur", "Ferozewala", "Fort Abbas", "Gadani", "Gambat", "Garh Maharaja", "Garhi Khairo", "Garhiyasin", "Gharo", "Ghauspur", "Ghotki", "Gilgit", "Gojra", "Goth Garelo", "Goth Phulji", "Goth Radhan", "Gujar Khan", "Gujranwala", "Gujranwala Division", "Gujrat", "Gulishah Kach", "Gwadar", "Hadali", "Hafizabad", "Hala", "Hangu", "Haripur", "Harnai", "Harnoli", "Harunabad", "Hasan Abdal", "Hasilpur", "Haveli Lakha", "Havelian", "Hazro", "Hingorja", "Hujra Shah Muqeem", "Hyderabad", "Islamabad", "Islamkot", "Jacobabad", "Jahanian Shah", "Jalalpur Jattan", "Jalalpur Pirwala", "Jampur", "Jamshoro", "Jand", "Jandiala Sher Khan", "Jaranwala", "Jati", "Jatoi Shimali", "Jauharabad", "Jhal Magsi District", "Jhang", "Jhang Sadar", "Jhawarian", "Jhelum", "Jhol", "Jiwani", "Johi", "Jāfarābād District", "Jām Sāhib", "Kabirwala", "Kadhan", "Kahna Nau", "Kahuta", "Kakad Wari Dir Upper", "Kalabagh", "Kalaswala", "Kalat", "Kaleke Mandi", "Kallar Kahar", "Kalur Kot", "Kalāt District", "Kamalia", "Kamar Mushani", "Kambar", "Kamoke", "Kamra", "Kandhkot", "Kandiari", "Kandiaro", "Kanganpur", "Karachi", "Karak", "Karaundi", "Kario Ghanwar", "Karor", "Kashmor", "Kasur", "Keshupur", "Keti Bandar", "Khadan Khak", "Khadro", "Khairpur", "Khairpur Mir’s", "Khairpur Nathan Shah", "Khairpur Tamiwali", "Khalabat", "Khandowa", "Khanewal", "Khanga Dogran", "Khangarh", "Khanpur", "Khanpur Mahar", "Kharan", "Kharian", "Khewra", "Khurrianwala", "Khushab", "Khuzdar", "Khuzdār District", "Khārān District", "Kohat", "Kohlu", "Kohror Pakka", "Kot Addu Tehsil", "Kot Diji", "Kot Ghulam Muhammad", "Kot Malik Barkhurdar", "Kot Mumin", "Kot Radha Kishan", "Kot Rajkour", "Kot Samaba", "Kot Sultan", "Kotli", "Kotli District", "Kotli Loharan", "Kotri", "Kulachi", "Kundian", "Kunjah", "Kunri", "Lachi", "Ladhewala Waraich", "Lahore", "Lakhi", "Lakki", "Lala Musa", "Lalian", "Landi Kotal", "Larkana", "Lasbela District", "Layyah", "Layyah District", "Liliani", "Lodhran", "Loralai", "Loralai District", "Mach", "Madeji", "Mailsi", "Malakwal", "Malakwal City", "Malir Cantonment", "Mamu Kanjan", "Mananwala", "Mandi Bahauddin", "Mandi Bahauddin District", "Mangla", "Mankera", "Mansehra", "Mardan", "Mastung", "Mastung District", "Matiari", "Matli", "Mehar", "Mehmand Chak", "Mehrabpur", "Mian Channun", "Mianke Mor", "Mianwali", "Minchinabad", "Mingora", "Miran Shah", "Miro Khan", "Mirpur Bhtoro", "Mirpur District", "Mirpur Khas", "Mirpur Mathelo", "Mirpur Sakro", "Mirwah Gorchani", "Mitha Tiwana", "Mithi", "Moro", "Moza Shahwala", "Multan", "Multan District", "Muridke", "Murree", "Mustafabad", "Muzaffargarh", "Muzaffarābād", "Mūsa Khel District", "Nabisar", "Nankana Sahib", "Narang Mandi", "Narowal", "Nasirabad", "Nasīrābād District", "Naudero", "Naukot", "Naushahra Virkan", "Naushahro Firoz", "Nawabshah", "Nazir Town", "New Bādāh", "New Mirpur", "Noorabad", "North Wazīristān Agency", "Nowshera", "Nowshera Cantonment", "Nushki", "Okara", "Ormara", "Pabbi", "Pad Idan", "Paharpur", "Pakki Shagwanwali", "Pakpattan", "Panjgūr District", "Pano Aqil", "Pasni", "Pasrur", "Pattoki", "Peshawar", "Phalia", "Pind Dadan Khan", "Pindi Bhattian", "Pindi Gheb", "Pir Jo Goth", "Pir Mahal", "Pishin", "Pithoro", "Qadirpur Ran", "Qila Didar Singh", "Qila Saifullāh District", "Quetta", "Quetta District", "Rabwah", "Rahim Yar Khan", "Rahimyar Khan District", "Raiwind", "Raja Jang", "Rajanpur", "Rajo Khanani", "Ranipur", "Rasulnagar", "Ratodero", "Rawala Kot", "Rawalpindi", "Rawalpindi District", "Renala Khurd", "Risalpur Cantonment", "Rohri", "Rojhan", "Rustam", "Sadiqabad", "Sahiwal", "Sakrand", "Samaro", "Sambrial", "Sanghar", "Sangla Hill", "Sanjwal", "Sann", "Sarai Alamgir", "Sarai Naurang", "Sarai Sidhu", "Sargodha", "Sehwan", "Setharja Old", "Shabqadar", "Shahdad Kot", "Shahdadpur", "Shahkot Tehsil", "Shahpur", "Shahpur Chakar", "Shahr Sultan", "Shakargarh", "Sharqpur", "Sheikhupura", "Shikarpur", "Shingli Bala", "Shinpokh", "Shorkot", "Shorkot", "Shujaabad", "Sialkot", "Sibi", "Sillanwali", "Sinjhoro", "Skardu", "Sobhodero", "Sodhra", "Sohbatpur", "South Wazīristān Agency", "Sukheke Mandi", "Sukkur", "Surab", "Surkhpur", "Swabi", "Sīta Road", "Talagang", "Talamba", "Talhar", "Tandlianwala", "Tando Adam", "Tando Allahyar", "Tando Bago", "Tando Jam", "Tando Mitha Khan", "Tando Muhammad Khan", "Tangi", "Tangwani", "Tank", "Taunsa", "Thal", "Tharu Shah", "Thatta", "Thul", "Toba Tek Singh", "Topi", "Turbat", "Ubauro", "Umarkot", "Umerkot", "Umerkot District", "Upper Dir", "Usta Muhammad", "Uthal", "Utmanzai", "Vihari", "Wah", "Wana", "Warah", "Warburton", "Wazirabad", "West Punjab", "Yazman", "Zafarwal", "Zahir Pir", "Zaida", "Zhob", "Zhob District", "Ziarat", "Ziārat District"];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (citydata);
 
 /***/ }),
 
@@ -8352,25 +8444,25 @@ var crops = [{
   image: '/images/crops/Arum.jpg'
 }, {
   name: 'Bajra',
-  image: '/images/crops/bajra.jpg'
+  image: '/images/crops/Bajra.jpg'
 }, {
   name: 'Banana',
   image: '/images/crops/Banana.jpg'
 }, {
   name: 'Barley',
-  image: '/images/crops/barley.jpg'
+  image: '/images/crops/Barley.jpg'
 }, {
   name: 'Beetroot',
-  image: '/images/crops/beetroot.jpg'
+  image: '/images/crops/Beetroot.jpg'
 }, {
   name: 'Ber',
   image: '/images/crops/Ber.jpg'
 }, {
   name: 'Bitter gourd',
-  image: '/images/crops/Bitter Gourd.jpg'
+  image: '/images/crops/Bitter gourd.jpg'
 }, {
   name: 'Bottle gourd',
-  image: '/images/crops/Bottle Gourd.jpg'
+  image: '/images/crops/Bottle gourd.jpg'
 }, {
   name: 'Brinjal',
   image: '/images/crops/Brinjal.jpg'
@@ -8379,7 +8471,7 @@ var crops = [{
   image: '/images/crops/Cabbage.jpg'
 }, {
   name: 'Carrot',
-  image: '/images/crops/carrot.jpg'
+  image: '/images/crops/Carrot.jpg'
 }, {
   name: 'Cauliflower',
   image: '/images/crops/Cauliflower.jpg'
@@ -8391,16 +8483,16 @@ var crops = [{
   image: '/images/crops/Coconut.jpg'
 }, {
   name: 'Coffee',
-  image: '/images/crops/coffee.jpg'
+  image: '/images/crops/Coffee.jpg'
 }, {
   name: 'Corn',
-  image: '/images/crops/corn.jpg'
+  image: '/images/crops/Corn.jpg'
 }, {
   name: 'Corriander',
   image: '/images/crops/Corriander.jpg'
 }, {
   name: 'Cotton',
-  image: '/images/crops/cotton.jpg'
+  image: '/images/crops/Cotton.jpg'
 }, {
   name: 'Cucumber',
   image: '/images/crops/Cucumber.jpg'
@@ -8415,25 +8507,25 @@ var crops = [{
   image: '/images/crops/Figs.jpg'
 }, {
   name: 'Garlic',
-  image: '/images/crops/garlic.jpg'
+  image: '/images/crops/Garlic.jpg'
 }, {
   name: 'Goldwheat',
-  image: '/images/crops/goldwheat.jpg'
+  image: '/images/crops/Goldwheat.jpg'
 }, {
   name: 'Grapefruit',
   image: '/images/crops/Grapefruit.jpg'
 }, {
   name: 'Green grapes',
-  image: '/images/crops/Green Grapes.jpg'
+  image: '/images/crops/Green grapes.jpg'
 }, {
   name: 'Greenwheat',
-  image: '/images/crops/greenwheat.jpg'
+  image: '/images/crops/Greenwheat.jpg'
 }, {
   name: 'Guava',
   image: '/images/crops/Guava.jpg'
 }, {
   name: 'Jowar',
-  image: '/images/crops/jowar.jpg'
+  image: '/images/crops/Jowar.jpg'
 }, {
   name: 'Lemon',
   image: '/images/crops/Lemon.jpg'
@@ -8445,10 +8537,10 @@ var crops = [{
   image: '/images/crops/Lichi.jpg'
 }, {
   name: 'Linseed',
-  image: '/images/crops/linseed.jpg'
+  image: '/images/crops/Linseed.jpg'
 }, {
   name: 'Long melon',
-  image: '/images/crops/Long Melon.jpg'
+  image: '/images/crops/Long melon.jpg'
 }, {
   name: 'Loquat',
   image: '/images/crops/Loquat.jpg'
@@ -8457,7 +8549,7 @@ var crops = [{
   image: '/images/crops/Luffa.jpg'
 }, {
   name: 'Maize',
-  image: '/images/crops/maize.jpg'
+  image: '/images/crops/Maize.jpg'
 }, {
   name: 'Mandarine',
   image: '/images/crops/Mandarine.jpg'
@@ -8475,16 +8567,16 @@ var crops = [{
   image: '/images/crops/Mung.jpg'
 }, {
   name: 'Musk melon',
-  image: '/images/crops/Musk Melon.jpg'
+  image: '/images/crops/Musk melon.jpg'
 }, {
   name: 'Mustard',
-  image: '/images/crops/mustard.jpg'
+  image: '/images/crops/Mustard.jpg'
 }, {
   name: 'Musubi',
   image: '/images/crops/Musubi.jpg'
 }, {
   name: 'Onion',
-  image: '/images/crops/onion.jpg'
+  image: '/images/crops/Onion.jpg'
 }, {
   name: 'Orange',
   image: '/images/crops/Orange.jpg'
@@ -8496,16 +8588,16 @@ var crops = [{
   image: '/images/crops/Peaches.jpg'
 }, {
   name: 'Peanuts',
-  image: '/images/crops/peanuts.jpg'
+  image: '/images/crops/Peanuts.jpg'
 }, {
   name: 'Pear',
   image: '/images/crops/Pear.jpg'
 }, {
   name: 'Peas',
-  image: '/images/crops/peas.jpg'
+  image: '/images/crops/Peas.jpg'
 }, {
   name: 'Pineapple',
-  image: '/images/crops/pineapple.jpg'
+  image: '/images/crops/Pineapple.jpg'
 }, {
   name: 'Plums',
   image: '/images/crops/Plums.jpg'
@@ -8514,7 +8606,7 @@ var crops = [{
   image: '/images/crops/Pomegrante.jpg'
 }, {
   name: 'Potato',
-  image: '/images/crops/potato.jpg'
+  image: '/images/crops/Potato.jpg'
 }, {
   name: 'Pumpkin',
   image: '/images/crops/Pumpkin.jpg'
@@ -8523,16 +8615,16 @@ var crops = [{
   image: '/images/crops/Radish.jpg'
 }, {
   name: 'Red chilli',
-  image: '/images/crops/Red Chilli.jpg'
+  image: '/images/crops/Red chilli.jpg'
 }, {
   name: 'Red grapes',
-  image: '/images/crops/Red Grapes.jpg'
+  image: '/images/crops/Red grapes.jpg'
 }, {
   name: 'Redbellpeppers',
-  image: '/images/crops/redbellpeppers.jpg'
+  image: '/images/crops/Redbellpeppers.jpg'
 }, {
   name: 'Rice',
-  image: '/images/crops/rice.jpg'
+  image: '/images/crops/Rice.jpg'
 }, {
   name: 'Safflower',
   image: '/images/crops/Safflower.jpg'
@@ -8541,40 +8633,40 @@ var crops = [{
   image: '/images/crops/Seasamum.jpg'
 }, {
   name: 'Sour lime',
-  image: '/images/crops/Sour Lime.jpg'
+  image: '/images/crops/Sour lime.jpg'
 }, {
   name: 'Sour orange',
-  image: '/images/crops/Sour Orange.jpg'
+  image: '/images/crops/Sour orange.jpg'
 }, {
   name: 'Soyabean',
   image: '/images/crops/Soyabean.jpg'
 }, {
   name: 'Soybean',
-  image: '/images/crops/soybean.jpg'
+  image: '/images/crops/Soybean.jpg'
 }, {
   name: 'Spinach',
   image: '/images/crops/Spinach.jpg'
 }, {
   name: 'Strawberry',
-  image: '/images/crops/strawberry.jpg'
+  image: '/images/crops/Strawberry.jpg'
 }, {
   name: 'Sugarcane',
-  image: '/images/crops/sugarcane.jpg'
+  image: '/images/crops/Sugarcane.jpg'
 }, {
   name: 'Sunflower',
-  image: '/images/crops/sunflower.jpg'
+  image: '/images/crops/Sunflower.jpg'
 }, {
   name: 'Sweet lime',
-  image: '/images/crops/Sweet Lime.jpg'
+  image: '/images/crops/Sweet lime.jpg'
 }, {
   name: 'Sweet potato',
-  image: '/images/crops/Sweet Potato.jpg'
+  image: '/images/crops/Sweet potato.jpg'
 }, {
   name: 'Tobacco',
   image: '/images/crops/Tobacco.jpg'
 }, {
   name: 'Tomato',
-  image: '/images/crops/tomato.jpg'
+  image: '/images/crops/Tomato.jpg'
 }, {
   name: 'Turmeric',
   image: '/images/crops/Turmeric.jpg'
@@ -10416,62 +10508,6 @@ function getSharedManager(options) {
   return sharedManager;
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BootstrapModalManager);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/Button.js":
-/*!****************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/Button.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_ui_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @restart/ui/Button */ "./node_modules/@restart/ui/esm/Button.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-"use client";
-
-
-
-
-
-
-const Button = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
-  as,
-  bsPrefix,
-  variant = 'primary',
-  size,
-  active = false,
-  disabled = false,
-  className,
-  ...props
-}, ref) => {
-  const prefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'btn');
-  const [buttonProps, {
-    tagName
-  }] = (0,_restart_ui_Button__WEBPACK_IMPORTED_MODULE_4__.useButtonProps)({
-    tagName: as,
-    disabled,
-    ...props
-  });
-  const Component = tagName;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, {
-    ...buttonProps,
-    ...props,
-    ref: ref,
-    disabled: disabled,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, prefix, active && 'active', variant && `${prefix}-${variant}`, size && `${prefix}-${size}`, props.href && disabled && 'disabled')
-  });
-});
-Button.displayName = 'Button';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
 /***/ }),
 
