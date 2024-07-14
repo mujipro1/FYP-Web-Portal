@@ -1,0 +1,79 @@
+.questionnaire{
+    overflow-y : auto;
+    overflow-x: hidden;
+    padding: 2px 20px;
+    height: 70vh;
+    width: 100%;
+    border-radius: 10px;
+}
+
+#profile-image{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+  
+  .chat-bubble {
+    margin: 10px 0;
+  }
+  
+  .question {
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    padding: 10px;
+    max-width: 60%;
+    min-width: 100px;
+    word-wrap: break-word;
+  }
+  
+  .answer {
+    background-color: #4e2400;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    max-width: 60%;
+    min-width: 100px;
+    /* handle if text overflows width. wrap to next line */
+    word-wrap: break-word;
+  }
+  
+  .answer-form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .min-height{
+    min-height:100%;
+  }
+  
+  .fixed-form {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+  }
+  
+  .fixed-form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .next-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #4e2400;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .next-button:hover {
+    background-color: #391b01;
+  }
+  
