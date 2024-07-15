@@ -52,14 +52,14 @@
                             @if ($worker == 0)
                             <a href="{{ route('manager.farmdetails', ['farm_id' => $farm_id]) }}"
                             class="back-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg"   class='svg' viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                                 </a>
                                 <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
                                 <div style='visibility:hidden;' class="invisible"></div>
                             @else
                             <a href="{{ route('expense_farmer') }}"
                             class="back-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg"  class='svg'  viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                                 </a>
                                 <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
                                 <div style='visibility:hidden;' class="invisible"></div>
@@ -81,6 +81,7 @@
 
                                     <form action="{{route('manager.manager_applyExpenseSearch')}}" method='POST'>
                                         @csrf
+                                        <input hidden name="worker" value="{{$worker}}">
                                         <div class="row">
                                             <input type="hidden" name="farm_id" value="{{$farm_id}}">
                                             <p class='mx-2 light'>Apply any filter to view expenses</p>
@@ -109,7 +110,7 @@
                                             <!-- search nutton -->
                                             <div class="col-md-3 mb-5">
                                                 <button class="btn" type='submit'>
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                    <svg xmlns="http://www.w3.org/2000/svg"  class='svg'
                                                         xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                                                         id="Capa_1" x="0px" y="0px" viewBox="0 0 513.749 513.749"
                                                         style="enable-background:new 0 0 513.749 513.749;"
@@ -156,11 +157,10 @@
 
                                                         <!-- fetch description from details json -->
                                                         <!-- check if the field decription exists -->
-                                                        @if (array_key_exists('description',
-                                                        json_decode($expense->details)))
-                                                        <td>{{json_decode($expense->details)->description}}</td>
+                                                        @if (is_array($expense->details) && array_key_exists('description', $expense->details))
+                                                            <td>{{ $expense->details['description'] }}</td>
                                                         @else
-                                                        <td></td>
+                                                            <td></td>
                                                         @endif
                                                     </tr>
                                                     @endforeach

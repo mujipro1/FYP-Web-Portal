@@ -137,7 +137,7 @@
                         <div class="d-flex justify-content-between align-items-center my-3">
                             <a href="{{ route('manager.configuration', ['farm_id' => $farm_id]) }}"
                             class="back-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512"  class='svg' height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                                 </a>
                                 <h3 class="flex-grow-1 text-center mb-0">Select Crops</h3>
                                 <div style='visibility:hidden;' class="invisible"></div>

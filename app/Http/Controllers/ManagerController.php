@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use Session;
@@ -15,7 +16,6 @@ use App\Models\FarmExpense;
 use App\Models\ExpenseConfiguration;
 use App\Models\FarmWorker;
 
-use App\Charts\MonthlyUsersChart;
 
 
 class ManagerController extends Controller
@@ -141,8 +141,9 @@ class ManagerController extends Controller
         }
         $farm_id = $request->input('farm_id');
         
+        $worker = $request->input('worker');
         if ($crop_id == null && $expense_type == null && $date == null) {
-           return redirect()->route('manager.view_cropexpense', ['farm_id' => $farm_id]);
+           return redirect()->route('manager.view_cropexpense', ['farm_id' => $farm_id, 'worker' => $worker]);
         }
 
         $expenses = $query->get();
@@ -153,7 +154,7 @@ class ManagerController extends Controller
         $expenses = $query->get();
         $crops = Crop::where('farm_id', $farm_id)->get();
 
-        return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'totalAmount' => $totalAmount, 'totalExpenses' => $totalExpenses]);
+        return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'totalAmount' => $totalAmount, 'totalExpenses' => $totalExpenses, 'worker' => $worker]);
 
     }
 
@@ -643,5 +644,7 @@ class ManagerController extends Controller
         $crop = Crop::with('deras')->find($crop_id);
         return view('manager_cropDetails', ['crop' => $crop, 'farm_id' => $farm_id]);
     }
+
+
 
 }

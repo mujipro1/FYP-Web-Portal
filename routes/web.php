@@ -90,3 +90,10 @@ Route::post('/superadmin/submit_createfarm', 'App\Http\Controllers\SuperAdminCon
 
 
 Route::get('/expense_farmer', 'App\Http\Controllers\ManagerController@render_expense_farmer')->name('expense_farmer');
+
+
+Route::get('/manager/analytics/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@analytics')->name('manager.analytics');
+Route::get('/manager/singlecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@singlecrop')->name('manager.singlecrop');
+Route::post('/manager/singlecropPost', 'App\Http\Controllers\ManagerAnalyticsController@singlecropPost')->name('manager.singlecropPost');
+
+Route::get('/manager/comparecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@comparecrop')->name('manager.comparecrop');

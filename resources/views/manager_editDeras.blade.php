@@ -48,7 +48,7 @@ const farm_id = @json($farm_id);
                 <div class="d-flex justify-content-between align-items-center my-3">
                 <a href="{{ route('manager.configuration', ['farm_id' => $farm_id]) }}"
                 class="back-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg"  class='svg' viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                     </a>
                     <h3 class="flex-grow-1 text-center mb-0">Edit Deras</h3>
                     <div style='visibility:hidden;' class="invisible"></div>
@@ -66,7 +66,7 @@ const farm_id = @json($farm_id);
 
                                     <div class="col divx" style='cursor:pointer;'>
                                         <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" id="addNewSvg3" data-name="Layer 1"
+                                            <svg xmlns="http://www.w3.org/2000/svg"  class='svg' id="addNewSvg3" data-name="Layer 1"
                                                 class='mx-2' viewBox="0 0 24 24" width="512" height="512">
                                                 <path
                                                     d="M17,12c0,.553-.448,1-1,1h-3v3c0,.553-.448,1-1,1s-1-.447-1-1v-3h-3c-.552,0-1-.447-1-1s.448-1,1-1h3v-3c0-.553,.448-1,1-1s1,.447,1,1v3h3c.552,0,1,.447,1,1Zm7-7v14c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5V5C0,2.243,2.243,0,5,0h14c2.757,0,5,2.243,5,5Zm-2,0c0-1.654-1.346-3-3-3H5c-1.654,0-3,1.346-3,3v14c0,1.654,1.346,3,3,3h14c1.654,0,3-1.346,3-3V5Z" />
@@ -75,13 +75,13 @@ const farm_id = @json($farm_id);
                                     </div>
                                     <div class="col-auto">
                                         <button id='drop1' class="btn">
-                                            <svg xmlns="http://www.w3.org/2000/svg" id="Bold" class="up1"
+                                            <svg xmlns="http://www.w3.org/2000/svg" id="Bold" class="up1  svg"
                                                 viewBox="0 0 24 24" width="512" height="512">
                                                 <path
                                                     d="M1.51,6.079a1.492,1.492,0,0,1,1.06.44l7.673,7.672a2.5,2.5,0,0,0,3.536,0L21.44,6.529A1.5,1.5,0,1,1,23.561,8.65L15.9,16.312a5.505,5.505,0,0,1-7.778,0L.449,8.64A1.5,1.5,0,0,1,1.51,6.079Z" />
                                             </svg>
                                             <svg style="display:none;" xmlns="http://www.w3.org/2000/svg" id="Bold"
-                                                class="down1" viewBox="0 0 24 24" width="512" height="512">
+                                                class="down1 svg" viewBox="0 0 24 24" width="512" height="512">
                                                 <path
                                                     d="M22.5,18a1.5,1.5,0,0,1-1.061-.44L13.768,9.889a2.5,2.5,0,0,0-3.536,0L2.57,17.551A1.5,1.5,0,0,1,.449,15.43L8.111,7.768a5.505,5.505,0,0,1,7.778,0l7.672,7.672A1.5,1.5,0,0,1,22.5,18Z" />
                                             </svg>
@@ -138,13 +138,13 @@ const farm_id = @json($farm_id);
                                     </div>
                                     <div class="col-auto">
                                         <button id='drop2' class="btn">
-                                            <svg xmlns="http://www.w3.org/2000/svg" id="Bold" class="up2"
+                                            <svg xmlns="http://www.w3.org/2000/svg" id="Bold" class="up2 svg"
                                                 viewBox="0 0 24 24" width="512" height="512">
                                                 <path
                                                     d="M1.51,6.079a1.492,1.492,0,0,1,1.06.44l7.673,7.672a2.5,2.5,0,0,0,3.536,0L21.44,6.529A1.5,1.5,0,1,1,23.561,8.65L15.9,16.312a5.505,5.505,0,0,1-7.778,0L.449,8.64A1.5,1.5,0,0,1,1.51,6.079Z" />
                                             </svg>
                                             <svg style="display:none;" xmlns="http://www.w3.org/2000/svg" id="Bold"
-                                                class="down2" viewBox="0 0 24 24" width="512" height="512">
+                                                class="down2 svg" viewBox="0 0 24 24" width="512" height="512">
                                                 <path
                                                     d="M22.5,18a1.5,1.5,0,0,1-1.061-.44L13.768,9.889a2.5,2.5,0,0,0-3.536,0L2.57,17.551A1.5,1.5,0,0,1,.449,15.43L8.111,7.768a5.505,5.505,0,0,1,7.778,0l7.672,7.672A1.5,1.5,0,0,1,22.5,18Z" />
                                             </svg>

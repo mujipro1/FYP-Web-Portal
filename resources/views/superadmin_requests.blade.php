@@ -107,7 +107,7 @@
                                             <div class='col-md-3 py-4 text-center'>
                                                 <div class="d-flex justify-content-center">
                                                     @if ($request['status'] == 'pending')
-                                                    <svg class='mb-3 mx-2' xmlns="http://www.w3.org/2000/svg"
+                                                    <svg class='mb-3 svg mx-2' xmlns="http://www.w3.org/2000/svg"
                                                         id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512"
                                                         height="512">
                                                         <path

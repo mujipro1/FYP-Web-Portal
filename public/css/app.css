@@ -121,7 +121,7 @@ body{
   font-weight: 600;
 }
 
-svg{
+.svg{
   fill : #713002;
   display: inline-block;
   width: 20px;
