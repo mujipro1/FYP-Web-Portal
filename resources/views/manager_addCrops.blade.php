@@ -88,18 +88,21 @@
                     <input type="date" class="form-control" id="cropHarvestingDate" required>
                 </div>
 
-
                 <div class="mt-4 labelcontainer">
-                    <label for="cropStage" class="form-label w-50">Crop Stage</label>
-                    <select class="form-select" id="cropStage" required>
-                        <option value="">Select Crop Stage</option>
-                        <option value="Planted">Planted</option>
-                        <option value="Established">Established</option>
-                        <option value="Harvested">Harvested</option>
-                        <option value="Sold">Sold</option>
-                    </select>
+                    <label for="variety" class="form-label w-50">Variety</label>
+                    <input class="form-control" id="variety"/>
                 </div>
 
+                <div class="mt-4 labelcontainer">
+                    <label for="stage" class="form-label w-50">Stage</label>
+                    <select class="form-select" id="stage" required>
+                    <option value="Germination">Germination</option>
+                    <option value="Vegetative">Vegetative</option>
+                    <option value="Flowering">Flowering</option>
+                    <option value="Fruiting">Fruiting</option>
+                    <option value="Harvesting">Harvesting</option>
+                    </select>
+                </div>
 
                  <div class="mt-4 labelcontainer">
                     <label for="description" class="form-label w-50">Description</label>

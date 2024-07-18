@@ -93,7 +93,15 @@ Route::get('/expense_farmer', 'App\Http\Controllers\ManagerController@render_exp
 
 
 Route::get('/manager/analytics/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@analytics')->name('manager.analytics');
+Route::post('/manager/analytics', 'App\Http\Controllers\ManagerAnalyticsController@analytics')->name('manager.analytics');
+
 Route::get('/manager/singlecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@singlecrop')->name('manager.singlecrop');
 Route::post('/manager/singlecropPost', 'App\Http\Controllers\ManagerAnalyticsController@singlecropPost')->name('manager.singlecropPost');
 
 Route::get('/manager/comparecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@comparecrop')->name('manager.comparecrop');
+Route::post('/manager/comparecropPost', 'App\Http\Controllers\ManagerAnalyticsController@comparecropPost')->name('manager.comparecropPost');
+
+
+Route::post('/update-crop-status', 'App\Http\Controllers\ManagerController@updateCropStatus')->name('manager.updateCropStatus');
+Route::get('/manager/farm_history/{farm_id}', 'App\Http\Controllers\ManagerController@farm_history')->name('manager.farm_history');
+Route::post('/manager/FarmStatusSearchPOST', 'App\Http\Controllers\ManagerController@FarmStatusSearchPOST')->name('manager.FarmStatusSearchPOST');

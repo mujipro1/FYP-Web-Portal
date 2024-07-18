@@ -27,6 +27,13 @@
             @yield('content')
         </div>
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
 
         <div class="container-fluid">
             <div class="row">
@@ -34,7 +41,7 @@
                     <div class="ManagerSidebar sidebar"></div>
                 </div>
                 <div class="overlay" id="overlay"></div>
-                <div class="col-md-10 offset-md-1 ">
+                <div class="col-md-10 section offset-md-1 ">
 
                     <div class="d-flex  justify-content-between align-items-center my-4">
                         <a href="{{ route('manager.analytics', ['farm_id' => $farm_id]) }}" class="back-button">
@@ -49,19 +56,18 @@
                     </div>
 
 
-
-                    <form action="{{route('manager.singlecropPost')}}" method='post'>
+                    <form action="{{route('manager.comparecropPost')}}" method='post' id="cropForm" >
                         @csrf
                         <div class="row m-4 mt-5">
                             <input type="hidden" name="farm_id" value="{{ $farm_id }}">
                             <div class="col-md-5">
                                 
                                 <div class="labelcontainer">
-                                    <label class='w-50' for="crop">Select Crop</label>
-                                    <select class="form-select" id="crop" name="crop">
+                                    <label class='w-50' for="crop1">Select Crop</label>
+                                    <select class="form-select" id="crop1" name="crop1" required>
                                     <option value=" ">Select a crop</option>
                                         @foreach($crops as $crop)
-                                        <option value="{{ $crop->id }}">{{ $crop->identifier }}</option>
+                                        <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }}</option>
                                         @endforeach
                                     </select>
                                     
@@ -70,14 +76,14 @@
                             <div class="col-md-6">
 
                                 <div class="labelcontainer">
-                                    <label class='w-50' for="crop">Select Crop</label>
-                                    <select class="form-select" id="crop" name="crop">
+                                    <label class='w-50' for="crop2">Select Crop</label>
+                                    <select class="form-select" id="crop2" name="crop2" required>
                                     <option value=" ">Select a crop</option>
                                         @foreach($crops as $crop)
-                                        <option value="{{ $crop->id }}">{{ $crop->identifier }}</option>
+                                        <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }}</option>
                                         @endforeach
                                     </select>
-                                    <button class="btn mx-3" type='submit'>
+                                    <button disabled type='submit' id='submit' class='btn mx-3 specialSubmitButton' >
                                         <svg xmlns="http://www.w3.org/2000/svg" class='svg'
                                             xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px"
                                             y="0px" viewBox="0 0 513.749 513.749"
@@ -94,6 +100,69 @@
                             </div>
                         </div>
                     </form>
+
+
+
+                        @if ($id == 0)
+                        <div class="row mt-5">
+                            <div class="d-flex light">
+                                Select crops to view analytics
+                            </div>
+                        </div>
+
+                        @else
+                        <div class="row my-4">
+                            <div class="col-md-7">
+                                <div class="popular-crop p-4" style="background-color:white;box-shadow: 0px 0px 10px #dddddd;">
+                                    <h5 class="text-start text-success">PKR {{$totalExpenses1}}/-</h5>
+                                    <div class='fsmall'>Total expenses of {{$crop1->identifier}}</div>
+                                </div>
+                                <div class="popular-crop p-4" style="background-color:white;box-shadow: 0px 0px 10px #dddddd;">
+                                    <h5 class="text-start text-success">PKR {{$totalExpenses2}}/-</h5>
+                                    <div class='fsmall'>Total expenses of {{$crop2->identifier}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 m-auto">
+                                <h5 class="text-center">{{$crop1->identifier}}</h5>
+                                <h6 class='light text-center'> vs</h6>
+                                <h5 class="text-center"> {{$crop2->identifier}}</h5>
+                            </div>
+                        </div>
+
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <div class="box-cont">
+                                    {!! $expenseChart->container() !!}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="box-cont">
+                                    {!! $expenseChartPerAcre->container() !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="col-md-12">
+                            <div class="box-cont">
+                                {!! $quantityChart->container() !!}
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            @foreach ($charts as $expenseType => $chartx)
+                            <div class="col-md-6 p-3">
+                                <div class="box-cont">
+                                    <h5>{{ $expenseType }} Expenses</h5>
+                                    {!! $chartx->container() !!}
+                                </div>
+                            </div>
+                            @endforeach
+
+                        @endif
                     
 
                 </div>
@@ -114,6 +183,15 @@
 <script src="{{ asset('js/ManagerSidebar.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
+@if ($id == 1)
+<script src="{{ $expenseChart->cdn() }}"></script>
+{{ $expenseChart->script() }}
+{{ $expenseChartPerAcre->script() }}
+@foreach ($charts as $chartx)
+{!! $chartx->script() !!}
+@endforeach
+{!! $quantityChart->script() !!}
+@endif
 <script>
 function handleSingleCrop() {
     window.location.href = "{{ route('manager.singlecrop', ['farm_id' => $farm_id]) }}";
@@ -124,7 +202,60 @@ function handleCompareCrop() {
 }
 
 
-// make an event listerner, if 
+
+document.addEventListener('DOMContentLoaded', function() {
+    const crop1 = document.getElementById('crop1');
+    const crop2 = document.getElementById('crop2');
+    
+    function filterOptions(selectedCrop, targetDropdown) {
+        selectedName = selectedCrop.options[selectedCrop.selectedIndex].getAttribute('data-name');
+        const selectedValue = selectedCrop.value;
+        const targetOptions = targetDropdown.querySelectorAll('option');
+        
+        
+        targetOptions.forEach(option => {
+            name = option.getAttribute('data-name');
+            name = name.replace(/\s/g, '');
+            selectedName = selectedName.replace(/\s/g, '');
+            console.log(name, selectedName);
+            if (option.value === "") {
+                // Always show the default option
+                option.style.display = 'block';
+            } else if (name === selectedName && option.value !== selectedValue) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    }
+    
+    crop1.addEventListener('change', function() {
+        filterOptions(crop1, crop2);
+    });
+    
+    crop2.addEventListener('change', function() {
+        filterOptions(crop2, crop1);
+    });
+});
+
+
+
+document.getElementById('crop1').addEventListener('change', function() {
+    if (document.getElementById('crop1').value != ' ' && document.getElementById('crop2').value != ' ') {
+        document.getElementById('submit').disabled = false;
+    } else {
+        document.getElementById('submit').disabled = true;
+    }
+});
+
+document.getElementById('crop2').addEventListener('change', function() {
+    if (document.getElementById('crop1').value != ' ' && document.getElementById('crop2').value != ' ') {
+        document.getElementById('submit').disabled = false;
+    } else {
+        document.getElementById('submit').disabled = true;
+    }
+});
+
 
 </script>
 

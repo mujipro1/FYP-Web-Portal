@@ -19,11 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const cropStatus = document.querySelectorAll('input[name="cropStatus"]');
     const cropSowingDate = document.getElementById("cropSowingDate");
     const cropHarvestDate = document.getElementById("cropHarvestingDate");
-    const cropStage = document.getElementById("cropStage");
     const description = document.getElementById("description");
     const derasContainer = document.getElementById("derasContainer");
+    const cropVariety = document.getElementById('variety');
     const cropNameModal = document.getElementById("cropNameModal");
     const cropAcresInput = document.getElementById("cropAcres");
+    const cropStage = document.getElementById("stage");
     const saveCropButton = document.getElementById("saveCropButton");
     const noDeraAlert = document.getElementById("noDeraAlert");
 
@@ -80,11 +81,17 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>
 
                             <div class="labelcontainer2">
-                                <label for="cropStage${index}">Stage</label>
+                                <label for="variety" class="form-label w-50">Variety</label>
+                                <input hidden type="text" class="form-control" id="cropVariety${index}" value="${crop.variety}" disabled />
+                                <label>${crop.variety}</label>
+                            </div>
+                            
+                            <div class=" labelcontainer2">
+                                <label for='stage' class="form-label w-50">Stage</label>
                                 <input hidden type="text" class="form-control" id="cropStage${index}" value="${crop.stage}" disabled />
                                 <label>${crop.stage}</label>
                             </div>
-
+                          
                         </div>
 
                         <div class="col-md-4">
@@ -231,9 +238,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const sowingDate = cropSowingDate.value;
         const harvestDate = cropHarvestDate.value;
-        const stage = cropStage.value;
         const desc = description.value;
-
+        const variety = cropVariety.value;
+        const stage = cropStage.value;
 
         let status;
             for (const statusX of cropStatus) {
@@ -254,10 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (!stage || stage === "") {
-            alert("Please enter a stage.");
-            return;
-        }
 
         if (!year || year === "") {
             alert("Please enter a year.");
@@ -284,7 +287,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 totalAcres += parseFloat(deraAcresInput.value) || 0;
             }
             else{
-                alert("Please select at least one dera.");
                 return;
             }
         });
@@ -311,6 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
             status,
             sowingDate,
             harvestDate,
+            variety,
             stage,
             desc
         };

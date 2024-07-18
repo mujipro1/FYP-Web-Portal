@@ -15,8 +15,7 @@ use App\Models\Expense;
 use App\Models\FarmExpense;
 use App\Models\ExpenseConfiguration;
 use App\Models\FarmWorker;
-
-
+use App\Models\CropStatusUpdate;
 
 class ManagerController extends Controller
 {
@@ -36,11 +35,19 @@ class ManagerController extends Controller
     public function render_get_farm_details_page($farm_id)
     {
         $farm = Farm::with(['crops.deras'])->find($farm_id);
-        // fetch workers from farmworker table and user table
         $workers = FarmWorker::where('farm_id', $farm_id)->get();
         $users = User::whereIn('id', $workers->pluck('user_id'))->get();
 
-        return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users]);
+        $activeCrops = $farm->crops->where('active', 1);
+
+        $latestUpdates = CropStatusUpdate::whereIn('crop_id', $activeCrops->pluck('id'))
+                            ->select('crop_id', DB::raw('MAX(created_at) as latest_update'))
+                            ->groupBy('crop_id')
+                            ->pluck('latest_update', 'crop_id');
+
+        $latestCropUpdates = CropStatusUpdate::whereIn('created_at', $latestUpdates)->get();
+
+        return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users, 'latestCropUpdates' => $latestCropUpdates]);
     }
 
 
@@ -55,13 +62,14 @@ class ManagerController extends Controller
             $crop = new Crop();
             $crop->name = $cropData['name'];
             $crop->year = $cropData['year'];
+            $crop->variety = $cropData['variety'];
             $crop->farm_id = $farm_id;
+            $crop->status = $cropData['stage'];
             $crop->acres = $cropData['acres'];
             $crop->identifier = $cropData['name'] . " " . $cropData['year'];
             $crop->sow_date = $cropData['sowingDate'];
             $crop->harvest_date = $cropData['harvestDate'];
             $crop->active = $cropData['status'];
-            $crop->status = $cropData['stage'];
             $crop->description = $cropData['desc'];
             $crop->save();
 
@@ -328,16 +336,11 @@ class ManagerController extends Controller
         $crop = Crop::find($request->input('selectedCropId'));
 
         $status = $request->input('status');
-        $stage = $request->input('stage');
 
         if ($status == NULL){
             $status = $crop->active;
         }
-        if ($stage == NULL){
-            $stage = $crop->status;
-        }
 
-        $crop->status = $stage;
         $crop->active = $status;
         $crop->save();
 
@@ -645,6 +648,44 @@ class ManagerController extends Controller
         return view('manager_cropDetails', ['crop' => $crop, 'farm_id' => $farm_id]);
     }
 
+    public function updateCropStatus(Request $request){
+
+        foreach ($request->status as $cropId => $status) {
+            $remarks = $request->remarks[$cropId] ?? '';
+            CropStatusUpdate::create([
+                'crop_id' => $cropId,
+                'status' => $status,
+                'remarks' => $remarks,
+                'updated_at' => now(),
+            ]);
+            $crop = Crop::find($cropId);
+            $crop->status = $status;
+            $crop->save();
+        }
+
+        return redirect()->back()->with('success', 'Crop status updated successfully');
+    }
+    public function farm_history($farm_id)
+    {
+        $farm = Farm::findOrFail($farm_id);
+        
+        // Fetch crop status updates with crop names for the specified farm
+        $cropStatusUpdates = CropStatusUpdate::whereHas('crop', function ($query) use ($farm_id) {
+                $query->where('farm_id', $farm_id);
+            })
+            ->with('crop')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(20);
+
+        return view('manager_farmHistory', compact('farm', 'cropStatusUpdates', 'farm_id'));
+    }
 
 
+    public function FarmStatusSearchPOST(Request $request)
+    {
+        $farm_id = $request->input('farm_id');
+        $date = $request->input('date');
+
+        
+    }
 }

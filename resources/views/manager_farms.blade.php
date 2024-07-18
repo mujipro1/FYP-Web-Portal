@@ -26,14 +26,14 @@
         
     <div class="container-fluid">
         <div class="row">
-                <div class="col-md-10 offset-md-1 section">
+                <div class="col-md-10 offset-md-1">
                     <div class="container">
                     <div class="row">
                         <div class='text-center my-3'><h3>Farms</h3></div>
-                        <div class="row">
+                        <div class="row section">
                         @foreach($farms as $farm)
                             <div class="col-md-4 my-2">
-                                <div class="selected-farm" onclick="handleClick({{ $farm['id'] }})" style="background-color:#f4f4f4;cursor:pointer;">
+                                <div class="selected-farm box-cont" onclick="handleClick({{ $farm['id'] }})" style="background-color:white;cursor:pointer;">
                                     <img src="{{ asset('images/farm1.jpg') }}" class="selected-farm-image" />
                                     <h5 class='mt-3 mx-2'>{{ $farm['name'] }}</h5>
                                     <div class='mx-2 light fsmall'>{{ $farm['city'] }}</div>

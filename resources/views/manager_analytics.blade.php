@@ -47,23 +47,8 @@
                         <h3 class="flex-grow-1 text-center mb-0">Analytics</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
-
-                    <div class="row mt-5">
-                        <div class="col-md-6">
-                            <div class="box-cont">
-                                {!! $chart2->container() !!}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="box-cont">
-                                {!! $chart->container() !!}
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="my-5">
-
-                    <div class="row">
+                   
+                    <div class="row ">
 
                         <div class=" col-md-6 p-2 my-3">
                             <div class="box-cont">
@@ -123,6 +108,69 @@
                         </div>
                     </div>
 
+                    <hr class="my-4">
+
+                    <div class="container">
+                        <form  method="POST">
+                            @csrf
+                            <div class="row">
+                                <input type="hidden" name="farm_id" value="{{ $farm_id }}">
+                                <p class="mx-2 light">Apply any filter to view expenses</p>
+
+                                <div class="col-md-3">
+                                    <div class="d-flex ">
+                                        <label class='mx-2' for="from_date">From</label>
+                                        <input type="date" id="from_date" name="from_date" class="form-control" value="" style="margin:0px;">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="d-flex ">
+                                        <label class='mx-2' for="to_date">To</label>
+                                        <input type="date" id="to_date" name="to_date" class="form-control" value="" style="margin:0px;">
+                                    </div>
+                                </div>
+
+                                <!-- search button -->
+                                <div class="col-md-3 mb-5">
+                                    <button class="btn" type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  class='svg' xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 513.749 513.749" style="enable-background:new 0 0 513.749 513.749;" xml:space="preserve" width="512" height="512">
+                                        <g>
+                                            <path d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15   S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0   c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160   s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z"/>
+                                        </g></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                   
+                    <div class="row mt-5">
+                        <div class="col-md-6">
+                            <div class="box-cont">
+                                {!! $chart2->container() !!}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box-cont">
+                                {!! $chart->container() !!}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    
+                    <div class="row">
+                        @foreach ($charts as $expenseType => $chartx)
+                        <div class="col-md-6 p-3">
+                            <div class="box-cont">
+                                <h5>{{ $expenseType }} Expenses</h5>
+                                {!! $chartx->container() !!}
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -139,6 +187,9 @@
 <script src="{{ $chart->cdn() }}"></script>
 {{ $chart->script() }}
 {{ $chart2->script() }}
+@foreach ($charts as $chartx)
+    {!! $chartx->script() !!}
+@endforeach
 <script src="{{ asset('js/alert.js') }}"></script>
 <script src="{{ asset('js/ManagerSidebar.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
@@ -151,6 +202,28 @@ function handleSingleCrop() {
 function handleCompareCrop() {
     window.location.href = "{{ route('manager.comparecrop', ['farm_id' => $farm_id]) }}";
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+        const fromDateInput = document.getElementById('from_date');
+        const toDateInput = document.getElementById('to_date');
+
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const midYearDate = new Date(currentYear, 6, 1); // July 1st
+
+        let fromDate, toDate;
+
+        if (currentDate < midYearDate) {
+            fromDate = new Date(currentYear, 0, 1); // January 1st
+        } else {
+            fromDate = midYearDate;
+        }
+
+        toDate = currentDate;
+
+        fromDateInput.value = fromDate.toISOString().split('T')[0];
+        toDateInput.value = toDate.toISOString().split('T')[0];
+    });
 </script>
 
 </html>

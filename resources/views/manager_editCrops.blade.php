@@ -90,7 +90,6 @@
                                                             data-crop-acres="{{ $crop->acres }}"
                                                             data-crop-deras='@json($crop->deras)'
                                                             data-crop-status = '{{ $crop->active }}'
-                                                            data-crop-stage = '{{ $crop->status}}'
                                                             data-crop-identifier="{{ $crop->identifier }}">Select
                                                             Crop</button>
 
@@ -152,12 +151,7 @@
                                                 <option value="">Select Status</option>
                                             </select>
                                         </div>
-                                        <div class="mt-2 d-flex">
-                                            <label class="w-75" for="stage">Change Stage</label>
-                                            <select class="form-select" name="stage" id="stage">
-                                                <option value="">Select Stage</option>
-                                            </select>
-                                        </div>
+                                     
                                     <input type="hidden" id="selectedCropId" name="selectedCropId" value="">
                                 </div>
 
@@ -218,7 +212,6 @@ function handleSelectCrop(button) {
     const cropName = button.getAttribute('data-crop-name');
     const cropIdentifier = button.getAttribute('data-crop-identifier');
     const cropAcres = button.getAttribute('data-crop-acres');
-    const cropStage = button.getAttribute('data-crop-stage');
     const cropStatus = button.getAttribute('data-crop-status');
     cropDeras = JSON.parse(button.getAttribute('data-crop-deras'));
 
@@ -276,32 +269,11 @@ function handleSelectCrop(button) {
     statusSelect.appendChild(statusOption1);
     statusSelect.appendChild(statusOption2);
 
-    const stageSelect = document.getElementById('stage');
-    stageSelect.innerHTML = '<option value="">Select Stage</option>';
-    const stageOption1 = document.createElement('option');
-    stageOption1.value = 'Planted';
-    stageOption1.textContent = 'Planted';
-    const stageOption2 = document.createElement('option');
-    stageOption2.value = 'Established';
-    stageOption2.textContent = 'Established';
-    const stageOption3 = document.createElement('option');
-    stageOption3.value = 'Harvested';
-    stageOption3.textContent = 'Harvested';
-    const stageOption4 = document.createElement('option');
-    stageOption4.value = 'Sold';
-    stageOption4.textContent = 'Sold';
-    stageSelect.appendChild(stageOption1);
-    stageSelect.appendChild(stageOption2);
-    stageSelect.appendChild(stageOption3);
-    stageSelect.appendChild(stageOption4);
-
     if (cropStatus == 1) {
         statusSelect.value = '1';
     } else {
         statusSelect.value = '0';
     }
-
-    stageSelect.value = cropStage;
 
 }
 
@@ -318,7 +290,6 @@ function clearFormFields() {
     document.getElementById('removeBtn').classList.add('btn-danger');
     document.getElementById('removeCropP').innerText = 'Click to remove crop from dera';
     document.getElementById('status').innerHTML = '<option value="">Select Status</option>';
-    document.getElementById('stage').innerHTML = '<option value="">Select Stage</option>';
     document.getElementById('selectedCropId').value = '';
     selectedCropId = null;
 }

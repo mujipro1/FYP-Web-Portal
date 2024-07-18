@@ -49,7 +49,7 @@ const farmExpenseData = [
     },
     {
         "head" : "Maintenance & Repairs ",
-        "sub-head" :['Building Repairs /Maintainence', 'Waterway Maintenance','Tube well Room Maintenance','Road Maintenance', 'Others'
+        "sub-head" :['Building Repairs', 'Waterway','Tube well Room','Road', 'Others'
               ],
         'entry':[
             'Amount',

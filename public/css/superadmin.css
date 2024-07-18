@@ -38,7 +38,7 @@
 
 .sidebarcol{
     /* background-color: #efefef; */
-    background:linear-gradient(180deg, #efefef 0%, #ffffff 100%);
+    background:linear-gradient(180deg, #ffffff 0%, #ffffff00 100%);
     border-radius: 0px 20px 20px 0px;
     width: 50px;
     padding: 10px 0px;
@@ -70,6 +70,7 @@
 .sidebarcol2{
   width: 150px;
   opacity: 0;
+  background-color: white;
   animation: opac 0.8s forwards;
 }
 
@@ -82,20 +83,6 @@
   }
 }
 
-.box-cont{
-    background-color: white;
-    border-radius: 20px;
-    padding: 20px;
-    min-height: 150px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    width: 100%;
-    border: 1px solid #d8d8d893;
-    transition: all 0.4s;
-  }
-
-  .box-cont:hover{
-    box-shadow: 0 0 10px rgba(0,0,0,0.12);
-  }
   
   .light{
     color: grey;

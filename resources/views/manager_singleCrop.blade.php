@@ -60,12 +60,12 @@
                                 <div class="labelcontainer">
                                     <label class='w-50' for="crop">Select Crop</label>
                                     <select class="form-select" id="crop" name="crop">
-                                    <option value=" ">Select a crop</option>
+                                    <option value="">Select a crop</option>
                                         @foreach($crops as $crop)
                                         <option value="{{ $crop->id }}">{{ $crop->identifier }}</option>
                                         @endforeach
                                     </select>
-                                    <button class="btn mx-4" type='submit'>
+                                    <button disabled  class="btn specialSubmitButton mx-4" type='submit'>
                                         <svg xmlns="http://www.w3.org/2000/svg" class='svg'
                                             xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px"
                                             y="0px" viewBox="0 0 513.749 513.749"
@@ -92,9 +92,9 @@
 
                     @else
                     <div class="col-md-6">
-                        <div class="popular-crop p-4">
-                            <h5 class="text-start">Total Expenses</h5>
-                            <div>PKR {{$totalExpenses}}/-</div>
+                        <div class="popular-crop p-4" style="background-color:white;box-shadow: 0px 0px 10px #dddddd;">
+                            <h5 class="text-start text-success">PKR {{$totalExpenses}}/-</h5>
+                            <div class='fsmall'>Total Expenses of {{$crop->identifier}}</div>
                         </div>
                     </div>
                     <div class="row mt-5">
@@ -110,6 +110,27 @@
                         </div>
                     </div>
 
+                    <hr class="my-4">
+                        
+                    <div class="col-md-12">
+                        <div class="box-cont">
+                            {!! $quantityChart->container() !!}
+                        </div>
+                    </div>
+
+
+                    <hr class="my-4">
+
+                    <div class="row">
+                        @foreach ($charts as $expenseType => $chartx)
+                        <div class="col-md-6 p-3">
+                            <div class="box-cont">
+                                <h5>{{ $expenseType }} Expenses</h5>
+                                {!! $chartx->container() !!}
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
 
                     @endif
 
@@ -135,7 +156,12 @@
 <script src="{{ $expenseChart->cdn() }}"></script>
 {{ $expenseChart->script() }}
 {{ $expenseChartPerAcre->script() }}
+@foreach ($charts as $chartx)
+{!! $chartx->script() !!}
+@endforeach
+{!! $quantityChart->script() !!}
 @endif
+
 <script>
 function handleSingleCrop() {
     window.location.href = "{{ route('manager.singlecrop', ['farm_id' => $farm_id]) }}";
@@ -144,6 +170,17 @@ function handleSingleCrop() {
 function handleCompareCrop() {
     window.location.href = "{{ route('manager.comparecrop', ['farm_id' => $farm_id]) }}";
 }
+
+
+cropSelect = document.getElementById('crop');
+cropSelect.addEventListener('change', () => {
+    if (cropSelect.value != '') {
+        document.querySelector('button[type="submit"]').disabled = false;
+    } else {
+        document.querySelector('button[type="submit"]').disabled = true;
+    }
+});
+
 </script>
 
 </html>

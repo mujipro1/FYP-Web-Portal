@@ -14,6 +14,7 @@ class CreateCropsTable extends Migration
             $table->integer('year');
             $table->integer('acres');
             $table->string('identifier');
+            $table->string('variety')->nullable();
             $table->unsignedBigInteger('farm_id');
             $table->date('sow_date');
             $table->date('harvest_date');
