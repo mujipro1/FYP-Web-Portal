@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Session;
 use Illuminate\Http\Request;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
+use Mail;
+use App\Mail\FarmCreated;
 
 use App\Models\User;
 use App\Models\Requests;
@@ -20,7 +22,6 @@ class SuperAdminController extends Controller{
         foreach ($requests as $request) {
             $request->user_info = json_decode($request->user_info, true);
             $request->farm_info = json_decode($request->farm_info, true);
-
         }
         return view('superadmin_requests', ['requests' => $requests, 'user' => $user]);
     }
@@ -77,6 +78,16 @@ class SuperAdminController extends Controller{
         $request = Requests::find($request->input('request_id'));
         $request->status = 'approved';
         $request->save();
+
+        $user_name = User::find($user_id)->name;
+        $email = User::find($user_id)->email;
+
+        $farmData = [
+            'name' => $user_name, 
+            'email' => $email
+        ];
+
+        Mail::to($email)->send(new FarmCreated($farmData));
 
         return redirect()->route('superadmin.requests')->with('success', 'Farm created successfully');
     }

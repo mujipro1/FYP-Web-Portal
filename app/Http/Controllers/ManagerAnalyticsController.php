@@ -118,7 +118,7 @@ class ManagerAnalyticsController extends Controller
         $farm = Farm::findOrFail($farm_id);
         $crops = $farm->crops;
 
-        return view('manager_singlecrop', ['farm_id' => $farm_id, 'crops' => $crops, 'id'=>0]);
+        return view('manager_singleCrop', ['farm_id' => $farm_id, 'crops' => $crops, 'id'=>0]);
     }   
 
     public function singlecropPost(Request $req){
@@ -225,7 +225,7 @@ class ManagerAnalyticsController extends Controller
         $quantityChart = $this->fetchCropExpenseQuantities($crop_id, $quantityKeys);
 
              
-        return view('manager_singlecrop', ['farm_id' => $farm_id, 'crops' => $crops, 'expenseChart' => $expenseChart,
+        return view('manager_singleCrop', ['farm_id' => $farm_id, 'crops' => $crops, 'expenseChart' => $expenseChart,
          'id'=>1, 'expenseChartPerAcre' => $expenseChartPerAcre, 'totalExpenses' => $totalExpenses, 'crop'=>$crop, 'charts' => $chartsSubtype
           , 'quantityChart' => $quantityChart]);
 
@@ -293,7 +293,7 @@ class ManagerAnalyticsController extends Controller
         $farm = Farm::findOrFail($farm_id);
         $crops = $farm->crops;
 
-        return view('manager_comparecrop', ['farm_id' => $farm_id, 'crops' => $crops, 'id'=>0]);
+        return view('manager_compareCrop', ['farm_id' => $farm_id, 'crops' => $crops, 'id'=>0]);
     }
 
 
@@ -379,7 +379,7 @@ class ManagerAnalyticsController extends Controller
         $quantityKeys = ['quantity', 'quantity_(litres)', 'no_of_units'];
         $quantityChart = $this->fetchCropExpenseQuantitiesCompare($crop_id1, $crop_id2,$quantityKeys, $farm_id);
 
-        return view('manager_comparecrop', [
+        return view('manager_compareCrop', [
             'farm_id' => $farm_id,
             'crops' => $crops,
             'expenseChart' => $expenseChart,

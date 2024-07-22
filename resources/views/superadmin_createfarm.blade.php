@@ -160,7 +160,7 @@
                                        <input hidden name='request_id' value="{{$request['id']}}">
                                         
                                        <div class="text-center mt-4 ">
-                                            <button class="btn text-light btn-brown" type="submit">Next</button>
+                                            <button class="btn text-light btn-brown" type="submit">Create</button>
                                         </div>
                                     </div>
                                 </div>
