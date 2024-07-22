@@ -142,6 +142,13 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="row">
+                            <div class="d-flex light">
+                                <h5>Expenses from {{Carbon\Carbon::parse($from_date)->format('d M, Y')}} to {{Carbon\Carbon::parse($to_date)->format('d M, Y')}}</h5>
+                            </div>
+                        </div>
+
                     </div>
                    
                     <div class="row mt-5">

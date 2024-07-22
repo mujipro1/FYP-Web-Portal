@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(FarmExpense::class);
     }
+    public function isManager()
+{
+    return $this->role === 'manager'; // Assuming you have a 'role' column
+}
+
 }

@@ -22,6 +22,20 @@
         @yield('content')
     </div>
 
+    @if(Session::get('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        {{Session::forget('success')}}
+        @endif
+
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
 
 
     <div class="d-flex container-fluid section background-image">
@@ -29,7 +43,7 @@
             <h1><b>{{ __('messages.welcome') }}</b></h1>
             <p>{{__('messages.welcome_message')}}</p>
             <div class='col'>
-                <button class="btn-brown" onClick="window.location.href = '/signup'"
+                <button class="btn-brown"  onclick="scrollToSignup()"
                     >{{__('messages.get_started')}}</button>
             </div>
         </div>
@@ -128,7 +142,7 @@
                         </div>
 
                         <div class='text-center'>
-                            {{__('messages.dont_have_account')}}<a href="/signup">{{__('messages.signup')}}</a>
+                            {{__('messages.dont_have_account')}} <a href="/signup">{{__('messages.signup')}}</a>
                     </form>
 
 
@@ -142,7 +156,12 @@
     <div id="footer">
         @include('components.footer')
     </div>
-
+</body>
     <script src="{{ asset('js/alert.js') }}"></script>
+    <script>
+      function scrollToSignup() {
+            document.getElementById('signup').scrollIntoView({ behavior: 'smooth' });
+        }   
+    </script>
 
 </html>

@@ -19,7 +19,7 @@ const farmExpenseData = [
     {
         "head" : "Labor",
         'entry':[
-            'Total Amount'
+            'Total'
         ],
         'dropdown':[
             {'Purpose':['Machinery Maintenance', 'Building Maintenance', 'Others']}

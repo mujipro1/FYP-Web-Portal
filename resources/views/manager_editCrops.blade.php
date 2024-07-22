@@ -146,7 +146,6 @@
                                     </div>
                                     <div class=" mt-4 d-flex">
                                             <label class="w-75" for="status">Change Status</label>
-                                            <input hidden name="crop_id" value="{{ $crop['id'] }}">
                                             <select class="form-select" name="status" id="status">
                                                 <option value="">Select Status</option>
                                             </select>

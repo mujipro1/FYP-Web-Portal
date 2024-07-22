@@ -35,73 +35,79 @@ Route::get('/signup', function () {
     return view('signup');
 });
 
-// Route::get('/manager', function () {
-//     return view('manager');
-// });
+Route::post('/submit-answers', 'App\Http\Controllers\SuperAdminController@submit_answers')->name('submit_answers');
+
 
 Route::post("login", "App\Http\Controllers\UserController@login")->name('login');
 
-Route::get('/manager/farms', 'App\Http\Controllers\ManagerController@render_farms_page')->name('manager.farms');
-Route::get('/manager/farmDetails/{farm_id}', 'App\Http\Controllers\ManagerController@render_get_farm_details_page')->name('manager.farmdetails');
-Route::get('/manager/configuration/{farm_id}', "App\Http\Controllers\ManagerController@render_configuration_page")->name('manager.configuration');
-Route::get('/manager/addCrop/{farm_id}', 'App\Http\Controllers\ManagerController@addCrop')->name('manager.addCrop');
-Route::get('/manager/editDeras/{farm_id}', 'App\Http\Controllers\ManagerController@editDeras')->name('manager.editDeras');
-Route::get('/manager/editCrops/{farm_id}', 'App\Http\Controllers\ManagerController@editCrops')->name('manager.editCrops');
-Route::post('/manager/configuration_form', 'App\Http\Controllers\ManagerController@configurationForm_submit')->name('manager.configurationForm');
-Route::post('/manager/editDerasPost', 'App\Http\Controllers\ManagerController@editDerasPost')->name('manager.editDerasPost');
-Route::post('/manager/addDerasPost', 'App\Http\Controllers\ManagerController@addDerasPost')->name('manager.addDerasPost');
-Route::post('/manager/editCropsPost', 'App\Http\Controllers\ManagerController@editCropsPost')->name('manager.editCropsPost');
-Route::get('/manager/configureExpenses/{farm_id}', 'App\Http\Controllers\ManagerController@configureExpenses')->name('manager.configureExpenses');
-Route::get('/manager/configureFarmExpense/{farm_id}', 'App\Http\Controllers\ManagerController@configureFarmExpense')->name('manager.configureFarmExpense');
-Route::get('/manager/configureCropExpense/{farm_id}', 'App\Http\Controllers\ManagerController@configureCropExpense')->name('manager.configureCropExpense');
-Route::post('/manager/saveExpenses/{farm_id}/{id}', 'App\Http\Controllers\ManagerController@saveExpenses')->name('manager.saveExpenses');
+Route::middleware('is_manager')->group(function () {
+    Route::get('/manager/farms', 'App\Http\Controllers\ManagerController@render_farms_page')->name('manager.farms');
+    Route::get('/manager/farmDetails/{farm_id}', 'App\Http\Controllers\ManagerController@render_get_farm_details_page')->name('manager.farmdetails');
+    Route::get('/manager/configuration/{farm_id}', "App\Http\Controllers\ManagerController@render_configuration_page")->name('manager.configuration');
+    Route::get('/manager/addCrop/{farm_id}', 'App\Http\Controllers\ManagerController@addCrop')->name('manager.addCrop');
+    Route::get('/manager/editDeras/{farm_id}', 'App\Http\Controllers\ManagerController@editDeras')->name('manager.editDeras');
+    Route::get('/manager/editCrops/{farm_id}', 'App\Http\Controllers\ManagerController@editCrops')->name('manager.editCrops');
+    Route::post('/manager/configuration_form', 'App\Http\Controllers\ManagerController@configurationForm_submit')->name('manager.configurationForm');
+    Route::post('/manager/editDerasPost', 'App\Http\Controllers\ManagerController@editDerasPost')->name('manager.editDerasPost');
+    Route::post('/manager/addDerasPost', 'App\Http\Controllers\ManagerController@addDerasPost')->name('manager.addDerasPost');
+    Route::post('/manager/editCropsPost', 'App\Http\Controllers\ManagerController@editCropsPost')->name('manager.editCropsPost');
+    Route::get('/manager/configureExpenses/{farm_id}', 'App\Http\Controllers\ManagerController@configureExpenses')->name('manager.configureExpenses');
+    Route::get('/manager/configureFarmExpense/{farm_id}', 'App\Http\Controllers\ManagerController@configureFarmExpense')->name('manager.configureFarmExpense');
+    Route::get('/manager/configureCropExpense/{farm_id}', 'App\Http\Controllers\ManagerController@configureCropExpense')->name('manager.configureCropExpense');
+    Route::post('/manager/saveExpenses/{farm_id}/{id}', 'App\Http\Controllers\ManagerController@saveExpenses')->name('manager.saveExpenses');
+
+    Route::get('/manager/cropdetails/{farm_id}/{crop_id}', 'App\Http\Controllers\ManagerController@cropdetails')->name('manager.cropdetails');
+
+    Route::get('/manager/render_workers/{farm_id}', 'App\Http\Controllers\ManagerController@render_workers')->name('manager.render_workers');
+    Route::post('/manager/addworker', 'App\Http\Controllers\ManagerController@addworker')->name('manager.addworker');
+    Route::post('/manager/delete', 'App\Http\Controllers\ManagerController@workerDelete')->name('workers.delete');
+    Route::post('/manager/revoke', 'App\Http\Controllers\ManagerController@workerRevoke')->name('workers.revoke');
+    
+    
+    Route::get('/get-deras/{crop_id}', 'App\Http\Controllers\ManagerController@getDerasForCrop');
+    Route::get('/get-all-deras/{farmId}', 'App\Http\Controllers\ManagerController@getAllDeras')->name('get_all_deras');
+    
+    Route::post('/manager/analytics', 'App\Http\Controllers\ManagerAnalyticsController@analytics')->name('manager.analytics');
+    
+    Route::get('/manager/singlecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@singlecrop')->name('manager.singlecrop');
+    Route::post('/manager/singlecropPost', 'App\Http\Controllers\ManagerAnalyticsController@singlecropPost')->name('manager.singlecropPost');
+    
+    Route::get('/manager/comparecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@comparecrop')->name('manager.comparecrop');
+    Route::post('/manager/comparecropPost', 'App\Http\Controllers\ManagerAnalyticsController@comparecropPost')->name('manager.comparecropPost');
+    
+    
+    Route::post('/update-crop-status', 'App\Http\Controllers\ManagerController@updateCropStatus')->name('manager.updateCropStatus');
+    Route::get('/manager/farm_history/{farm_id}', 'App\Http\Controllers\ManagerController@farm_history')->name('manager.farm_history');
+    Route::post('/manager/FarmStatusSearchPOST', 'App\Http\Controllers\ManagerController@FarmStatusSearchPOST')->name('manager.FarmStatusSearchPOST');
+    
+});
 
 
-Route::get('/manager/render_cropexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@render_cropexpense')->name('manager.render_cropexpense');
-Route::post('/manager/add_cropexpense', 'App\Http\Controllers\ManagerController@add_cropexpense')->name('manager.add_cropexpense');
-Route::get('/manager/view_cropexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@view_cropexpense')->name('manager.view_cropexpense');
-Route::get('/manager/view_cropexpense_details/{farm_id}/{worker}/{expense_id}', 'App\Http\Controllers\ManagerController@view_cropexpense_details')->name('manager.view_cropexpense_details');
-Route::post('manager/manager_applyExpenseSearch', 'App\Http\Controllers\ManagerController@manager_applyExpenseSearch')->name('manager.manager_applyExpenseSearch');
-
-Route::get('/manager/cropdetails/{farm_id}/{crop_id}', 'App\Http\Controllers\ManagerController@cropdetails')->name('manager.cropdetails');
-
-Route::get('/manager/render_farmexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@render_farmexpense')->name('manager.render_farmexpense');
-Route::post('/manager/add_farmexpense', 'App\Http\Controllers\ManagerController@add_farmexpense')->name('manager.add_farmexpense');
-Route::get('/manager/view_farmexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@view_farmexpense')->name('manager.view_farmexpense');
-Route::get('/manager/view_farmexpense_details/{farm_id}/{worker}/{expense_id}', 'App\Http\Controllers\ManagerController@view_farmexpense_details')->name('manager.view_farmexpense_details');
-Route::post('manager/manager_applyExpenseSearchfarm', 'App\Http\Controllers\ManagerController@manager_applyExpenseSearchfarm')->name('manager.manager_applyExpenseSearchfarm');
-
-Route::get('/manager/render_workers/{farm_id}', 'App\Http\Controllers\ManagerController@render_workers')->name('manager.render_workers');
-Route::post('/manager/addworker', 'App\Http\Controllers\ManagerController@addworker')->name('manager.addworker');
-Route::post('/manager/delete', 'App\Http\Controllers\ManagerController@workerDelete')->name('workers.delete');
-Route::post('/manager/revoke', 'App\Http\Controllers\ManagerController@workerRevoke')->name('workers.revoke');
+Route::middleware('is_manager_and_expense_farmer')->group(function () {
+    Route::get('manager/reconciliation/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@reconciliation')->name('manager.reconciliation');
+    Route::get('/manager/view_farmexpense_details/{farm_id}/{worker}/{expense_id}', 'App\Http\Controllers\ManagerController@view_farmexpense_details')->name('manager.view_farmexpense_details');
+    Route::get('/manager/render_farmexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@render_farmexpense')->name('manager.render_farmexpense');
+    Route::get('/manager/view_cropexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@view_cropexpense')->name('manager.view_cropexpense');
+    Route::post('/manager/add_cropexpense', 'App\Http\Controllers\ManagerController@add_cropexpense')->name('manager.add_cropexpense');
+    Route::post('manager/manager_applyExpenseSearch', 'App\Http\Controllers\ManagerController@manager_applyExpenseSearch')->name('manager.manager_applyExpenseSearch');
+    Route::post('/manager/add_farmexpense', 'App\Http\Controllers\ManagerController@add_farmexpense')->name('manager.add_farmexpense');
+    Route::post('manager/manager_applyExpenseSearchfarm', 'App\Http\Controllers\ManagerController@manager_applyExpenseSearchfarm')->name('manager.manager_applyExpenseSearchfarm');
+    Route::get('/manager/view_farmexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@view_farmexpense')->name('manager.view_farmexpense');
+    Route::get('/manager/view_cropexpense_details/{farm_id}/{worker}/{expense_id}', 'App\Http\Controllers\ManagerController@view_cropexpense_details')->name('manager.view_cropexpense_details');
+    Route::get('/manager/render_cropexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@render_cropexpense')->name('manager.render_cropexpense');
+});
 
 
-Route::get('manager/reconciliation/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@reconciliation')->name('manager.reconciliation');
+Route::middleware('is_superadmin')->group(function () {
+    Route::get('/superadmin', 'App\Http\Controllers\SuperAdminController@render_superadmin_page')->name('superadmin');
+    Route::get('/superadmin/requests', 'App\Http\Controllers\SuperAdminController@render_request_page')->name('superadmin.requests');
+    Route::post('/superadmin/createfarm', 'App\Http\Controllers\SuperAdminController@render_createfarm')->name('superadmin.render_createfarm');
+    Route::post('/superadmin/submit_createfarm', 'App\Http\Controllers\SuperAdminController@submit_createfarm')->name('superadmin.submit_createfarm');
+});
 
-Route::get('/get-deras/{crop_id}', 'App\Http\Controllers\ManagerController@getDerasForCrop');
-Route::get('/get-all-deras/{farmId}', 'App\Http\Controllers\ManagerController@getAllDeras')->name('get_all_deras');
+Route::middleware('is_expense_farmer')->group(function () {
+    Route::get('/expense_farmer', 'App\Http\Controllers\ManagerController@render_expense_farmer')->name('expense_farmer');
+});
 
-
-Route::get('/superadmin', 'App\Http\Controllers\UserController@render_superadmin_page')->name('superadmin');
-Route::get('/superadmin/requests', 'App\Http\Controllers\SuperAdminController@render_request_page')->name('superadmin.requests');
-Route::post('/superadmin/createfarm', 'App\Http\Controllers\SuperAdminController@render_createfarm')->name('superadmin.render_createfarm');
-Route::post('/superadmin/submit_createfarm', 'App\Http\Controllers\SuperAdminController@submit_createfarm')->name('superadmin.submit_createfarm');
-
-
-Route::get('/expense_farmer', 'App\Http\Controllers\ManagerController@render_expense_farmer')->name('expense_farmer');
-
-
-Route::get('/manager/analytics/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@analytics')->name('manager.analytics');
-Route::post('/manager/analytics', 'App\Http\Controllers\ManagerAnalyticsController@analytics')->name('manager.analytics');
-
-Route::get('/manager/singlecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@singlecrop')->name('manager.singlecrop');
-Route::post('/manager/singlecropPost', 'App\Http\Controllers\ManagerAnalyticsController@singlecropPost')->name('manager.singlecropPost');
-
-Route::get('/manager/comparecrop/{farm_id}', 'App\Http\Controllers\ManagerAnalyticsController@comparecrop')->name('manager.comparecrop');
-Route::post('/manager/comparecropPost', 'App\Http\Controllers\ManagerAnalyticsController@comparecropPost')->name('manager.comparecropPost');
-
-
-Route::post('/update-crop-status', 'App\Http\Controllers\ManagerController@updateCropStatus')->name('manager.updateCropStatus');
-Route::get('/manager/farm_history/{farm_id}', 'App\Http\Controllers\ManagerController@farm_history')->name('manager.farm_history');
-Route::post('/manager/FarmStatusSearchPOST', 'App\Http\Controllers\ManagerController@FarmStatusSearchPOST')->name('manager.FarmStatusSearchPOST');
+// Route::middleware('is_sales_farmer')->group(function () {
+    // });

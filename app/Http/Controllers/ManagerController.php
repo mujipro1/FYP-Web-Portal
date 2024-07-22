@@ -23,6 +23,7 @@ class ManagerController extends Controller
     {
         $user = Session::get('manager');
         $farms = Farm::where('user_id', $user->id)->get();
+        
         return view('manager_farms', ['farms' => $farms]);
     }
 
@@ -318,6 +319,9 @@ class ManagerController extends Controller
     public function editCrops($farm_id){
         $farm = Farm::with('crops')->find($farm_id);
         $crops = $farm->crops;
+        if (count($crops) == 0){
+            return redirect()->back()->with('error', 'No crops in your farm!');
+        }
 
         return view('manager_editCrops', ['farm' => $farm, 'crops' => $crops, 'farm_id' => $farm_id]);
     }
@@ -586,8 +590,8 @@ class ManagerController extends Controller
             $user->role = 'sales_farmer';
         }
 
-        // $user->password = bcrypt($request->input('password'));
-        $user->password = $request->input('password');
+        $user->password = bcrypt($request->input('password'));
+        // $user->password = $request->input('password');
 
         $user->save();
 

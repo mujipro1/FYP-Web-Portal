@@ -110,7 +110,7 @@
 
                                         <div class="labelcontainer" style='padding:0px 3px;!important'>
                                             <label class='light w-75'>Workers</label>
-                                            <label class='w-50'>2</label>
+                                            <label class='w-50'>{{count($workers)}}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -334,8 +334,8 @@
 
 
                                         @if (count($farm->crops) == 0)
-                                        <div class="mx-3 text-center">
-                                            <p class=''>No crops configured yet</p>
+                                        <div class="m-3 text-center">
+                                            <p class='light'>No crops configured yet</p>
                                         </div>
                                         @endif
 
@@ -456,6 +456,7 @@
 </body>
 <script src="{{ asset('js/alert.js') }}"></script>
 <script src="{{ asset('js/ManagerSidebar.js') }}"></script>
+<script src="{{ asset('js/handleAnalytics.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
@@ -474,50 +475,6 @@ function handleWorkerClick() {
 function handleCropClick(crop_id) {
     window.location.href = "{{ route('manager.cropdetails' , ['farm_id' => $farm['id'], 'crop_id' => ':crop_id'] )}}"
         .replace(':crop_id', crop_id);
-}
-
-function handleAnalytics() {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const midYearDate = new Date(currentYear, 6, 1); // July 1st
-
-    let fromDate, toDate;
-
-    if (currentDate < midYearDate) {
-        fromDate = new Date(currentYear, 0, 1); // January 1st
-    } else {
-        fromDate = midYearDate;
-    }
-
-    toDate = currentDate;
-
-    const fromDateString = fromDate.toISOString().split('T')[0];
-    const toDateString = toDate.toISOString().split('T')[0];
-
-    form = document.getElementById('analytics-form');
-
-    const farmIdInput = document.createElement('input');
-    farmIdInput.type = 'hidden';
-    farmIdInput.name = 'farm_id';
-    farmIdInput.value = "{{ $farm['id'] }}";
-
-    const fromDateInput = document.createElement('input');
-    fromDateInput.type = 'hidden';
-    fromDateInput.name = 'from_date';
-    fromDateInput.value = fromDateString;
-
-    const toDateInput = document.createElement('input');
-    toDateInput.type = 'hidden';
-    toDateInput.name = 'to_date';
-    toDateInput.value = toDateString;
-
-  
-    form.appendChild(farmIdInput);
-    form.appendChild(fromDateInput);
-    form.appendChild(toDateInput);
-
-    document.body.appendChild(form);
-    form.submit();
 }
 
 

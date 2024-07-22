@@ -35,17 +35,21 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 mt-3 sidebarcol">
-                    <div class="SuperAdminSidebar sidebar"></div>
-                </div>
-                <div class="col-md-10 ">
+                <div class="col-md-10 offset-md-1 section">
 
-
-
-                    <div class="container ">
-                        <div class="text-center py-4">
-                            <h3>Requests</h3>
-                        </div>
+                    <div class="container mt-4">
+                    <div class="d-flex justify-content-between align-items-center mb-5 my-3">
+                        <a href="{{ route('superadmin') }}" class="back-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class='svg' viewBox="0 0 24 24" width="512"
+                                height="512">
+                                <path
+                                    d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
+                            </svg>
+                        </a>
+                        <h3 class="flex-grow-1 text-center mb-0">Requests</h3>
+                        <div style='visibility:hidden;' class="invisible"></div>
+                    </div>
+                
 
                         <div class="row px-3 mt-3">
                             <div class="col-md-5 offset-md-1 px-3">
@@ -59,10 +63,6 @@
                                 </div>
                             </div>
 
-
-
-
-
                         </div>
                         <div class="row p-3">
                             <div class="col-md-10 p-3 offset-md-1">
@@ -74,39 +74,43 @@
                                     @foreach($requests as $request)
 
 
-                                    <div class="request-item" data-status="{{ $request->status }}">
+                                    <div class="request-item" data-status="{{ strtolower($request['status']) }}">
                                         <div class="box-cont row my-4">
                                             <div class="col-md-9">
-                                                <h5 class='px-3 pt-3'>{{$request['user_info']['name']}}</h5>
+                                                <h5 class='px-3 pt-3'>{{$request['user_info']['farmerName']}}</h5>
                                                 <p class=' px-3 text-success'>{{$request['created_at']}}</p>
                                                 <div class="px-3 labelcontainer1">
                                                     <label class=' light w-25'>Farm Name</label>
-                                                    <label>{{$request['farm_info']['name']}}</label>
+                                                    <label>{{$request['farm_info']['farmName']}}</label>
                                                 </div>
                                                 <div class="px-3 labelcontainer1">
                                                     <label class=' light w-25'>City</label>
-                                                    <label>{{$request['farm_info']['city']}}</label>
+                                                    <label>{{$request['farm_info']['farmCity']}}</label>
                                                 </div>
                                                 <div class="px-3 labelcontainer1">
                                                     <label class=' light w-25'>Acres</label>
-                                                    <label>{{$request['farm_info']['number_of_acres']}}</label>
+                                                    <label>{{$request['farm_info']['acres']}}</label>
                                                 </div>
                                                 <div class="px-3 labelcontainer1">
                                                     <label class=' light w-25'>Has Deras</label>
-                                                    <label>{{$request['farm_info']['has_deras']}}</label>
+                                                    <label>{{$request['farm_info']['deras'] == 0 ? 'No' : 'Yes'}}</label>
                                                 </div>
+                                                @if($request['farm_info']['deras'] > 0)
                                                 <div class="px-3 labelcontainer1">
                                                     <label class=' light w-25'>No of Deras</label>
-                                                    <label>{{$request['farm_info']['number_of_deras']}}</label>
+                                                    <label>{{$request['farm_info']['deras']}}</label>
                                                 </div>
+                                                @endif
                                                 <div class="px-3 labelcontainer1">
                                                     <label class=' light w-25'>Address</label>
-                                                    <label>{{$request['farm_info']['address']}}</label>
+                                                    <label>{{$request['farm_info']['farmAddress']}}</label>
                                                 </div>
                                             </div>
                                             <div class='col-md-3 py-4 text-center'>
                                                 <div class="d-flex justify-content-center">
-                                                    @if ($request['status'] == 'pending')
+                                                    
+                                                <!-- convert to lowercase then check -->
+                                                    @if(strtolower($request['status']) == 'pending')
                                                     <svg class='mb-3 svg mx-2' xmlns="http://www.w3.org/2000/svg"
                                                         id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512"
                                                         height="512">
@@ -119,7 +123,7 @@
 
                                                     <p>{{$request['status']}}</p>
                                                 </div>
-                                                @if ($request['status'] == 'pending')
+                                                @if(strtolower($request['status']) == 'pending')
                                                 <form method="POST"
                                                     action="{{ route('superadmin.render_createfarm') }}">
                                                     @csrf
@@ -153,7 +157,6 @@
 
 </body>
 <script src="{{ asset('js/alert.js') }}"></script>
-<script src="{{ asset('js/SuperadminSidebar.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>

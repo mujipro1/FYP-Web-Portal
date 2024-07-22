@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,11 +25,11 @@
     <div class="container my-5">
         <div class="row box-cont">
             <div class="col-md-6">
-                <img  id='signup-image' style='width:100%'/>
+                <img id='signup-image' style='width:100%'/>
             </div>
             <div class="col-md-6" id="form-container">
                 <div id="get-started" style="height:100%">
-                    <div class="d-flex justify-content-center align-items-center flex-column" style="height:100%" >
+                    <div class="d-flex justify-content-center align-items-center flex-column" style="height:100%">
                         <h3>Get Registered!</h3>
                         <p class='text-center p-3'>Register your farm with us by answering some short questions by our agent Hina!</p>
                         <button class="text-light btn-brown" onclick="handleGetStartedClick()">Start</button>
@@ -49,8 +48,13 @@
                                 </div>
                             </div>
                             <form id="question-form" class='fixed-form' onsubmit="handleNextQuestion(event)">
-                                <input type="text" id="answer-input" autofocus />
-                                <button type="submit" class='next-button'>Next</button>
+                                <div class="d-flex justify-content-end">
+                                    <input type="text" id="answer-input" autofocus />
+                                    <button type="submit" class='next-button'>Next</button>
+                                </div>
+                            </form>
+                            <form id="signup-form" class='d-none' action="{{route('submit_answers')}}" method='post'>
+                                @csrf    
                             </form>
                         </div>
                     </div>
@@ -59,16 +63,15 @@
         </div>
     </div>
 
-
     <div id="footer">
         @include('components.footer')
     </div>
 
 </div>
 
-
-
     <script src="{{ asset('js/alert.js') }}"></script>
     <script src="{{ asset('js/signup.js') }}"></script>
+    <script src="{{ asset('js/data/cityData.js') }}"></script>
 
+</body>
 </html>

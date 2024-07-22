@@ -44,13 +44,16 @@
                 <div class="col-md-10 section offset-md-1 ">
 
                     <div class="d-flex  justify-content-between align-items-center my-4">
-                        <a href="{{ route('manager.analytics', ['farm_id' => $farm_id]) }}" class="back-button">
+                    <form action="{{route('manager.analytics')}}" method='post' id='analytics-form'>
+                        @csrf
+                        <button type='button' class="btn back-button"  onclick='handleAnalytics()'>
                             <svg xmlns="http://www.w3.org/2000/svg" class='svg' viewBox="0 0 24 24" width="512"
                                 height="512">
                                 <path
                                     d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                             </svg>
-                        </a>
+                        </button>
+                        </form>
                         <h3 class="flex-grow-1 text-center mb-0">Crop Comparison</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
@@ -182,6 +185,7 @@
 <script src="{{ asset('js/alert.js') }}"></script>
 <script src="{{ asset('js/ManagerSidebar.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
+<script src="{{ asset('js/handleAnalytics.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 @if ($id == 1)
 <script src="{{ $expenseChart->cdn() }}"></script>

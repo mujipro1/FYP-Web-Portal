@@ -155,7 +155,8 @@ body{
 
 
 .signup-cont{
-  background-color: rgba(245, 245, 245, 0.795);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 20px;
 }
 

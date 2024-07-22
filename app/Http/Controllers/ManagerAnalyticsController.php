@@ -14,8 +14,9 @@ class ManagerAnalyticsController extends Controller
     {  
 
         $farm_id = $request->input('farm_id');
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
 
-    
         $farm = Farm::findOrFail($farm_id);
         $crops = $farm->crops->where('active', 1);
     
@@ -35,7 +36,10 @@ class ManagerAnalyticsController extends Controller
             ]);
 
 
-            $farm_expenses = FarmExpense::where('farm_id', $farm_id)->get();
+            $farm_expenses = FarmExpense::where('farm_id', $farm_id)
+            ->whereBetween('date', [$from_date, $to_date])
+            ->get();
+
             $expenseData = [];
             foreach ($farm_expenses as $expense) {
                 $expenseType = $expense->expense_type;
@@ -60,20 +64,21 @@ class ManagerAnalyticsController extends Controller
         
         $chartsSubtype = [];
         foreach ($expenseTypes as $expenseType) {
-            $chartsSubtype[$expenseType] = $this->generateExpenseSubtypeChart($farm_id, $expenseType, 0);
+            $chartsSubtype[$expenseType] = $this->generateExpenseSubtypeChart($farm_id, $expenseType, 0, $from_date, $to_date);
         }
                 
 
   
-    return view('manager_analytics', ['chart' => $chart, 'farm_id' => $farm_id, 'chart2' => $chart2, 'charts' => $chartsSubtype]);
+    return view('manager_analytics', ['chart' => $chart, 'farm_id' => $farm_id, 'chart2' => $chart2, 'charts' => $chartsSubtype, 'from_date' => $from_date, 'to_date' => $to_date]);
 } 
 
 
-    private function generateExpenseSubtypeChart($farm_id, $expenseType, $id, $crop_id = 0)
+    private function generateExpenseSubtypeChart($farm_id, $expenseType, $id, $from_date , $to_date , $crop_id = 0)
     {
         if ($id == 0){
             $expenses = FarmExpense::where('farm_id', $farm_id)
             ->where('expense_type', $expenseType)
+            ->whereBetween('date', [$from_date, $to_date])
             ->get();
         } else {
             $expenses = Expense::where('crop_id', $crop_id)
@@ -182,7 +187,7 @@ class ManagerAnalyticsController extends Controller
         
         $chartsSubtype = [];
         foreach ($expenseTypes as $expenseType) {
-            $chartsSubtype[$expenseType] = $this->generateExpenseSubtypeChart($farm_id, $expenseType, 1, $crop_id);
+            $chartsSubtype[$expenseType] = $this->generateExpenseSubtypeChart($farm_id, $expenseType, $crop_id, null , null, 1);
         }
 
 
