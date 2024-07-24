@@ -11,7 +11,8 @@ class FarmWorker extends Model
     protected $fillable = [
         'farm_id',
         'user_id',
-        'access'
+        'access',
+        'wallet'
     ];
 
     /**

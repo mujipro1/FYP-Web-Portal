@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 fieldsContainer.classList.remove('hidden');
                 document.getElementById('submitdiv').classList.remove('hidden');
-                document.getElementById('paidByOwner').classList.remove('hidden');
             }
 
             // Populate entry fields if they exist
@@ -127,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 fieldsContainer.classList.remove('hidden');
                 document.getElementById('submitdiv').classList.remove('hidden');
-                document.getElementById('paidByOwner').classList.remove('hidden');
             }
 
             // Populate textbox fields if they exist

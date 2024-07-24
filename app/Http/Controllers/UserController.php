@@ -15,16 +15,17 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        // use Hashing to check for password
+
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         $user = User::where('email', $credentials['email'])->first();
+
         if (!($user && password_verify($credentials['password'], $user->password))) {
                 return redirect()->route('home')->with('error', 'Invalid email or password');
             }
-            
-            // // check without auth
-            // if (!($user && $credentials['password'] == $user->password)) {
-            //     return redirect()->route('home')->with('error', 'Invalid email or password');
-            // }
             
             else{
                 if ($user) {

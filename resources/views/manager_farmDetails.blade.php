@@ -35,7 +35,6 @@
         @endif
 
 
-
         <div class="container-fluid">
             <div class="row">
                 <div class="mt-3 sidebarcol">
@@ -128,101 +127,47 @@
                                 <div class="box-cont p-4">
                                     <div class="d-flex justify-content-between">
                                         <h4 class='light'>Farm Status</h4>
-                                        <button class="btn  mx-3 btn-brown" onclick='handleActivity()'>Activity</button>
+                                        <div class="d-flex">
+                                            <button class="btn btn-brown" onclick='handleAddCrop()'>Add New Crop
+                                                <svg class='mb-1 mx-1 svg' style='fill:white;' height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm1-11h4v2h-4v4h-2v-4h-4v-2h4v-4h2z"/></svg>
+                                            </button>
+                                            <button class="btn  mx-3 btn-brown" onclick='handleActivity()'>Farm History</button>
+                                        </div>
                                     </div>
-                                    <p class='light fsmall'>View current farm status, apply filter to view status at any
-                                        date</p>
 
-                                    <form action="{{route('manager.FarmStatusSearchPOST')}}" method='POST'>
-                                        @csrf
-                                        <div class="row">
-                                            <input type="hidden" name="farm_id" value="{{$farm['id']}}">
-
-                                            <div class="col-md-5">
-                                                <input type="date" id="date" name="date" class="form-control"
-                                                    value="{{date('Y-m-d')}}" style='margin:0px;'>
-                                            </div>
-
-                                            <!-- search nutton -->
-                                            <div class="col-md-3 mb-5">
-                                                <button class="btn" type='submit'>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class='svg'
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-                                                        id="Capa_1" x="0px" y="0px" viewBox="0 0 513.749 513.749"
-                                                        style="enable-background:new 0 0 513.749 513.749;"
-                                                        xml:space="preserve" width="512" height="512">
-                                                        <g>
-                                                            <path
-                                                                d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15   S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0   c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160   s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z" />
-                                                        </g>
-                                                    </svg>
-                                                </button>
+                                    <div class="row" id="cropsContainer">
+                                        @foreach($farm->crops as $crop)
+                                        @if($crop['active'] == 1)
+                                        <div
+                                            class="col-md-3 mt-4 my-2 crop {{ $crop['active'] == '1' ? 'active-crop' : 'passive-crop' }}">
+                                            <div class="selected-crop" style="background-color:#f1f1f1"
+                                                onclick="handleCropClick('{{$crop['id']}}')">
+                                                <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}"
+                                                    class="selected-crop-image" />
+                                                <div class="d-flex justify-content-between">
+                                                    <h5 class="m-2 my-3">{{$crop['identifier']}}</h5>
+                                                    <div class="greenCircle mx-2"></div>
+                                                </div>
+                                                @if ($crop['variety'] != null)
+                                                <div class="light mx-2 fsmall">{{$crop['variety']}}</div>
+                                                @else
+                                                <div class="light mx-2 fsmall">No variety specified</div>
+                                                @endif
                                             </div>
                                         </div>
-                                    </form>
-
-                                    <div class="table-responsive" style='height:40vh;'>
-                                        <table id='' class="table table-scroll ">
-                                            <form method="POST" action="{{ route('manager.updateCropStatus') }}"
-                                                id="crop-status-form">
-                                                @csrf
-                                                <thead>
-                                                    <tr>
-                                                        <th>Crop Name</th>
-                                                        <th>Sow Date</th>
-                                                        <th>Acres</th>
-                                                        <th>Variety</th>
-                                                        <th>Status</th>
-                                                        <th>Remarks</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($farm->crops as $crop)
-                                                    @php
-                                                    $latestUpdate = $latestCropUpdates->where('crop_id', $crop->id)->first();
-                                                    @endphp
-                                                    @if ($crop['active'] == 1)
-                                                    <tr>
-                                                        <td>{{$crop['name']}}</td>
-                                                        <td>{{Carbon\Carbon::parse($crop['sow_date'])->format('d M Y')}}
-                                                        </td>
-                                                        <td>{{$crop['acres']}}</td>
-                                                        <td>{{$crop['variety']}}</td>
-
-                                                        <td>
-                                                            <select disabled name="status[{{$crop['id']}}]"
-                                                                class="form-select" aria-label="Default select example"
-                                                                style='cursor:pointer;' id="status-{{$crop['id']}}">
-                                                                <option value="{{$crop['status']}}" selected>
-                                                                    {{$crop['status']}}</option>
-                                                                <option value="Germination">Germination</option>
-                                                                <option value="Vegetative">Vegetative</option>
-                                                                <option value="Flowering">Flowering</option>
-                                                                <option value="Fruiting">Fruiting</option>
-                                                                <option value="Harvesting">Harvesting</option>
-                                                            </select>
-                                                        </td>
-
-                                                        <td>
-                                                            <input type="text" name="remarks[{{$crop['id']}}]"  value="{{ $latestUpdate->remarks ?? '' }}"
-                                                                class="form-control" id="remarks-{{$crop['id']}}"
-                                                                disabled>
-                                                        </td>
-
-                                                      
-                                                        <td>
-                                                            <button type="button" class="btn btn-brown"
-                                                                id="button-{{$crop['id']}}"
-                                                                onclick="enableSelect('{{ $crop['id'] }}')">Edit</button>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-                                                    @endforeach
-                                                </tbody>
-                                            </form>
-                                        </table>
+                                        @endif
+                                        @endforeach
                                     </div>
+
+
+
+                                    @if (count($farm->crops) == 0)
+                                    <div class="m-3 text-center">
+                                        <p class='light'>No crops configured yet</p>
+                                    </div>
+                                    @endif
+
+
                                 </div>
                             </div>
 
@@ -272,13 +217,16 @@
                                                 </p>
                                             </div>
                                             <div class="col-md-3">
-                                                <form action="{{route('manager.analytics')}}" method='post' id='analytics-form'>
+                                                <form action="{{route('manager.analytics')}}" method='post'
+                                                    id='analytics-form'>
                                                     @csrf
-                                                    <div class="text-end  d-flex justify-content-center align-items-end h-100 flex-column">
+                                                    <div
+                                                        class="text-end  d-flex justify-content-center align-items-end h-100 flex-column">
                                                         <button type='button' class="btn btn-brown" style="width:70px;"
                                                             onclick='handleAnalytics()'>
                                                             <svg xmlns="http://www.w3.org/2000/svg" id="configuration"
-                                                                class='svg' viewBox="0 0 24 24" width="512" height="512">
+                                                                class='svg' viewBox="0 0 24 24" width="512"
+                                                                height="512">
                                                                 <path
                                                                     d="M18,12h0a2,2,0,0,0-.59-1.4l-4.29-4.3a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42L15,11H5a1,1,0,0,0,0,2H15l-3.29,3.29a1,1,0,0,0,1.41,1.42l4.29-4.3A2,2,0,0,0,18,12Z" />
                                                             </svg>
@@ -295,49 +243,6 @@
 
                                 <div class="box-cont mt-4">
                                     <div class="row">
-                                        <div class="text-start">
-                                            <h4 class='light'>Crops</h4>
-                                        </div>
-
-                                        <!-- add a radio button to select active or passive crops -->
-                                        <div class="crop-filter d-flex justify-content-start">
-                                            <div class="m-3">
-                                                <input type="radio" class='form-check-input' id='active'
-                                                    name="cropFilter" value="active" checked
-                                                    onclick="filterCrops('active')" style='cursor:pointer;'>
-                                                <label for='active'>Active</label>
-                                            </div>
-                                            <div class="m-3">
-                                                <input type="radio" id='passive' class='form-check-input'
-                                                    name="cropFilter" value="passive" onclick="filterCrops('passive')"
-                                                    style='cursor:pointer;'>
-                                                <label class='passive'>Passive</label>
-                                            </div>
-                                        </div>
-                                        <div class="row" id="cropsContainer">
-                                            @foreach($farm->crops as $crop)
-                                            <div
-                                                class="col-md-6 my-2 crop {{ $crop['active'] == '1' ? 'active-crop' : 'passive-crop' }}">
-                                                <div class="selected-crop" style="background-color:#f1f1f1"
-                                                    onclick="handleCropClick('{{$crop['id']}}')">
-                                                    <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}"
-                                                        class="selected-crop-image" />
-                                                    <div class="d-flex justify-content-between">
-                                                        <h5 class="m-2 my-3">{{$crop['identifier']}}</h5>
-                                                        <div class="greenCircle mx-2"></div>
-                                                    </div>
-                                                    <div class="light mx-2 fsmall">{{$crop['status']}}</div>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                        </div>
-
-
-                                        @if (count($farm->crops) == 0)
-                                        <div class="m-3 text-center">
-                                            <p class='light'>No crops configured yet</p>
-                                        </div>
-                                        @endif
 
                                     </div>
                                 </div>
@@ -473,44 +378,14 @@ function handleWorkerClick() {
 }
 
 function handleCropClick(crop_id) {
-    window.location.href = "{{ route('manager.cropdetails' , ['farm_id' => $farm['id'], 'crop_id' => ':crop_id'] )}}"
+    window.location.href = "{{ route('manager.cropdetails' , ['farm_id' => $farm['id'], 'crop_id' => ':crop_id', 'route_id' => 0 ])}}"
         .replace(':crop_id', crop_id);
 }
 
-
-
-function filterCrops(filter) {
-    var activeCrops = document.querySelectorAll('.active-crop');
-    var passiveCrops = document.querySelectorAll('.passive-crop');
-
-    if (filter === 'active') {
-        activeCrops.forEach(function(crop) {
-            crop.style.display = 'block';
-        });
-        passiveCrops.forEach(function(crop) {
-            crop.style.display = 'none';
-            
-        });
-    } else if (filter === 'passive') {
-       
-        activeCrops.forEach(function(crop) {
-            crop.style.display = 'none';
-        });
-        passiveCrops.forEach(function(crop) {
-            crop.style.display = 'block';
-        });
-    }
+function handleAddCrop() {
+    window.location.href = "{{ route('manager.addCrop' , ['farm_id' => $farm['id']] )}}"
 }
-filterCrops('active');
 
-
-
-// for passive, change greenCircle to redCircle and vice versa
-
-document.querySelectorAll('.passive-crop').forEach(function(crop) {
-    crop.querySelector('.greenCircle').classList.add('redCircle');
-    crop.querySelector('.greenCircle').classList.remove('greenCircle');
-});
 
 
 function enableSelect(cropId) {
@@ -532,7 +407,6 @@ function enableSelect(cropId) {
 function handleActivity() {
     window.location.href = "{{ route('manager.farm_history' , ['farm_id' => $farm['id']] )}}"
 }
-
 </script>
 
 </html>

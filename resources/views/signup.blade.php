@@ -71,7 +71,7 @@
 
     <script src="{{ asset('js/alert.js') }}"></script>
     <script src="{{ asset('js/signup.js') }}"></script>
-    <script src="{{ asset('js/data/cityData.js') }}"></script>
+    <script src="{{ asset('js/data/citydata.js') }}"></script>
 
 </body>
 </html>

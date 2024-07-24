@@ -15,7 +15,7 @@ use App\Models\Expense;
 use App\Models\FarmExpense;
 use App\Models\ExpenseConfiguration;
 use App\Models\FarmWorker;
-use App\Models\CropStatusUpdate;
+use App\Models\Reconciliation;
 
 class ManagerController extends Controller
 {
@@ -39,22 +39,12 @@ class ManagerController extends Controller
         $workers = FarmWorker::where('farm_id', $farm_id)->get();
         $users = User::whereIn('id', $workers->pluck('user_id'))->get();
 
-        $activeCrops = $farm->crops->where('active', 1);
-
-        $latestUpdates = CropStatusUpdate::whereIn('crop_id', $activeCrops->pluck('id'))
-                            ->select('crop_id', DB::raw('MAX(created_at) as latest_update'))
-                            ->groupBy('crop_id')
-                            ->pluck('latest_update', 'crop_id');
-
-        $latestCropUpdates = CropStatusUpdate::whereIn('created_at', $latestUpdates)->get();
-
-        return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users, 'latestCropUpdates' => $latestCropUpdates]);
+        return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users]);
     }
 
 
     public function configurationForm_submit(Request $request)
     {
-
         $farm_id = $request->input('farm_id');
         $cropsData = json_decode($request->input('cropDetails'), true);
 
@@ -65,7 +55,6 @@ class ManagerController extends Controller
             $crop->year = $cropData['year'];
             $crop->variety = $cropData['variety'];
             $crop->farm_id = $farm_id;
-            $crop->status = $cropData['stage'];
             $crop->acres = $cropData['acres'];
             $crop->identifier = $cropData['name'] . " " . $cropData['year'];
             $crop->sow_date = $cropData['sowingDate'];
@@ -105,6 +94,7 @@ class ManagerController extends Controller
                             ->where('include', 0)
                             ->pluck('expense_head')
                             ->toArray();
+
 
         return view('manager_cropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker]);
     }
@@ -240,7 +230,6 @@ class ManagerController extends Controller
     {
 
         $details = $request->except(['_token', 'date', 'farm_id', 'head','total', 'subhead', 'selected_crop']);
-
         $crop_id = $request->input('selected_crop');
         $crop = Crop::find($crop_id);
 
@@ -260,9 +249,43 @@ class ManagerController extends Controller
             'details' => json_encode($details),
             'user_id' => $user_id
         ]);
-        $worker = $request->input('worker');
 
         $expense->save();
+
+        $added_by = $details['addedBy'];
+        $worker = $details['worker'];
+        
+        if ($worker == 0){
+            // manager added expenses
+            $reconcile = new Reconciliation();
+            $reconcile->user_id = $added_by;
+            $reconcile->amount =   $total;
+            $reconcile->spent = 1;
+            $reconcile->expense_id = $expense->id;
+            $reconcile->date = $request->input('date');
+            $reconcile->save();
+        }
+        else{
+            // worker added expenses
+            $paidByOwner = $request->input('paidbyowner');
+
+            $reconcile = new Reconciliation();
+            $reconcile->user_id = $added_by;
+            $reconcile->amount =   $total;
+            $reconcile->spent = 1;
+            $reconcile->date = $request->input('date');
+            $reconcile->expense_id = $expense->id;
+            $reconcile->save();
+
+            if ($paidByOwner == null){
+                $worker = FarmWorker::where('user_id', $added_by)->first();
+                $worker->wallet = $worker->wallet - $total;
+                $worker->save();
+            }
+
+        }
+
+        $worker = $details['worker'];
 
         return redirect()->route('manager.render_cropexpense', ['farm_id' => $farm_id, 'worker'=>$worker])->with('success', 'Expense added successfully');
     }
@@ -272,14 +295,15 @@ class ManagerController extends Controller
     {
 
         $details = $request->except(['_token', 'date', 'farm_id', 'head','total', 'subhead']);
-
-        $farm_id = $request->input('farm_id');
-        $user_id = Farm::find($farm_id)->user_id;
-
+        
         $total = $request->input('total');
         if(!$total){
             $total = $request->input('amount');
         }
+        $farm_id = $request->input('farm_id');
+        $user_id = Farm::find($farm_id)->user_id;
+
+       
 
         // add farm expense
         $expense = new FarmExpense();
@@ -292,16 +316,100 @@ class ManagerController extends Controller
         $expense->user_id = $user_id;
         $expense->farm_id = $farm_id;
         $expense->save();
+        
+        $added_by = $details['addedBy'];
+        $worker = $details['worker'];
 
-        $worker = $request->input('worker');
+        
+        if ($worker == 0){
+            // manager added expenses
+            $reconcile = new Reconciliation();
+            $reconcile->user_id = $added_by;
+            $reconcile->amount =   $total;
+            $reconcile->spent = 1;
+            $reconcile->date = $request->input('date');
+            $reconcile->farm_expense_id = $expense->id;
+            $reconcile->save();
+        }
+        else{
+            // worker added expenses
+            $paidByOwner = $details['paidbyowner'];
 
+            $reconcile = new Reconciliation();
+            $reconcile->user_id = $added_by;
+            $reconcile->amount =   $total;
+            $reconcile->spent = 1;
+            $reconcile->date = $request->input('date');
+            $reconcile->farm_expense_id = $expense->id;
+            $reconcile->save();
+
+            $worker = FarmWorker::where('user_id', $added_by)->first();
+            $worker->wallet = $worker->wallet - $total;
+            $worker->save();
+
+        }
+        $worker = $details['worker'];
+        
         return redirect()->route('manager.render_farmexpense', ['farm_id' => $farm_id, 'worker'=>$worker])->with('success', 'Expense added successfully');
     }
 
     public function reconciliation($farm_id, $worker){
-        return view('manager_reconciliation', ['farm_id' => $farm_id, 'worker' => $worker]);
+
+        $workers = FarmWorker::where('farm_id', $farm_id)
+        ->with('user')
+        ->get();
+    
+        // Get the latest reconcile with spent = 0 for each worker
+        $reconciles = Reconciliation::where('spent', 0)
+            ->whereIn('user_id', $workers->pluck('user_id'))
+            ->orderBy('created_at', 'desc') // or 'updated_at'
+            ->get()
+            ->groupBy('user_id');
+        
+        // Attach the latest reconcile to each worker
+        foreach ($workers as $x) {
+            $latestReconcile = $reconciles->get($x->user_id)?->first();
+            if ($latestReconcile) {
+                $x->reconcile = $latestReconcile;
+            }
+        }
+        
+        return view('manager_reconciliation', ['farm_id' => $farm_id, 'worker' => $worker, 'workers' => $workers]);
     }
 
+    public function reconciliationHistory($farm_id){
+
+        // get all reconciliation data of the specific farm's manager and workers associated
+        $workers = FarmWorker::where('farm_id', $farm_id);
+        $manager = Farm::find($farm_id)->user_id;
+
+        $reconciles = Reconciliation::whereIn('user_id', $workers->pluck('user_id'))
+            ->orWhere('user_id', $manager)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        return view('manager_reconciliationHistory', ['farm_id' => $farm_id, 'worker'=>0, 'reconciles'=>$reconciles]);
+    }
+
+    public function add_cash(Request $request){
+        $farm_id = $request->input('farm_id');
+        $cash = $request->input('cash');
+        $worker_id = $request->input('workerSelect');
+        
+        $worker = FarmWorker::where('id', $worker_id)->first();
+        $worker->wallet = $worker->wallet + $cash;
+        $worker->save();
+        
+        $reconcile = new Reconciliation();
+        $reconcile->user_id = $worker->user_id;
+        $reconcile->amount =   $cash;
+        $reconcile->spent = 0;
+        $reconcile->date = $request->input('date');
+        $reconcile->save();
+        
+        $worker = $request->input('worker');
+        return redirect()->route('manager.reconciliation', ['farm_id' => $farm_id, 'worker' => $worker])->with('success', 'Cash added successfully');
+    }
 
     public function addCrop($farm_id){
         $farm = Farm::with('deras')->find($farm_id);
@@ -647,49 +755,16 @@ class ManagerController extends Controller
         return view('worker_farms', ['farms' => $farms]);
     }
 
-    public function cropdetails($farm_id, $crop_id){
+    public function cropdetails($farm_id, $crop_id, $route_id){
         $crop = Crop::with('deras')->find($crop_id);
-        return view('manager_cropDetails', ['crop' => $crop, 'farm_id' => $farm_id]);
+        return view('manager_cropDetails', ['crop' => $crop, 'farm_id' => $farm_id, 'route_id' => $route_id]);
     }
 
-    public function updateCropStatus(Request $request){
-
-        foreach ($request->status as $cropId => $status) {
-            $remarks = $request->remarks[$cropId] ?? '';
-            CropStatusUpdate::create([
-                'crop_id' => $cropId,
-                'status' => $status,
-                'remarks' => $remarks,
-                'updated_at' => now(),
-            ]);
-            $crop = Crop::find($cropId);
-            $crop->status = $status;
-            $crop->save();
-        }
-
-        return redirect()->back()->with('success', 'Crop status updated successfully');
-    }
+    
     public function farm_history($farm_id)
     {
-        $farm = Farm::findOrFail($farm_id);
-        
-        // Fetch crop status updates with crop names for the specified farm
-        $cropStatusUpdates = CropStatusUpdate::whereHas('crop', function ($query) use ($farm_id) {
-                $query->where('farm_id', $farm_id);
-            })
-            ->with('crop')
-            ->orderBy('updated_at', 'desc')
-            ->paginate(20);
-
-        return view('manager_farmHistory', compact('farm', 'cropStatusUpdates', 'farm_id'));
+        $crops = Crop::where('farm_id', $farm_id)->get();
+        return view('manager_farmHistory', compact('crops', 'farm_id'));
     }
 
-
-    public function FarmStatusSearchPOST(Request $request)
-    {
-        $farm_id = $request->input('farm_id');
-        $date = $request->input('date');
-
-        
-    }
 }

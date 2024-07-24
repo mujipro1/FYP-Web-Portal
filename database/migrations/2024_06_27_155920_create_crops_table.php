@@ -19,7 +19,6 @@ class CreateCropsTable extends Migration
             $table->date('sow_date');
             $table->date('harvest_date');
             $table->boolean('active')->default(1);
-            $table->string('status');
             $table->string('description')->nullable();
             $table->foreign('farm_id')->references('id')->on('farms')->onDelete('cascade');
             $table->timestamps();

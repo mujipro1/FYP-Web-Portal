@@ -17,6 +17,7 @@ class CreateFarmWorkersTable extends Migration
             $table->foreignId('farm_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('access')->default(1);
+            $table->decimal('wallet', 8, 2)->default(0);
             $table->timestamps();             
         });
     }

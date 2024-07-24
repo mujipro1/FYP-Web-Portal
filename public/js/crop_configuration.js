@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const cropVariety = document.getElementById('variety');
     const cropNameModal = document.getElementById("cropNameModal");
     const cropAcresInput = document.getElementById("cropAcres");
-    const cropStage = document.getElementById("stage");
     const saveCropButton = document.getElementById("saveCropButton");
     const noDeraAlert = document.getElementById("noDeraAlert");
 
@@ -240,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const harvestDate = cropHarvestDate.value;
         const desc = description.value;
         const variety = cropVariety.value;
-        const stage = cropStage.value;
 
         let status;
             for (const statusX of cropStatus) {
@@ -314,7 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
             sowingDate,
             harvestDate,
             variety,
-            stage,
             desc
         };
 

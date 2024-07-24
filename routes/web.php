@@ -56,7 +56,7 @@ Route::middleware('is_manager')->group(function () {
     Route::get('/manager/configureCropExpense/{farm_id}', 'App\Http\Controllers\ManagerController@configureCropExpense')->name('manager.configureCropExpense');
     Route::post('/manager/saveExpenses/{farm_id}/{id}', 'App\Http\Controllers\ManagerController@saveExpenses')->name('manager.saveExpenses');
 
-    Route::get('/manager/cropdetails/{farm_id}/{crop_id}', 'App\Http\Controllers\ManagerController@cropdetails')->name('manager.cropdetails');
+    Route::get('/manager/cropdetails/{farm_id}/{crop_id}/{route_id}', 'App\Http\Controllers\ManagerController@cropdetails')->name('manager.cropdetails');
 
     Route::get('/manager/render_workers/{farm_id}', 'App\Http\Controllers\ManagerController@render_workers')->name('manager.render_workers');
     Route::post('/manager/addworker', 'App\Http\Controllers\ManagerController@addworker')->name('manager.addworker');
@@ -76,10 +76,10 @@ Route::middleware('is_manager')->group(function () {
     Route::post('/manager/comparecropPost', 'App\Http\Controllers\ManagerAnalyticsController@comparecropPost')->name('manager.comparecropPost');
     
     
-    Route::post('/update-crop-status', 'App\Http\Controllers\ManagerController@updateCropStatus')->name('manager.updateCropStatus');
     Route::get('/manager/farm_history/{farm_id}', 'App\Http\Controllers\ManagerController@farm_history')->name('manager.farm_history');
-    Route::post('/manager/FarmStatusSearchPOST', 'App\Http\Controllers\ManagerController@FarmStatusSearchPOST')->name('manager.FarmStatusSearchPOST');
-    
+    Route::post('/manager/add_cash', 'App\Http\Controllers\ManagerController@add_cash')->name('manager.add_cash');
+
+    Route::get('/manager/reconciliationHistory/{farm_id}', 'App\Http\Controllers\ManagerController@reconciliationHistory')->name('manager.reconciliationHistory');
 });
 
 

@@ -23,6 +23,9 @@ class SuperAdminController extends Controller{
             $request->user_info = json_decode($request->user_info, true);
             $request->farm_info = json_decode($request->farm_info, true);
         }
+
+        $requests = $requests->sortByDesc('created_at');
+        
         return view('superadmin_requests', ['requests' => $requests, 'user' => $user]);
     }
     

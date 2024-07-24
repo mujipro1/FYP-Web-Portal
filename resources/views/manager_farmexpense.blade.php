@@ -127,16 +127,29 @@
                                         </div>
                                     </div>
 
+                                    @if($worker == 1)
                                     <div class='col-md-7 m-2 mt-4 hidden ' id='paidByOwner'>
                                         <input type="checkbox" id="paidbyowner" class='form-check-input' style='cursor:pointer;' name="paidbyowner" value="1">
                                         <label class='w-50 mx-3' for="paidbyowner" style='cursor:pointer;'>Paid By Owner</label>
                                     </div>
+                                    @endif
 
 
                                     <div id='submitdiv' class="hidden text-center mt-4">
                                         <button class='btn btn-brown' type="submit">Submit</button>
                                     </div>
+                                    @php 
+                                    if($worker == 0){
+                                        $manager = Session::get('manager');
+                                    }
+                                    else{
+                                        $manager = Session::get('expense_farmer');
+                                    }
+                                    $addedBy = $manager['id'];
+                                    @endphp
+                                    
                                     <input hidden name='worker' value="{{$worker}}">
+                                    <input hidden name='addedBy' value="{{$addedBy}}">
 
                                 </form>
                             </div>

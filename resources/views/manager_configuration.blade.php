@@ -52,9 +52,9 @@
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
 
-                    <div class="row my-4 px-5">
+                    <div class="row section my-4 px-5">
 
-                        <div class="offset-md-1 col-md-5 px-4 py-5">
+                        <div class=" col-md-4 px-4 py-5">
                             <div class="mycard">
                                 <img src="{{ asset('images/crops/Wheat.jpg') }}" alt="" class="img-fluid">
                                 <div class="mycardInner">
@@ -73,7 +73,7 @@
                         </div>
 
 
-                        <div class="col-md-5 px-4 py-5">
+                        <div class="col-md-4 px-4 py-5">
                             <div class="mycard">
                                 <img src="{{ asset('images/farm1.jpg') }}" alt="" class="img-fluid">
                                 <div class="mycardInner">
@@ -92,24 +92,7 @@
                         </div>
 
 
-                        <div class="offset-md-1 col-md-5 py-5 px-4">
-                            <div class="mycard">
-                                <img src="{{ asset('images/crops/Sunflower.jpg') }}" alt="" class="img-fluid">
-                                <div class="mycardInner">
-                                    <div class="py-3 d-flex justify-content-center">
-                                        <div class="line"></div>
-                                    </div>
-                                    <div class="text-center pt-2 ">
-                                        <h4>Add New Crops</h4>
-                                        <p class='fsmall'>Click here to add New crops</p>
-                                    </div>
-                                    <div class="text-center ">
-                                        <button onclick="handleAddCrop()" class='btn btn-primary'>Add Crops</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 py-5 px-4">
+                        <div class="col-md-4 py-5 px-4">
                             <div class="mycard">
                                 <img src="{{ asset('images/farm3.jpg') }}" alt="" class="img-fluid">
                                 <div class="mycardInner">

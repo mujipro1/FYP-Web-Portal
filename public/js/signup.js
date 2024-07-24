@@ -6,7 +6,7 @@ const questions = [
     { id: 5, question: "Which city is your farm located in?", key: "farmCity", type: "dropdown" },
     { id: 6, question: "Could you provide the complete address of your farm?", key: "farmAddress" },
     { id: 7, question: "What is the total area of your farm in acres?", key: "farmArea", type: "number" },
-    { id: 8, question: "Does your farm have any deras?", key: "has_deras", type:"dropdown"},
+    { id: 8, question: "Deras are defined as any subdivisions based on area (acres) in your farm. Does your farm have any deras or subdivisions?", key: "has_deras", type:"dropdown"},
     { id: 9, question: "Please enter the number of deras in your farm.", key: "deras", type: "number" },
     { id: 10, question: "Please enter the number of acres in each dera.", key: "deraAcres" },
     {id: 11, question: "If there is any additional information that you want to provide to us, please share.", key: "remarks"},
@@ -182,6 +182,12 @@ function renderInputField() {
             inputField.addEventListener('change', (e) => {
                 answers[key] = e.target.value;
             });}
+        else if (key == 'email'){
+            inputField.setAttribute('type', 'email');
+        }
+        else if(key == 'phone'){
+            inputField.setAttribute('type', 'phone');
+        }
         else {
             inputField.setAttribute('type', 'text');
         }
@@ -189,6 +195,9 @@ function renderInputField() {
         inputField.value = answers[key] || '';
         form.innerHTML = ''; // Clear previous input field
         form.appendChild(inputField);
+
+        // focus on input field
+        inputField.focus();
     }
 
     const nextButton = document.createElement('button');
