@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Requests;
 use App\Models\Dera;
 use App\Models\Farm;
+use App\Models\Map;
 
 class SuperAdminController extends Controller{
 
@@ -56,7 +57,6 @@ class SuperAdminController extends Controller{
         $no_of_deras = $request->input('numberOfDeras');
         $deraAcres = $request->input('deraAcres');
 
-        //create farm
         $farm = new Farm();
         $farm->user_id = $user_id;
         $farm->name = $farmName;
@@ -65,6 +65,17 @@ class SuperAdminController extends Controller{
         $farm->address = $address;
         $farm->has_deras = $hasDeras;
         $farm->save();
+
+        $or_request = Requests::find($request->input('request_id'));
+        $farm_info = json_decode($or_request->farm_info, true);
+        $map_data = json_decode($farm_info['map'], true);        
+
+        $map = new Map();
+        $map->farm_id = $farm->id;
+
+        $map->coords = json_encode($map_data);
+        $map->save();
+        
 
         //create deras
         if ($hasDeras == 1) {
@@ -89,6 +100,7 @@ class SuperAdminController extends Controller{
             'name' => $user_name, 
             'email' => $email
         ];
+
 
         Mail::to($email)->send(new FarmCreated($farmData));
 
@@ -152,12 +164,65 @@ class SuperAdminController extends Controller{
             $deraAcres = $request->input('deraAcres');
             $remarks = $request->input('remarks');
 
-            $user = User::where('email', $email)->first();
+            $data = [
+                'farmerName' => $farmerName,
+                'email' => $email,
+                'phone' => $phone,
+                'farmName' => $farmName,
+                'farmCity' => $farmCity,
+                'farmAddress' => $farmAddress,
+                'acres' => $acres,
+                'has_deras' => $has_deras,
+                'deras' => $deras,
+                'deraAcres' => $deraAcres,
+                'remarks' => $remarks,
+            ];
+
+            // store data in session
+            Session::put('Preview_data', $data);
+            return redirect()->route('render-preview-answers');
+
+            
+        }
+
+        public function render_preview_answers(){
+            // fetch data from session
+            $data = Session::get('Preview_data');
+            if (!$data) {
+                return redirect()->route('signup');
+            }
+            return view('signup_confirm', ['data' => $data]);
+        }
+
+        public function save_preview_changes(Request $request){
+            $data = $request->all();
+            Session::forget('Preview_data');
+            Session::put('Preview_data', $data);
+            return redirect()->route('render-signupmap');            
+        }
+        public function render_signupmap(){
+            $data = Session::get('Preview_data');
+            if ($data['has_deras'] == 0){
+                $data['deras'] = 0;
+                $data['deraAcres'] = [];
+            }
+            if (!$data) {
+                return redirect()->route('signup');
+            }
+            return view('signup_map', ['data' => $data]);
+        }
+
+        public function map_save(Request $request){
+
+            $data = json_decode($request->input('data'), true);
+            $map = $request->input('deraDetails');
+
+            $user = User::where('email', $data['email'])->first();
             if (!$user) {
                 $user = new User();
-                $user->name = $farmerName;
-                $user->email = $email;
-                $user->phone = $phone;
+                $user->name = $data['farmerName'];
+                $user->email = $data['email'];
+                $user->phone = $data['phone'];
                 $user->role = 'manager';
                 $user->password = bcrypt('password');
                 $user->save();
@@ -166,29 +231,29 @@ class SuperAdminController extends Controller{
             $request = new Requests();
             
             $user_info = [
-                'farmerName' => $farmerName,
-                'email' => $email,
-                'phone' => $phone,
+                'farmerName' => $data['farmerName'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
             ];
 
             $farm_info = [
-                'farmName' => $farmName,
-                'farmCity' => $farmCity,
-                'farmAddress' => $farmAddress,
-                'acres' => $acres,
-                'has_deras' => $has_deras,
-                'deras' => $deras,
-                'deraAcres' => $deraAcres,
+                'farmName' => $data['farmName'],
+                'farmCity' => $data['farmCity'],
+                'farmAddress' => $data['farmAddress'],
+                'acres' => $data['acres'],
+                'has_deras' => $data['has_deras'],
+                'deras' => $data['deras'],
+                'deraAcres' => $data['deraAcres'],
+                'map' => json_encode($map),
             ];
 
             $request->user_info = json_encode($user_info);
             $request->farm_info = json_encode($farm_info);
-            $request->details = $remarks;
+            $request->details = $data['remarks'];
             $request->status = 'pending';
             $request->user_id = $user->id;
             $request->save();
 
-            return redirect()->route('home')->with('success', 'Request submitted successfully');
-
+            return view('thankyou');
         }
 }

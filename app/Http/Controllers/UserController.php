@@ -58,7 +58,21 @@ class UserController extends Controller
         
     }
 
-  
+    public function logout(){
+        if (Session::has('manager')) {
+            Session::forget('manager');
+        } 
+        else if (Session::has('superadmin')) {
+            Session::forget('superadmin');
+        }
+        else if (Session::has('expense_farmer')) {
+            Session::forget('expense_farmer');
+        }
+        else if (Session::has('sales_farmer')) {
+            Session::forget('sales_farmer');
+        }
+        return redirect()->route('home')->with('success', 'Logged out successfully');
+    }
 
 }
 

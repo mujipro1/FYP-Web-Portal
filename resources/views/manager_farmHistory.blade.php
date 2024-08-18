@@ -70,7 +70,7 @@
                     <div class="box-cont my-3">
                         <h4 class='light m-3 my-4'>Crops of {{ $year }}</h4>
                         @foreach($cropsOfYear as $crop)
-                        <div class="col-md-3 my-3 crop {{ $crop['active'] == '1' ? 'active-crop' : 'passive-crop' }}">
+                        <div class="col-md-3 my-3 crop {{ $crop['active'] == '1' ? 'active-crop' : 'passive-crop' }}" style='display:inline-block;'>
                             <div class="selected-crop" style="background-color:#f1f1f1"
                                 onclick="handleCropClick('{{$crop['id']}}')">
                                 <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}"

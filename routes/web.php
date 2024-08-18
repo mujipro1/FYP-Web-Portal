@@ -35,7 +35,7 @@ Route::get('/signup', function () {
     return view('signup');
 });
 
-Route::post('/submit-answers', 'App\Http\Controllers\SuperAdminController@submit_answers')->name('submit_answers');
+Route::get('/logout', 'App\Http\Controllers\UserController@logout')->name('logout');
 
 
 Route::post("login", "App\Http\Controllers\UserController@login")->name('login');
@@ -78,8 +78,17 @@ Route::middleware('is_manager')->group(function () {
     
     Route::get('/manager/farm_history/{farm_id}', 'App\Http\Controllers\ManagerController@farm_history')->name('manager.farm_history');
     Route::post('/manager/add_cash', 'App\Http\Controllers\ManagerController@add_cash')->name('manager.add_cash');
-
+    
     Route::get('/manager/reconciliationHistory/{farm_id}', 'App\Http\Controllers\ManagerController@reconciliationHistory')->name('manager.reconciliationHistory');
+    
+    
+    
+    // maps___________________________
+    
+    Route::get('/manager/maps/{farm_id}', 'App\Http\Controllers\ManagerMapController@render_map_page')->name("manager.maps");
+    Route::post('/manager/mapsave', 'App\Http\Controllers\ManagerMapController@map_save')->name('manager.map.save');
+
+
 });
 
 
@@ -104,6 +113,11 @@ Route::middleware('is_superadmin')->group(function () {
     Route::post('/superadmin/createfarm', 'App\Http\Controllers\SuperAdminController@render_createfarm')->name('superadmin.render_createfarm');
     Route::post('/superadmin/submit_createfarm', 'App\Http\Controllers\SuperAdminController@submit_createfarm')->name('superadmin.submit_createfarm');
 });
+Route::post('/submit-answers', 'App\Http\Controllers\SuperAdminController@submit_answers')->name('submit_answers');
+Route::post('/submit-preview-answers', 'App\Http\Controllers\SuperAdminController@save_preview_changes')->name('save_preview_changes');
+Route::get('/render-preview-answers', 'App\Http\Controllers\SuperAdminController@render_preview_answers')->name('render-preview-answers');
+Route::get('/render-signupmap', 'App\Http\Controllers\SuperAdminController@render_signupmap')->name('render-signupmap');
+Route::post('/superadmin.map_save', 'App\Http\Controllers\SuperAdminController@map_save')->name('superadmin.map_save');
 
 Route::middleware('is_expense_farmer')->group(function () {
     Route::get('/expense_farmer', 'App\Http\Controllers\ManagerController@render_expense_farmer')->name('expense_farmer');
@@ -111,3 +125,4 @@ Route::middleware('is_expense_farmer')->group(function () {
 
 // Route::middleware('is_sales_farmer')->group(function () {
     // });
+

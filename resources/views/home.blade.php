@@ -17,7 +17,7 @@
 <body>
     <div class="container mb-4">
         <div id="navbar">
-        @include('components.navbar')
+        @include('components.nav2')
         </div>
         @yield('content')
     </div>

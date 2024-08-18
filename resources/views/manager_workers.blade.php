@@ -87,7 +87,7 @@
                         <div class="row my-5">
                             <div class="col-md-4 offset-md-1">
                                 @foreach($workers as $worker)
-                                <div class="worker-cont mb-3 p-2">
+                                <div class="box-cont mb-3 p-2">
                                     <div class="my-2 w-100 d-flex justify-content-start align-items-center px-2 py-2">
                                         <img src="{{asset('images/profile.jpg')}}" id='profile-image'
                                             class='mx-2' />
@@ -120,14 +120,16 @@
                                     <hr class='mx-3' />
 
                                     <div class="text-center my-3">
-                                        <button class="btn btn-primary" onclick="confirmAction('revoke', {{$worker->id}})">
+                                        <button class="btn btn-orange px-2 or-width" onclick="confirmAction('revoke', {{$worker->id}})">
                                         @if ($worker->access == 1)  
                                         Revoke Access
                                         @else
                                         Grant Access
                                         @endif
                                         </button>
-                                        <button class="btn btn-danger" onclick="confirmAction('delete', {{$worker->id}})">Delete</button>
+                                        <button class="btn btn-orange2 px-3" onclick="confirmAction('delete', {{$worker->id}})"
+                                        style='background-color:red;'
+                                        >Delete</button>
                                     </div>
 
                                 </div>
@@ -169,7 +171,7 @@
                                         </div>
 
                                         <div class="text-center mt-4 mb-3">
-                                            <button type="submit" class="btn w-25 btn-primary">Add</button>
+                                            <button type="submit" class="btn w-25 btn-orange">Add</button>
                                         </div>
                                         
 

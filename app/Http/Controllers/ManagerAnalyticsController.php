@@ -19,32 +19,33 @@ class ManagerAnalyticsController extends Controller
 
         $farm = Farm::findOrFail($farm_id);
         $crops = $farm->crops->where('active', 1);
-    
-        // Prepare crop data for the chart
+
+
+        $cropAcres = $crops->pluck('acres')->toArray();
         $cropNames = $crops->pluck('name')->toArray();
-        $cropAcres = $crops->pluck('acres')->toArray();       
-
-        $chart = LarapexChart::setType('bar')
+        
+        // Combine crop names and acres for the labels
+        $cropLabels = array_map(function($name, $acres) {
+            return "{$name} : {$acres} acres";
+        }, $cropNames, $cropAcres);
+        
+        $chart = LarapexChart::pieChart()
             ->setTitle('Active Crops')
-            ->setXAxis($cropNames)
+            ->setLabels($cropLabels)  // Labels now show 'Crop Name : Acres acres'
+            ->addData($cropAcres);   // Acres data for chart display
+        
 
-            ->setDataset([
-                [
-                    'name'  => 'Acres',
-                    'data'  => $cropAcres
-                ]
-            ]);
-
-
+            
+            
             $farm_expenses = FarmExpense::where('farm_id', $farm_id)
             ->whereBetween('date', [$from_date, $to_date])
             ->get();
-
+            
             $expenseData = [];
             foreach ($farm_expenses as $expense) {
                 $expenseType = $expense->expense_type;
                 $expenseAmount = intval($expense->total);
-    
+                
                 if (isset($expenseData[$expenseType])) {
                     $expenseData[$expenseType] += $expenseAmount;
                 } else {
@@ -54,23 +55,27 @@ class ManagerAnalyticsController extends Controller
             $expenseNames = array_keys($expenseData);
             $expenseAmounts = array_values($expenseData);
 
+            
             $chart2 = LarapexChart::PieChart()
-                ->setTitle('Farm Expenses')
-                ->addData($expenseAmounts)
-                ->setLabels($expenseNames);
+            ->setTitle('Farm Expenses')
+            ->addData($expenseAmounts)
+            ->setLabels($expenseNames);
 
-
+            if ($expenseData == null){
+                $chart2 = [];
+            }
+            
+            
         $expenseTypes = ['Electricity Bills','Labor', 'Machinery Maintenance', 'Fuel', 'Maintenance & Repairs', 'Tubewells', 'Livestock'];
         
         $chartsSubtype = [];
         foreach ($expenseTypes as $expenseType) {
             $chartsSubtype[$expenseType] = $this->generateExpenseSubtypeChart($farm_id, $expenseType, 0, $from_date, $to_date);
         }
-                
-
-  
-    return view('manager_analytics', ['chart' => $chart, 'farm_id' => $farm_id, 'chart2' => $chart2, 'charts' => $chartsSubtype, 'from_date' => $from_date, 'to_date' => $to_date]);
-} 
+        
+        
+        return view('manager_analytics', ['chart' => $chart, 'farm_id' => $farm_id, 'chart2' => $chart2, 'charts' => $chartsSubtype, 'from_date' => $from_date, 'to_date' => $to_date]);
+    } 
 
 
     private function generateExpenseSubtypeChart($farm_id, $expenseType, $id, $from_date , $to_date , $crop_id = 0)
@@ -221,9 +226,10 @@ class ManagerAnalyticsController extends Controller
             ]);
 
 // ----------------------------
+
         $quantityKeys = ['quantity', 'quantity_(litres)', 'no_of_units'];
         $quantityChart = $this->fetchCropExpenseQuantities($crop_id, $quantityKeys);
-
+        
              
         return view('manager_singleCrop', ['farm_id' => $farm_id, 'crops' => $crops, 'expenseChart' => $expenseChart,
          'id'=>1, 'expenseChartPerAcre' => $expenseChartPerAcre, 'totalExpenses' => $totalExpenses, 'crop'=>$crop, 'charts' => $chartsSubtype
@@ -240,12 +246,15 @@ class ManagerAnalyticsController extends Controller
     $quantityData = [];
     $expenseData = [];
 
+    
+
     foreach ($crop_expenses as $expense) {
         $expenseType = $expense->expense_type;
 
         // Decode the details JSON object
         $details = json_decode($expense->details, true);
         $quantity = 0;
+        
 
         // Check for quantity keys in the details
         foreach ($quantityKeys as $key) {
@@ -253,6 +262,7 @@ class ManagerAnalyticsController extends Controller
                 $quantity += intval($details[$key]);
             }
         }
+        
 
         // Only add to the arrays if there is a quantity
         if ($quantity > 0) {
@@ -271,14 +281,14 @@ class ManagerAnalyticsController extends Controller
             }
         }
     }
-
+    
     // Only proceed if there are quantities
     if (!empty($quantityData)) {
         $expenseNames = array_keys($quantityData);
         $quantityAmounts = array_values($quantityData);
 
         $expenseChart = LarapexChart::barChart()
-            ->setTitle('Crop Quantities')
+            ->setTitle('Quantities (Bags, Litres, Units, etc.)')
             ->addData('Quantity', $quantityAmounts)
             ->setXAxis($expenseNames);
 
@@ -517,7 +527,7 @@ class ManagerAnalyticsController extends Controller
             $quantityAmounts2 = array_values($quantityData2);
 
             $expenseChart = LarapexChart::barChart()
-                ->setTitle('Crop Quantities')
+                ->setTitle('Quantities (Bags, Litres, Units, etc.)')
                 ->addData($crop1_name, $quantityAmounts1)
                 ->addData($crop2_name, $quantityAmounts2)
                 ->setXAxis($expenseNames);

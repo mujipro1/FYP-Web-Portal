@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navBar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/questionaire.css') }}">
     <link rel="stylesheet" href="{{ asset('css/superadmin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     <div class="c1">    
@@ -33,7 +34,7 @@
                         <div class="row">
                         @foreach($farms as $farm)
                             <div class="col-md-4 my-2">
-                                <div class="selected-farm" onclick="handleClick({{ $farm['id'] }})" style="background-color:#f4f4f4;cursor:pointer;">
+                                <div class="selected-farm " onclick="handleClick({{ $farm['id'] }})" style="background-color:white;cursor:pointer;" >
                                     <img src="{{ asset('images/farm1.jpg') }}" class="selected-farm-image" />
                                     <h5 class='mt-3 mx-2'>{{ $farm['name'] }}</h5>
                                     <div class='mx-2 light fsmall'>{{ $farm['city'] }}</div>

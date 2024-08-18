@@ -10,17 +10,21 @@ use App\Models\Farm;
 use App\Models\User;
 use App\Models\CropDera;
 use App\Models\Crop;
+use App\Models\Map;
 use App\Models\Dera;
 use App\Models\Expense;
 use App\Models\FarmExpense;
 use App\Models\ExpenseConfiguration;
 use App\Models\FarmWorker;
 use App\Models\Reconciliation;
+use Jenssegers\Agent\Agent;
 
 class ManagerController extends Controller
 {
     public function render_farms_page()
     {
+
+       
         $user = Session::get('manager');
         $farms = Farm::where('user_id', $user->id)->get();
         
@@ -34,12 +38,28 @@ class ManagerController extends Controller
     }
 
     public function render_get_farm_details_page($farm_id)
+
     {
         $farm = Farm::with(['crops.deras'])->find($farm_id);
         $workers = FarmWorker::where('farm_id', $farm_id)->get();
         $users = User::whereIn('id', $workers->pluck('user_id'))->get();
 
-        return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users]);
+        $map_info = Map::where('farm_id', $farm_id)->get();
+        if ($map_info->isEmpty()){
+            $map_info = 'EMPTY';
+        }
+        else{
+            $map_info = json_decode($map_info->first()->coords);
+        }
+        $agent = new Agent();
+
+        if ($agent->isMobile()) {
+            return view('manager_farmDetailsMobile', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info]);
+        } else {
+            return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info]);
+        }
+
+
     }
 
 
@@ -302,8 +322,6 @@ class ManagerController extends Controller
         }
         $farm_id = $request->input('farm_id');
         $user_id = Farm::find($farm_id)->user_id;
-
-       
 
         // add farm expense
         $expense = new FarmExpense();

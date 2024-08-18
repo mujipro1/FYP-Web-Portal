@@ -66,7 +66,7 @@
                                         <p class='fsmall'>Click here to edit crops</p>
                                     </div>
                                     <div class="text-center ">
-                                        <button onclick="handleEditCrop()" class='btn btn-primary'>Edit Crops</button>
+                                        <button onclick="handleEditCrop()" class='btn or-width btn-orange'>Edit Crops</button>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                         <p class='fsmall'>Click here to edit deras</p>
                                     </div>
                                     <div class="text-center">
-                                        <button onclick="handleEditDeras()" class='btn btn-primary'>Edit Deras</button>
+                                        <button onclick="handleEditDeras()" class='btn or-width btn-orange'>Edit Deras</button>
                                     </div>
                                 </div>
                             </div>
@@ -100,12 +100,12 @@
                                         <div class="line"></div>
                                     </div>
                                     <div class="text-center pt-2 ">
-                                        <h4>Configure Expenses</h4>
+                                        <h4>Config. Expenses</h4>
                                         <p class='fsmall'>Click here to configure Expenses</p>
                                     </div>
                                     <div class="text-center ">
-                                        <button onclick="handleConfigureExpenses()" class='btn btn-primary'>Configure
-                                            Expenses</button>
+                                        <button onclick="handleConfigureExpenses()" class='btn or-width btn-orange'>Configure
+                                            </button>
                                     </div>
                                 </div>
                             </div>

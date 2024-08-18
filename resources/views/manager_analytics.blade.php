@@ -110,6 +110,8 @@
 
                     <hr class="my-4">
 
+                    <h3 class='text-center' >Farm Analytics</h3>
+
                     <div class="container">
                         <form  method="POST">
                             @csrf
@@ -152,23 +154,51 @@
                     </div>
                    
                     <div class="row mt-5">
-                        <div class="col-md-6">
-                            <div class="box-cont">
-                                {!! $chart2->container() !!}
-                            </div>
+                        <div class="col-md-6" >
+                            @if ($chart2 == [])
+                                <div class="box-cont d-flex justify-content-center align-items-center" style='height: 50vh;'>
+                                    <h6 class="light">No data available for Farm Expenses<br> in given time span</h6>
+                                </div>
+                            @else    
+                                <div class="box-cont" style='height: 50vh;'>
+                                    {!! $chart2->container() !!}
+                                </div>
+                            @endif
                         </div>
-                        <div class="col-md-6">
-                            <div class="box-cont">
+                        <div class="col-md-6" >
+                            <div class="box-cont " style='height: 50vh;'>
                                 {!! $chart->container() !!}
                             </div>
                         </div>
                     </div>
 
                     <hr class="my-4">
+
+                    @php
+                        $expenseTypes = [];
+                        foreach($charts as $expenseType => $chartx){
+                            $expenseTypes[] = $expenseType;
+                        }                        
+                    @endphp
+
+
+                    <div class="col-md-6">
+                        <div class="labelcontainer">
+                            <label class="label w-50">Expense Type</label>
+                            <!-- drop down -->
+                            <select class="form-select" id="expenseType" name="expenseType">
+                                <option value="">Select Expense Type</option>
+                                @foreach ($expenseTypes as $expenseType)
+                                <option value="{{ $expenseType }}">{{ $expenseType }}</option>
+                                @endforeach
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                    </div>
                     
                     <div class="row">
                         @foreach ($charts as $expenseType => $chartx)
-                        <div class="col-md-6 p-3">
+                        <div class="col-md-6 p-3"  id="{{ $expenseType }}" hidden>
                             <div class="box-cont">
                                 <h5>{{ $expenseType }} Expenses</h5>
                                 {!! $chartx->container() !!}
@@ -193,7 +223,9 @@
 </body>
 <script src="{{ $chart->cdn() }}"></script>
 {{ $chart->script() }}
-{{ $chart2->script() }}
+@if ($chart2 != [])
+    {{ $chart2->script() }}
+@endif
 @foreach ($charts as $chartx)
     {!! $chartx->script() !!}
 @endforeach
@@ -231,6 +263,29 @@ document.addEventListener('DOMContentLoaded', function() {
         fromDateInput.value = fromDate.toISOString().split('T')[0];
         toDateInput.value = toDate.toISOString().split('T')[0];
     });
+
+    document.getElementById('expenseType').addEventListener('change', function() {
+        const expenseType = this.value;
+        const expenseTypes = @json($expenseTypes);
+
+        if (expenseType === 'all') {
+            expenseTypes.forEach(type => {
+                const element = document.getElementById(type);
+                element.hidden = false;
+            });
+            return;
+        }
+        expenseTypes.forEach(type => {
+            const element = document.getElementById(type);
+            
+            if (type === expenseType) {
+                element.hidden = false;
+            } else {
+                element.hidden = true;
+            }
+        });
+    });
+   
 </script>
 
 </html>

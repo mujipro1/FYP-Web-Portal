@@ -184,8 +184,8 @@
 
 <script src="{{ asset('js/alert.js') }}"></script>
 <script src="{{ asset('js/ManagerSidebar.js') }}"></script>
-<script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('js/handleAnalytics.js') }}"></script>
+<script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 @if ($id == 1)
 <script src="{{ $expenseChart->cdn() }}"></script>

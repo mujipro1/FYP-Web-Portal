@@ -173,11 +173,12 @@
 
 .selected-crop{
   padding: 10px;
-  background-color: #efefefa3;
+  background-color: #ebebebb7;
   border-radius: 10px;
   margin: 5px;
   min-height: 150px;
   cursor: pointer;
+
 }
 
 .selected-crop:hover{
@@ -196,6 +197,7 @@
   height: 110px;
   margin-right: 5px;
   border-radius: 5px;
+  width: 100%;
 }
 
 .selected-farm-image{

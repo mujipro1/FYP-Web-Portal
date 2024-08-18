@@ -17,7 +17,7 @@
 <body>
 <div class="container mb-4">
         <div id="navbar">
-        @include('components.navbar')
+        @include('components.nav2')
         </div>
         @yield('content')
     </div>
@@ -32,7 +32,7 @@
                     <div class="d-flex justify-content-center align-items-center flex-column" style="height:100%">
                         <h3>Get Registered!</h3>
                         <p class='text-center p-3'>Register your farm with us by answering some short questions by our agent Hina!</p>
-                        <button class="text-light btn-brown" onclick="handleGetStartedClick()">Start</button>
+                        <button class="btn btn-orange or-width" onclick="handleGetStartedClick()">Start</button>
                     </div>
                 </div>
                 <div id="questionnaire" class="d-none">
@@ -50,7 +50,7 @@
                             <form id="question-form" class='fixed-form' onsubmit="handleNextQuestion(event)">
                                 <div class="d-flex justify-content-end">
                                     <input type="text" id="answer-input" autofocus />
-                                    <button type="submit" class='next-button'>Next</button>
+                                    <button type="submit" class='btn btn-orange'>Next</button>
                                 </div>
                             </form>
                             <form id="signup-form" class='d-none' action="{{route('submit_answers')}}" method='post'>

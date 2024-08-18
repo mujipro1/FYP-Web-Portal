@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     headSelect.addEventListener('change', (e) => {
         const selectedHead = e.target.value;
 
+
         // Clear previous subhead options and fields
         subheadSelect.innerHTML = '<option value="">Select Subtype</option>';
         fieldsContainer.innerHTML = '';
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     option.value = subhead;
                     option.textContent = subhead;
                     subheadSelect.appendChild(option);
+                    
                 });
                 subheadContainer.classList.remove('hidden');
             }
@@ -146,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fieldsContainer.classList.remove('hidden');
             }
         }
+
     });
 
     const calculateTotal = () => {
@@ -175,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (form) {
+        
         form.addEventListener('submit', (e) => {
             const selectedCrop = document.querySelector('.selected');
             if (!selectedCrop) {

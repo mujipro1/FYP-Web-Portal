@@ -18,11 +18,9 @@ const farmExpenseData = [
     },
     {
         "head" : "Labor",
+        'sub-head':['Machinery Maintenance', 'Building Maintenance', 'Others'],
         'entry':[
             'Total'
-        ],
-        'dropdown':[
-            {'Purpose':['Machinery Maintenance', 'Building Maintenance', 'Others']}
         ],
         'textbox':['Description']
     },

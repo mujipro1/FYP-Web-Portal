@@ -365,7 +365,6 @@ body{
 
 .mycard{
   height: 50vh;
-  /* border: 1px solid #009797; */
   border-radius: 15px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   overflow: hidden;
@@ -377,6 +376,7 @@ body{
   background-color: white;
   transform: translateY(-20px);
 }
+
 
 .line{
   width: 30px;
@@ -468,4 +468,165 @@ body{
 .greenRow{
   background-color: #00a000 !important;
   color:white;
+}
+
+.map-cont{
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #ffffffa3;
+  height: 80vh;
+}
+#map{
+  border: 2px solid #bcbcbc93;
+}
+#map{
+  height: 90%;
+}
+
+:root{
+  --brown : #5c2d16;
+
+}
+
+.pr1{
+  /* background-color: #003e3e; */
+  background-color: #48bf53;
+}
+
+.pr2{
+  /* background-color: #007c7c; */
+  background-color: #004d25;
+}
+
+.pr3{
+  /* background-color: #00b1b1; */
+  background-color: #11823b;
+}
+
+.pr4{
+  /* background-color: #02dfdf; */
+  background-color: #48bf53;
+}
+
+.btn-orange{
+  background-color:transparent;
+  /* color: #ff9900; */
+  color: var(--brown);
+  border-radius: 30px;
+  border: 2px solid var(--brown);
+  transition: all 0.5s;
+  box-sizing: border-box;
+  min-width: 50px;
+  /* border to be inside */
+  padding: 3px;
+}
+
+.btn-orange svg{
+  fill: var(--brown);
+  transition: all 0.5s;
+}
+.or-width{
+  width:140px;
+}
+.btn-orange:hover{
+  background-color: var(--brown);
+  color: white;
+}
+.btn-orange:hover svg{
+  fill: white;
+}
+.btn-orange:active{
+  background-color: var(--brown);
+  color: white;
+}
+
+.btn-orange2{
+  background-color: var(--brown);
+  min-width: 50px;
+  color: white;
+  border-radius: 30px;
+  transition: all 0.5s;
+  border:none;
+}
+.btn-orange2 svg{
+  fill: white;
+  transition: all 0.5s;
+}
+
+.btn-orange2:hover{
+  background-color: var(--brown);
+  color: white;
+}
+
+.smallCard{
+  border-radius: 5px;
+  height: 50px;
+  width: 150px;
+  color:white;
+  background:linear-gradient(-60deg, #004d25 0%, #11823b 100%);
+}
+
+.bigCard{
+  border-radius: 15px;
+  height: 40vh;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.bigCard:hover{
+  transform: scale(1.05) rotate(2deg);
+}
+
+.svgDiv{
+  height: 65%;
+}
+
+.svgDiv img{
+  height: 60%;
+  padding: 10px;
+  align-items: end;
+  
+}
+
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.tooltip-text {
+  visibility: hidden;
+  min-width: 120px;
+  max-width: 200px;
+  min-height: 45px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  background-color: #ffffff;
+  color: #575757;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-radius: 15px;
+  padding:  15px;
+  position: fixed;
+  z-index: 100;
+  left: 55%;
+  font-size: small;
+  top: 15%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+nav li:hover{
+  cursor: pointer;
+}
+
+nav .dropdown-item:active{
+  background-color: rgb(116, 116, 116);
 }
