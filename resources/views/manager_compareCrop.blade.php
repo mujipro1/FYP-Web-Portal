@@ -20,6 +20,20 @@
 <body>
     <div class="c1">
 
+    @if(Session::get('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        {{Session::forget('success')}}
+        @endif
+
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
         <div class="container mb-4">
             <div id="navbar">
                 @include('components.navbar')

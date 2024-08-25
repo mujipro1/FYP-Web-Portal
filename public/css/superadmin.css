@@ -173,16 +173,31 @@
 
 .selected-crop{
   padding: 10px;
-  background-color: #ebebebb7;
+  background-color: #ffffffb7;
   border-radius: 10px;
   margin: 5px;
   min-height: 150px;
   cursor: pointer;
+  box-shadow: 0px 0px 5px rgba(198, 198, 198, 0.621);
 
 }
+.selecteds{
+  background-color: #6e6e6e !important;
+  color:white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+  min-height: 150px;
+  cursor: pointer;
+}
+.selecteds .light{
+  color:white;
+}
+
 
 .selected-crop:hover{
-  background-color: #e8e8e8;
+  background-color: #d2d2d29b;
+  box-shadow: none;
 }
 .popular-crop{
   padding: 5px 10px;
@@ -193,12 +208,13 @@
   cursor: pointer;
 }
 
-.selected-crop img{
+.selected-crop img, .selecteds img{
   height: 110px;
   margin-right: 5px;
   border-radius: 5px;
   width: 100%;
 }
+
 
 .selected-farm-image{
   width: 100%;

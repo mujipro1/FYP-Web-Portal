@@ -26,7 +26,19 @@
         @yield('content')
     </div>
 
+    @if(Session::get('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        {{Session::forget('success')}}
+        @endif
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
         <!-- Modal -->
 <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
     <div class="modal-dialog">

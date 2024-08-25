@@ -23,6 +23,19 @@
         @yield('content')
     </div>
 
+    @if(Session::get('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        {{Session::forget('success')}}
+        @endif
+
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
         
     <div class="container-fluid">
         <div class="row">
@@ -70,8 +83,14 @@
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
+    farmer = @json($farmer);
     function handleClick(farm_id){
-        const baseUrl = "{{ route('manager.render_cropexpense', ['farm_id' => ':farm_id', 'worker' => 1]) }}";
+        if (farmer == 0){
+            baseUrl = "{{ route('manager.render_cropexpense', ['farm_id' => ':farm_id', 'worker' => 1]) }}";
+        }
+        if (farmer == 1){
+            baseUrl = "{{ route('manager.render_sales_page', ['farm_id' => ':farm_id']) }}";
+        }
         const url = baseUrl.replace(':farm_id', farm_id);
         window.location.href = url;
     }

@@ -148,6 +148,21 @@
                                         </table>
                                     </div>
                                     </div>
+
+                                    <h5 class="my-4">Expense Summary</h5>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <label class="w-50" for="total">Total Amount</label>
+                                            <label class="w-50" for="total_value">{{$totalAmount}}</label>
+                                        </div>
+                                        <div class="d-flex">
+                                            <label class="w-50" for="total">Total Expenses</label>
+                                            <label class="w-50" for="total_value">{{$totalExpenses}}</label>
+                                        </div>
+
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -173,23 +188,23 @@
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
 function handlefarmExpenseClick() {
-    window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id] )}}"
+    window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id,'worker' => $worker] )}}"
 }
 
 function handlecropExpenseClick() {
-    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm_id] )}}"
+    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm_id,'worker' => $worker] )}}"
 }
 
 function handleViewExpenseClick() {
-    window.location.href = "{{ route('manager.view_cropexpense' , ['farm_id' => $farm_id] )}}"
+    window.location.href = "{{ route('manager.view_cropexpense' , ['farm_id' => $farm_id,'worker' => $worker] )}}"
 }
 
 function handleExpenseRowClick(expense_id) {
-    window.location.href = `/manager/view_farmexpense_details/{{$farm_id}}/${expense_id}`;
+    window.location.href = `/manager/view_farmexpense_details/{{$farm_id}}/{{$worker}}/${expense_id}`;
 }
 
 function handleReconClick() {
-    window.location.href = "{{ route('manager.reconciliation' , ['farm_id' => $farm_id] )}}"
+    window.location.href = "{{ route('manager.reconciliation' , ['farm_id' => $farm_id, 'worker' => $worker] )}}"
 }
 
 expenseDropdown = document.getElementById('expense_type');

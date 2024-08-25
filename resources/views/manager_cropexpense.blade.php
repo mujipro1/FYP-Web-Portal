@@ -28,13 +28,19 @@
         @yield('content')
     </div>
 
-        @if(Session::get('success'))
+    @if(Session::get('success'))
         <div class="alert alert-success">
             {{Session::get('success')}}
         </div>
         {{Session::forget('success')}}
         @endif
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
         <div class="container-fluid">
         <div class="row">
                 @if ($worker == 0)
@@ -161,7 +167,6 @@
                                             $addedBy = $manager['id'];
                                             @endphp
                                             
-                                            <input hidden name='worker' value="{{$worker}}">
                                             <input hidden name='addedBy' value="{{$addedBy}}">
                                         </form>
 
@@ -196,17 +201,16 @@
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
     function handleExpenseClick() {
-        window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id, 'worker' => $worker] )}}"
+        window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id])}}"
     }
-
 
     function handleViewExpenseClick() {
 
-        window.location.href = "{{ route('manager.view_cropexpense' , ['farm_id' => $farm_id ,'worker' => $worker])}}"
+        window.location.href = "{{ route('manager.view_cropexpense', ['farm_id' => $farm_id])}}"
     }
 
     function handleReconClick() {
-        window.location.href = "{{ route('manager.reconciliation' , ['farm_id' => $farm_id, 'worker' => $worker])}}"
+        window.location.href = "{{ route('manager.reconciliation' , ['farm_id' => $farm_id])}}"
     }
     
     farm_Id = {{$farm_id}};

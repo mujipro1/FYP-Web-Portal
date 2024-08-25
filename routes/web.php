@@ -89,21 +89,23 @@ Route::middleware('is_manager')->group(function () {
     Route::post('/manager/mapsave', 'App\Http\Controllers\ManagerMapController@map_save')->name('manager.map.save');
 
 
+    // sales
+
 });
 
 
 Route::middleware('is_manager_and_expense_farmer')->group(function () {
-    Route::get('manager/reconciliation/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@reconciliation')->name('manager.reconciliation');
-    Route::get('/manager/view_farmexpense_details/{farm_id}/{worker}/{expense_id}', 'App\Http\Controllers\ManagerController@view_farmexpense_details')->name('manager.view_farmexpense_details');
-    Route::get('/manager/render_farmexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@render_farmexpense')->name('manager.render_farmexpense');
-    Route::get('/manager/view_cropexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@view_cropexpense')->name('manager.view_cropexpense');
+    Route::get('manager/reconciliation/{farm_id}', 'App\Http\Controllers\ManagerController@reconciliation')->name('manager.reconciliation');
+    Route::get('/manager/view_farmexpense_details/{farm_id}/{expense_id}', 'App\Http\Controllers\ManagerController@view_farmexpense_details')->name('manager.view_farmexpense_details');
+    Route::get('/manager/render_farmexpense/{farm_id}', 'App\Http\Controllers\ManagerController@render_farmexpense')->name('manager.render_farmexpense');
+    Route::get('/manager/view_cropexpense/{farm_id}', 'App\Http\Controllers\ManagerController@view_cropexpense')->name('manager.view_cropexpense');
     Route::post('/manager/add_cropexpense', 'App\Http\Controllers\ManagerController@add_cropexpense')->name('manager.add_cropexpense');
     Route::post('manager/manager_applyExpenseSearch', 'App\Http\Controllers\ManagerController@manager_applyExpenseSearch')->name('manager.manager_applyExpenseSearch');
     Route::post('/manager/add_farmexpense', 'App\Http\Controllers\ManagerController@add_farmexpense')->name('manager.add_farmexpense');
     Route::post('manager/manager_applyExpenseSearchfarm', 'App\Http\Controllers\ManagerController@manager_applyExpenseSearchfarm')->name('manager.manager_applyExpenseSearchfarm');
-    Route::get('/manager/view_farmexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@view_farmexpense')->name('manager.view_farmexpense');
-    Route::get('/manager/view_cropexpense_details/{farm_id}/{worker}/{expense_id}', 'App\Http\Controllers\ManagerController@view_cropexpense_details')->name('manager.view_cropexpense_details');
-    Route::get('/manager/render_cropexpense/{farm_id}/{worker}', 'App\Http\Controllers\ManagerController@render_cropexpense')->name('manager.render_cropexpense');
+    Route::get('/manager/view_farmexpense/{farm_id}/', 'App\Http\Controllers\ManagerController@view_farmexpense')->name('manager.view_farmexpense');
+    Route::get('/manager/view_cropexpense_details/{farm_id}/{expense_id}', 'App\Http\Controllers\ManagerController@view_cropexpense_details')->name('manager.view_cropexpense_details');
+    Route::get('/manager/render_cropexpense/{farm_id}', 'App\Http\Controllers\ManagerController@render_cropexpense')->name('manager.render_cropexpense');
 });
 
 
@@ -123,6 +125,13 @@ Route::middleware('is_expense_farmer')->group(function () {
     Route::get('/expense_farmer', 'App\Http\Controllers\ManagerController@render_expense_farmer')->name('expense_farmer');
 });
 
-// Route::middleware('is_sales_farmer')->group(function () {
-    // });
+Route::middleware('is_sales_farmer')->group(function () {
+    Route::get('/sales_farmer', 'App\Http\Controllers\ManagerController@render_sales_farmer')->name('sales_farmer');
+});
 
+
+Route::get('/manager/sales/{farm_id}', 'App\Http\Controllers\ManagerSalesController@render_sales_page')->name('manager.render_sales_page');
+Route::post('/manager/add_sales', 'App\Http\Controllers\ManagerSalesController@add_sales')->name('manager.add_sales');
+Route::get('/manager/view_sales/{farm_id}', 'App\Http\Controllers\ManagerSalesController@view_sales')->name('manager.view_sales');
+Route::post('/manager/apply_salesSearch', 'App\Http\Controllers\ManagerSalesController@apply_salesSearch')->name('manager.apply_salesSearch');
+Route::get('/manager/viewSalesRow/{farm_id}/{sale_id}', 'App\Http\Controllers\ManagerSalesController@viewSalesRow')->name('manager.viewSalesRow');

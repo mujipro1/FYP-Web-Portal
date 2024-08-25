@@ -22,6 +22,20 @@
         @yield('content')
     </div>
 
+    @if(Session::get('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        {{Session::forget('success')}}
+        @endif
+
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
     <div class="container my-5">
         <div class="row box-cont">
             <div class="col-md-6">

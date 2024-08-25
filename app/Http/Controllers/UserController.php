@@ -29,8 +29,10 @@ class UserController extends Controller
             
             else{
                 if ($user) {
+                    Session::put('user', $user);
                     if ($user->role == 'manager') {
                         Session::put('manager', $user);
+                        Session::put('worker', 0);
                         return redirect()->route('manager.farms');
                     } 
                     else if ($user->role == 'superadmin') {
@@ -43,16 +45,18 @@ class UserController extends Controller
                             return redirect()->route('home')->with('error', 'You do not have access to this page');
                         }
                         Session::put('expense_farmer', $user);
+                        Session::put('worker', 1);
                         return  redirect()->route('expense_farmer');
                     }
-                    // else if ($user->role == 'sales_farmer') {
-                        // $worker = FarmWorker::where('user_id', $user->id)->first();
-                        // if ($worker->access == 0) {
-                        //     return redirect()->route('home')->with('error', 'You do not have access to this page');
-                        // }
-                        // Session::put('sales_farmer', $user);
-                        // return  redirect()->route('sales_farmer');
-                    // }
+                    else if ($user->role == 'sales_farmer') {
+                        $worker = FarmWorker::where('user_id', $user->id)->first();
+                        if ($worker->access == 0) {
+                            return redirect()->route('home')->with('error', 'You do not have access to this page');
+                        }
+                        Session::put('sales_farmer', $user);
+                        Session::put('worker', 1);
+                        return  redirect()->route('sales_farmer');
+                    }
                 }   
         }
         
@@ -61,14 +65,17 @@ class UserController extends Controller
     public function logout(){
         if (Session::has('manager')) {
             Session::forget('manager');
+            Session::forget('worker');
         } 
         else if (Session::has('superadmin')) {
             Session::forget('superadmin');
         }
         else if (Session::has('expense_farmer')) {
+            Session::forget('worker');
             Session::forget('expense_farmer');
         }
         else if (Session::has('sales_farmer')) {
+            Session::forget('worker');
             Session::forget('sales_farmer');
         }
         return redirect()->route('home')->with('success', 'Logged out successfully');

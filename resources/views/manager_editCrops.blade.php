@@ -34,6 +34,13 @@
         {{Session::forget('success')}}
         @endif
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
         <div class="container-fluid">
         <div class="row">
                 <div class="mt-3 sidebarcol">

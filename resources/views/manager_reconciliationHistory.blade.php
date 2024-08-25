@@ -33,6 +33,13 @@
         {{Session::forget('success')}}
         @endif
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
 
 
         <div class="container-fluid">
@@ -162,19 +169,16 @@
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
 function handlefarmExpenseClick() {
-    window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id, 'worker'=>$worker]) }}"
+    window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id]) }}"
 }
 
 function handlecropExpenseClick() {
-    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm_id, 'worker'=>$worker]) }}"
+    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm_id]) }}"
 }
 
-function handleRecClick() {
-    window.location.href = "{{ route('manager.reconciliationHistory' , ['farm_id' => $farm_id]) }}"
-}
 
 function handleReconClick() {
-        window.location.href = "{{ route('manager.reconciliation' , ['farm_id' => $farm_id, 'worker' => $worker] )}}"
+        window.location.href = "{{ route('manager.reconciliation' , ['farm_id' => $farm_id] )}}"
     }
 </script>
 

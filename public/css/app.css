@@ -340,12 +340,14 @@ body{
 
 .selected{
   padding: 10px;
-  background-color: #6e6e6e;
+  background-color: #6e6e6e !important;
   color:white;
   border-radius: 10px;
   margin: 5px;
   min-height: 150px;
 }
+
+
 
 .selected img{
   height: 110px;
@@ -353,6 +355,9 @@ body{
   border-radius: 5px;
 }
 
+.selected .light{
+  color: white;
+}
 
 .back-button{
   margin-left: 20px;

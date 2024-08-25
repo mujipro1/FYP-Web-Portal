@@ -33,6 +33,12 @@
         {{Session::forget('success')}}
         @endif
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
 
 
         <div class="container-fluid">
@@ -88,11 +94,11 @@
                                         @if ($worker == 0)
                                         <div class="d-flex justify-content-between">
                                             <p class="mb-3 light">Manage your worker's wallets here</p>
-                                            <button class="btn btn-brown" onclick="handleRecHistory()">History</button>
+                                            <button class="btn btn-orange2 mb-2 or-width" onclick="handleRecHistory()">History</button>
                                         </div>
                                         @foreach($workers as $workerx)
                                         <div class="col-md-6">
-                                            <div class="selected-crop">
+                                            <div class="selected-crop" style='background-color:#f3f3f3;box-shadow:none;'>
                                                 <div
                                                     class="my-2 mb-4 crop w-100 d-flex justify-content-start align-items-center px-2 py-2">
                                                     <img src="{{asset('images/profile.jpg')}}" id='profile-image'
@@ -208,7 +214,6 @@
                                             @csrf
 
                                             <input hidden name="farm_id" value="{{$farm_id}}">
-                                            <input hidden name="worker" id="worker" value="{{$worker}}">
                                             
                                         <div class="col-md-7 my-2 d-flex justify-content-start">
                                             <label class='w-50' for="date">Date</label>
@@ -266,11 +271,11 @@
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
 function handlefarmExpenseClick() {
-    window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id, 'worker'=>$worker]) }}"
+    window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id]) }}"
 }
 
 function handlecropExpenseClick() {
-    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm_id, 'worker'=>$worker]) }}"
+    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm_id]) }}"
 }
 
 function handleRecHistory() {

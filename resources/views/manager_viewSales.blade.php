@@ -25,7 +25,6 @@
             </div>
             @yield('content')
         </div>
-
         @if(Session::get('success'))
         <div class="alert alert-success">
             {{Session::get('success')}}
@@ -43,49 +42,34 @@
 
         <div class="container-fluid">
         <div class="row">
-                @if ($worker == 0)
+            @if($worker == 0)
                 <div class="mt-3 sidebarcol">
                     <div class="ManagerSidebar sidebar"></div>
                 </div>
                 <div class="overlay" id="overlay"></div>
-                @endif
+            @endif
                     <div class="col-md-10 offset-md-1 ">
 
 
                     <div class="container">
 
                         <div class="d-flex justify-content-between align-items-center my-3">
-                            @if ($worker == 0)
-                            <a href="{{ route('manager.farmdetails', ['farm_id' => $farm_id]) }}"
-                            class="back-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg"   class='svg' viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
-                                </a>
-                                <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
-                                <div style='visibility:hidden;' class="invisible"></div>
-                            @else
-                            <a href="{{ route('expense_farmer') }}"
+                          
+                            <a href="{{ route('manager.render_sales_page', ['farm_id'=>$farm_id]) }}"
                             class="back-button">
                                     <svg xmlns="http://www.w3.org/2000/svg"  class='svg'  viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                                 </a>
-                                <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                                <h3 class="flex-grow-1 text-center mb-0">Sales</h3>
                                 <div style='visibility:hidden;' class="invisible"></div>
                                 
-                            @endif
                         </div>
 
                         <div class="row">
                             <div class="p-3">
-                                <div class="button-cont px-4">
-                                    <button class="tab-button" onclick="handlecropExpenseClick()">Crop Expense</button>
-                                    <button class="deselect" onclick="handlefarmExpenseClick()">Farm Expense</button>
-                                    <button class="deselect" onclick="handleReconClick()">Reconciliation</button>
-
-                                </div>
-
 
                                 <div class="box-cont p-5">
 
-                                    <form action="{{route('manager.manager_applyExpenseSearch')}}" method='POST'>
+                                    <form method='POST' action="{{route('manager.apply_salesSearch')}}">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="farm_id" value="{{$farm_id}}">
@@ -95,18 +79,13 @@
                                                     aria-label="Default select example">
                                                     <option value='' selected>Select Crop</option>
                                                     @foreach ($crops as $crop)
-                                                    <option value="{{$crop->id}}">{{$crop->name}}</option>
+                                                    <option value="{{$crop->id}}">{{$crop->identifier}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
-                                            <div class="col-md-3">
-                                                <select class="form-select" id="expense_type" name="expense_type"
-                                                    aria-label="Default select example">
-                                                    <option value='' selected>Select Expense</option>
-                                                </select>
-                                            </div>
 
+                            
                                             <div class="col-md-3">
                                                 <input type="date" id="date" name="date" class="form-control" value=""
                                                     style='margin:0px;'>
@@ -142,37 +121,31 @@
                                                     <tr>
                                                         <th scope="col">Date</th>
                                                         <th scope="col">Crop</th>
-                                                        <th scope="col">Expense</th>
-                                                        <th scope="col">Subtype</th>
+                                                        <th scope="col">Weight(Kgs)</th>
                                                         <th scope="col">Amount</th>
                                                         <th scope="col">Description</th>
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($expenses as $expense)
-                                                    <tr onclick="handleExpenseRowClick({{$expense->id}})"
+                                                    @foreach ($sales as $sale)
+                                                    @php
+                                                    $sale->details = json_decode($sale->details, true);
+                                                    @endphp
+                                                    <tr onclick="handleSaleRowClick({{$sale->id}})"
                                                         style='cursor:pointer;'>
-                                                        <td>{{$expense->date}}</td>
-                                                        <td>{{$expense->crop->name}}</td>
-                                                        <td>{{$expense->expense_type}}</td>
-                                                        <td>{{$expense->expense_subtype}}</td>
-                                                        <td>{{$expense->total}}</td>
-                                                        <!-- convert json to presentable in details -->
-
-                                                        <!-- fetch description from details json -->
-                                                        <!-- check if the field decription exists -->
-                                                        @if (is_array($expense->details) && array_key_exists('description', $expense->details))
-                                                            <td>{{ $expense->details['description'] }}</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
+                                                        <td>{{$sale->date}}</td>
+                                                        <td>{{$sale->crop->identifier}}</td>
+                                                        <td>{{$sale->details['Weight_(KGs)']}}</td>
+                                                        <td>{{$sale->amount}}</td>
+                                                        <td>{{$sale->details['Remarks']}}</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -197,33 +170,9 @@
 
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
-function handlefarmExpenseClick() {
-    window.location.href = "{{ route('manager.render_farmexpense' , ['farm_id' => $farm_id] )}}"
-}
-
-function handlecropExpenseClick() {
-    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm_id] )}}"
-}
-
-function handleViewExpenseClick() {
-    window.location.href = "{{ route('manager.view_cropexpense' , ['farm_id' => $farm_id] )}}"
-}
-
-function handleExpenseRowClick(expense_id) {
-    window.location.href = `/manager/view_cropexpense_details/{{$farm_id}}/${expense_id}`;
-}
-
-function handleReconClick() {
-    window.location.href = "{{ route('manager.reconciliation' , ['farm_id' => $farm_id] )}}"
-}
-
-expenseDropdown = document.getElementById('expense_type');
-cropExpenseData.forEach(expense => {
-    let option = document.createElement('option');
-    option.value = expense['head']
-    option.innerHTML = expense['head'];
-    expenseDropdown.appendChild(option);
-});
+    function handleSaleRowClick(sale_id){
+        window.location.href = `/manager/viewSalesRow/{{$farm_id}}/${sale_id}`;
+    }
 </script>
 
 </html>

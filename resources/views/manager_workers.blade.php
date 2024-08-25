@@ -33,6 +33,13 @@
         {{Session::forget('success')}}
         @endif
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
 
         <!-- Modal -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">

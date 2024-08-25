@@ -37,6 +37,13 @@
         {{Session::forget('success')}}
         @endif
 
+        @if(Session::get('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
+        </div>
+        {{Session::forget('error')}}
+        @endif
+
 
         <div class="container-fluid">
             <div class="row section">
@@ -95,7 +102,7 @@
                                         <div class='d-flex'>
                                             <div class="smallCard  d-flex justify-content-between p-3 pr3">
                                                 <div>Crops</div>
-                                                <h4 class='mt-2'>{{$farm->crops->count()}}</h4>
+                                                <h4 class='mt-2'>{{$farm->crops->where('active', 1)->count()}}</h4>
                                             </div>
                                             <div class="smallCard  d-flex justify-content-between p-3 pr2 mx-2">
                                                 <div>Deras</div>
@@ -138,7 +145,7 @@
                                         @foreach($farm->crops as $crop)
                                         @if($crop['active'] == 1)
                                         <div class="col-md-4">
-                                            <div data-tooltip='Active crop' class="selected-crop tooltip-container"
+                                            <div data-tooltip='Active crop' class="selected-crop tooltip-container" style='background-color:#f3f3f3;box-shadow:none;'
                                                 onclick="handleCropClick('{{$crop['id']}}')">
                                                 <img
                                                     src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}">
@@ -183,7 +190,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 tooltip-container" data-tooltip='Add or View your crop sales'>
-                                        <div class="bigCard  pr3">
+                                        <div class="bigCard  pr3" onclick='handleSalesClick()'>
                                             <div class="svgDiv">
                                                 <img src="{{ asset('images/sales.png') }}">
                                             </div>
@@ -295,7 +302,11 @@ function handleConfiguration() {
 }
 
 function handleExpenseClick() {
-    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm['id'] ,'worker'=> 0 ])}}"
+    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm['id']])}}"
+}
+
+function handleSalesClick(){
+    window.location.href = "{{ route('manager.render_sales_page' , ['farm_id' => $farm['id']])}}"
 }
 
 function handleWorkerClick() {

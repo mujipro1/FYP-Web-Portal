@@ -22,9 +22,7 @@ use Jenssegers\Agent\Agent;
 class ManagerController extends Controller
 {
     public function render_farms_page()
-    {
-
-       
+    {       
         $user = Session::get('manager');
         $farms = Farm::where('user_id', $user->id)->get();
         
@@ -33,13 +31,21 @@ class ManagerController extends Controller
 
     public function render_configuration_page($farm_id)
     {      
-
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         return view('manager_configuration', ['farm_id' => $farm_id]);    
     }
 
     public function render_get_farm_details_page($farm_id)
-
     {
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
+
         $farm = Farm::with(['crops.deras'])->find($farm_id);
         $workers = FarmWorker::where('farm_id', $farm_id)->get();
         $users = User::whereIn('id', $workers->pluck('user_id'))->get();
@@ -66,6 +72,10 @@ class ManagerController extends Controller
     public function configurationForm_submit(Request $request)
     {
         $farm_id = $request->input('farm_id');
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         $cropsData = json_decode($request->input('cropDetails'), true);
 
         foreach ($cropsData as $cropData) {
@@ -102,7 +112,7 @@ class ManagerController extends Controller
         return redirect()->route('manager.farmdetails', ['farm_id' => $farm_id]);
     }
 
-    public function render_cropexpense($farm_id, $worker){
+    public function render_cropexpense($farm_id){
         $crops = Crop::where('farm_id', $farm_id)->get();
         $added_expenses = ExpenseConfiguration::where('farm_id', $farm_id)
                             ->where('crop_id', 1)
@@ -115,27 +125,27 @@ class ManagerController extends Controller
                             ->pluck('expense_head')
                             ->toArray();
 
-
+        $worker = Session::get('worker');
         return view('manager_cropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker]);
     }
 
-    public function view_cropexpense($farm_id, $worker){
+    public function view_cropexpense($farm_id){
         $crops = Crop::where('farm_id', $farm_id)->get();
         $expenses = Expense::whereIn('crop_id', $crops->pluck('id'))->get();
+        $worker = Session::get('worker');
 
-        $totalAmount = $expenses->sum('total');
-        $totalExpenses = $expenses->count();
+        return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'worker' => $worker]);
+    }
 
-         return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'totalAmount' => $totalAmount, 'totalExpenses' => $totalExpenses, 'worker' => $worker]);
-        }
-
-    public function view_cropexpense_details($farm_id, $worker,$expense_id){
+    public function view_cropexpense_details($farm_id,$expense_id){
         $expense = Expense::find($expense_id);
+        $worker = Session::get('worker');
         return view('manager_viewRowexpense', ['farm_id' => $farm_id, 'expense' => $expense, 'worker' => $worker]);
     }
 
-    public function view_farmexpense_details($farm_id, $worker,$expense_id){
+    public function view_farmexpense_details($farm_id, $expense_id){
         $expense = FarmExpense::find($expense_id);
+        $worker = Session::get('worker');
         return view('manager_viewRowexpense', ['farm_id' => $farm_id, 'expense' => $expense, 'worker' => $worker]);
     }
 
@@ -160,7 +170,8 @@ class ManagerController extends Controller
         }
         $farm_id = $request->input('farm_id');
         
-        $worker = $request->input('worker');
+        $worker = Session::get('worker');
+
         if ($crop_id == null && $expense_type == null && $date == null) {
            return redirect()->route('manager.view_cropexpense', ['farm_id' => $farm_id, 'worker' => $worker]);
         }
@@ -173,7 +184,7 @@ class ManagerController extends Controller
         $expenses = $query->get();
         $crops = Crop::where('farm_id', $farm_id)->get();
 
-        return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'totalAmount' => $totalAmount, 'totalExpenses' => $totalExpenses, 'worker' => $worker]);
+        return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'worker' => $worker]);
 
     }
 
@@ -199,16 +210,12 @@ class ManagerController extends Controller
               return redirect()->route('manager.view_farmexpense', ['farm_id' => $farm_id]);
         }
 
-
-
         $expenses = $query->get();
-        $totalAmount = $expenses->sum('total');
-        $totalExpenses = $expenses->count();
-        return view('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses, 'totalAmount' => $totalAmount, 'totalExpenses' => $totalExpenses]);
+        return route('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses]);
         
     }        
 
-    public function render_farmexpense($farm_id, $worker){
+    public function render_farmexpense($farm_id){
         $added_expenses = ExpenseConfiguration::where('farm_id', $farm_id)
                             ->where('crop_id', 0)
                             ->where('include', 1)
@@ -219,14 +226,14 @@ class ManagerController extends Controller
                             ->where('include', 0)
                             ->pluck('expense_head')
                             ->toArray();
+        $worker = Session::get('worker');
 
         return view('manager_farmexpense', ['farm_id' => $farm_id, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker]);
     }
-    public function view_farmexpense($farm_id, $worker){
+    public function view_farmexpense($farm_id){
         $expenses = FarmExpense::where('farm_id', $farm_id)->get();
-        $totalAmount = $expenses->sum('total');
-        $totalExpenses = $expenses->count();
-        return view('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses, 'totalAmount' => $totalAmount, 'totalExpenses' => $totalExpenses, 'worker' => $worker]);
+        $worker = Session::get('worker');
+        return view('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses, 'worker' => $worker]);
     }
     
     public function getDerasForCrop($crop_id)
@@ -273,7 +280,7 @@ class ManagerController extends Controller
         $expense->save();
 
         $added_by = $details['addedBy'];
-        $worker = $details['worker'];
+        $worker = Session::get('worker');
         
         if ($worker == 0){
             // manager added expenses
@@ -305,7 +312,7 @@ class ManagerController extends Controller
 
         }
 
-        $worker = $details['worker'];
+        $worker = Session::get('worker');
 
         return redirect()->route('manager.render_cropexpense', ['farm_id' => $farm_id, 'worker'=>$worker])->with('success', 'Expense added successfully');
     }
@@ -336,7 +343,7 @@ class ManagerController extends Controller
         $expense->save();
         
         $added_by = $details['addedBy'];
-        $worker = $details['worker'];
+        $worker = Session::get('worker');
 
         
         if ($worker == 0){
@@ -366,12 +373,12 @@ class ManagerController extends Controller
             $worker->save();
 
         }
-        $worker = $details['worker'];
+        $worker = Session::get('worker');
         
         return redirect()->route('manager.render_farmexpense', ['farm_id' => $farm_id, 'worker'=>$worker])->with('success', 'Expense added successfully');
     }
 
-    public function reconciliation($farm_id, $worker){
+    public function reconciliation($farm_id){
 
         $workers = FarmWorker::where('farm_id', $farm_id)
         ->with('user')
@@ -391,6 +398,8 @@ class ManagerController extends Controller
                 $x->reconcile = $latestReconcile;
             }
         }
+
+        $worker = Session::get('worker');
         
         return view('manager_reconciliation', ['farm_id' => $farm_id, 'worker' => $worker, 'workers' => $workers]);
     }
@@ -425,17 +434,26 @@ class ManagerController extends Controller
         $reconcile->date = $request->input('date');
         $reconcile->save();
         
-        $worker = $request->input('worker');
+        $worker = Session::get('worker');
         return redirect()->route('manager.reconciliation', ['farm_id' => $farm_id, 'worker' => $worker])->with('success', 'Cash added successfully');
     }
 
     public function addCrop($farm_id){
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         $farm = Farm::with('deras')->find($farm_id);
         $deras = $farm->deras->pluck('name');
         return view('manager_addCrops', ['farm' => $farm, 'deras' => $deras, 'farm_id' => $farm_id]);
     }
 
     public function editDeras($farm_id){
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         $farm = Farm::with('deras')->find($farm_id);
         $deras = $farm->deras;
 
@@ -443,6 +461,10 @@ class ManagerController extends Controller
     }
 
     public function editCrops($farm_id){
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         $farm = Farm::with('crops')->find($farm_id);
         $crops = $farm->crops;
         if (count($crops) == 0){
@@ -454,6 +476,11 @@ class ManagerController extends Controller
 
     public function editCropsPost(Request $request){
         $farm_id = $request->input('farm_id');
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
 
         $remove = $request->input('remove');
         if ($remove == '1' && $request->input('selectedCropId') != NULL && $request->input('deras') != NULL)
@@ -490,6 +517,11 @@ class ManagerController extends Controller
     public function editDerasPost(Request $request){
         $farm_id = $request->input('farm_id');
 
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
+
         $dera = Dera::find($request->input('deraDropDown'));
         $dera->name = $request->input('deraNameEdit');
         $dera->number_of_acres = $request->input('acres');
@@ -500,6 +532,11 @@ class ManagerController extends Controller
 
     public function addDerasPost(Request $request){
         $farm_id = $request->input('farm_id');
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
 
         $dera = new Dera();
         $dera->name = $request->input('deraName');
@@ -512,10 +549,20 @@ class ManagerController extends Controller
 
 
     public function configureExpenses($farm_id){
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         return view('manager_configureExpenses', ['farm_id' => $farm_id]);
     }
 
     public function configureFarmExpense($farm_id){
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
 
         $added_expenses = ExpenseConfiguration::where('farm_id', $farm_id)
                             ->where('crop_id', 0)
@@ -532,6 +579,11 @@ class ManagerController extends Controller
     }
 
     public function configureCropExpense($farm_id){
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
 
         $added_expenses = ExpenseConfiguration::where('farm_id', $farm_id)
                             ->where('crop_id', 1)
@@ -552,6 +604,11 @@ class ManagerController extends Controller
             $crop_id = 0;
         }else{
             $crop_id = 1;
+        }
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
         }
             
             // Extract form data
@@ -691,7 +748,11 @@ class ManagerController extends Controller
 
     public function render_workers($farm_id){
         // fetch all workers for the farm
-
+        
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         $workers = FarmWorker::where('farm_id', $farm_id)->get();
         $users = User::whereIn('id', $workers->pluck('user_id'))->get();
         foreach ($users as $user) {
@@ -703,6 +764,17 @@ class ManagerController extends Controller
 
     public function addworker(Request $request){
         $farm_id = $request->input('farm_id');
+
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
+
+        $existing = User::where('email',  $request->input('email'))->first();
+        if ($existing){
+            return redirect()->back()->with('error', 'Email is already registered!');
+        }
 
         $user = new User();
         $user->name = $request->input('name');
@@ -733,6 +805,11 @@ class ManagerController extends Controller
 
     public function workerDelete(Request $req){
         $farm_id = $req->input('farm_id');
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         $worker = $req->input('worker_id');
 
         $worker = FarmWorker::where('user_id', $worker)->first();
@@ -745,6 +822,10 @@ class ManagerController extends Controller
 
     public function workerRevoke(Request $req){
         $farm_id = $req->input('farm_id');
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
         $worker = $req->input('worker_id');
 
         $worker = FarmWorker::where('user_id', $worker)->first();
@@ -770,7 +851,7 @@ class ManagerController extends Controller
         $farm_ids = FarmWorker::where('user_id', $worker->id)->pluck('farm_id');
         $farms = Farm::whereIn('id', $farm_ids)->get();
 
-        return view('worker_farms', ['farms' => $farms]);
+        return view('worker_farms', ['farms' => $farms, 'farmer' => 0]);
     }
 
     public function cropdetails($farm_id, $crop_id, $route_id){
@@ -781,8 +862,26 @@ class ManagerController extends Controller
     
     public function farm_history($farm_id)
     {
+
+        $login_user = Session::get('manager');
+        if (!(Farm::find($farm_id)->user_id == $login_user->id)){
+            return redirect()->back()->with('error', "You do not have access to requested page");
+        }
+
         $crops = Crop::where('farm_id', $farm_id)->get();
         return view('manager_farmHistory', compact('crops', 'farm_id'));
+    }
+
+    public function render_sales_farmer(){
+        $worker = Session::get('sales_farmer');
+        // get farms from farmworker table
+        if (!$worker) {
+            return redirect()->route('home');
+        }
+        $farm_ids = FarmWorker::where('user_id', $worker->id)->pluck('farm_id');
+        $farms = Farm::whereIn('id', $farm_ids)->get();
+
+        return view('worker_farms', ['farms' => $farms, 'farmer' => 1]);
     }
 
 }
