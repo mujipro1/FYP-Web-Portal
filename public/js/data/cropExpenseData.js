@@ -113,6 +113,13 @@ const cropExpenseData = [
         'textbox':['Description']
     },
     {
+        "head" : "Equipment",
+        'entry':[
+            'Amount'
+        ],
+        'textbox':['Description']
+    },
+    {
         "head" : "Miscellaneous",
         'entry':[
             'Amount'
