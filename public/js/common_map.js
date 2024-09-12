@@ -74,6 +74,7 @@ function initializeMap() {
             .addTo(map);
         }
         else{
+            console.log(dera)
             L.tooltip({
                 permanent: true,
                 direction: 'center',

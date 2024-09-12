@@ -9,8 +9,22 @@ use Illuminate\Http\Request;
 
 class ManagerSalesController extends Controller
 {
+    private function route_security($farm_id){
+        $login_user = Session::get('manager') ?: Session::get('sales_farmer');
+
+        $farm = Farm::find($farm_id);
+        if (!$farm || $farm->user_id !== $login_user->id || !$login_user) {
+            return redirect()->back()->with('error', "You do not have access to the requested page");
+        }
+        return null;
+    }
+
+
     public function render_sales_page($farm_id)
     {
+
+        $security_check = $this->route_security($farm_id);
+        if ($security_check) {return $security_check;}
 
         $crops = Crop::where('farm_id',$farm_id)
         ->where('active', 1)
@@ -49,6 +63,10 @@ class ManagerSalesController extends Controller
     }
 
     public function view_sales($farm_id){
+
+        $security_check = $this->route_security($farm_id);
+        if ($security_check) {return $security_check;}
+
         $crops = Crop::where('farm_id', $farm_id)->orderBy('year', 'desc')->get();
         $sales = Sale::whereIn('crop_id', $crops->pluck('id'))->get();
        
@@ -84,6 +102,11 @@ class ManagerSalesController extends Controller
     }
 
     public function viewSalesRow($farm_id, $sale_id){
+
+        $security_check = $this->route_security($farm_id);
+        if ($security_check) {return $security_check;}
+
+
         $sale = Sale::where('id', $sale_id)->first();
         if (!($sale)){
             return redirect()->back()->with('error', 'Sales Data not Found!');

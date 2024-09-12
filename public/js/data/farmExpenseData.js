@@ -18,7 +18,7 @@ const farmExpenseData = [
     },
     {
         "head" : "Labor",
-        'sub-head':['Machinery Maintenance', 'Building Maintenance', 'Others'],
+        'sub-head':['Machinery Maintenance', 'Building Maintenance', 'Driver','Others'],
         'entry':[
             'Total'
         ],
@@ -56,8 +56,16 @@ const farmExpenseData = [
     },
     {
         "head" : "Tubewells",
-        "sub-head" :['Bore','Motors','Solar Panels', 'Solar Panels Stands'
+        "sub-head" :['Bore','Motors','Other'
               ],
+        'entry':[
+            'Amount',
+        ],
+        'textbox':['Description']
+    },
+    {
+        "head" : "Solar",
+        "sub-head" :['Panels','Stands','Inverter','Fixing','Other'],
         'entry':[
             'Amount',
         ],
@@ -90,6 +98,13 @@ const farmExpenseData = [
         "head" : "Travels",
         'entry':[
             'Amount',
+        ],
+        'textbox':['Description']
+    },
+    {
+        "head" : "Equipment",
+        'entry':[
+            'Amount'
         ],
         'textbox':['Description']
     },

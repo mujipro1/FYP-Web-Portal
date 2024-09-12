@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/navBar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/superadmin.css') }}">
-</head>
+    <script src="{{ asset('js/alert.js') }}"></script>
+    </head>
 
 <body>
     <div class="c1">
@@ -24,18 +25,26 @@
         @yield('content')
     </div>
 
-    @if(Session::get('success'))
-        <div class="alert alert-success">
-            {{Session::get('success')}}
-        </div>
-        {{Session::forget('success')}}
-        @endif
-
-        @if(Session::get('error'))
-        <div class="alert alert-danger">
-            {{Session::get('error')}}
-        </div>
-        {{Session::forget('error')}}
+    <div class='alertDiv fade justify-content-center align-items-center' id="alertDiv"></div>
+        
+        @if(Session::get('success') || Session::get('error'))
+            @if(Session::get('success'))
+                <script>
+                    showAlert("{{ Session::get('success') }}", 'success', 9000);
+                    </script>
+                @php
+                Session::forget('success');
+                @endphp
+                @endif
+                
+                @if(Session::get('error'))
+                <script>
+                    showAlert("{{ Session::get('error') }}", 'error', 9000);
+            </script>
+                @php
+                    Session::forget('error');
+                @endphp
+            @endif
         @endif
 
 
@@ -162,7 +171,7 @@
     </div>
 
 </body>
-<script src="{{ asset('js/alert.js') }}"></script>
+
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>

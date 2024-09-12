@@ -2,7 +2,7 @@ const cropExpenseData = [
     {
         "head" : "Labour",
         "sub-head" :[
-            'Sowing','Harvesting','Fertilizer','Poison','Spray','Mulching','Cleaning','Misc' 
+            'Sowing','Harvesting','Fertilizer','Poison','Spray','Mulching','Cleaning','Driver','Misc' 
         ],
         'entry':[
             'No of Units',
@@ -28,7 +28,7 @@ const cropExpenseData = [
     {
         "head" : "Fertilizer",
         "sub-head" :[
-           "DAP", "Nitrophas", "Zinc", "Homic Acid", "Urea", "Potash"
+           "DAP", "Nitrophas", "Zinc", "Homic Acid", "Urea", "Potash", "Sulphur", "Other"
         ],
         'entry':[
             'Bag Weight (Kg)',

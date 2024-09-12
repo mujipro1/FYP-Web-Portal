@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         crops: [],
     };
 
-    const popularCrops = crops.slice(0, 4);
+    const popularCrops = ['Wheat','Sugarcane', 'Rice', 'Cotton', 'Maize']
 
     const selectedCropsContainer = document.getElementById("selectedCropsContainer");
     const popularCropsContainer = document.getElementById("popularCropsContainer");
@@ -25,12 +25,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const cropNameModal = document.getElementById("cropNameModal");
     const cropAcresInput = document.getElementById("cropAcres");
     const saveCropButton = document.getElementById("saveCropButton");
-    const noDeraAlert = document.getElementById("noDeraAlert");
+    
 
     let currentCrop = null;
 
     const renderSelectedCrops = () => {
         selectedCropsContainer.innerHTML = "";
+        // if no crops are selected, hide the next button
+        if (data.crops.length === 0) {
+            document.getElementById("nextButton").classList.add("d-none");
+        } else {
+            document.getElementById("nextButton").classList.remove("d-none");
+        }
         data.crops.forEach((crop, index) => {
             const cropDiv = document.createElement("div");
             cropDiv.classList.add("col-md-12", "my-2");
@@ -40,12 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         
                         <div class="col-md-8 p-3">
-                            <h4>${crop.name}</h4>
-                            <div class="labelcontainer2">
-                                <label for="cropYear${index}">Year</label>
-                                <input hidden type="text" class="form-control" id="cropYear${index}" value="${crop.year}" disabled />
-                                <label>${crop.year}</label>
-                            </div>
+                            <h4>${crop.name} ${crop.year}</h4>
+                            
 
                             
                             ${crop.deras.map(dera => `
@@ -84,13 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <input hidden type="text" class="form-control" id="cropVariety${index}" value="${crop.variety}" disabled />
                                 <label>${crop.variety}</label>
                             </div>
-                            
-                            <div class=" labelcontainer2">
-                                <label for='stage' class="form-label w-50">Stage</label>
-                                <input hidden type="text" class="form-control" id="cropStage${index}" value="${crop.stage}" disabled />
-                                <label>${crop.stage}</label>
-                            </div>
-                          
                         </div>
 
                         <div class="col-md-4">
@@ -124,8 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const cropDiv = document.createElement("div");
             cropDiv.classList.add("popular-crop");
             cropDiv.innerHTML = `
-                <span class="mx-3">${crop.name}</span>
-                <button class="btn cross" type="button" data-name="${crop.name}">+</button>
+                <span class="mx-3">${crop}</span>
+                <button class="btn cross" type="button" data-name="${crop}">+</button>
             `;
             popularCropsContainer.appendChild(cropDiv);
         });
@@ -190,29 +185,89 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const showCropModal = () => {
+
+        cropname = currentCrop.name;
+
+        page1 = document.querySelector(".page1");
+        page2 = document.querySelector(".page2");
+
+        btnclose = document.querySelector(".btn-close");
+        btnclose.addEventListener("click", () => {
+            page1.classList.remove("d-none");
+            page2.classList.add("d-none");
+
+            if (data.crops.length === 0) {
+                document.getElementById("nextButton").classList.add("d-none");
+            }
+        });
+
+        page1.classList.add("d-none");
+        page2.classList.remove("d-none");
+
+        if (currentCrop === null) return;
+        if (currentCrop.name == 'Sugarcane'){
+            
+            async function getSugarcaneData() {
+                try {
+                    const data = await fetchSugarcane();
+                    if (data.length == 0) {
+                        return;
+                    }
+                    document.getElementById('sugarcane').classList.remove('d-none');
+
+                    sugarcanePreviousCrop = document.getElementById('sugarcanePreviousCrop');
+                    data.forEach(sugarcane => {
+                        let option = document.createElement('option');
+                        option.value = sugarcane.id;
+                        option.text = sugarcane['identifier'];
+                        sugarcanePreviousCrop.appendChild(option);
+                    });
+
+                } catch (err) {
+                    console.log(err); // Handle any errors here
+                }
+            }
+            
+            getSugarcaneData();
+            
+        }
+        else{
+            document.getElementById('sugarcane').classList.add('d-none');
+            document.getElementById('sugarcanePreviousCrop').innerHTML = '';
+
+        }
+        
         cropAcresInput.value = "";
-        derasContainer.innerHTML = "";
-        cropNameModal.innerHTML = `<h4>${currentCrop.name}</h4>`;
+        derasContainer.innerHTML = `
+        <hr class='my-4'>
+        <p class='light fsmall mt-4' >Deras Information <span class='required'> *</span></p>`;
+        cropNameModal.innerHTML = `<h4 id='cropname' class='my-3'>${currentCrop.name}</h4>`;
 
         if (deras.length > 0) {
             deras.forEach((dera, index) => {
                 const deraDiv = document.createElement("div");
                 deraDiv.classList.add("mb-3");
                 deraDiv.innerHTML = `
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="${dera}" id="dera${index}">
-                        <label class="form-check-label" for="dera${index}">${dera}</label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="deraAcres${index}" class="form-label">Acres</label>
-                        <input required type="number" class="form-control" id="deraAcres${index}" disabled>
-                    </div>
+                <div class="d-flex justify-content-between">
+                <div class="form-check w-25">
+                <input class="form-check-input form-check" type="checkbox" value="${dera}" id="dera${index}">
+                <label class="form-check-label mt-1 form-check" for="dera${index}">${dera}</label>
+                </div>
+                <div class="mt-1 d-flex w-75">
+                <label for="deraAcres${index}" class="mx-2 form-label">Acres</label>
+                <input required type="number" min='0' class="form-control" id="deraAcres${index}" disabled>
+                </div>
+                </div>
                 `;
                 derasContainer.appendChild(deraDiv);
+                hr = document.createElement('hr');
+                hr.classList.add('my-5');
+                derasContainer.appendChild(hr);
 
                 const deraCheckbox = deraDiv.querySelector(`#dera${index}`);
                 const deraAcresInput = deraDiv.querySelector(`#deraAcres${index}`);
-
+                
+                  
                 deraCheckbox.addEventListener("change", (e) => {
                     if (deraCheckbox.checked) {
                         deraAcresInput.disabled = false;
@@ -221,6 +276,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         deraAcresInput.value = "";
                     }
                 });
+
+                deraAcresInput.addEventListener("keyup", (e) =>{
+                    value = e.target.value;
+                    e.target.value = Math.abs(value);
+                });
+
             });
             cropAcresInput.parentElement.classList.add("d-none");
         } else {
@@ -228,17 +289,29 @@ document.addEventListener("DOMContentLoaded", () => {
             cropAcresInput.parentElement.classList.remove("d-none");
         }
 
-        noDeraAlert.classList.add("d-none");
-        cropModal.show();
+        
+        // cropModal.show();
     };
 
     saveCropButton.addEventListener("click", () => {
+
+       
+
         const year = cropYearInput.value;
         
         const sowingDate = cropSowingDate.value;
         const harvestDate = cropHarvestDate.value;
         const desc = description.value;
         const variety = cropVariety.value;
+        const polygonData = document.getElementById('polygonData').value;
+
+        sameSeed = null;
+        sugarcanePreviousCrop = null;
+        if (currentCrop.name == 'Sugarcane'){
+            sameSeed = document.getElementById('sameSeed').checked ? 1 : 0;
+            sugarcanePreviousCrop = document.getElementById('sugarcanePreviousCrop').value;
+        }
+
 
         let status;
             for (const statusX of cropStatus) {
@@ -249,21 +322,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         // check if all fields are present other than description
-        if (!sowingDate || sowingDate === "") {
-            alert("Please enter a sowing date.");
-            return;
-        }
-
-        if (!harvestDate || harvestDate === "") {
-            alert("Please enter a harvest date.");
-            return;
-        }
-
 
         if (!year || year === "") {
-            alert("Please enter a year.");
+            showAlert("Please select a year.", "danger");
             return;
         }
+
+        if (!sowingDate || sowingDate === "") {
+            showAlert("Please enter a sowing date.", "danger");
+            return;
+        }
+
 
         let totalAcres = 0;
         const selectedDeras = [];
@@ -274,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (deraCheckbox.checked) {
 
                 if (!deraAcresInput.value) {
-                    alert("Please enter acres for all selected deras.");
+                    showAlert("Please enter acres for all selected deras.", "danger");
                     return;
                 }
 
@@ -290,14 +359,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (deras.length > 0 && selectedDeras.length === 0) {
-            noDeraAlert.classList.remove("d-none");
+            showAlert('Please select at least one Dera', 'danger');
             return;
         }
 
         if (deras.length === 0) {
             totalAcres = cropAcresInput.value;
             if (!totalAcres) {
-                noDeraAlert.classList.remove("d-none");
+                showAlert('Please select at least one Dera or enter acres if no Deras are present.', 'danger');
                 return;
             }
         }
@@ -312,12 +381,21 @@ document.addEventListener("DOMContentLoaded", () => {
             sowingDate,
             harvestDate,
             variety,
-            desc
+            desc,
+            polygonData,
+            sameSeed,
+            sugarcanePreviousCrop
         };
 
         data.crops.push(cropData);
+        page1 = document.querySelector(".page1");
+        page2 = document.querySelector(".page2");
+
+        page1.classList.remove("d-none");
+        page2.classList.add("d-none");
+
         renderSelectedCrops();
-        cropModal.hide();
+    
     });
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -336,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("nextButton").addEventListener("click", (e) => {
         e.preventDefault();
         if (data.crops.length > 0) {
-
+            
             // create input 
             let input = document.createElement("input");
             input.setAttribute("type", "hidden");
@@ -347,7 +425,8 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("cropDetailsForm").submit();
 
         } else {
-            alert("Please add at least one crop.");
+            document.getElementById("nextButton").classList.add("d-none");
+            showAlert('Please add at least one crop.', 'danger');
         }
     });
 
@@ -355,3 +434,14 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSelectedCrops();
     renderPopularCrops();
 });
+
+
+function fetchSugarcane(){
+    return fetch('/fetch-sugarcane/' + farm_id)
+        .then(res => res.json())
+        .then(data => {
+            return data;
+        })
+        .catch(err => console.log(err));
+}
+

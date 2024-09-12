@@ -6,7 +6,7 @@ ManagerSidebar2 = `
     </div>
     <ul>
         <li><a href="/manager/farms">Farms</a></li>
-        <li><a href="/manager/render_cropexpense/${farm_id}/0">Expenses</a></li>
+        <li><a href="/manager/render_cropexpense/${farm_id}">Expenses</a></li>
         <li><a href="/manager/sales/${farm_id}">Sales</a></li>
         <li><a href="/manager/render_workers/${farm_id}">Workers</a></li>
     </ul>
