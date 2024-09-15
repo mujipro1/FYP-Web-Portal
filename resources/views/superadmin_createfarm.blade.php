@@ -130,7 +130,7 @@
                                                 </div>
                                                 <div class="labelcontainer mx-3">
                                                     <label class="">Acres</label>
-                                                    <input type="number" class="form-control w-75 ml-3" name="acres"
+                                                    <input type="number" step='any' class="form-control w-75 ml-3" name="acres"
                                                         value="{{$request['farm_info']['acres']}}" />
                                                 </div>
                                                 <div class="labelcontainer mx-3">

@@ -93,7 +93,7 @@
                         <div class="col-md-6">
                             <div class="labelcontainer">
                                 <label for='acres' class='form-label w-50'>Farm Area</label>
-                                <input type='text' class='form-control' id='acres' name='acres'
+                                <input type='number' step='any' class='form-control' id='acres' name='acres'
                                     value="{{ $data['acres'] }}" disabled>
                             </div>
                             <div class="labelcontainer">

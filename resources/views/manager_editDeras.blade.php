@@ -125,7 +125,7 @@ const farm_id = @json($farm_id);
 
                                             <div class="labelcontainer">
                                                 <label class='form-label w-50' for="acres">Acres</label>
-                                                <input class='form-control' type="number" id="acres" name="acres" required>
+                                                <input class='form-control' type="number" step='any' id="acres" name="acres" required>
                                             </div>
 
                                             <div class="text-center">
@@ -183,7 +183,7 @@ const farm_id = @json($farm_id);
                                             <div class="labelcontainer">
                                                 <label class='form-label w-50' for="deraName">Select Dera</label>
                                                 <select class="form-select" aria-label="Default select example" id="deraDropDown" name="deraDropDown">
-                                                    <option selected>Select Dera</option>
+                                                    <option disabled selected>Select Dera</option>
                                                     @foreach($deras as $dera)
                                                     <option value='{{$dera->id}}'>{{$dera->name}}</option>
                                                     @endforeach
@@ -196,7 +196,7 @@ const farm_id = @json($farm_id);
 
                                             <div class="labelcontainer">
                                                 <label class='form-label w-50' for="acres">Acres</label>
-                                                <input class='form-control' type="number" id="addacres" name="acres" value='0'
+                                                <input class='form-control' type="number" id="addacres" step='any' name="acres" value='0'
                                                 >
                                             </div>
                                             <div class="text-center">

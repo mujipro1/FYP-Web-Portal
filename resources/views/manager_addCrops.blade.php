@@ -122,7 +122,7 @@
                                         </div>
                                         <div class="mb-3 d-flex">
                                             <label for="cropAcres" class="w-50 form-label">Number of Acres<span class='required'> *</span></label>
-                                            <input required type="number" class="form-control" id="cropAcres" required>
+                                            <input step="any" required type="number" class="form-control" id="cropAcres" required>
                                         </div>
 
                                         <!-- radio button for active passive -->

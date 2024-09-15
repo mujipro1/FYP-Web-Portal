@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="mt-1 d-flex w-75">
                 <label for="deraAcres${index}" class="mx-2 form-label">Acres</label>
-                <input required type="number" min='0' class="form-control" id="deraAcres${index}" disabled>
+                <input required type="number" step="any" min='0' class="form-control" id="deraAcres${index}" disabled>
                 </div>
                 </div>
                 `;
@@ -279,7 +279,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 deraAcresInput.addEventListener("keyup", (e) =>{
                     value = e.target.value;
-                    e.target.value = Math.abs(value);
+                    if (value < 0){
+                        e.target.value = 0;
+                    }
                 });
 
             });

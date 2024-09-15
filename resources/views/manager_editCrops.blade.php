@@ -146,7 +146,7 @@
                                     <div class="labelcontainer2 mb-2">
                                         <label class='w-25' for="acres">Total Acres</label>
                                         <label id="acresLabel"></label>
-                                        <input hidden type="text" id="acres" name="acres" class="form-control">
+                                        <input hidden type="number" step='any' id="acres" name="acres" class="form-control">
                                     </div>
                                     <div class="labelcontainer">
                                         <label class='w-75' for="deras">Deras</label>
@@ -158,7 +158,7 @@
 
                                     <div class="labelcontainer">
                                         <label class='w-75' for="deraAcres">Dera Acres</label>
-                                        <input type="text" id="deraAcres" name="deraAcres" class="form-control">
+                                        <input type="number" step='any' id="deraAcres" name="deraAcres" class="form-control">
                                     </div>
                                     <div class=" mt-4 d-flex">
                                             <label class="w-75" for="status">Change Status</label>

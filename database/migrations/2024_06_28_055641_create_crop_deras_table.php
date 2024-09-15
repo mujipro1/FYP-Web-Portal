@@ -12,7 +12,7 @@ class CreateCropDerasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('crop_id');
             $table->unsignedBigInteger('dera_id');
-            $table->integer('acres');
+            $table->decimal('acres', 8, 2);
             $table->foreign('crop_id')->references('id')->on('crops')->onDelete('cascade');
             $table->foreign('dera_id')->references('id')->on('deras')->onDelete('cascade');
             $table->timestamps();

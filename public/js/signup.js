@@ -165,6 +165,7 @@ function renderInputField() {
             inputField.setAttribute('type', 'date');
         } else if (type === "number") {
             inputField.setAttribute('type', 'number');
+            inputField.setAttribute('step', 'any');
         } else if (type === "dropdown" && key == 'farmCity'){
             inputField.innerHTML = `<option value="">Select City</option>`;
             citydata.forEach((city) => {

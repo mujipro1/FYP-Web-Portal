@@ -12,7 +12,7 @@ class CreateCropsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('year');
-            $table->integer('acres');
+            $table->decimal('acres', 8, 2);
             $table->string('identifier');
             $table->string('variety')->nullable();
             $table->unsignedBigInteger('farm_id');

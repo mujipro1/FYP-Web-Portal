@@ -13,7 +13,7 @@ class CreateFarmsTable extends Migration
             $table->string('name');
             $table->string('city');
             $table->string('address');
-            $table->integer('number_of_acres');
+            $table->decimal('number_of_acres', 8, 2);
             $table->boolean('has_deras');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

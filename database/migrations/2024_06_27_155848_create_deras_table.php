@@ -12,7 +12,7 @@ class CreateDerasTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('farm_id');
-            $table->integer('number_of_acres');
+            $table->decimal('number_of_acres', 8, 2);
             $table->foreign('farm_id')->references('id')->on('farms')->onDelete('cascade');
             $table->timestamps();
         });
