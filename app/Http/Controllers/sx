@@ -1,3 +1,6 @@
+
+
+
 <?php
 
 namespace App\Http\Controllers;
@@ -90,45 +93,56 @@ class ManagerController extends Controller
             $crop_identifier = $cropData['name'] . " " . $cropData['year'];
             $cropData['name'] = str_replace(' ', '', $cropData['name']);
 
-            if ($cropData['name'] == 'Sugarcane') {
-                $month = date('M', strtotime($cropData['sowingDate']));
-                $cropyear = substr($cropData['year'], -2);
-                $crop_identifier = "{$cropData['name']} $month $cropyear";
-            
-                $sugarcane_id = '';
-                
-                if ($cropData['sameSeed'] == 1) {
-                    $prevCropId = $cropData['sugarcanePreviousCrop'];
+            if ($cropData['name'] == 'Sugarcane'){
+                $month = date('F', strtotime($cropData['sowingDate']));
+                $month = substr($month, 0, 3);
+                $cropyear = substr($cropData['year'], 2, 4);
+                $crop_identifier = $cropData['name'] . " " . $month . " " . $cropyear;
+
+                if ($cropData['sameSeed'] == 1){
+                    $prevCrop = $cropData['sugarcanePreviousCrop'];
                     
-                    // Find the root parent crop
-                    $rootParentId = $prevCropId;
-                    $crop = Crop::find($prevCropId);
-                    
-                    while ($crop && $crop->sugarcane_id) {
-                        list($parentId) = explode('-', $crop->sugarcane_id);
-                        $rootParentId = $parentId;
-                        $crop = Crop::find($parentId);
+                    function get_prev($prevCropId) {
+                        $prevCrop = Crop::where('id', $prevCropId)->first();
+                        if ($prevCrop && $prevCrop->sugarcane_id != null) {
+                            $SCidParts = explode("-", $prevCrop->sugarcane_id);
+                            $prev = $SCidParts[0];
+                            return get_prev($prev);
+                        }
+                        return $prevCrop ? $prevCrop->id : null;
                     }
-            
-                    // If no root parent found, use the original prevCropId
-                    $rootParentId = $rootParentId ?: $prevCropId;
-            
-                    // Find the highest version for this parent
-                    $highestVersion = Crop::where('farm_id', $farm_id)
-                        ->where('name', 'Sugarcane')
-                        ->where(function($query) use ($rootParentId) {
-                            $query->where('sugarcane_id', 'like', $rootParentId . '-%')
-                                  ->orWhere('id', $rootParentId);
-                        })
-                        ->max(DB::raw('COALESCE(CAST(SUBSTRING_INDEX(sugarcane_id, "-", -1) AS UNSIGNED), 0)'));
-            
+                    $id = get_prev($prevCrop);
+                    $crops = Crop::where('farm_id', $farm_id)
+                            ->where('name', 'Sugarcane')
+                            ->get();
+
+                    $highestVersion = 0;
+
+                    foreach ($crops as $crop) {
+                        $sugarcaneId = $crop->sugarcane_id ?? '';
+                    
+                        if (strpos($sugarcaneId, '-') !== false) {
+                            $sugarcaneIdParts = explode("-", $sugarcaneId);
+
+                            if ($sugarcaneIdParts[0] == $id){
+                            $version = (int) $sugarcaneIdParts[1]; // Convert version to integer for comparison
+                    
+                            if ($version > $highestVersion) {
+                                $highestVersion = $version;
+                            }
+                        }
+                        }
+                    }                    
                     $version = $highestVersion + 1;
-                    $sugarcane_id = "$rootParentId-$version";
+                    $sugarcane_id = $id . "-" . $version;
+                    if ($id == null){
+                        $sugarcane_id = '';
+                    }
+                }
+                else{
+                    $sugarcane_id = '';
                 }
             }
-            
-            
-            
 
             $crop = new Crop();
             $crop->name = $cropData['name'];

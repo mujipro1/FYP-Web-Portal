@@ -329,4 +329,26 @@ class ManagerExpenseController extends Controller
         return view('manager_cropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker]);
     }
 
+
+    public function saveEditExpenses(Request $req){
+        
+
+        $expense_id = $req->input('expense_id');
+        $farm_id = $req->input('farm_id');
+        $expense = Expense::find($expense_id);
+
+        if (!$expense || $expense->crop->farm_id != $farm_id) {
+            return redirect()->back()->with('error', "You do not have access to the requested page");
+        }
+        $expense->date = $req->input('date');
+        $details = json_decode($expense->details, true);
+        $details['description'] = $req->input('description');
+        $expense->details = json_encode($details);
+
+        $expense->save();
+
+        return redirect()->back()->with('success', 'Expense updated successfully');
+
+    }
+
 }
