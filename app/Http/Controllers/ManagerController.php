@@ -82,9 +82,8 @@ class ManagerController extends Controller
         $farm_id = $request->input('farm_id');
         $security_check = $this->route_security($farm_id);
         if ($security_check) {return $security_check;}
-        
         $cropsData = json_decode($request->input('cropDetails'), true);
-
+        
         foreach ($cropsData as $cropData) {
             
             $crop_identifier = $cropData['name'] . " " . $cropData['year'];

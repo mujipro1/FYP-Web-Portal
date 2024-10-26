@@ -184,13 +184,13 @@
                                     <h6 class="light">No data available for Farm Expenses<br> in given time span</h6>
                                 </div>
                             @else    
-                                <div class="box-cont" style='height: 50vh;'>
+                                <div class="box-cont" style='height: 70vh;'>
                                     {!! $chart2->container() !!}
                                 </div>
                             @endif
                         </div>
                         <div class="col-md-6" >
-                            <div class="box-cont " style='height: 50vh;'>
+                            <div class="box-cont " style='height: 70vh;'>
                                 {!! $chart->container() !!}
                             </div>
                         </div>

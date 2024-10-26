@@ -99,13 +99,23 @@
                                     </div>
                                     <h5 class='mt-5'> Crops</h5>
                                     <div class='light'>Select Crop</div>
-                                    <div class="row">
 
+                                    <div class="col-md-5">
+                                        <select class='form-select my-3' id='crop-select'>
+                                            <option value="0">Active Crops</option>
+                                            <option value="1">Passive Crops</option>
+                                        </select>
+                                    </div>
+                                        
+
+                                    <div class="row">
                                         @foreach($crops as $crop)
-                                        <div class="col-md-4 my-2">
-                                            <div class="selected-crop" data-id="{{$crop['id']}}"  data-identifier="{{$crop['identifier']}}" style="backgroundColor:#f4f4f4;cursor:pointer;">
+                                        <div class="col-md-4 crops-container my-2"  data-active="{{$crop['active']}}">
+                                            <div class="selected-crop" data-id="{{$crop['id']}}" data-identifier="{{$crop['identifier']}}" 
+                                            style="backgroundColor:#f4f4f4;cursor:pointer;">
                                                 <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}" class="selected-crop-image" />
-                                                <h5 class="m-2 my-3">{{$crop['identifier']}}</h5>
+                                                <h5 class="m-2 mt-3">{{$crop['identifier']}}</h5>
+                                                <p class="mx-2  fsmall light pt-1">{{$crop['variety'] ? $crop['variety'] : 'No Variety Found' }}</p>
                                             </div>
                                         </div>
                                         @endforeach
@@ -121,7 +131,7 @@
                                                 <div class="labelcontainer">
                                                     <label class='w-50' for="date">Date</label>
                                                     <input type="date" id="date" name="date" class="form-control"
-                                                        value="{{date('Y-m-d')}}" style='margin:0px;'>
+                                                        value="{{$latest_expense_date}}" style='margin:0px;'>
                                                 </div>
                                             </div>
                                             <div class='col-md-7'>
@@ -226,5 +236,36 @@
     }
     
     farm_Id = {{$farm_id}};
+
+
+    document.querySelectorAll('.crops-container').forEach(function(crop) {
+        if (crop.getAttribute('data-active') == 1) {
+            crop.style.display = 'block';
+        } else {
+            crop.style.display = 'none';
+        }
+    });
+
+    document.getElementById('crop-select').addEventListener('change', function() {
+        if (this.value == 0) {
+            document.querySelectorAll('.crops-container').forEach(function(crop) {
+                if (crop.getAttribute('data-active') == 1) {
+                    crop.style.display = 'block';
+                } else {
+                    crop.style.display = 'none';
+                }
+            });
+        } else {
+            document.querySelectorAll('.crops-container').forEach(function(crop) {
+                if (crop.getAttribute('data-active') == 0) {
+                    crop.style.display = 'block';
+                } else {
+                    crop.style.display = 'none';
+                }
+            });
+        }
+    });
+
+
 </script>
 </html>

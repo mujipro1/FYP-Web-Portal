@@ -118,19 +118,31 @@
                                                         d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                                 </svg>
                                             </a>
-                                            <label class='or-width'></label>
                                             <h3 class="flex-grow-1 text-center mb-0">Expense Details</h3>
                                             <div style='visibility:hidden;' class="invisible"></div>
-                                            <button class='btn-orange or-width' id="expense-edit-button">Edit</button>
                                     </div>
+                                    <div class="px-5 py-4">
+                                        <button class='btn btn-orange or-width' id="expense-edit-button">Edit</button>
+                                        <button class='btn btn-orange2 or-width'
+                                            id="expense-delete-button">Delete</button>
+                                    </div>
+
+                                    <form id="delete-expense-form" action="{{ route('manager.deleteExpense') }}"
+                                        method="POST" style="display: none;">
+                                        @csrf
+                                        <input type="hidden" name="expense_id" value="{{ $expense->id }}">
+                                        <input type="hidden" name="farm_id" value="{{ $farm_id }}">
+                                        <input type="hidden" name="crop_farm_id" id="crop_farm_id" >
+                                        
+                                    </form>
 
                                     <div class="row p-5">
                                         <form action="{{route('manager.saveEditExpenses')}}" method='post'>
                                             @csrf
                                             <div class="col-md-8">
 
-                                                <input hidden name='expense_id' value="{{$expense->id}}"/>
-                                                <input hidden name='farm_id' value="{{$farm_id}}"/>
+                                                <input hidden name='expense_id' value="{{$expense->id}}" />
+                                                <input hidden name='farm_id' value="{{$farm_id}}" />
                                                 <div class="d-flex">
                                                     <label class="w-50" for="date">Date</label>
                                                     <input id='date' name='date' class='form-control mb-2 w-50' disabled
@@ -160,29 +172,34 @@
                                                 <hr class="my-4">
 
                                                 @foreach (json_decode($expense->details) as $key => $value)
-                                                @if ($key != 'amount' && $key != 'description')
+                                                @if ($key != 'amount' && $key != 'description' && $key != 'addedBy')
                                                 <div class="d-flex">
                                                     <label class="w-50"
                                                         for="{{ $key }}">{{ ucwords(str_replace('_', ' ', $key)) }}</label>
+                                                    @if ($value != null)
                                                     <label class="w-50" for="{{ $key }}_value">{{ $value }}</label>
+                                                    @else
+                                                    <label class="text-danger w-50" for="{{ $key }}_value"><i>Not
+                                                            found</i></label>
+                                                    @endif
                                                 </div>
                                                 @endif
                                                 @endforeach
                                                 <div class="d-flex my-3">
                                                     <label class="w-50" for="amount">Amount</label>
-                                                    <label class="w-50  fw-bold"
-                                                        for="amount_value">{{ $expense->total }}</label>
+                                                    <label class="w-50  fw-bold" for="amount_value">{{ $expense->total }}</label>
                                                 </div>
 
                                                 <div class="d-flex my-3">
-                                                    <label for='description' class="w-50">Description</label>
-                                                    @php 
-                                                        $description = json_decode($expense->details);
-                                                        $desc = $description->description;
+                                                    @php
+                                                    $description = json_decode($expense->details);
+                                                    $desc = $description->description ?? null;
                                                     @endphp
+                                                    @if($desc)
+                                                    <label for='description' class="w-50">Description</label>
                                                     <textarea id="description" class="w-50 form-control"
-                                                        name="description"
-                                                        disabled>{{$desc}}</textarea>
+                                                        name="description" disabled>{{$desc}}</textarea>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -242,6 +259,18 @@ document.getElementById('expense-edit-button').addEventListener('click', () => {
     date.disabled = !date.disabled;
     description.disabled = !description.disabled;
 })
+
+document.getElementById('expense-delete-button').addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete this expense?')) {
+        document.getElementById('delete-expense-form').submit();
+    }
+});
+
+if (window.location.pathname.includes('view_cropexpense')) {
+    document.getElementById('crop_farm_id').value = 1;
+} else {
+    document.getElementById('crop_farm_id').value = 0;
+}
 
 </script>
 

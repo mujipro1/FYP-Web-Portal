@@ -139,7 +139,7 @@
 
                         @else
                         <div class="row my-4">
-                            <div class="col-md-7">
+                            <div class="col-md-7 d-flex justify-content-center">
                                 <div class="popular-crop p-4" style="background-color:white;box-shadow: 0px 0px 10px #dddddd;">
                                     <h5 class="text-start text-success">PKR {{$totalExpenses1}}/-</h5>
                                     <div class='fsmall'>Total expenses of {{$crop1->identifier}}</div>
@@ -169,6 +169,9 @@
                             </div>
                         </div>
 
+
+                        @if($quantityChart != null)
+
                         <hr class="my-4">
 
                         <div class="col-md-12">
@@ -177,6 +180,7 @@
                             </div>
                         </div>
 
+                        @endif
                         <hr class="my-4">
 
                         <div class="row">
@@ -218,7 +222,9 @@
 @foreach ($charts as $chartx)
 {!! $chartx->script() !!}
 @endforeach
+@if ($quantityChart != null)
 {!! $quantityChart->script() !!}
+@endif
 @endif
 <script>
 function handleSingleCrop() {

@@ -229,6 +229,11 @@ class ManagerAnalyticsController extends Controller
 
         $quantityKeys = ['quantity', 'quantity_(litres)', 'no_of_units'];
         $quantityChart = $this->fetchCropExpenseQuantities($crop_id, $quantityKeys);
+
+        if ($quantityChart == null) {
+            $quantityChart = 'empty';
+        }
+
         
              
         return view('manager_singleCrop', ['farm_id' => $farm_id, 'crops' => $crops, 'expenseChart' => $expenseChart,
@@ -245,7 +250,6 @@ class ManagerAnalyticsController extends Controller
     $crop_expenses = Expense::where('crop_id', $crop_id)->get();
     $quantityData = [];
     $expenseData = [];
-
     
 
     foreach ($crop_expenses as $expense) {
@@ -258,12 +262,11 @@ class ManagerAnalyticsController extends Controller
 
         // Check for quantity keys in the details
         foreach ($quantityKeys as $key) {
+
             if (isset($details[$key])) {
                 $quantity += intval($details[$key]);
             }
-        }
-        
-
+        }        
         // Only add to the arrays if there is a quantity
         if ($quantity > 0) {
             // Add quantity
@@ -282,6 +285,7 @@ class ManagerAnalyticsController extends Controller
         }
     }
     
+
     // Only proceed if there are quantities
     if (!empty($quantityData)) {
         $expenseNames = array_keys($quantityData);

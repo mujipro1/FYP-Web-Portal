@@ -136,6 +136,8 @@
                         </div>
                     </div>
 
+                    
+                    @if ($quantityChart != 'empty')
                     <hr class="my-4">
                         
                     <div class="col-md-12">
@@ -144,6 +146,7 @@
                         </div>
                     </div>
 
+                    @endif
 
                     <hr class="my-4">
 
@@ -187,7 +190,9 @@
 @foreach ($charts as $chartx)
 {!! $chartx->script() !!}
 @endforeach
-{!! $quantityChart->script() !!}
+@if ($quantityChart != 'empty')
+    {!! $quantityChart->script() !!}
+@endif
 @endif
 
 <script>

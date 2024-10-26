@@ -147,7 +147,11 @@
                                                 <tr onclick="handleExpenseRowClick({{$expense->id}})" style='cursor:pointer;'>
                                                     <td>{{$expense->date}}</td>
                                                     <td>{{$expense->expense_type}}</td>
+                                                    @if ($expense->expense_subtype)
                                                     <td>{{$expense->expense_subtype}}</td>
+                                                    @else
+                                                    <td><label class='text-danger'><i>Not Found</i></label></td>
+                                                    @endif
                                                     <td>{{$expense->total}}</td>
                                                     <!-- convert json to presentable in details -->
                                                    
@@ -156,7 +160,7 @@
                                                      @if (is_array($expense->details) && array_key_exists('description', $expense->details))
                                                         <td>{{ $expense->details['description'] }}</td>
                                                     @else
-                                                        <td></td>
+                                                        <td><label class="text-danger"><i>Not Found</i></label></td>
                                                     @endif
                                                 </tr>
                                                 @endforeach

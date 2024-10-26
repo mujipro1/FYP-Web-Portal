@@ -103,13 +103,12 @@
                                 <div class="d-flex">
                                     <label class="w-50" for="crop">Sowing Date</label>
                                     <label class="w-50"
-                                        for="crop_value">{{Carbon\Carbon::parse($crop['sowing_date'])->format('d M Y')}}</label>
+                                        for="crop_value">{{ $crop['sow_date'] ? \Carbon\Carbon::parse($crop['sow_date'])->format('d M Y') : 'Date not available' }}</label>
                                 </div>
 
                                 <div class="d-flex">
                                     <label class="w-50" for="crop">Harvest Date</label>
-                                    <label class="w-50"
-                                        for="crop_value">{{Carbon\Carbon::parse($crop['harvest_date'])->format('d M Y')}}</label>
+                                    <label class="w-50" for="crop_value">{{ $crop['harvest_date'] ? \Carbon\Carbon::parse($crop['harvest_date'])->format('d M Y') : 'Date not available' }}</label>
                                 </div>
 
                                 <div class="d-flex">
@@ -152,11 +151,11 @@
                                         <h4 class="my-3">{{$version->identifier}}</h4>
                                         <div class="d-flex">
                                             <label class="w-50" >Sowing Date</label>
-                                            <label class="w-50" >{{Carbon\Carbon::parse($version['sow_date'])->format('d M Y')}}</label>
+                                            <label class="w-50" >{{$crop['sow_date'] ? \Carbon\Carbon::parse($crop['sow_date'])->format('d M Y') : 'Date not available'}}</label>
                                         </div>
                                         <div class="d-flex">
                                             <label class="w-50" >Harvest Date</label>
-                                            <label class="w-50" >{{Carbon\Carbon::parse($version['harvest_date'])->format('d M Y')}}</label>
+                                            <label class="w-50" >{{$crop['harvest_date'] ? \Carbon\Carbon::parse($crop['harvest_date'])->format('d M Y') : 'Date not available'}}</label>
                                         </div>
                                         @endforeach
                                     @endif

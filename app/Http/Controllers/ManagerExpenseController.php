@@ -325,8 +325,18 @@ class ManagerExpenseController extends Controller
                             ->pluck('expense_head')
                             ->toArray();
 
+
+        $user_id = Farm::where('id', $farm_id)->value('user_id');
+        $latest_expense = Expense::where('user_id', $user_id)->orderBy('id', 'desc')->first(); 
+
+        if ($latest_expense) {
+            $latest_expense_date = $latest_expense->date;
+        } else {
+            $latest_expense_date = date('Y-m-d');
+        }
+
         $worker = Session::get('worker');
-        return view('manager_cropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker]);
+        return view('manager_cropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker, 'latest_expense_date' => $latest_expense_date]);
     }
 
 
@@ -349,6 +359,26 @@ class ManagerExpenseController extends Controller
 
         return redirect()->back()->with('success', 'Expense updated successfully');
 
+    }
+
+    public function deleteExpense(Request $request)
+    {
+        if($request->crop_farm_id == '1'){
+            $expense = Expense::find($request->expense_id);
+            if ($expense && $expense->crop->farm_id == $request->farm_id) {
+                $expense->delete();
+                return redirect()->route('manager.view_cropexpense' , ['farm_id' => $request->farm_id])->with('success', 'Expense deleted successfully');
+            }
+            return redirect()->route('manager.view_cropexpense' , ['farm_id' => $request->farm_id])->with('error', 'Expense Not Found');
+        }   
+        else{
+            $expense = FarmExpense::find($request->expense_id);
+            if ($expense && $expense->farm_id == $request->farm_id) {
+                $expense->delete();
+                return redirect()->route('manager.view_farmexpense' , ['farm_id' => $request->farm_id])->with('success', 'Expense deleted successfully');
+            }
+            return redirect()->route('manager.view_farmexpense' , ['farm_id' => $request->farm_id])->with('error', 'Expense Not Found');
+        }
     }
 
 }

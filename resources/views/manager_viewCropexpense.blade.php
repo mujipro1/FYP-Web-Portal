@@ -104,7 +104,7 @@
                                                     aria-label="Default select example">
                                                     <option value='' selected>Select Crop</option>
                                                     @foreach ($crops as $crop)
-                                                    <option value="{{$crop->id}}">{{$crop->name}}</option>
+                                                    <option value="{{$crop->id}}">{{$crop->identifier}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -165,16 +165,20 @@
                                                         <td>{{$expense->date}}</td>
                                                         <td>{{$expense->crop->name}}</td>
                                                         <td>{{$expense->expense_type}}</td>
+                                                        @if ($expense->expense_subtype)
                                                         <td>{{$expense->expense_subtype}}</td>
+                                                        @else
+                                                        <td><label class='text-danger'><i>Not Found</i></label></td>
+                                                        @endif
                                                         <td>{{$expense->total}}</td>
                                                         <!-- convert json to presentable in details -->
 
                                                         <!-- fetch description from details json -->
                                                         <!-- check if the field decription exists -->
                                                         @if (is_array($expense->details) && array_key_exists('description', $expense->details))
-                                                            <td>{{ $expense->details['description'] }}</td>
+                                                            <td>{{ $expense->details['description']}}</td>
                                                         @else
-                                                            <td></td>
+                                                            <td><label class='text-danger'><i>Not Found</i></label></td>
                                                         @endif
                                                     </tr>
                                                     @endforeach
