@@ -1,3 +1,5 @@
+@extends('layouts.app') 
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 

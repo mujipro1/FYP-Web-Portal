@@ -83,5 +83,15 @@ const crops = [
     { name: 'Walnut', image: '/images/crops/Walnut.jpg' },
     { name: 'Watermelon', image: '/images/crops/Watermelon.jpg' },
     { name: 'Wheat', image: '/images/crops/Wheat.jpg' },
+    { name: 'Alfafa', image: '/images/crops/Alfafa.jpg' },
+    { name: 'Sorghum', image: '/images/crops/Sorghum.jpg' },
+    { name: 'Fodder', image: '/images/crops/Fodder.jpg' },
+    { name: 'Silage', image: '/images/crops/Silage.jpg' },
+    { name: 'Vegetables', image: '/images/crops/Vegetables.jpg' },
+    { name: 'Canola', image: '/images/crops/Canola.jpg' },
+    { name: 'Berseem', image: '/images/crops/Berseem.jpg' },
+    { name: 'Jaggery', image: '/images/crops/Jaggery.jpg' },
+    { name: 'Straw', image: '/images/crops/Straw.jpg' },
+
 ];
 

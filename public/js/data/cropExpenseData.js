@@ -2,7 +2,7 @@ const cropExpenseData = [
     {
         "head" : "Labour",
         "sub-head" :[
-            'Sowing','Harvesting','Fertilizer','Poison','Spray','Mulching','Cleaning','Driver','Misc' 
+            'Sowing','Harvesting', 'Loading/Unloading','Fertilizer','Poison','Spray','Mulching','Cleaning','Driver','Food and Subsistence','Travel','Others' 
         ],
         'entry':[
             'No of Units',
@@ -14,8 +14,7 @@ const cropExpenseData = [
 
     {
         "head" : "Machinery",
-        "sub-head" :[
-            'Harvester','Thresher'
+        "sub-head" :[,'Rice Planter','Happy Seeder','Harvester Rent','Thresher Rent','Laser Level Rent','Corn Sowing Machine Rent','Silage Machine Rent','Transport','Others'
         ],
         'entry':[
             'No of Units',
@@ -28,7 +27,8 @@ const cropExpenseData = [
     {
         "head" : "Fertilizer",
         "sub-head" :[
-           "DAP", "Nitrophas", "Zinc", "Homic Acid", "Urea", "Potash", "Sulphur", "Other"
+           "DAP", "Nitrophas", "Zinc", "Homic Acid", "Urea", "Potash", "Sulphur", "Sulphur K2",'Single Super Phosphate',
+           'NPK','Zinced Urea','Boric Acid','Ammonium Sulphate','Root Feed','Transport',"Others"
         ],
         'entry':[
             'Bag Weight (Kg)',
@@ -42,7 +42,7 @@ const cropExpenseData = [
     {
         "head" : "Seed",
         "sub-head" :[
-           
+            'Seed','Seedling','Transport','Others'
         ],
         'entry':[
             'Bag Weight (Kg)',
@@ -55,7 +55,8 @@ const cropExpenseData = [
 
     {
         "head" : "Fuel",
-        "sub-head" :['Tractor Diesel','Rice Planter Petrol','Motorcycle Petrol' 
+        "sub-head" :['Tractor Diesel','Rice Planter Petrol',
+            'Motorcycle Petrol' , ,'Tube well Peter Engine','Transport','Others'
         ],
         'entry':[
             'Quantity (Litres)',
@@ -70,8 +71,6 @@ const cropExpenseData = [
 
     {
         "head" : "Electricity Bills ",
-        "sub-head" :['Meter 1', 'Meter 2' 
-        ],
         'entry':[
             'Month',
             'Amount'
@@ -80,8 +79,7 @@ const cropExpenseData = [
 
     {
         "head" : "Pesticides",
-        "sub-head" :[
-           "Dumbi Sitti", "Wide Leaf",  "Strengthen", "Brove", "Pest", "Tela", "Weed Spray", "Pest Patta Lapait", "Suudi", "Klorifas"
+        "sub-head" :['Fungicide ','Pesticide','Weedicide','Poison ','Strengthen','Transport','Others'
         ],
         'entry':[
             'Bag Weight (Kg)',
@@ -99,19 +97,7 @@ const cropExpenseData = [
         ],
         'textbox':['Description']
     },
-    {
-        "head" : "Poisons",
-        "sub-head" :[
-           "Dumbi Sitti", "Wide Leaf",  "Strengthen", "Brove", "Pest", "Tela", "Weed Spray", "Pest Patta Lapait", "Suudi", "Klorifas"
-        ],
-        'entry':[
-            'Bag Weight (Kg)',
-            'Unit Expense (Per Bag)',
-            'Quantity',
-            'Total',
-        ],
-        'textbox':['Description']
-    },
+    
     {
         "head" : "Equipment",
         'entry':[
@@ -121,6 +107,8 @@ const cropExpenseData = [
     },
     {
         "head" : "Miscellaneous",
+        "sub-head" : ['Sacks and sew','Transport','Others'
+        ],
         'entry':[
             'Amount'
         ],

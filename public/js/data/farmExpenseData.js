@@ -1,8 +1,8 @@
 
 const farmExpenseData = [
     {
-        "head" : "Electricity Bills ",
-        "sub-head" :['Meter 1', 'Meter 2' 
+        "head" : "Electricity",
+        "sub-head" :['Bills', 'Others' 
         ],
         'entry':[
             'Month',
@@ -10,15 +10,9 @@ const farmExpenseData = [
         ],
     },
     {
-        "head" : "Electricity Repairs ",
-        'entry':[
-            'Amount'
-        ],
-        'textbox':['Description']
-    },
-    {
         "head" : "Labor",
-        'sub-head':['Machinery Maintenance', 'Building Maintenance', 'Driver','Others'],
+        'sub-head':['Machinery Maintenance', 'Building Maintenance', 'Driver',
+            ,'Food and Subsistence', 'Travel','Others'],
         'entry':[
             'Total'
         ],
@@ -26,8 +20,8 @@ const farmExpenseData = [
     },
     {
         "head" : "Machinery Maintenance",
-        "sub-head" :[
-            'Tractor Oil Change','Tractor Parts Maintenance','Rice Planter','Trolly','Happy Seeder','Motorcycle','Laser Level','Other'
+        "sub-head" :['Tractor Oils','Tractor Parts','Tractor Service','Rice Planter',
+            'Maintenance','Trolley','Happy Seeder ','Motorcycle','Laser Level','Rotavator ','Peter Engine','Spray Machine','Plough and Related','Transport','Others'
         ],
         'entry':[
             'Amount'
@@ -36,7 +30,7 @@ const farmExpenseData = [
     },
     {
         "head" : "Fuel",
-        "sub-head" :['Motorcycle Petrol' 
+        "sub-head" :['Motorcycle Petrol' ,'Tractor Diesel','Diesel Misc','Petrol Misc'
         ],
         'entry':[
             'Quantity (Litres)',
@@ -47,7 +41,7 @@ const farmExpenseData = [
     },
     {
         "head" : "Maintenance & Repairs ",
-        "sub-head" :['Building Repairs', 'Waterway','Tube well Room','Road', 'Others'
+        "sub-head" :['Buildings', 'Waterway','Tube well Room','Road','Electricity','Equipment','Plumbing','Others'
               ],
         'entry':[
             'Amount',
@@ -56,7 +50,7 @@ const farmExpenseData = [
     },
     {
         "head" : "Tubewells",
-        "sub-head" :['Bore','Motors','Other'
+        "sub-head" :['Bore','Motors','Transport', 'Fixing','Other'
               ],
         'entry':[
             'Amount',
@@ -65,7 +59,7 @@ const farmExpenseData = [
     },
     {
         "head" : "Solar",
-        "sub-head" :['Panels','Stands','Inverter','Fixing','Other'],
+        "sub-head" :['Panels','Stands','Inverter','Fixing','Repair', 'Transport','Other'],
         'entry':[
             'Amount',
         ],
@@ -80,6 +74,7 @@ const farmExpenseData = [
     },
     {
         "head" : "HR Costs",
+        'sub-head':['Worker Salaries', 'Others'],
         'entry':[
             'Month',
             'Amount',
@@ -88,7 +83,8 @@ const farmExpenseData = [
     },
     {
         "head" : "Livestock",
-        "sub-head" :['Medicine', 'Fertilization','Food','Transport'],
+        "sub-head" :['Animal Medicine','Animal Fertilization','Animal Feed','Transport','Chaff Cutter Maintenance','Chaff Cutter Fuel'
+        ],
         'entry':[
             'Amount',
         ],
@@ -110,6 +106,23 @@ const farmExpenseData = [
     },
     {
         "head" : "Miscellaneous",
+        "sub-head": ['Others', "Transport"],
+        'entry':[
+            'Amount',
+        ],
+        'textbox':['Description']
+    },
+    {
+        "head" : "Qurbani",
+        "sub-head": ['Animal Medicine', "Animal Feed", "Labour","Transport",'Chaff Cutter Maintenance','Chaff Cutter Fuel', "Others"],
+        'entry':[
+            'Amount',
+        ],
+        'textbox':['Description']
+    },
+    {
+        "head" : "Poultry",
+        "sub-head": ['Medicine', "Feed", "Chicks","Logistics", "Transport", "Others"],
         'entry':[
             'Amount',
         ],

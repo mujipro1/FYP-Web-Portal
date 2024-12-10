@@ -718,4 +718,8 @@ class ManagerController extends Controller
 
         return redirect()->back()->with('success', 'Crop harvested successfully');
     }
+
+    public function lucifer($farm_id){
+        return view('chatbotseperate', ['farm_id'=>$farm_id]);
+    }
 }

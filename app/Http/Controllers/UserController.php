@@ -9,7 +9,6 @@ use App\Models\Farm;
 use App\Models\FarmWorker;
 use App\Models\Crop;
 
-
 class UserController extends Controller
 {
     public function login(Request $request)
@@ -81,5 +80,6 @@ class UserController extends Controller
         return redirect()->route('home')->with('success', 'Logged out successfully');
     }
 
+   
 }
 

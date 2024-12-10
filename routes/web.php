@@ -109,6 +109,8 @@ Route::middleware('is_manager_and_expense_farmer')->group(function () {
     Route::get('/manager/render_cropexpense/{farm_id}', 'App\Http\Controllers\ManagerExpenseController@render_cropexpense')->name('manager.render_cropexpense');
     Route::post('/manager/saveEditExpenses', 'App\Http\Controllers\ManagerExpenseController@saveEditExpenses')->name('manager.saveEditExpenses');
     Route::post('/manager/deleteExpense', 'App\Http\Controllers\ManagerExpenseController@deleteExpense')->name('manager.deleteExpense');
+    
+    Route::get('/manager/lucifer/{farm_id}', 'App\Http\Controllers\ManagerController@lucifer')->name('lucifer');
 });
 
 
@@ -138,3 +140,4 @@ Route::post('/manager/add_sales', 'App\Http\Controllers\ManagerSalesController@a
 Route::get('/manager/view_sales/{farm_id}', 'App\Http\Controllers\ManagerSalesController@view_sales')->name('manager.view_sales');
 Route::post('/manager/apply_salesSearch', 'App\Http\Controllers\ManagerSalesController@apply_salesSearch')->name('manager.apply_salesSearch');
 Route::get('/manager/viewSalesRow/{farm_id}/{sale_id}', 'App\Http\Controllers\ManagerSalesController@viewSalesRow')->name('manager.viewSalesRow');
+
