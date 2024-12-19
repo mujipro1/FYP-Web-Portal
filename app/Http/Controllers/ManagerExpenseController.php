@@ -287,13 +287,17 @@ class ManagerExpenseController extends Controller
             $query->whereDate('date', $date);
         }
         $farm_id = $request->input('farm_id');
+        $query->where('farm_id', $farm_id);
+
+        $worker = Session::get('worker');
         
         if ($expense_type == null && $date == null) {
-              return redirect()->route('manager.view_farmexpense', ['farm_id' => $farm_id]);
+              return redirect()->route('manager.view_farmexpense', ['farm_id' => $farm_id, 'worker'=>$worker]);
         }
 
         $expenses = $query->get();
-        return route('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses]);
+
+        return view('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses, 'worker'=>$worker]);
         
     }        
 

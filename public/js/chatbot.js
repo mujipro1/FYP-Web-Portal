@@ -136,7 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
             '0f7b5e6590104937b3d1861b1b5b9be8', 
             '8bcb1eaed1324782a3b59af2822b7676',
             '5251b604ca0641beada69aa79fe096ec',
-            '96ecc478626c41e29db001eaa90f7307'
+            '96ecc478626c41e29db001eaa90f7307',
+            'fd7a856441e6492d9ee4fcbd65bc710f',
+            'c89a922c0a0040849b3ed13d591f5cb5'
         ];
 
         const sendReq = async (kuch_khas_nai) => {

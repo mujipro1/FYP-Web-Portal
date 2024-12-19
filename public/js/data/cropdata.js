@@ -92,6 +92,9 @@ const crops = [
     { name: 'Berseem', image: '/images/crops/Berseem.jpg' },
     { name: 'Jaggery', image: '/images/crops/Jaggery.jpg' },
     { name: 'Straw', image: '/images/crops/Straw.jpg' },
+    { name: 'Pepper', image: '/images/crops/Pepper.jpg' },
+    { name: 'Jantar', image: '/images/crops/Jantar.jpg' },
+    { name: 'Sesame', image: '/images/crops/Sesame.jpg' },
 
 ];
 

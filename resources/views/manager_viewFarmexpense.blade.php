@@ -159,10 +159,13 @@
                                                    
                                                     <!-- fetch description from details json -->
                                                      <!-- check if the field decription exists -->
-                                                     @if (is_array($expense->details) && array_key_exists('description', $expense->details))
-                                                        <td>{{ $expense->details['description'] }}</td>
+                                                     @php
+                                                        $details = json_decode($expense->details, true); 
+                                                    @endphp
+                                                    @if (is_array($details) && array_key_exists('description', $details))
+                                                        <td>{{ $details['description']}}</td>
                                                     @else
-                                                        <td><label class="text-danger"><i>Not Found</i></label></td>
+                                                        <td><label class='text-danger'><i>Not Found</i></label></td>
                                                     @endif
                                                 </tr>
                                                 @endforeach
