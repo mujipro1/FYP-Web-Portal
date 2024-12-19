@@ -22,8 +22,7 @@ class UserController extends Controller
 
         $user = User::where('email', $credentials['email'])->first();
 
-        // if (!($user && password_verify($credentials['password'], $user->password))) {
-            if (!($user && $credentials['password'] == $user->password)) {
+        if (!($user && password_verify($credentials['password'], $user->password))) {
                 return redirect()->route('home')->with('error', 'Invalid email or password');
             }
             
