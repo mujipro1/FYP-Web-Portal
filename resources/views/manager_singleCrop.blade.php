@@ -80,6 +80,8 @@
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
 
+
+
                     <form action="{{route('manager.singlecropPost')}}" method='post'>
                         @csrf
                         <div class="row m-4 mt-5">
@@ -89,8 +91,8 @@
                                     <label class='w-50' for="crop">Select Crop</label>
                                     <select class="form-select" id="crop" name="crop">
                                     <option value="">Select a crop</option>
-                                        @foreach($crops as $crop)
-                                        <option value="{{ $crop->id }}">{{ $crop->identifier }}</option>
+                                        @foreach($crops as $cropx)
+                                        <option value="{{ $cropx->id }}">{{ $cropx->identifier }}</option>
                                         @endforeach
                                     </select>
                                     <button disabled  class="btn specialSubmitButton mx-4" type='submit'>
@@ -119,12 +121,27 @@
                     </div>
 
                     @else
-                    <div class="col-md-6">
-                        <div class="popular-crop p-4" style="background-color:white;box-shadow: 0px 0px 10px #dddddd;">
-                            <h5 class="text-start text-success">PKR {{$totalExpenses}}/-</h5>
-                            <div class='fsmall'>Total Expenses of {{$crop->identifier}}</div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="popular-cropz d-flex justify-content-start p-2">
+                                <div>
+                                    <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}" class='anal-img img-fluid'/>
+                                </div>
+                                <div class="">
+                                    <h5 class="text-start text-success">PKR {{$totalExpenses}}/-</h5>
+                                    <div class='fsmall'>Total Expenses of {{$crop->identifier}}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="my-4 text-center">
+                        <button class="btn btn-orange2 or-width csv-export" onclick=" window.location.href = '/export-csv/{{$crop->id}}'">Export Data
+                            <svg xmlns="http://www.w3.org/2000/svg" id="svg1" data-name="Layer 1" viewBox="0 0 24 24" ><path d="M24,24H0v-2H24v2Zm-9.86-4.89l9.82-10.11h-6.95V0H7V9H.07l9.8,10.11h0c.57,.58,1.32,.89,2.12,.89h0c.8,0,1.56-.31,2.13-.89Z"/></svg>
+                        </button>
+                    </div>
+
+                       
                     <div class="row mt-5">
                         <div class="col-md-6">
                             <div class="box-cont">

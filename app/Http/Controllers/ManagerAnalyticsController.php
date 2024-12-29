@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Response;
 
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 use App\Models\Farm;
 use App\Models\FarmExpense;
+use App\Models\Crop;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 
@@ -132,7 +134,6 @@ class ManagerAnalyticsController extends Controller
         $crops = $farm->crops;
         $crop_id = $req->input('crop');
 
-
         $crop_expenses = Expense::where('crop_id', $crop_id)->get();
         $expenseData = [];
         foreach ($crop_expenses as $expense) {
@@ -192,11 +193,9 @@ class ManagerAnalyticsController extends Controller
         
         $chartsSubtype = [];
         foreach ($expenseTypes as $expenseType) {
-            $chartsSubtype[$expenseType] = $this->generateExpenseSubtypeChart($farm_id, $expenseType, $crop_id, null , null, 1);
+            $chartsSubtype[$expenseType] = $this->generateExpenseSubtypeChart($farm_id, $expenseType, 1, null , null, $crop_id);
+
         }
-
-
-
 
 // ---------------------------
 
@@ -234,16 +233,11 @@ class ManagerAnalyticsController extends Controller
             $quantityChart = 'empty';
         }
 
-        
-             
         return view('manager_singleCrop', ['farm_id' => $farm_id, 'crops' => $crops, 'expenseChart' => $expenseChart,
          'id'=>1, 'expenseChartPerAcre' => $expenseChartPerAcre, 'totalExpenses' => $totalExpenses, 'crop'=>$crop, 'charts' => $chartsSubtype
           , 'quantityChart' => $quantityChart]);
 
     }
-
-
-
 
     private function fetchCropExpenseQuantities($crop_id, $quantityKeys)
 {
@@ -596,4 +590,65 @@ class ManagerAnalyticsController extends Controller
         return $subtypeData;
     }
     
-}
+    
+    public function exportCsv($crop_id)
+    {
+
+        $crop = Crop::where('id', $crop_id)->first();
+
+        if (!$crop) {
+            return response()->json(['error' => 'Crop not found'], 404);
+        }
+        $crop_name = $crop->identifier;
+        $acres = $crop->acres;
+        $expenses = Expense::where('crop_id', $crop_id)->get();
+
+        if ($expenses->isEmpty()) {
+            return response()->json(['error' => 'No expenses found for the crop'], 404);
+        }
+    
+        $total_expense_amount = $expenses->sum('total');
+        $number_of_expenses = $expenses->count();
+        $per_acre_expense = $acres > 0 ? $total_expense_amount / $acres : 0;
+    
+        // Group by expense type and then by subtype
+        $type_and_subtype_expenses = $expenses->groupBy('expense_type')->map(function ($group) {
+            return [
+                'total' => $group->sum('total'),
+                'subtypes' => $group->groupBy('expense_subtype')->map(function ($subgroup) {
+                    return $subgroup->sum('total');
+                }),
+            ];
+        });
+    
+        // Prepare CSV data
+        $data = [
+            ['Crop Name', 'Total Expense', 'Number of Expenses', 'Per Acre Expense'],
+            [$crop_name, $total_expense_amount, $number_of_expenses, $per_acre_expense],
+            [''], // Spacer row
+            ['Expense Type', 'Subtype', 'Total'], // Header for expense details
+        ];
+    
+        foreach ($type_and_subtype_expenses as $type => $details) {
+            foreach ($details['subtypes'] as $subtype => $amount) {
+                $data[] = [$type, $subtype ? $subtype : "No Subtype Found", $amount]; // Add subtype details
+            }
+            $data[] = ['', 'Total', $details['total']]; // Add total for the type
+            $data[] = ['']; // Spacer row between types
+        }
+    
+        // Generate and return CSV
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="'.$crop_name.'.csv"',
+        ];
+    
+        return Response::stream(function () use ($data) {
+            $file = fopen('php://output', 'w');
+            foreach ($data as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        }, 200, $headers);
+    }
+}    

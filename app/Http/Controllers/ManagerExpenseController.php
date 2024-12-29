@@ -86,7 +86,15 @@ class ManagerExpenseController extends Controller
                             ->toArray();
         $worker = Session::get('worker');
 
-        return view('manager_farmexpense', ['farm_id' => $farm_id, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker]);
+        $latest_expense = FarmExpense::where('farm_id', $farm_id)->orderBy('id', 'desc')->first(); 
+        
+        if ($latest_expense) {
+            $latest_expense_date = $latest_expense->date;
+        } else {
+            $latest_expense_date = date('Y-m-d');
+        }
+
+        return view('manager_farmexpense', ['farm_id' => $farm_id, 'added_expenses' => $added_expenses, 'removed_expenses' => $removed_expenses, 'worker' => $worker, 'latest_expense_date'=>$latest_expense_date]);
     }
 
     public function view_cropexpense($farm_id){
@@ -96,7 +104,7 @@ class ManagerExpenseController extends Controller
         
         
         $crops = Crop::where('farm_id', $farm_id)->get();
-        $expenses = Expense::whereIn('crop_id', $crops->pluck('id'))->get();
+        $expenses = Expense::whereIn('crop_id', $crops->where('active', 1)->pluck('id'))->orderBy('date', 'desc')->get();
         $worker = Session::get('worker');
 
         return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'worker' => $worker]);
@@ -177,40 +185,36 @@ class ManagerExpenseController extends Controller
     }
     
     public function manager_applyExpenseSearch(Request $request){ 
-        $crop_id = $request->input('crop_id');
-        $expense_type = $request->input('expense_type');
-        $date = $request->input('date');
-
-        $query = Expense::query();
-
-        if ($crop_id) {
-            $query->where('crop_id', $crop_id);
-        }
-
-        if ($expense_type) {
-            $query->where('expense_type', $expense_type);
-        }
-
-        if ($date) {
-            $query->whereDate('date', $date);
-        }
+   
+        $active_passive = $request->input('active_passive');
         $farm_id = $request->input('farm_id');
-        
+
+        if ($active_passive == '0') {
+            $expenses = Expense::whereHas('crop', function($query) use ($farm_id) {
+                        $query->where('active', 1)->where('farm_id', $farm_id);})->orderBy('date', 'desc')->get();
+            $crops = Crop::where('farm_id', $farm_id)->where('active', 1)->get();
+        } elseif ($active_passive == '1') {
+            $expenses = Expense::whereHas('crop', function($query) use ($farm_id) {
+                        $query->where('active', 0)->where('farm_id', $farm_id); })->orderBy('date', 'desc')->get();
+                        $crops = Crop::where('farm_id', $farm_id)->where('active', 0)->get();
+        } elseif ($active_passive == '2') {
+            $expenses = Expense::whereHas('crop', function($query) use ($farm_id) {
+                    $query->where('farm_id', $farm_id);})->orderBy('date', 'desc')->get();
+                    $crops = Crop::where('farm_id', $farm_id)->get();
+        }
+
+
         $worker = Session::get('worker');
 
-        if ($crop_id == null && $expense_type == null && $date == null) {
-           return redirect()->route('manager.view_cropexpense', ['farm_id' => $farm_id, 'worker' => $worker]);
+        if ($active_passive == null) {
+           return redirect()->route('manager.view_cropexpense', ['farm_id' => $farm_id, 'worker' => $worker, 'active_passive'=>$active_passive]);
         }
 
-        $expenses = $query->get();
 
         $totalAmount = $expenses->sum('total');
         $totalExpenses = $expenses->count();
 
-        $expenses = $query->get();
-        $crops = Crop::where('farm_id', $farm_id)->get();
-
-        return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'worker' => $worker]);
+        return view('manager_viewCropexpense', ['farm_id' => $farm_id, 'crops' => $crops, 'expenses' => $expenses, 'worker' => $worker, 'active_passive'=>$active_passive]);
 
     }
 
@@ -274,30 +278,53 @@ class ManagerExpenseController extends Controller
     }
 
     public function manager_applyExpenseSearchfarm(Request $request){
-        $expense_type = $request->input('expense_type');
-        $date = $request->input('date');
 
-        $query = FarmExpense::query();
-
-        if ($expense_type) {
-            $query->where('expense_type', $expense_type);
-        }
-
-        if ($date) {
-            $query->whereDate('date', $date);
-        }
         $farm_id = $request->input('farm_id');
-        $query->where('farm_id', $farm_id);
 
+        $active_passive = $request->input('active_passive');
+        $farm_id = $request->input('farm_id');
+
+        if ($active_passive == '0') {
+            $activeCrops = Crop::where('farm_id', $farm_id)->where('active', 1)->get();
+            if ($activeCrops->isNotEmpty()) {
+                $oldestActiveCropExpense = Expense::whereIn('crop_id', $activeCrops->pluck('id'))->orderBy('date', 'asc')->first();
+                if ($oldestActiveCropExpense) {
+                    $expenses = FarmExpense::where('farm_id', $farm_id)->where('date', '>=', $oldestActiveCropExpense->date) // Get expenses after the oldest active crop expense date
+                        ->orderBy('date', 'desc')->get();
+                } else {
+                    $expenses = collect();
+                }
+            } else {
+                $expenses = collect();
+            }
+        } elseif ($active_passive == '1') {
+            $activeCrops = Crop::where('farm_id', $farm_id)->where('active', 1)->get();
+            if ($activeCrops->isNotEmpty()) {
+                $oldestActiveCropExpense = Expense::whereIn('crop_id', $activeCrops->pluck('id'))->orderBy('date', 'asc')->first();
+                if ($oldestActiveCropExpense) {
+                    $expenses = FarmExpense::where('farm_id', $farm_id)->where('date', '<=', $oldestActiveCropExpense->date) // Get expenses after the oldest active crop expense date
+                        ->orderBy('date', 'desc')->get();
+                } else {
+                    $expenses = collect();
+                }
+            } else {
+                $expenses = collect();
+            }
+        
+        } elseif ($active_passive == '2') {
+            $expenses = FarmExpense::where('farm_id', $farm_id)->orderBy('date', 'desc')->get();
+        }
+        
+
+        
         $worker = Session::get('worker');
         
-        if ($expense_type == null && $date == null) {
+        if ($active_passive == null) {
               return redirect()->route('manager.view_farmexpense', ['farm_id' => $farm_id, 'worker'=>$worker]);
         }
 
-        $expenses = $query->get();
 
-        return view('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses, 'worker'=>$worker]);
+        return view('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses, 'worker'=>$worker, 'active_passive'=>$active_passive]);
         
     }        
 
@@ -307,7 +334,20 @@ class ManagerExpenseController extends Controller
         if ($security_check) {return $security_check;}
         
 
-        $expenses = FarmExpense::where('farm_id', $farm_id)->get();
+
+        $activeCrops = Crop::where('farm_id', $farm_id)->where('active', 1)->get();
+        if ($activeCrops->isNotEmpty()) {
+            $oldestActiveCropExpense = Expense::whereIn('crop_id', $activeCrops->pluck('id'))->orderBy('date', 'asc')->first();
+            if ($oldestActiveCropExpense) {
+                $expenses = FarmExpense::where('farm_id', $farm_id)->where('date', '>=', $oldestActiveCropExpense->date) // Get expenses after the oldest active crop expense date
+                    ->orderBy('date', 'desc')->get();
+            } else {
+                $expenses = collect();
+            }
+        } else {
+            $expenses = collect();
+        }
+
         $worker = Session::get('worker');
         return view('manager_viewFarmexpense', ['farm_id' => $farm_id, 'expenses' => $expenses, 'worker' => $worker]);
     }

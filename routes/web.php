@@ -113,6 +113,8 @@ Route::middleware('is_manager_and_expense_farmer')->group(function () {
     Route::get('/manager/lucifer/{farm_id}', 'App\Http\Controllers\ManagerController@lucifer')->name('lucifer');
 });
 
+Route::get('/export-csv/{crop_id}', 'App\Http\Controllers\ManagerAnalyticsController@exportCsv');
+
 
 Route::middleware('is_superadmin')->group(function () {
     Route::get('/superadmin', 'App\Http\Controllers\SuperAdminController@render_superadmin_page')->name('superadmin');

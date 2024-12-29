@@ -121,7 +121,7 @@
                                                 @else
                                                 <tr>
                                                 @endif
-                                                    <td>{{$reconcile->date}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($reconcile->date)->format('d M Y')}}</td>
                                                     <td>{{$reconcile->user->name}}</td>
                                                     @if($reconcile->spent == 1)
                                                         @if($reconcile->farmExpense)

@@ -16,5 +16,6 @@
     @include('components.chatbot')
     <!-- Add your scripts -->
     <script src="{{ asset('js/chatbot.js') }}"></script>
+
 </body>
 </html>

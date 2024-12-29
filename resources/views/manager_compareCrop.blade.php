@@ -151,10 +151,16 @@
                                     <div class='fsmall'>Total expenses of {{$crop2->identifier}}</div>
                                 </div>
                             </div>
-                            <div class="col-md-5 m-auto">
-                                <h5 class="text-center">{{$crop1->identifier}}</h5>
-                                <h6 class='light text-center'> vs</h6>
-                                <h5 class="text-center"> {{$crop2->identifier}}</h5>
+                            <div class="col-md-5 d-flex align-items-center justify-content-center m-auto">
+                                
+                                <div class='px-4 pt-2'>
+                                    <h5 class="text-center">{{$crop1->identifier}}</h5>
+                                    <h6 class='light text-center'> vs</h6>
+                                    <h5 class="text-center"> {{$crop2->identifier}}</h5>
+                                </div>
+                                <div>
+                                    <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}" class='anal-img borders img-fluid'/>
+                                </div>
                             </div>
                         </div>
 

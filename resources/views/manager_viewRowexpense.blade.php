@@ -147,8 +147,8 @@
                                                 <input hidden name='farm_id' value="{{$farm_id}}" />
                                                 <div class="d-flex">
                                                     <label class="w-50" for="date">Date</label>
-                                                    <input id='date' name='date' class='form-control mb-2 w-50' disabled
-                                                        type='date' value="{{$expense->date}}"></input>
+                                                    <label id='changeDateFormat' class='w-50'
+                                                    for="crop_value">{{\Carbon\Carbon::parse($expense->date)->format('d M Y')}}</label>
                                                 </div>
 
                                                 @if (!isset($expense->farm))
@@ -251,15 +251,27 @@ function handleViewExpenseClick() {
     window.location.href = "{{ route('manager.view_cropexpense' , ['farm_id' => $farm_id]) }}"
 }
 
+flag = 0
 document.getElementById('expense-edit-button').addEventListener('click', () => {
-    date = document.getElementById('date');
+    flag = !flag
+    changeDateFormat = document.getElementById('changeDateFormat');
+    changeDateFormat.innerHTML = `
+      <input id='date' name='date' class='form-control mb-2 w-75'
+        type='date' value="{{$expense->date}}"></input>
+    `;
+
     description = document.getElementById('description');
 
     document.querySelector('button[type="submit"]').disabled = !document.querySelector('button[type="submit"]')
         .disabled;
 
-    date.disabled = !date.disabled;
-    description.disabled = !description.disabled;
+    if (description){
+        description.disabled = !description.disabled;
+    }
+
+    if (flag == 0){
+        changeDateFormat.innerHTML = "{{\Carbon\Carbon::parse($expense->date)->format('d M Y')}}"
+    }
 })
 
 document.getElementById('expense-delete-button').addEventListener('click', () => {

@@ -24,6 +24,9 @@
                             <a id='home' class="nav-link" href="/home">{{__('messages.home')}}</a>
                         </li>
                         <li class="nav-item">
+                            <a id='home' class="nav-link" href="/manager/farms">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
                             <a id='services' class="nav-link" href="/services">{{__('messages.services')}}</a>
                         </li>
                         <li class="nav-item">

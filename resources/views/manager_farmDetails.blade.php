@@ -111,7 +111,7 @@
                                     <p class='light'>Farm Status</p>
                                     <div class="d-flex my-2 justify-content-between">
                                         <div class='d-flex'>
-                                            <div class="smallCard  d-flex justify-content-between p-3 pr3">
+                                            <div class="smallCard d-flex justify-content-between p-3 pr3">
                                                 <div>Crops</div>
                                                 <h4 class='mt-2'>{{$farm->crops->where('active', 1)->count()}}</h4>
                                             </div>
@@ -156,7 +156,7 @@
                                         @foreach($farm->crops as $crop)
                                         @if($crop['active'] == 1)
                                         <div class="col-md-4">
-                                            <div data-tooltip='Active crop' class="selected-crop tooltip-container" style='background-color:#f3f3f3;box-shadow:none;'
+                                            <div data-tooltip='Active crop' class="selected-crop tooltip-container" style='background-color:#f3f3f3;box-shadow:none;width:100%;margin-bottom:17px;'
                                                 onclick="handleCropClick('{{$crop['id']}}')">
                                                 <img
                                                     src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}">

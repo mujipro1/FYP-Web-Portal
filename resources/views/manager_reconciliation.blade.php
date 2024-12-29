@@ -125,7 +125,8 @@
                                                 @if ($workerx->reconcile)
                                                 <div class="d-flex px-4">
                                                     <label class='w-50 light' for="wallet">Reconcile Date</label>
-                                                    <label class='w-50' for="wallet">{{$workerx->reconcile->date}}</label>
+                                                    <label class='w-50' for="wallet">{{\Carbon\Carbon::parse($workerx->reconcile->date)->format('d M Y')}}</label>
+                                                    
                                                 </div>
                                                 <div class="d-flex px-4">
                                                     <label class='w-50 light' for="wallet">Reconcile Amount</label>
@@ -183,7 +184,7 @@
                                                 @if ($workerx->reconcile)
                                                 <div class="d-flex px-4">
                                                     <label class='w-50 light' for="wallet">Reconcile Date</label>
-                                                    <label class='w-50' for="wallet">{{$workerx->reconcile->date}}</label>
+                                                    <label class='w-50' for="wallet">{{\Carbon\Carbon::parse($workerx->reconcile->date)->format('d M Y')}}</label>
                                                 </div>
                                                 <div class="d-flex px-4">
                                                     <label class='w-50 light' for="wallet">Reconcile Amount</label>
@@ -228,7 +229,7 @@
                                             
                                         <div class="col-md-7 my-2 d-flex justify-content-start">
                                             <label class='w-50' for="date">Date</label>
-                                            <label class='w-50' for="date">{{ date('Y-m-d') }}</label>
+                                            <label class='w-50' for="date">{{ date('d M Y') }}</label>
                                             <input type="hidden" name="date" value="{{ date('Y-m-d') }}">
                                         </div>
 

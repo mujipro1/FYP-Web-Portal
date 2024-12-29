@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (unitCostField && quantityField && totalField) {
             const unitCostValue = parseFloat(unitCostField.value) || 0;
-            const quantityValue = parseInt(quantityField.value) || 0;
+            const quantityValue = parseFloat(quantityField.value) || 0;
             const totalValue = unitCostValue * quantityValue;
             totalField.value = totalValue.toFixed(2);
             totalField.readOnly = true;

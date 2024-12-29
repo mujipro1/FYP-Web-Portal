@@ -113,7 +113,7 @@
                                         <div class="labelcontainer">
                                             <label class='w-50' for="date">Date</label>
                                             <input type="date" id="date" name="date" class="form-control"
-                                                value="{{date('Y-m-d')}}" style='margin:0px;'>
+                                                value="{{$latest_expense_date}}" style='margin:0px;'>
                                         </div>
                                     </div>
                                     <div class='col-md-7'>

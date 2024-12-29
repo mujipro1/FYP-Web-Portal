@@ -147,7 +147,7 @@
                                                     @endphp
                                                     <tr onclick="handleSaleRowClick({{$sale->id}})"
                                                         style='cursor:pointer;'>
-                                                        <td>{{$sale->date}}</td>
+                                                        <td>{{\Carbon\Carbon::parse($sale->date)->format('d M Y')}}</td>
                                                         <td>{{$sale->crop->identifier}}</td>
                                                         <td>{{$sale->details['Weight_(KGs)']}}</td>
                                                         <td>{{$sale->amount}}</td>
