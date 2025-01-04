@@ -159,7 +159,7 @@
                                     <h5 class="text-center"> {{$crop2->identifier}}</h5>
                                 </div>
                                 <div>
-                                    <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}" class='anal-img borders img-fluid'/>
+                                    <img src="{{asset('images/crops/'. str_replace(' ', '', $crop1['name']) .'.jpg')}}" class='anal-img borders img-fluid'/>
                                 </div>
                             </div>
                         </div>
