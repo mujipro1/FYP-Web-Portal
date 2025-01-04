@@ -80,46 +80,70 @@ class ManagerAnalyticsController extends Controller
     } 
 
 
-    private function generateExpenseSubtypeChart($farm_id, $expenseType, $id, $from_date , $to_date , $crop_id = 0)
-    {
-        if ($id == 0){
-            $expenses = FarmExpense::where('farm_id', $farm_id)
+    private function generateExpenseSubtypeChart($farm_id, $expenseType, $id, $from_date, $to_date, $crop_id = 0)
+{
+    if ($id == 0) {
+        $expenses = FarmExpense::where('farm_id', $farm_id)
             ->where('expense_type', $expenseType)
             ->whereBetween('date', [$from_date, $to_date])
             ->get();
-        } else {
-            $expenses = Expense::where('crop_id', $crop_id)
+    } elseif ($id > 0) {
+        $expenses = Expense::where('crop_id', $crop_id)
             ->where('expense_type', $expenseType)
             ->get();
-        }
-
-        
-        // Initialize the data array for subtypes
-        $subtypeData = [];
-
-        foreach ($expenses as $expense) {
-
-            $subtype = $expense->expense_subtype;
-            $expenseAmount = intval($expense->total);
-
-            if (isset($subtypeData[$subtype])) {
-                $subtypeData[$subtype] += $expenseAmount;
-            } else {
-                $subtypeData[$subtype] = $expenseAmount;
-            }
-        }
-        
-        $subtypeNames = array_keys($subtypeData);
-
-        $subtypeAmounts = array_values($subtypeData);
-
-        // Create the bar chart for subtypes
-        $chart = LarapexChart::barChart()
-            ->setTitle("Expenses for $expenseType")
-            ->addData('Amount', $subtypeAmounts)
-            ->setXAxis($subtypeNames);
-        return $chart;
+    } else {
+        throw new InvalidArgumentException('Invalid ID value provided.');
     }
+
+    // Initialize the data array for subtypes
+    $subtypeData = [];
+
+    foreach ($expenses as $expense) {
+        $subtype = $expense->expense_subtype ?? 'Unknown Subtype';
+        $expenseAmount = intval($expense->total);
+
+        // Decode the JSON details column to extract quantity
+        $details = json_decode($expense->details, true);
+        $quantity = (is_array($details) && isset($details['quantity'])) ? intval($details['quantity']) : 0;
+
+        if (!isset($subtypeData[$subtype])) {
+            $subtypeData[$subtype] = [
+                'amount' => 0,
+                'quantity' => 0,
+            ];
+        }
+
+        $subtypeData[$subtype]['amount'] += $expenseAmount;
+        $subtypeData[$subtype]['quantity'] += $quantity;
+    }
+
+    $subtypeNames = array_keys($subtypeData);
+    $subtypeAmounts = array_column($subtypeData, 'amount');
+    $subtypeQuantities = array_column($subtypeData, 'quantity');
+
+    // Create the bar chart for subtypes
+    $chart = LarapexChart::barChart()
+        ->setTitle("Expenses for $expenseType")
+        ->setDataset([
+            [
+                'name' => 'Amount',
+                'data' => $subtypeAmounts, 
+            ],
+        ])
+        ->setXAxis($subtypeNames);
+
+    $chart2 = LarapexChart::barChart()
+        ->setTitle("Quantity for $expenseType")
+        ->setDataset([
+            [
+                'name' => 'Quantity', // Corrected name
+                'data' => $subtypeQuantities, 
+            ],
+        ])
+        ->setXAxis($subtypeNames);
+
+    return ['amountChart' => $chart, 'qChart' => $chart2];
+}
 
     public function singlecrop($farm_id){
         $farm = Farm::findOrFail($farm_id);
@@ -330,6 +354,7 @@ class ManagerAnalyticsController extends Controller
         $expenseData1 = $this->calculateExpenses($crop1_expenses);
         $expenseData2 = $this->calculateExpenses($crop2_expenses);
 
+       
         $expenseNames = array_unique(array_merge(array_keys($expenseData1), array_keys($expenseData2)));
         sort($expenseNames); 
 
@@ -377,12 +402,10 @@ class ManagerAnalyticsController extends Controller
         $totalExpenses2 = array_sum($expenseAmounts2);
 
         $SubExpenseCharts = [];
-        $expenseTypes = ['Labour','Machinery','Fertilizer','Fuel','Electricity Bills','Pesticides', 'Poisons'];
+        $expenseTypes = ['Labour','Machinery','Fertilizer','Fuel','Electricity Bills','Pesticides', 'Poisons', 'Seed'];
         foreach ($expenseTypes as $expenseType) {
             $SubExpenseCharts[$expenseType] = $this->generateExpenseSubtypeChartCompare($farm_id, $expenseType, $crop_id1, $crop_id2);
         }
-
-
 
         $quantityKeys = ['quantity', 'quantity_(litres)', 'no_of_units'];
         $quantityChart = $this->fetchCropExpenseQuantitiesCompare($crop_id1, $crop_id2,$quantityKeys, $farm_id);
@@ -545,8 +568,13 @@ class ManagerAnalyticsController extends Controller
             ->where('expense_type', $expenseType)
             ->get();
 
+
         $subtypeData1 = $this->calculateSubtypeData($expenses1);
         $subtypeData2 = $this->calculateSubtypeData($expenses2);
+
+        $subtypeQData1 = $this->calculateSubtypeQData($expenses1);
+        $subtypeQData2 = $this->calculateSubtypeQData($expenses2);
+        
 
         $crop1 = Farm::findOrFail($farm_id)->crops->where('id', $crop_id1)->first();
         $crop2 = Farm::findOrFail($farm_id)->crops->where('id', $crop_id2)->first();
@@ -555,11 +583,15 @@ class ManagerAnalyticsController extends Controller
         $crop2_name = $crop2->identifier;
 
         $subtypeNames = array_unique(array_merge(array_keys($subtypeData1), array_keys($subtypeData2)));
-        $subtypeAmounts1 = $this->getExpenseAmounts($subtypeNames, $subtypeData1);
 
+        $subtypeAmounts1 = $this->getExpenseAmounts($subtypeNames, $subtypeData1);
         $subtypeAmounts2 = $this->getExpenseAmounts($subtypeNames, $subtypeData2);
         
-        $expenseChartPerAcre = LarapexChart::setType('bar')
+        $subtypeQuantity1 = $this->getExpenseAmounts($subtypeNames, $subtypeQData1);
+        $subtypeQuantity2 = $this->getExpenseAmounts($subtypeNames, $subtypeQData2);
+        
+
+        $expenseChartAmount = LarapexChart::setType('bar')
             ->setXAxis($subtypeNames)
             ->setDataset([
                 [
@@ -571,7 +603,38 @@ class ManagerAnalyticsController extends Controller
                     'data' => $subtypeAmounts2
                 ]
             ]);
-        return $expenseChartPerAcre;
+
+            $expenseChartQ = LarapexChart::setType('bar')
+            ->setXAxis($subtypeNames)
+            ->setDataset([
+                [
+                    'name' => $crop1_name . ' Quantity',
+                    'data' => $subtypeQuantity1
+                ],
+                [
+                    'name' => $crop2_name . ' Quantity',
+                    'data' => $subtypeQuantity2
+                ]
+            ]);
+
+    
+        return ['amountChart'=> $expenseChartAmount, 'qChart'=>$expenseChartQ];
+    }
+
+    private function calculateSubtypeQData($expenses){
+        $subtypeData = [];
+        foreach ($expenses as $expense) {
+            $subtype = $expense->expense_subtype;
+            $details = json_decode($expense->details, true);
+            $quantity = (is_array($details) && isset($details['quantity'])) ? intval($details['quantity']) : 0;
+
+            if (isset($subtypeData[$subtype])) {
+                $subtypeData[$subtype] += $quantity;
+            } else {
+                $subtypeData[$subtype] = $quantity;
+            }
+        }
+        return $subtypeData;
     }
 
     private function calculateSubtypeData($expenses)
@@ -592,63 +655,77 @@ class ManagerAnalyticsController extends Controller
     
     
     public function exportCsv($crop_id)
-    {
+{
+    $crop = Crop::where('id', $crop_id)->first();
 
-        $crop = Crop::where('id', $crop_id)->first();
-
-        if (!$crop) {
-            return response()->json(['error' => 'Crop not found'], 404);
-        }
-        $crop_name = $crop->identifier;
-        $acres = $crop->acres;
-        $expenses = Expense::where('crop_id', $crop_id)->get();
-
-        if ($expenses->isEmpty()) {
-            return response()->json(['error' => 'No expenses found for the crop'], 404);
-        }
-    
-        $total_expense_amount = $expenses->sum('total');
-        $number_of_expenses = $expenses->count();
-        $per_acre_expense = $acres > 0 ? $total_expense_amount / $acres : 0;
-    
-        // Group by expense type and then by subtype
-        $type_and_subtype_expenses = $expenses->groupBy('expense_type')->map(function ($group) {
-            return [
-                'total' => $group->sum('total'),
-                'subtypes' => $group->groupBy('expense_subtype')->map(function ($subgroup) {
-                    return $subgroup->sum('total');
-                }),
-            ];
-        });
-    
-        // Prepare CSV data
-        $data = [
-            ['Crop Name', 'Total Expense', 'Number of Expenses', 'Per Acre Expense'],
-            [$crop_name, $total_expense_amount, $number_of_expenses, $per_acre_expense],
-            [''], // Spacer row
-            ['Expense Type', 'Subtype', 'Total'], // Header for expense details
-        ];
-    
-        foreach ($type_and_subtype_expenses as $type => $details) {
-            foreach ($details['subtypes'] as $subtype => $amount) {
-                $data[] = [$type, $subtype ? $subtype : "No Subtype Found", $amount]; // Add subtype details
-            }
-            $data[] = ['', 'Total', $details['total']]; // Add total for the type
-            $data[] = ['']; // Spacer row between types
-        }
-    
-        // Generate and return CSV
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="'.$crop_name.'.csv"',
-        ];
-    
-        return Response::stream(function () use ($data) {
-            $file = fopen('php://output', 'w');
-            foreach ($data as $row) {
-                fputcsv($file, $row);
-            }
-            fclose($file);
-        }, 200, $headers);
+    if (!$crop) {
+        return response()->json(['error' => 'Crop not found'], 404);
     }
+
+    $crop_name = $crop->identifier;
+    $acres = $crop->acres;
+    $expenses = Expense::where('crop_id', $crop_id)->get();
+
+    if ($expenses->isEmpty()) {
+        return response()->json(['error' => 'No expenses found for the crop'], 404);
+    }
+
+    $total_expense_amount = $expenses->sum('total');
+    $number_of_expenses = $expenses->count();
+    $per_acre_expense = $acres > 0 ? $total_expense_amount / $acres : 0;
+
+    // Group by expense type and then by subtype
+    $type_and_subtype_expenses = $expenses->groupBy('expense_type')->map(function ($group) {
+        return [
+            'total' => $group->sum('total'),
+            'subtypes' => $group->groupBy('expense_subtype')->map(function ($subgroup) {
+                return $subgroup->sum('total');
+            }),
+        ];
+    });
+
+    // Prepare CSV data
+    $data = [
+        ['Crop Name', 'Total Expense', 'Number of Expenses', 'Per Acre Expense'],
+        [$crop_name, $total_expense_amount, $number_of_expenses, $per_acre_expense],
+        [''], // Spacer row
+        ['Expense Type', 'Subtype', 'Total', 'Quantity'], // Header for expense details
+    ];
+
+    foreach ($type_and_subtype_expenses as $type => $details) {
+        foreach ($details['subtypes'] as $subtype => $amount) {
+            $quantities = $expenses
+                ->where('expense_type', $type)
+                ->where('expense_subtype', $subtype)
+                ->sum(function ($expense) {
+                    $details = json_decode($expense->details, true);
+                    return $details['quantity'] ?? 0;
+                });
+
+            $data[] = [
+                $type, 
+                $subtype ? $subtype : "No Subtype Found", 
+                $amount, 
+                $quantities
+            ]; // Add subtype details
+        }
+        $data[] = ['', 'Total', $details['total'], '']; // Add total for the type
+        $data[] = ['']; // Spacer row between types
+    }
+
+    // Generate and return CSV
+    $headers = [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="' . $crop_name . '.csv"',
+    ];
+
+    return Response::stream(function () use ($data) {
+        $file = fopen('php://output', 'w');
+        foreach ($data as $row) {
+            fputcsv($file, $row);
+        }
+        fclose($file);
+    }, 200, $headers);
+}
+
 }    

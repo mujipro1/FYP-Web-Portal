@@ -173,8 +173,19 @@
                         @foreach ($charts as $expenseType => $chartx)
                         <div class="col-md-6 p-3">
                             <div class="box-cont">
-                                <h5>{{ $expenseType }} Expenses</h5>
-                                {!! $chartx->container() !!}
+                                <div class="d-flex justify-content-center">
+                                    <h5 class="w-75">{{ $expenseType }} Expenses</h5>
+                                    <select class="form-select w-25 chart-toggle" data-expense-type="{{ $expenseType }}">
+                                        <option value="Amounts">Amounts</option>
+                                        <option value="Quantity">Quantity</option>
+                                    </select>
+                                </div>
+                                <div class="chart-container" id="amountChart-{{ $expenseType }}">
+                                    {!! $chartx['amountChart']->container() !!}
+                                </div>
+                                <div class="chart-container" id="quantityChart-{{ $expenseType }}" style="display: none;">
+                                    {!! $chartx['qChart']->container() !!}
+                                </div>
                             </div>
                         </div>
                         @endforeach
@@ -207,7 +218,8 @@
 {{ $expenseChart->script() }}
 {{ $expenseChartPerAcre->script() }}
 @foreach ($charts as $chartx)
-{!! $chartx->script() !!}
+{!! $chartx['amountChart']->script() !!}
+{!! $chartx['qChart']->script() !!}
 @endforeach
 @if ($quantityChart != 'empty')
     {!! $quantityChart->script() !!}
@@ -232,6 +244,29 @@ cropSelect.addEventListener('change', () => {
         document.querySelector('button[type="submit"]').disabled = true;
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleDropdowns = document.querySelectorAll('.chart-toggle');
+
+    toggleDropdowns.forEach(dropdown => {
+        dropdown.addEventListener('change', function() {
+            const expenseType = this.dataset.expenseType;
+            const selectedValue = this.value;
+
+            const amountChart = document.getElementById(`amountChart-${expenseType}`);
+            const quantityChart = document.getElementById(`quantityChart-${expenseType}`);
+
+            if (selectedValue === 'Amounts') {
+                amountChart.style.display = 'block';
+                quantityChart.style.display = 'none';
+            } else {
+                amountChart.style.display = 'none';
+                quantityChart.style.display = 'block';
+            }
+        });
+    });
+});
+
 
 </script>
 

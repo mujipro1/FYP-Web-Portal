@@ -160,11 +160,12 @@
                                         <table id='cropexpensetable' class="table table-scroll table-striped" >
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Expense Date</th>
                                                     <th scope="col">Expense</th>
                                                     <th scope="col">Subtype</th>
                                                     <th scope="col">Amount</th>
                                                     <th scope="col">Description</th>
+                                                    <th scope="col">System Entry Date</th>
 
                                                 </tr>
                                             </thead>
@@ -190,7 +191,9 @@
                                                         <td>{{ $details['description']}}</td>
                                                     @else
                                                         <td><label class='text-danger'><i>Not Found</i></label></td>
-                                                    @endif
+                                                        @endif
+                                                        <td>{{ \Carbon\Carbon::parse($expense->created_at)->format('d M Y') }} - 
+                                                            {{ \Carbon\Carbon::parse($expense->created_at)->format('h:i A') }}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

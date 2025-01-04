@@ -103,7 +103,7 @@ class ManagerExpenseController extends Controller
         if ($security_check) {return $security_check;}
         
         
-        $crops = Crop::where('farm_id', $farm_id)->get();
+        $crops = Crop::where('farm_id', $farm_id)->where('active', 1)->get();
         $expenses = Expense::whereIn('crop_id', $crops->where('active', 1)->pluck('id'))->orderBy('date', 'desc')->get();
         $worker = Session::get('worker');
 

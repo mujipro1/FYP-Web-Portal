@@ -228,7 +228,7 @@
                         <div class="col-md-6 p-3"  id="{{ $expenseType }}" hidden>
                             <div class="box-cont">
                                 <h5>{{ $expenseType }} Expenses</h5>
-                                {!! $chartx->container() !!}
+                                {!! $chartx['amountChart']->container() !!}
                             </div>
                         </div>
                         @endforeach
@@ -254,7 +254,7 @@
     {{ $chart2->script() }}
 @endif
 @foreach ($charts as $chartx)
-    {!! $chartx->script() !!}
+    {!! $chartx['amountChart']->script() !!}
 @endforeach
 
 <script src="{{ asset('js/ManagerSidebar.js') }}"></script>
