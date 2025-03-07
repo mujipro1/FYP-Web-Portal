@@ -151,9 +151,10 @@ const fetchChatbotResponse = async (userMessage) => {
         const data = await response.json();
         return data.response; // Ensure the backend returns a JSON object with a "response" key
     } catch (err) {
-        console.error('Error:', err);
-        return "Sorry, something went wrong. Please try again later.";
+        console.error('Fetch Error:', err); // Improved error logging
+        return `Sorry, something went wrong. Error: ${err.message}`;
     }
 };
+    
 
 });
