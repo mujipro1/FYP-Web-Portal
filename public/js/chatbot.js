@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to fetch chatbot response
 const fetchChatbotResponse = async (userMessage) => {
     try {
-        const response = await fetch('http://10.3.16.62:5000/query', {
+        const response = await fetch('https://10.3.16.62:443/query', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
