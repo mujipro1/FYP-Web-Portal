@@ -102,7 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         // Parse and render Markdown
-        botMessage.innerHTML = parseMarkdown(message);
+        const sanitizedMessage = message.replace(/<think>.*?<\/think>/gs, '');
+        botMessage.innerHTML = parseMarkdown(sanitizedMessage);
+
         botMessage.style.textAlign = 'left';
 
         // Set time text
@@ -131,62 +133,27 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to fetch chatbot response
-    const fetchChatbotResponse = async (userMessage) => {
-        const aisy_he_bas = [
-            '0f7b5e6590104937b3d1861b1b5b9be8', 
-            '8bcb1eaed1324782a3b59af2822b7676',
-            '5251b604ca0641beada69aa79fe096ec',
-            '96ecc478626c41e29db001eaa90f7307',
-            'fd7a856441e6492d9ee4fcbd65bc710f',
-            'c89a922c0a0040849b3ed13d591f5cb5'
-        ];
+    // Function to fetch chatbot response
+const fetchChatbotResponse = async (userMessage) => {
+    try {
+        const response = await fetch('http://10.3.16.62:5000/query', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query: userMessage }),
+        });
 
-        const sendReq = async (kuch_khas_nai) => {
-
-            const baseUrl = 'https://api.aimlapi.com/v1';
-            const systemPrompt = "You are an agricultural assistant in a farming website, for Pakistan's agricultural practices. Be precise, your answer shouldn't exceed 2 paragraphs. Don't be vague, give specific answers.";
-
-            try {
-                const response = await fetch(`${baseUrl}/chat/completions`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${kuch_khas_nai}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-4-turbo',
-                        messages: [
-                            { role: 'system', content: systemPrompt },
-                            { role: 'user', content: userMessage },
-                        ],
-                        temperature: 0.7,
-                        max_tokens: 256,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content; // Extract the chatbot's response
-            } catch (err) {
-                return false;
-            }
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        let success = false;
-        let res;
+        const data = await response.json();
+        return data.response; // Ensure the backend returns a JSON object with a "response" key
+    } catch (err) {
+        console.error('Error:', err);
+        return "Sorry, something went wrong. Please try again later.";
+    }
+};
 
-        for (let i = 0; i < aisy_he_bas.length; i++) {
-            res = await sendReq(aisy_he_bas[i]);
-            success = !!res;
-            if (success == true) break;
-        }
-
-        if (success == false) {
-            return "Whoa there, chatterbox! You've maxed out my patience for today—catch you in an hour when I'm emotionally ready to deal with you again!"
-        }
-        return res;
-    };
 });
