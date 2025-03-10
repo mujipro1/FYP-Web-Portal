@@ -71,7 +71,7 @@ class ManagerController extends Controller
         
         $farm = Farm::find($farm_id);
         $crop = Crop::where('farm_id', $farm_id)
-        ->where('acres' > 0)
+        ->where('acres', '>', 0)
         ->orderBy('acres', 'desc')
         ->limit(10)->get();
         $farmExpense = FarmExpense::where('farm_id', $farm_id)->get();
