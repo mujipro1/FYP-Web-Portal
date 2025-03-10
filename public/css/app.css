@@ -799,6 +799,12 @@ nav .dropdown-item:active{
   height: 200px;
   background-color: #f5f500;
   border-radius: 10px;
+  overflow-y: scroll;
+
+}
+
+.yellow-fun::-webkit-scrollbar {
+  display: none;
 }
 .recommender:hover .item-1-rec{
   animation: move 20s linear infinite;

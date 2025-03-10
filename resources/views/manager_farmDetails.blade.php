@@ -115,7 +115,7 @@
                                             <div class="col-md-6">
                                                 <h4 class="text-light">Insights by Chacha Ameer</h4>
                                                 @php
-                                                $kleio_data->recommendation = json_decode('"' . $kleio_data->recommendation . '"');
+
                                                 $kleio_data->fun_fact = json_decode('"' . $kleio_data->fun_fact . '"');
 
                                                 @endphp
@@ -500,13 +500,20 @@ document.querySelectorAll('.tooltip-container').forEach(function(container) {
         fetch("{{ route('daily.task') }}", {
             method: "POST",
             headers: {
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-            , body: JSON.stringify({ data: data, farm_id: farm_id })
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                farm_id: farm_id,
+                data: Array.isArray(data) ? data : [data] // Ensure it's an array
+            })
         })
         .then(response => response.json())
         .then(data => console.log("Request sent successfully:", data))
         .catch(error => console.error("Error:", error));
+
+
     }
 
     // Start checking time on page load

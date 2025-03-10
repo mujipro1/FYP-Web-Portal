@@ -10,65 +10,69 @@ use App\Models\Crop;
 use App\Models\Kleio;
 use App\Models\Expense;
 use App\Models\FarmExpense;
+use Illuminate\Support\Str;
 
 class DailyTaskController extends Controller
 {
     public function executeTask(Request $req)
-    {
+{
+    $data = $req->validate([
+        'farm_id' => 'required|integer',
+        'data' => 'required', // Accept both string and array
+    ]);                
+
+    if ($req->has('farm_id')) {
+        $farm_id = $req->farm_id;
+
+        // Ensure data is a string before decoding
+        $data = is_string($req->data) ? json_decode($req->data, true) : $req->data;
+
+        // Convert to string if it's an array
+        $dataString = is_array($data) ? implode('', $data) : $data; 
 
 
-            
-        $data = $req->validate([
-            'farm_id' => 'required|integer',
-            'data' => 'required|array',
-        ]);                
-        if ($req->has('farm_id')) {
-            $farm_id = $req->farm_id;
+        $recommendation = Str::between($dataString, '<recommendation>', '</recommendation>') ?? 'Recommendation not found';
+        $funFact = Str::between($dataString, '<fun_fact>', '</fun_fact>') ?? 'Fun fact not found';
 
-            $data = $req->data;
-        
-                // Extract recommendation and fun_fact
-                preg_match('/<recommendation>(.*?)<\/recommendation>/s', $data, $recommendationMatch);
-                preg_match('/<fun_fact>(.*?)<\/fun_fact>/s', $data, $funFactMatch);
-        
-                $recommendation = $recommendationMatch[1] ?? null;
-                $funFact = $funFactMatch[1] ?? null;
-        
+        if ($recommendation && $funFact) {
+            $kleio_data = Kleio::where('farm_id', $farm_id);
 
-                if ($recommendation && $funFact) {
-                    // Save data into the Kleio table
-
-                    $kleio_data = Kleio::where('farm_id', $farm_id);
-                    if ($kleio_data->exists()) {
-                        $kleio_data->update([
-                            'recommendation' => trim($recommendation),
-                            'fun_fact' => trim($funFact),
-                            'record_date' => Carbon::today()->toDateString(),
-                        ]);
-                    } else {
-                        Kleio::create([
-                            'recommendation' => trim($recommendation),
-                            'fun_fact' => trim($funFact),
-                            'record_date' => Carbon::today()->toDateString(),
-                            'farm_id' => $farm_id,
-                        ]);
-                    }
-
-                    return response()->json([
-                        'message' => 'Task executed and data stored successfully',
-                        'api_response' => $response->json(),
-                    ]);
-                } else {
-                    return response()->json([
-                        'message' => 'Failed to extract recommendation or fun fact',
-                        'api_response' => $response->json(),
-                    ], 400);
-                }
+            if ($kleio_data->exists()) {
+                $kleio_data->update([
+                    'recommendation' => trim($recommendation),
+                    'fun_fact' => trim($funFact),
+                    'record_date' => Carbon::today()->toDateString(),
+                ]);
             } else {
-                return response()->json([
-                    'message' => 'Failed to fetch recommendations',
-                    'error' => $response->body()
-                ], $response->status());
+                Kleio::create([
+                    'recommendation' => trim($recommendation),
+                    'fun_fact' => trim($funFact),
+                    'record_date' => Carbon::today()->toDateString(),
+                    'farm_id' => $farm_id,
+                ]);
             }
-    }        
+
+            return response()->json([
+                'message' => 'Task executed and data stored successfully',
+            ]);
+        } else {
+            \Log::error("Failed to extract recommendation or fun fact.", [
+                'dataString' => $dataString,
+                'recommendationMatch' => $recommendationMatch,
+                'funFactMatch' => $funFactMatch
+            ]);
+
+            return response()->json([
+                'message' => 'Failed to extract recommendation or fun fact',
+            ], 400);
+        }
+    }
+
+    return response()->json([
+        'message' => 'Missing farm_id in request',
+    ], 400);
+}
+
+
+      
 }
