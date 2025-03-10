@@ -67,7 +67,7 @@
                     <div class="chatbot-sep">
                         <button class="hidden" id="chatbot-toggle"></button>
                         <div id="chatbot-header">
-                            <span>Virtual Assistant</span>
+                            <span>Chacha Ameer</span>
                             <button class="hidden" id="chatbot-close">✖</button>
                         </div>
                         <div id="chatbot-messages" class='chatbot-messages-sep'></div>

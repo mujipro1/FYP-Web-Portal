@@ -9,7 +9,7 @@ ManagerSidebar2 = `
         <li><a href="/manager/render_cropexpense/${farm_id}">Expenses</a></li>
         <li><a href="/manager/sales/${farm_id}">Sales</a></li>
         <li><a href="/manager/render_workers/${farm_id}">Workers</a></li>
-        <li><a href="/manager/lucifer/${farm_id}">Virtual Assistant</a></li>
+        <li><a href="/manager/lucifer/${farm_id}">Chacha</a></li>
     </ul>
 `;
 

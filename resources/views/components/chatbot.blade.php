@@ -4,7 +4,7 @@
     </button>
     <div id="chatbot-window">
         <div id="chatbot-header">
-            <span>Virtual Assistant</span>
+            <span>Chacha Ameer</span>
             <button id="chatbot-close">✖</button>
         </div>
         <div id="chatbot-messages">
