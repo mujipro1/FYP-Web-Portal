@@ -32,7 +32,7 @@ class DailyTaskController extends Controller
 
         $recommendation = Str::between($dataString, '<recommendation>', '</recommendation>') ?? 'Recommendation not found';
         $funFact = Str::between($dataString, '<fun_fact>', '</fun_fact>') ?? 'Fun fact not found';
-
+        dd($recommendation, $funFact, $dataString);
         if ($recommendation && $funFact) {
             $kleio_data = Kleio::where('farm_id', $farm_id);
 
