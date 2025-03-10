@@ -57,15 +57,16 @@
 
 
         <div class="container-fluid">
-            <div class="row">
+            <div class="row chatbot-sep-chacha">
+                <img src="{{ asset('images/kleio.png') }}" class="chacha-pura" >
                 <div class="mt-3 sidebarcol">
                     <div class="ManagerSidebar sidebar"></div>
                 </div>
                 <div class="overlay" id="overlay"></div>
 
-                <div class="col-md-6 offset-md-3">
+                <div class="col-md-6  offset-md-3">
+                    
                     <div class="chatbot-sep">
-                        <button class="hidden" id="chatbot-toggle"></button>
                         <div id="chatbot-header">
                             <span>Chacha Ameer</span>
                             <button class="hidden" id="chatbot-close">✖</button>

@@ -1,6 +1,6 @@
 <div id="chatbot-container">
     <button id="chatbot-toggle">
-        <img src="{{ asset('images/chatbot.png') }}" class="img-fluid"/>
+        <img src="{{ asset('images/chatbot.png') }}" class="chacha-ameer"/>
     </button>
     <div id="chatbot-window">
         <div id="chatbot-header">

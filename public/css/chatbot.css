@@ -6,14 +6,45 @@
 }
 
 #chatbot-toggle {
-    background-color: white;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 65px;
-    height: 65px;
+    width: 75px;
+    height: 75px;
     cursor: pointer;
     box-shadow: 0 2px 10px rgba(84, 84, 84, 0.142);
+    overflow: hidden;
+    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 0px 3px rgb(164, 1, 167);
+}
+
+.chatbot-sep-chacha{
+    position: relative;
+}
+
+.chacha-pura{
+    position: absolute;
+    left: 5%;
+    bottom: -20px;
+    width: 300px;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .chacha-pura {
+        display: none;
+    }
+}
+
+.chacha-ameer{
+    width: 100px;
+    object-fit: contain;
+    height: auto;
+    transform: scale(1);
+    margin-top:5px;
 }
 
 #chatbot-window {
@@ -148,6 +179,7 @@
     background-size: cover; /* Ensures the image covers the container */
     background-position: center; /* Centers the image */
 }
+
 
 .chatbot-sep{
     height: 70vh;

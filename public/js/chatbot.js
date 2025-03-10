@@ -7,10 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendbutton = document.getElementById('chatbot-send-btn');
 
     // Toggle the chatbot window when the chat button is clicked
-    chatbotToggle.addEventListener('click', () => {
-        chatbotToggle.style.display = 'none'; // Hide the toggle button
-        chatbotWindow.style.display = 'flex'; // Show the chatbot window
-    });
+    if (chatbotToggle){
+
+        chatbotToggle.addEventListener('click', () => {
+            chatbotToggle.style.display = 'none'; // Hide the toggle button
+            chatbotWindow.style.display = 'flex'; // Show the chatbot window
+        });
+    }
 
     // Close the chatbot window when the close button is clicked
     chatbotClose.addEventListener('click', () => {
