@@ -73,7 +73,7 @@ class ManagerController extends Controller
         $crop = Crop::where('farm_id', $farm_id)
         ->where('acres', '>', 0)
         ->orderBy('acres', 'desc')
-        ->limit(10)->get();
+        ->limit(5)->get();
         $farmExpense = FarmExpense::where('farm_id', $farm_id)->get();
 
         $cropData = '';
@@ -84,13 +84,7 @@ class ManagerController extends Controller
                 ->sum('total');
 
                 $cropData .= '
-                Crop Name: ' . $c->identifier . ', 
-                Crop Area: ' . $c->acres . ' acres, 
-                Crop Type: ' . $c->type . ', 
-                Crop Sowing Date: ' . $c->sowing_date . ', 
-                Crop Harvest Date: ' . $c->harvest_date . ',
-                Crops Total Expense Till To-date: ' . $totalExpense . ' PKR ,
-                Crop Expense Per Acre Normalized: ' . $totalExpense / $c->acres . ' PKR';
+                Crop Name: ' . $c->identifier . ',Crop Area: ' . $c->acres . ' acres, Crop Type: ' . $c->type . ', Crop Sowing Date: ' . $c->sowing_date . ', Crop Harvest Date: ' . $c->harvest_date . ',Crops Total Expense Till To-date: ' . $totalExpense . ' PKR ,Crop Expense Per Acre Normalized: ' . $totalExpense / $c->acres . ' PKR';
             }
         }
 
@@ -102,11 +96,9 @@ class ManagerController extends Controller
 
         $farmExpenseData = '';
         foreach ($farmExpenses as $expense) {
-        $farmExpenseData .= '
-        <expense>
-            Expense Type: ' . $expense->expense_type . ', 
-            Total Amount: ' . $expense->total_expense . ' PKR
-        </expense>';
+        $farmExpenseData .= '<expense>
+Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_expense . ' PKR
+</expense>';
         }
 
         $queryData = [
