@@ -30,9 +30,10 @@ class DailyTaskController extends Controller
         // Convert to string if it's an array
         $dataString = is_array($data) ? implode('', $data) : $data; 
 
-        $recommendation = Str::between($dataString, '<recommendation>', '</recommendation>') ?? 'Recommendation not found';
-        $funFact = Str::between($dataString, '<fun_fact>', '</fun_fact>') ?? 'Fun fact not found';
-        dd($recommendation, $funFact, $dataString);
+        $recommendation = trim(strip_tags(Str::between($dataString, '<recommendation>', '</recommendation>')));
+        $funFact = trim(strip_tags(Str::between($dataString, '<fun_fact>', '</fun_fact>')));
+            dd($recommendation, $funFact, $dataString);
+
         if ($recommendation && $funFact) {
             $kleio_data = Kleio::where('farm_id', $farm_id);
 
