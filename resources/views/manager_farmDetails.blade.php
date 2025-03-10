@@ -465,9 +465,9 @@ document.querySelectorAll('.tooltip-container').forEach(function(container) {
         kleioDataDate.setHours(0, 0, 0, 0);
         today.setHours(0, 0, 0, 0);
 
-        if (today > kleioDataDate) {
+        // if (today > kleioDataDate) {
             sendRequest();
-        }
+        // }
 
     }
     
