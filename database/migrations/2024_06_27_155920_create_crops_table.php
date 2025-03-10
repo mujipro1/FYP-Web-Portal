@@ -15,12 +15,12 @@ class CreateCropsTable extends Migration
             $table->decimal('acres', 8, 2);
             $table->string('identifier');
             $table->string('variety')->nullable();
-            $table->unsignedBigInteger('farm_id');
             $table->date('sow_date');
             $table->date('harvest_date')->nullable();
             $table->boolean('active')->default(1);
             $table->string('description')->nullable();
             $table->string('sugarcane_id')->nullable();
+            $table->unsignedBigInteger('farm_id');
             $table->foreign('farm_id')->references('id')->on('farms')->onDelete('cascade');
             $table->timestamps();
         });

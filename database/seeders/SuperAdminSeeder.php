@@ -23,5 +23,12 @@ class SuperAdminSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('kleio')->insert([
+            'recommendation' => 'To improve wheat yield, consider using certified seeds and adopting modern irrigation techniques like drip irrigation. Timely fertilizer application and proper pest control can significantly boost productivity. Additionally, crop rotation with legumes can enhance soil fertility and reduce disease risk.',
+            'fun_fact'=>'Did you know? Pakistan is one of the top 10 producers of mangoes in the world, and the famous Sindhri and Chaunsa varieties are exported globally for their unmatched sweetness!',
+            'record_date' => date('Y-m-d'),
+            'farm_id' => 0,
+        ]);
     }
 }

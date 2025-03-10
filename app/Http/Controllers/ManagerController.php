@@ -18,6 +18,7 @@ use App\Models\FarmExpense;
 use App\Models\ExpenseConfiguration;
 use App\Models\FarmWorker;
 use App\Models\Reconciliation;
+use App\Models\Kleio;
 use Jenssegers\Agent\Agent;
 
 class ManagerController extends Controller
@@ -67,10 +68,15 @@ class ManagerController extends Controller
         }
         $agent = new Agent();
 
+        $kleio_data = Kleio::where('farm_id', $farm_id)->first();
+        if ($kleio_data == null){
+            $kleio_data = Kleio::where('farm_id', 0)->first();
+        }
+
         if ($agent->isMobile()) {
             return view('manager_farmDetailsMobile', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info]);
         } else {
-            return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info]);
+            return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info, 'kleio_data' => $kleio_data]);
         }
 
 

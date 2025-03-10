@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- CSRF Token -->
     <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navBar.css') }}">
@@ -34,25 +34,25 @@
         </div>
 
         <div class='alertDiv fade justify-content-center align-items-center' id="alertDiv"></div>
-        
+
         @if(Session::get('success') || Session::get('error'))
-            @if(Session::get('success'))
-                <script>
-                    showAlert("{{ Session::get('success') }}", 'success', 9000);
-                    </script>
-                @php
-                Session::forget('success');
-                @endphp
-                @endif
-                
-                @if(Session::get('error'))
-                <script>
-                    showAlert("{{ Session::get('error') }}", 'error', 9000);
-            </script>
-                @php
-                    Session::forget('error');
-                @endphp
-            @endif
+        @if(Session::get('success'))
+        <script>
+        showAlert("{{ Session::get('success') }}", 'success', 9000);
+        </script>
+        @php
+        Session::forget('success');
+        @endphp
+        @endif
+
+        @if(Session::get('error'))
+        <script>
+        showAlert("{{ Session::get('error') }}", 'error', 9000);
+        </script>
+        @php
+        Session::forget('error');
+        @endphp
+        @endif
         @endif
 
 
@@ -105,6 +105,72 @@
                             </div>
 
 
+                            <div class="col-md-12 p-0 m-0 mt-4">
+                                <div class="recommender">
+                                    <div class="item-1-rec"></div>
+                                    <div class="item-2-rec"></div>
+                                    <div class="item-3-rec"></div>
+                                    <div class="inner-recommender">
+                                        <div class="row p-2">
+                                            <div class="col-md-6">
+                                                <h4 class="text-light">Insights by Chacha Ameer</h4>
+                                                @php
+                                                $kleio_data->recommendation = json_decode('"' . $kleio_data->recommendation . '"');
+                                                $kleio_data->fun_fact = json_decode('"' . $kleio_data->fun_fact . '"');
+
+                                                @endphp
+                                                <div class="recommender-1 text-light p-4">
+                                                    {{$kleio_data->recommendation}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('images/kleio.png') }}" class='kleio'>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="fun-fact text-light">
+                                                    <h4>Today's Fun Fact</h4>
+                                                    <div class="yellow-fun text-dark p-4">
+                                                        {{$kleio_data->fun_fact}}
+                                                    </div>
+                                                </div>
+                                                <div class="timer d-flex justify-content-center align-items-center">
+                                                    <div class="time-value" id="time"></div>
+                                                    <script>
+                                                    function startTime() {
+                                                        var today = new Date();
+                                                        var h = today.getHours();
+                                                        var m = today.getMinutes();
+                                                        var s = today.getSeconds();
+                                                        m = checkTime(m);
+                                                        s = checkTime(s);
+
+                                                        // convert to 12 hours format
+                                                        if (h > 12) {
+                                                            h = h - 12;
+                                                        }
+                                                        if (h == 0) {
+                                                            h = 12;
+                                                        }
+                                                        document.getElementById('time').innerHTML = h + ":" + m + ":" +
+                                                            s;
+                                                        var t = setTimeout(startTime, 500);
+                                                    }
+
+                                                    function checkTime(i) {
+                                                        if (i < 10) {
+                                                            i = "0" + i
+                                                        }; // add zero in front of numbers < 10
+                                                        return i;
+                                                    }
+                                                    startTime();
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="col-md-8 mt-4">
                                 <div class="box-cont p-4">
@@ -156,7 +222,8 @@
                                         @foreach($farm->crops as $crop)
                                         @if($crop['active'] == 1)
                                         <div class="col-md-4">
-                                            <div data-tooltip='Active crop' class="selected-crop tooltip-container" style='background-color:#f3f3f3;box-shadow:none;width:100%;margin-bottom:17px;'
+                                            <div data-tooltip='Active crop' class="selected-crop tooltip-container"
+                                                style='background-color:#f3f3f3;box-shadow:none;width:100%;margin-bottom:17px;'
                                                 onclick="handleCropClick('{{$crop['id']}}')">
                                                 <img
                                                     src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}">
@@ -316,7 +383,7 @@ function handleExpenseClick() {
     window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm['id']])}}"
 }
 
-function handleSalesClick(){
+function handleSalesClick() {
     window.location.href = "{{ route('manager.render_sales_page' , ['farm_id' => $farm['id']])}}"
 }
 
@@ -388,5 +455,38 @@ document.querySelectorAll('.tooltip-container').forEach(function(container) {
 });
 </script>
 <script src="{{ asset('js/common_map.js') }}"></script>
+
+<script>
+    function checkTimeAndSendRequest() {
+        
+        const kleioDataDate = new Date("{{ $kleio_data->record_date }}");
+        const today = new Date();
+
+        kleioDataDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+
+        if (today > kleioDataDate) {
+            sendRequest();
+        }
+
+    }
+    
+    farm_id = @json($farm['id']);
+    function sendRequest() {
+        fetch("{{ route('daily.task', 'farm_id') }}".replace('farm_id', farm_id), {
+            method: "GET",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => console.log("Request sent successfully:", data))
+        .catch(error => console.error("Error:", error));
+    }
+
+    // Start checking time on page load
+    checkTimeAndSendRequest();
+
+</script>
 
 </html>
