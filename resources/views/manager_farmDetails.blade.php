@@ -464,20 +464,45 @@ document.querySelectorAll('.tooltip-container').forEach(function(container) {
 
         kleioDataDate.setHours(0, 0, 0, 0);
         today.setHours(0, 0, 0, 0);
-
-        // if (today > kleioDataDate) {
-            sendRequest();
-        // }
-
+        
+        if (today > kleioDataDate) {
+            queryData = @json($queryData);
+            getRecommendation();
+        }
     }
+
     
     farm_id = @json($farm['id']);
-    function sendRequest() {
-        fetch("{{ route('daily.task', 'farm_id') }}".replace('farm_id', farm_id), {
-            method: "GET",
+    
+    async function getRecommendation() {
+        try {
+        const response = await fetch('https://10.3.16.62:443/recommendations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query: queryData }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sendRequest(data.response);
+    } catch (err) {
+        console.error('Fetch Error:', err); // Improved error logging
+        return `Sorry, something went wrong. Error: ${err.message}`;
+    }
+    }
+
+    function sendRequest(data) {
+        fetch("{{ route('daily.task') }}", {
+            method: "POST",
             headers: {
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
+            , body: JSON.stringify({ data: data, farm_id: farm_id })
         })
         .then(response => response.json())
         .then(data => console.log("Request sent successfully:", data))

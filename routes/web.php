@@ -143,4 +143,4 @@ Route::get('/manager/view_sales/{farm_id}', 'App\Http\Controllers\ManagerSalesCo
 Route::post('/manager/apply_salesSearch', 'App\Http\Controllers\ManagerSalesController@apply_salesSearch')->name('manager.apply_salesSearch');
 Route::get('/manager/viewSalesRow/{farm_id}/{sale_id}', 'App\Http\Controllers\ManagerSalesController@viewSalesRow')->name('manager.viewSalesRow');
 
-Route::get('/daily-task/{farm_id}', 'App\Http\Controllers\DailyTaskController@executeTask')->name('daily.task');
+Route::post('/daily-task', 'App\Http\Controllers\DailyTaskController@executeTask')->name('daily.task');
