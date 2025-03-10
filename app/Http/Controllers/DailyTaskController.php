@@ -30,7 +30,6 @@ class DailyTaskController extends Controller
         // Convert to string if it's an array
         $dataString = is_array($data) ? implode('', $data) : $data; 
 
-
         $recommendation = Str::between($dataString, '<recommendation>', '</recommendation>') ?? 'Recommendation not found';
         $funFact = Str::between($dataString, '<fun_fact>', '</fun_fact>') ?? 'Fun fact not found';
 
