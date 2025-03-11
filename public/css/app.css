@@ -734,7 +734,7 @@ nav .dropdown-item:active{
   width: 300px;
   height: 300px;
   border-radius: 100%;
-  background-color: rgba(186, 155, 224, 0.104);
+  background-color: rgba(186, 155, 224, 0.186);
 }
 .item-1-rec{
   top: -100px;
@@ -806,8 +806,8 @@ nav .dropdown-item:active{
 .yellow-fun::-webkit-scrollbar {
   display: none;
 }
-.recommender:hover .item-1-rec{
-  animation: move 20s linear infinite;
+.item-1-rec{
+  animation: move 10s linear infinite alternate-reverse;
 }
 
 @keyframes move {
@@ -815,12 +815,12 @@ nav .dropdown-item:active{
     transform: translateX(0);
   }
   100% {
-    transform: translateX(200px);
+    transform: translateX(240px);
   }
 }
 
-.recommender:hover .item-2-rec{
-  animation: move2 20s linear infinite;
+.item-2-rec{
+  animation: move2 10s linear infinite alternate-reverse;
 }
 
 @keyframes move2 {
@@ -828,12 +828,12 @@ nav .dropdown-item:active{
     transform: translate(0 , 0);
   }
   100% {
-    transform: translate(-100px, 200px);
+    transform: translate(-130px, 240px);
   }
 }
 
-.recommender:hover .item-3-rec{
-  animation: move3 40s linear infinite;
+.item-3-rec{
+  animation: move3 20s linear infinite alternate-reverse;
 }
 
 @keyframes move3 {
@@ -841,9 +841,9 @@ nav .dropdown-item:active{
     transform: translate(0 , 0);
   }
   50% {
-    transform: translate(200px, -100px);
+    transform: translate(200px, -140px);
   }
   100% {
-    transform: translate(200px, -300px);
+    transform: translate(200px, -280px);
   }
 }

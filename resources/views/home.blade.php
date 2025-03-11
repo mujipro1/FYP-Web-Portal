@@ -173,5 +173,4 @@
             document.getElementById('signup').scrollIntoView({ behavior: 'smooth' });
         }   
     </script>
-
 </html>

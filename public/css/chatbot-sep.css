@@ -25,17 +25,22 @@
     position: relative;
 }
 
+#chatbot-send-button svg{
+    width: 40px;
+    height: 40px;
+}
 .chacha-pura{
     position: absolute;
-    left: 5%;
-    bottom: -20px;
+    left: 0%;
+    bottom: 20px;
+    z-index:232313;
     width: 300px;
     height: auto;
 }
 
 @media (max-width: 768px) {
     .chacha-pura {
-        display: none;
+        display: none!important;
     }
 }
 
@@ -83,7 +88,7 @@
     flex: 1;
     padding: 10px;
     overflow-y: auto; /* Enables scrolling for messages */
-    max-height: calc(100% - 60px); /* Leaves room for input */
+    max-height: calc(100% - 0px); /* Leaves room for input */
 }
 
 #chatbot-input {
@@ -152,7 +157,7 @@
 .chatbot-bot-msg-outer{
     display: flex;
     text-align: left;
-    margin: 4px 0;
+    margin: 6px 0;
     justify-content: start;
     align-items: end;
 }
@@ -168,6 +173,8 @@
     background-position: center; /* Centers the image */
 }
 
+
+
 .bot-pfp{
     width: 30px;
     height: 30px;
@@ -180,19 +187,71 @@
     background-position: center; /* Centers the image */
 }
 
+
 .chatbot-sep{
-    height: 70vh;
-    width: 100%;
-    background-color: white;
+    height: 90vh;
+    width: 70%;
     display: flex;
+    padding-top: 10px;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0px 0px 10px #cccccc;
+    padding-left: 20px;
+    background-color: white;
+    margin: auto;
 }
 
 .chatbot-messages-sep{
     margin: 0 10px;
-    background-color: #dfdfdf68;
+}
+
+.chatbot-typer{
+    background-color: white;
+    padding:20px;
+    border-radius: 20px;
+    z-index: 2002;
+}
+.chatbot-typer:focus{
+    outline: none;
+    border:1px solid rgb(205, 205, 205)!important;
+    box-shadow: none;
+}
+
+.temp-msg-chatbot-parent{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.temp-msg-chatbot{
+    width: 100%;
+    height: 100%;
+    margin-top:10%;
+}
+
+.chacha-start{
+    height: 30vw;
+    width: auto;
+}
+
+.chacha-question{
+    padding:10px 15px;
+    background-color: #ededed5b;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+@media (max-width:768px) {
+    .chacha-start{
+        display: none;
+    }
+    .temp-msg-chatbot{
+        width:70%;
+    }
 }

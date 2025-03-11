@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendbutton = document.getElementById('chatbot-send-btn');
 
     // Toggle the chatbot window when the chat button is clicked
-    if (chatbotToggle){
-
+    if (chatbotToggle) {
         chatbotToggle.addEventListener('click', () => {
             chatbotToggle.style.display = 'none'; // Hide the toggle button
             chatbotWindow.style.display = 'flex'; // Show the chatbot window
@@ -16,19 +15,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Close the chatbot window when the close button is clicked
-    chatbotClose.addEventListener('click', () => {
-        chatbotWindow.style.display = 'none'; // Hide the chatbot window
-        chatbotToggle.style.display = 'block'; // Show the toggle button
-    });
+    if (chatbotClose) {
+        chatbotClose.addEventListener('click', () => {
+            chatbotWindow.style.display = 'none'; // Hide the chatbot window
+            chatbotToggle.style.display = 'flex'; // Show the toggle button
+        });
+    }
 
     // Send a message when the user presses Enter or clicks the send button
     sendbutton.addEventListener('click', (e) => {
         e.preventDefault(); // Prevent form submission
+        tempMsgChatbotParent = document.getElementById('temp-msg-chatbot-parent');
+        if(tempMsgChatbotParent){
+            tempMsgChatbotParent.style.display = 'none';
+        }
+        chachaPura = document.getElementById('chacha-pura');
+        if(chachaPura){
+            chachaPura.style.display = 'block';
+        }
+        
         sendMessage();
     });
 
     chatbotText.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
+            tempMsgChatbotParent = document.getElementById('temp-msg-chatbot-parent');
+            if(tempMsgChatbotParent){
+            tempMsgChatbotParent.style.display = 'none';
+        }
+            chachaPura = document.getElementById('chacha-pura');
+            if(chachaPura){
+            chachaPura.style.display = 'block';
+        }
             e.preventDefault(); // Prevent form submission
             sendMessage();
         }
@@ -38,21 +56,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendMessage = () => {
         const message = chatbotText.value.trim();
         if (!message) return;
-
-        // Add user message to chat
+    
+        // Add user message to the chat
         addUserMessage(message);
-
+    
         chatbotText.value = ''; // Clear input field
-
+    
+        // Show typing animation from bot while waiting for the response
+        addBotTyping();
+    
         // Send API request
         fetchChatbotResponse(message)
-            .then(botReply => addBotMessage(botReply))
+            .then(botReply => {
+                addBotMessage(botReply); // Replace typing animation with bot's response
+            })
             .catch(err => {
                 console.error('Error:', err);
                 addBotMessage("Sorry, something went wrong. Please try again later.");
             });
     };
+    
+    // Function to add bot typing indicator
+    const addBotTyping = () => {
+        const botMessageOuter = document.createElement('div');
+        const pfp = document.createElement('div');
+        const botMessage = document.createElement('div');
+        const typingIndicator = document.createElement('div');
+        
+        // Add classes for styling
+        botMessage.classList.add("chatbot-bot-msg");
+        botMessageOuter.classList.add("chatbot-bot-msg-outer");
+        botMessageOuter.classList.add("typing-indicator-container"); // Add a specific class for easier selection
+        typingIndicator.classList.add("chatbot-typing-indicator");
+        pfp.classList.add("bot-pfp");
+    
+        // Set typing message
+        typingIndicator.textContent = "Thinking...";  // Initial text
+        botMessage.appendChild(typingIndicator);
+    
+        // Append elements
+        botMessageOuter.appendChild(pfp);
+        botMessageOuter.appendChild(botMessage);
+        chatbotMessages.appendChild(botMessageOuter);
+    
+        // Scroll to the bottom
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    
+        // Change text to "Compiling Data" after 2 seconds
+        setTimeout(() => {
+            if (typingIndicator) {
+                typingIndicator.textContent = "Searching the Web...";
+            }
+        }, 3000);
+    };
+    
 
+// Function to add bot message to the chat
+
+    
     // Function to add user message to the chat
     const addUserMessage = (message) => {
         const userMessageOuter = document.createElement('div');
@@ -91,40 +152,125 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to add bot message to the chat
-    const addBotMessage = (message) => {
-        const botMessageOuter = document.createElement('div');
-        const pfp = document.createElement('div');
-        const botMessage = document.createElement('div');
-        const timeElement = document.createElement('div');
+    // Function to add bot message to the chat with typing animation
+const addBotMessage = (message) => {
+    // Remove the thinking/compiling indicator
+    const typingIndicatorWrapper = document.querySelector(".typing-indicator-container");
+    if (typingIndicatorWrapper) {
+        typingIndicatorWrapper.remove();
+    }
 
-        // Add classes for styling
-        botMessage.classList.add("chatbot-bot-msg");
-        botMessageOuter.classList.add("chatbot-bot-msg-outer");
-        timeElement.classList.add("chatbot-bot-time");
-        pfp.classList.add("bot-pfp");
+    // Create new message elements
+    const botMessageOuter = document.createElement('div');
+    const pfp = document.createElement('div');
+    const botMessage = document.createElement('div');
+    const messageContent = document.createElement('div');
+    const timeElement = document.createElement('div');
 
+    // Add classes for styling
+    botMessage.classList.add("chatbot-bot-msg");
+    botMessageOuter.classList.add("chatbot-bot-msg-outer");
+    timeElement.classList.add("chatbot-bot-time");
+    pfp.classList.add("bot-pfp");
+    messageContent.classList.add("chatbot-message-content");
 
-        // Parse and render Markdown
-        const sanitizedMessage = message.replace(/<think>.*?<\/think>/gs, '');
-        botMessage.innerHTML = parseMarkdown(sanitizedMessage);
+    // Set time text
+    const now = new Date();
+    const formattedTime = formatTime(now);
+    timeElement.textContent = formattedTime;
 
-        botMessage.style.textAlign = 'left';
+    // Append elements but leave messageContent empty for now
+    botMessageOuter.appendChild(pfp);
+    botMessageOuter.appendChild(botMessage);
+    botMessage.appendChild(messageContent);
+    botMessage.appendChild(timeElement);
+    chatbotMessages.appendChild(botMessageOuter);
 
-        // Set time text
-        const now = new Date();
-        const formattedTime = formatTime(now);
-        timeElement.textContent = formattedTime;
+    // Scroll to the bottom
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 
-        // Append elements
-        botMessageOuter.appendChild(pfp);
-        botMessageOuter.appendChild(botMessage);
-        botMessage.appendChild(timeElement);
-        chatbotMessages.appendChild(botMessageOuter);
-
-        // Scroll to the bottom
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    // Parse markdown
+    const parsedMessage = parseMarkdown(message);
+    
+    // Insert the full HTML content immediately
+    messageContent.style.textAlign = 'left';
+    messageContent.innerHTML = parsedMessage;
+    
+    // Find all text nodes
+    const textNodes = [];
+    const getTextNodes = (node) => {
+        if (node.nodeType === 3 && node.nodeValue.trim() !== '') {  // Text node with content
+            textNodes.push(node);
+        } else if (node.nodeType === 1) {  // Element node
+            for (let i = 0; i < node.childNodes.length; i++) {
+                getTextNodes(node.childNodes[i]);
+            }
+        }
     };
-
+    
+    getTextNodes(messageContent);
+    
+    // Hide all text initially
+    textNodes.forEach(node => {
+        node.originalText = node.nodeValue;
+        node.nodeValue = '';
+    });
+    
+    // Improved typing animation with faster speed
+    const typingSpeed = 250; // Higher number = faster typing (characters per second)
+    let lastTypedTime = Date.now();
+    
+    // Function to reveal characters at a consistent rate
+    const revealText = () => {
+        const now = Date.now();
+        const elapsed = now - lastTypedTime;
+        const charsToType = Math.floor(elapsed * typingSpeed / 1000);
+        
+        if (charsToType <= 0) {
+            requestAnimationFrame(revealText);
+            return;
+        }
+        
+        let charsTyped = 0;
+        let allDone = true;
+        
+        // Type characters across all text nodes
+        for (let i = 0; i < textNodes.length; i++) {
+            const node = textNodes[i];
+            const remaining = node.originalText.length - node.nodeValue.length;
+            
+            if (remaining > 0) {
+                allDone = false;
+                const charsToAdd = Math.min(remaining, charsToType - charsTyped);
+                if (charsToAdd <= 0) continue;
+                
+                const nextPortion = node.originalText.substr(
+                    node.nodeValue.length, 
+                    charsToAdd
+                );
+                node.nodeValue += nextPortion;
+                charsTyped += charsToAdd;
+                
+                if (charsTyped >= charsToType) break;
+            }
+        }
+        
+        // Update time and scroll position
+        lastTypedTime = now;
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        
+        // Continue animation if not done
+        if (!allDone) {
+            requestAnimationFrame(revealText);
+        }
+    };
+    
+    // Start the animation
+    lastTypedTime = Date.now();
+    requestAnimationFrame(revealText);
+};
+    
+    
     // Function to format time
     const formatTime = (date) => {
         const hours = date.getHours();
@@ -136,28 +282,57 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to fetch chatbot response
-    // Function to fetch chatbot response
-const fetchChatbotResponse = async (userMessage) => {
-    try {
-        const response = await fetch('https://10.3.16.62:443/query', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ query: userMessage }),
-        });
+    const fetchChatbotResponse = async (userMessage) => {
+        try {
+            const response = await fetch('https://10.3.16.62:443/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: userMessage }),
+            });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.response; // Ensure the backend returns a JSON object with a "response" key
+        } catch (err) {
+            console.error('Fetch Error:', err); // Improved error logging
+            return `Sorry, something went wrong. Error: ${err.message}`;
+        }
+    };
+
+    // Now expose `sendDefaultMessage` to global scope so it's accessible outside DOMContentLoaded
+    window.sendDefaultMessage = (e) => {
+
+        tempMsgChatbotParent = document.getElementById('temp-msg-chatbot-parent');
+        if(tempMsgChatbotParent){
+            tempMsgChatbotParent.style.display = 'none';
         }
 
-        const data = await response.json();
-        return data.response; // Ensure the backend returns a JSON object with a "response" key
-    } catch (err) {
-        console.error('Fetch Error:', err); // Improved error logging
-        return `Sorry, something went wrong. Error: ${err.message}`;
-    }
-};
+        chachaPura = document.getElementById('chacha-pura');
+        if(chachaPura){
+            chachaPura.style.display = 'block';
+        }
     
+        let question = '';
+        if (e === 1) { question = "What are some famous crops in Punjab?" }
+        if (e === 2) { question = "Guide me about basics of farming techniques in Pakistan" }
+        if (e === 3) { question = "Tell me a fun fact" }
+    
+        // Add user question to the chat
+        addUserMessage(question);
+    
+        addBotTyping();
 
+        // Fetch the chatbot response
+        fetchChatbotResponse(question)
+            .then(botReply => addBotMessage(botReply))
+            .catch(err => {
+                console.error('Error:', err);
+                addBotMessage("Sorry, something went wrong. Please try again later.");
+            });
+    };
 });
