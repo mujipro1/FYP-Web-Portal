@@ -425,4 +425,58 @@ class ManagerExpenseController extends Controller
         }
     }
 
+    public function deleteFarmExpenses(Request $request)
+{
+    $expenseIds = $request->input('expense_ids');
+
+    if (is_array($expenseIds) && count($expenseIds) > 0) {
+        try {
+            // Delete the selected expenses
+            FarmExpense::whereIn('id', $expenseIds)->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => count($expenseIds) . ' expense(s) deleted successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while deleting expenses.'
+            ]);
+        }
+    }
+
+    return response()->json([
+        'success' => false,
+        'message' => 'No expenses selected for deletion.'
+    ]);
+}
+
+public function deleteCropExpenses(Request $request)
+{
+    $expenseIds = $request->input('expense_ids');
+
+    if (is_array($expenseIds) && count($expenseIds) > 0) {
+        try {
+            // Delete the selected expenses
+            Expense::whereIn('id', $expenseIds)->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => count($expenseIds) . ' expense(s) deleted successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while deleting expenses.'
+            ]);
+        }
+    }
+
+    return response()->json([
+        'success' => false,
+        'message' => 'No expenses selected for deletion.'
+    ]);
+}
+
 }

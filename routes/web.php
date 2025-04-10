@@ -144,3 +144,6 @@ Route::post('/manager/apply_salesSearch', 'App\Http\Controllers\ManagerSalesCont
 Route::get('/manager/viewSalesRow/{farm_id}/{sale_id}', 'App\Http\Controllers\ManagerSalesController@viewSalesRow')->name('manager.viewSalesRow');
 
 Route::post('/daily-task', 'App\Http\Controllers\DailyTaskController@executeTask')->name('daily.task');
+
+Route::post('/manager/delete-farm-expenses', 'App\Http\Controllers\ManagerExpenseController@deleteFarmExpenses')->name('manager.deleteFarmExpenses');
+Route::post('/manager/delete-farm-expenses', 'App\Http\Controllers\ManagerExpenseController@deleteCropExpenses')->name('manager.deleteCropExpenses');

@@ -146,6 +146,15 @@
                                                 value="" style='margin:0px;'>
                                         </div>
 
+                                        <div class="col-md-2 offset-md-4">
+                                            <button class="btn btn-orange2 or-width" style="display:none" id="delete-expenses">Delete</button>
+                                        </div>
+
+                                        
+                                        <div class="col-md-4">
+                                            <h5 id="sum-of-expenses"style="display:none"></h5>
+                                        </div>
+
                                        
                                     </div>
                                         </form>
@@ -160,6 +169,7 @@
                                         <table id='cropexpensetable' class="table table-scroll table-striped" >
                                             <thead>
                                                 <tr>
+                                                    <th scope="col">Select</th>
                                                     <th scope="col">Expense Date</th>
                                                     <th scope="col">Expense</th>
                                                     <th scope="col">Subtype</th>
@@ -171,15 +181,16 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($expenses as $expense)
-                                                <tr onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>
-                                                    <td>{{\Carbon\Carbon::parse($expense->date)->format('d M Y')}}</td>
-                                                    <td>{{$expense->expense_type}}</td>
+                                                <tr>
+                                                    <td><input type="checkbox" name="expense_id[]" value="{{$expense->id}}"></td>
+                                                    <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{\Carbon\Carbon::parse($expense->date)->format('d M Y')}}</td>
+                                                    <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{$expense->expense_type}}</td>
                                                     @if ($expense->expense_subtype)
-                                                    <td>{{$expense->expense_subtype}}</td>
+                                                    <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{$expense->expense_subtype}}</td>
                                                     @else
-                                                    <td><label class='text-danger'><i>Not Found</i></label></td>
+                                                    <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'><label class='text-danger'><i>Not Found</i></label></td>
                                                     @endif
-                                                    <td>{{$expense->total}}</td>
+                                                    <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{$expense->total}}</td>
                                                     <!-- convert json to presentable in details -->
                                                    
                                                     <!-- fetch description from details json -->
@@ -188,11 +199,11 @@
                                                         $details = json_decode($expense->details, true); 
                                                     @endphp
                                                     @if (is_array($details) && array_key_exists('description', $details))
-                                                        <td>{{ $details['description']}}</td>
+                                                        <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{ $details['description']}}</td>
                                                     @else
-                                                        <td><label class='text-danger'><i>Not Found</i></label></td>
+                                                        <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'><label class='text-danger'><i>Not Found</i></label></td>
                                                         @endif
-                                                        <td>{{ \Carbon\Carbon::parse($expense->created_at)->format('d M Y') }} - 
+                                                        <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{ \Carbon\Carbon::parse($expense->created_at)->format('d M Y') }} - 
                                                             {{ \Carbon\Carbon::parse($expense->created_at)->format('h:i A') }}</td>
                                                 </tr>
                                                 @endforeach
@@ -280,7 +291,82 @@ document.addEventListener('DOMContentLoaded', function () {
     applyFilters();
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButton = document.getElementById('delete-expenses');
+    const sumOfExpenses = document.getElementById('sum-of-expenses');
+    const checkboxes = document.querySelectorAll('input[name="expense_id[]"]');
+    let selectedCount = 0;
 
+    // Initially hide the delete button and sum heading
+    deleteButton.style.display = 'none';
+    sumOfExpenses.style.display = 'none';
+
+    // Function to update the delete button text, visibility, and sum of selected rows
+    function updateDeleteButtonAndSum() {
+        selectedCount = 0;
+        let totalSum = 0;
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedCount++;
+                const row = checkbox.closest('tr');
+                const amountCell = row.querySelector('td:nth-child(5)'); // Assuming the 6th column contains the amount
+                const amount = parseFloat(amountCell.textContent) || 0;
+                totalSum += amount;
+            }
+        });
+
+        if (selectedCount > 0) {
+            deleteButton.style.display = 'block';
+            sumOfExpenses.style.display = 'block';
+            deleteButton.textContent = `Delete ${selectedCount} row(s)`;
+            sumOfExpenses.textContent = `Sum of Selected Rows: ${totalSum.toFixed(2)}`;
+        } else {
+            deleteButton.style.display = 'none';
+            sumOfExpenses.style.display = 'none';
+        }
+    }
+
+    // Add event listeners to checkboxes
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateDeleteButtonAndSum);
+    });
+
+    // Handle delete button click
+    deleteButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        if (selectedCount > 0) {
+            // Show confirmation modal
+            if (confirm(`Are you sure you want to delete ${selectedCount} row(s)?`)) {
+                // Collect selected expense IDs
+                const selectedIds = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value);
+
+                // Send a POST request to delete the selected rows
+                fetch('{{ route("manager.deleteCropExpenses") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ expense_ids: selectedIds })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload(); // Reload the page to reflect changes
+                    } else {
+                        alert('Failed to delete expenses. Please try again.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+    });
+});
 </script>
 
 </html>
