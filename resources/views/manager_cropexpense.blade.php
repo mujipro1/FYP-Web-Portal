@@ -79,7 +79,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg"  class='svg' viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                             </a>
                         @endif
-                        <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.expenses')}}</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                         </div>
                         
@@ -87,25 +87,25 @@
                             <div class="p-3">
                                 <div class="button-cont px-4">
                                     <button class="tab-button">Crop Expense</button>
-                                    <button class="deselect" onclick="handleExpenseClick()">Farm Expense</button>
-                                    <button class="deselect" onclick="handleReconClick()">Reconciliation</button>
+                                    <button class="deselect" onclick="handleExpenseClick()">{{__('messages.farm_expenses')}} </button>
+                                    <button class="deselect" onclick="handleReconClick()">{{__('messages.reconciliation')}}</button>
                                 </div>
 
 
                                  @if (count($crops) != 0)
                                 <div class="box-cont p-5">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="light">Add your crop expenses here</p>
+                                        <p class="light">{{__('messages.add_crop_expenses_here')}}</p>
                                         <button class="btn btn-brown" onclick = "handleViewExpenseClick()"
-                                        id="addexpense">View Expenses</button>
+                                        id="addexpense">{{__('messages.view_expenses')}}</button>
                                     </div>
-                                    <h5 class='mt-5'> Crops</h5>
-                                    <div class='light'>Select Crop</div>
+                                    <h5 class='mt-5'>{{__('messages.crops')}} </h5>
+                                    <div class='light'>{{__('messages.selectCrop')}}</div>
 
                                     <div class="col-md-5">
                                         <select class='form-select my-3' id='crop-select'>
-                                            <option value="0">Active Crops</option>
-                                            <option value="1">Passive Crops</option>
+                                            <option value="0">{{__('messages.active_Crops')}} </option>
+                                            <option value="1">{{__('messages.passive_Crops')}} </option>
                                         </select>
                                     </div>
                                         
@@ -117,7 +117,7 @@
                                             style="backgroundColor:#f4f4f4;cursor:pointer;">
                                                 <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}" class="selected-crop-image" />
                                                 <h5 class="m-2 mt-3">{{$crop['identifier']}}</h5>
-                                                <p class="mx-2  fsmall light pt-1">{{$crop['variety'] ? $crop['variety'] : 'No Variety Found' }}</p>
+                                                <p class="mx-2  fsmall light pt-1">{{$crop['variety'] ? $crop['variety'] : __('messages.no_variety_found') }}</p>
                                             </div>
                                         </div>
                                         @endforeach
@@ -131,34 +131,34 @@
                                             <input type="hidden" name="selected_crop" id="selected_crop">
                                             <div class="col-md-7">
                                                 <div class="labelcontainer">
-                                                    <label class='w-50' for="date">Date</label>
+                                                    <label class='w-50' for="date">{{__('messages.date')}}</label>
                                                     <input type="date" id="date" name="date" class="form-control"
                                                         value="{{$latest_expense_date}}" style='margin:0px;'>
                                                 </div>
                                             </div>
                                             <div class='col-md-7'>
                                                 <div class="labelcontainer" id="farmdera-container">
-                                                    <label class='w-50' for="head">Dera</label>
+                                                    <label class='w-50' for="head">{{__('messages.dera')}}</label>
                                                     <select class='form-select' id="dera" name="dera">
-                                                        <option value="">Select Dera</option>
+                                                        <option value="">{{__('messages.select_dera')}} </option>
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class='col-md-7'>
                                                 <div class="labelcontainer">
-                                                    <label class='w-50' for="head">Expense Type</label>
+                                                    <label class='w-50' for="head">{{__('messages.expense_type')}} </label>
                                                     <select class='form-select' id="head" name="head" required>
-                                                        <option value="">Select Expense Type</option>
+                                                        <option value="">{{__('messages.select_expense_type')}}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class='col-md-7 hidden' id="subhead-container">
                                                 <div class="labelcontainer">
 
-                                                    <label class='w-50' for="subhead">Subtype</label>
+                                                    <label class='w-50' for="subhead">{{__('messages.subtype')}}</label>
                                                     <select class='form-select' id="subhead" name="subhead">
-                                                        <option value="">Select Subtype</option>
+                                                        <option value="">{{__('messages.select_subtype')}} </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -173,12 +173,12 @@
                                             @if($worker == 1)
                                             <div class='col-md-7 m-2 mt-4 hidden ' id='paidByOwner'>
                                                 <input type="checkbox" id="paidbyowner" class='form-check-input' style='cursor:pointer;' name="paidbyowner" value="1">
-                                                <label class='w-50 mx-3' for="paidbyowner" style='cursor:pointer;'>Paid By Owner</label>
+                                                <label class='w-50 mx-3' for="paidbyowner" style='cursor:pointer;'>{{__('messages.paid_by_owner')}}</label>
                                             </div>
                                             @endif
 
                                             <div id='submitdiv' class="hidden text-center mt-4">
-                                                <button class='btn btn-brown' type="submit">Submit</button>
+                                                <button class='btn btn-brown' type="submit">{{__('messages.submit')}}</button>
                                             </div>
 
                                             @php 
@@ -198,7 +198,7 @@
                                 </div>
                                 @else
                                 <div class="box-cont p-5">
-                                    <p class="light">No crops found</p>
+                                    <p class="light">{{__('messages.no_crops_found')}}</p>
                                 </div>
                                 @endif
                             </div>

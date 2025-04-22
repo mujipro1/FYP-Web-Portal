@@ -84,7 +84,7 @@
                                 </svg>
                             </a>
                             @endif
-                            <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
 
@@ -92,26 +92,26 @@
                         <div class="row">
                             <div class="p-3">
                                 <div class="button-cont px-4">
-                                    <button class="deselect" onclick="handlecropExpenseClick()">Crop Expense</button>
-                                    <button class="deselect" onclick="handlefarmExpenseClick()">Farm Expense</button>
-                                    <button class="tab-button" onclick="handleReconClick()">Reconciliation</button>
+                                    <button class="deselect" onclick="handlecropExpenseClick()">{{__('messages.crop_expenses')}} </button>
+                                    <button class="deselect" onclick="handlefarmExpenseClick()">{{__('messages.farm_expenses')}} </button>
+                                    <button class="tab-button" onclick="handleReconClick()">{{__('messages.reconciliation')}}</button>
 
                                 </div>
 
                                 <div class="box-cont">
 
                                     <div class="row m-3"  style='height:60vh;overflow-y:scroll'>
-                                        <h5 class='light'>Reconcilation and Expenditure History</h5>
+                                        <h5 class='light'>{{__('messages.recon_and_expenditure_hist')}}</h5>
 
 
                                         <table class=''>
                                             <thead>
                                                 <tr>
-                                                    <th>Date</th>
-                                                    <th>User</th>
-                                                    <th>Purpose</th>
-                                                    <th>Amount</th>
-                                                    <th>Description</th>
+                                                    <th>{{__('messages.date')}}</th>
+                                                    <th>{{__('messages.user')}}</th>
+                                                    <th>{{__('messages.purpose')}}</th>
+                                                    <th>{{__('messages.amount')}}</th>
+                                                    <th>{{__('messages.description')}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -125,13 +125,13 @@
                                                     <td>{{$reconcile->user->name}}</td>
                                                     @if($reconcile->spent == 1)
                                                         @if($reconcile->farmExpense)
-                                                            <td>Farm Expense</td>
+                                                            <td>{{__('messages.farm_expenses')}} </td>
                                                         @endif
                                                         @if($reconcile->expense)
-                                                            <td>Crop Expense</td>
+                                                            <td>{{__('messages.crop_expenses')}}</td>
                                                         @endif
                                                     @else
-                                                    <td>Reconciled</td>
+                                                    <td>{{__('messages.reconciled')}}</td>
                                                     @endif
                                                     <td>{{$reconcile->amount}}</td>
                                                     

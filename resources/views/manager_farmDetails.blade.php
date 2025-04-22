@@ -113,7 +113,7 @@
                                     <div class="inner-recommender">
                                         <div class="row p-2">
                                             <div class="col-md-6">
-                                                <h4 class="text-light">Insights by Chacha Ameer</h4>
+                                                <h4 class="text-light">{{__('messages.insights_by_chahca_ameer')}}</h4>
                                                 @php
 
                                                 $kleio_data->fun_fact = json_decode('"' . $kleio_data->fun_fact . '"');
@@ -128,7 +128,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="fun-fact text-light">
-                                                    <h4>Today's Fun Fact</h4>
+                                                    <h4>{{__('messages.today_fun_fact')}}</h4>
                                                     <div class="yellow-fun text-dark p-4">
                                                         {{$kleio_data->fun_fact}}
                                                     </div>
@@ -174,22 +174,22 @@
 
                             <div class="col-md-8 mt-4">
                                 <div class="box-cont p-4">
-                                    <p class='light'>Farm Status</p>
+                                    <p class='light'>{{__('messages.farm_status')}}</p>
                                     <div class="d-flex my-2 justify-content-between">
                                         <div class='d-flex'>
                                             <div class="smallCard d-flex justify-content-between p-3 pr3">
-                                                <div>Crops</div>
+                                                <div>{{__('messages.crops')}}</div>
                                                 <h4 class='mt-2'>{{$farm->crops->where('active', 1)->count()}}</h4>
                                             </div>
                                             <div class="smallCard  d-flex justify-content-between p-3 pr2 mx-2">
-                                                <div>Deras</div>
+                                                <div>{{__('messages.deras')}}</div>
                                                 <h4 class='mt-2'>{{$farm->deras->count()}}</h4>
                                             </div>
                                         </div>
                                         <div>
                                             <button data-tooltip='Add New Crops in your farm'
                                                 class='btn tooltip-container or-width btn-orange'
-                                                onclick='handleAddCrop()'>Add Crop
+                                                onclick='handleAddCrop()'>{{__('messages.add_crops')}}
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="m-1 svg"
                                                     data-name="Layer 1" viewBox="0 0 24 24">
                                                     <path
@@ -198,7 +198,7 @@
                                             </button>
                                             <button data-tooltip='View previously sown and harvested crops'
                                                 class='btn tooltip-container or-width btn-orange2'
-                                                onclick='handleActivity()'>History
+                                                onclick='handleActivity()'>{{__('messages.history')}}
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-1 svg"
                                                     viewBox="0 0 24 24" width="512" height="512">
                                                     <path
@@ -216,7 +216,7 @@
                                     <div class="row" style='height:29vh;overflow-y:scroll'>
                                         @if($farm->crops->count() == 0)
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <h5 class='light'>No crops added</h5>
+                                            <h5 class='light'>{{__('messages.no_crops_added')}}</h5>
                                         </div>
                                         @endif
                                         @foreach($farm->crops as $crop)
@@ -231,7 +231,7 @@
                                                 @if ($crop['variety'] != null)
                                                 <div class='mx-2 fsmall light'>{{$crop['variety']}}</div>
                                                 @else
-                                                <div class='mx-2 fsmall light'>No variety</div>
+                                                <div class='mx-2 fsmall light'>{{__('messages.no_variety_found')}}</div>
                                                 @endif
                                             </div>
                                         </div>
@@ -247,7 +247,7 @@
                                             <div class="svgDiv">
                                                 <img src="{{ asset('images/expense.png') }}">
                                             </div>
-                                            <h5 class='text-light my-2 mx-3'>Expenses</h5>
+                                            <h5 class='text-light my-2 mx-3'>{{__('messages.expenses')}}</h5>
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex mx-3">
                                                     <div class="circle1"></div>
@@ -272,7 +272,7 @@
                                             <div class="svgDiv">
                                                 <img src="{{ asset('images/sales.png') }}">
                                             </div>
-                                            <h5 class='text-light my-2 mx-3'>Sales</h5>
+                                            <h5 class='text-light my-2 mx-3'>{{__('messages.sales')}}</h5>
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex mx-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class=" svg"
@@ -300,7 +300,7 @@
                                                 <div class="svgDiv">
                                                     <img src="{{ asset('images/analytics.png') }}">
                                                 </div>
-                                                <h5 class='text-light my-2 mx-3'>Analytics</h5>
+                                                <h5 class='text-light my-2 mx-3'>{{__('messages.analytics')}}</h5>
                                                 <div class="d-flex justify-content-between">
                                                     <div class="d-flex mx-3">
                                                         <svg class='mx-1 svg'
@@ -330,7 +330,7 @@
                                     class="box-cont tooltip-container" style='height:58vh;'>
                                     @if($map_info == 'EMPTY')
                                     <div class="" style='cursor:pointer;'>
-                                        <h6 class='light'>Click to configure your farm on map</h6>
+                                        <h6 class='light'>{{__('messages.click_config_on_map')}}</h6>
                                         <img src="{{asset('images/world-map.png')}}" class='img-fluid' />
                                     </div>
                                     @else

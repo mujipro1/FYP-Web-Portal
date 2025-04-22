@@ -67,7 +67,7 @@
                                             d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                     </svg>
                                 </a>
-                                <h3 class="flex-grow-1 text-center mb-0">Create Farm</h3>
+                                <h3 class="flex-grow-1 text-center mb-0">{{__('messages.create_farm')}}</h3>
                                 <div style='visibility:hidden;' class="invisible"></div>
                             </div>
 
@@ -86,11 +86,11 @@
                                             <div class=" p-3 mb-3">
                                                 <div class="box-cont">
                                                     <div class="text-center">
-                                                        Request Status
+                                                        {{__('messages.request_Status')}} 
                                                     </div>
                                                     <div class=" labelcontainer1 light pt-3 px-4">
                                                         <label class="w-50">
-                                                            Request ID
+                                                            {{__('messages.request_id')}} 
                                                         </label>
                                                         <label class="">
                                                             {{$request['id']}}
@@ -98,7 +98,7 @@
                                                     </div>
                                                     <div class=" labelcontainer1 light px-4">
                                                         <label class="w-50">
-                                                            Farmer
+                                                            {{__('messages.farmer')}}
                                                         </label>
                                                         <label class="">
                                                             {{$request['user_info']['farmerName']}}
@@ -106,7 +106,7 @@
                                                         </label>
                                                     </div>
                                                     <div class=" labelcontainer1 light px-4">
-                                                        <label class="w-50">Date</label>
+                                                        <label class="w-50">{{__('messages.date')}}</label>
                                                         <label class="">
                                                             {{$request['created_at']}}
                                                         </label>
@@ -116,42 +116,42 @@
                                             <div class="">
                                                 <div class="labelcontainer mx-3">
                                                     <label class="">
-                                                        Farm Name
+                                                        {{__('messages.farm_name')}} 
                                                     </label>
                                                     <input type="text" class="form-control w-75 ml-3" name="farmName"
                                                         value="{{$request['farm_info']['farmName']}}" />
                                                 </div>
                                                 <div class="labelcontainer mx-3">
-                                                    <label class="">City</label>
+                                                    <label class="">{{__('messages.city')}}</label>
                                                     <select class="form-control w-75 ml-3" name="farmCity"
                                                         id='citydropdown'>
 
                                                     </select>
                                                 </div>
                                                 <div class="labelcontainer mx-3">
-                                                    <label class="">Acres</label>
+                                                    <label class="">{{__('messages.acres')}}</label>
                                                     <input type="number" step='any' class="form-control w-75 ml-3" name="acres"
                                                         value="{{$request['farm_info']['acres']}}" />
                                                 </div>
                                                 <div class="labelcontainer mx-3">
-                                                    <label class="">Address</label>
+                                                    <label class="">{{__('messages.address')}}</label>
                                                     <input type="text" class="form-control w-75 ml-3" name="address"
                                                         value="{{$request['farm_info']['farmAddress']}}" />
                                                 </div>
                                                 <div class="labelcontainer mx-3">
-                                                    <label class="">Has Deras</label>
+                                                    <label class="">{{__('messages.has_Deras')}} </label>
                                                     <select class="form-control w-75 ml-3" name="has_Deras">
                                                         <option selected value="{{$request['farm_info']['has_deras']}}"
                                                             disabled>
                                                             {{$request['farm_info']['has_deras'] == 1 ? 'Yes' : 'No'}}
                                                         </option>
-                                                        <option value="1">Yes</option>
-                                                        <option value="0">No</option>
+                                                        <option value="1">{{__('messages.yes')}}</option>
+                                                        <option value="0">{{__('messages.no')}}</option>
                                                     </select>
 
                                                 </div>
                                                 <div class="labelcontainer mx-3">
-                                                    <label class="">No of Deras</label>
+                                                    <label class="">{{__('messages.no_of_deras')}}</label>
                                                     <input type="text" class="form-control w-75 ml-3"
                                                         name="numberOfDeras"
                                                         value="{{$request['farm_info']['deras']}}" />
@@ -166,7 +166,7 @@
 
                                                     @foreach($deraAcres as $index => $deraAcre)
                                                     <div class="labelcontainer mx-3">
-                                                        <label class="">Dera {{$loop->iteration}} (Acres)</label>
+                                                        <label class="">{{__('messages.dera')}} {{$loop->iteration}} {{__('messages.acres')}}</label>
                                                         <input type="text" class="form-control w-75 ml-3"
                                                             name="deraAcres[]" value="{{ $deraAcre }}" />
                                                     </div>
@@ -180,7 +180,7 @@
 
                                                 <div class="text-center mt-4 ">
                                                     <button class="btn text-light btn-brown"
-                                                        type="submit">Create</button>
+                                                        type="submit">{{__('messages.create')}}</button>
                                                 </div>
                                             </div>
                                             </div>
@@ -188,18 +188,17 @@
                                         <div class="col-md-6 p-3 mb-3">
                                             <div class="box-cont " style='height: '>
                                                 <div class="text-center">
-                                                    Chat
+                                                    {{__('messages.chat')}}
                                                 </div>
                                                 <div class="overflow-y text-justify mt-4 light pt-3 px-4"
                                                     style='height: 72vh;'>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Hello, I am Hina and I will be asking you
-                                                            some questions, So lets get started!</p>
+                                                        <p class='answer'>{{__('messages.hello_hakeem')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Could you please tell us your name?</p>
+                                                        <p class='answer'>{{__('messages.tell_ur_name')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -209,7 +208,7 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Please enter your email address.</p>
+                                                        <p class='answer'>{{__('messages.enter_ur_email')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -220,7 +219,7 @@
 
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Please enter your phone number.</p>
+                                                        <p class='answer'>{{__('messages.enter_ur_phone')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -231,7 +230,7 @@
 
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>What is the name of your farm?</p>
+                                                        <p class='answer'>{{__('messages.what_farm_name')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -241,7 +240,7 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Which city is your farm located in?</p>
+                                                        <p class='answer'>{{__('messages.city_farm_in')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -251,8 +250,7 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Could you provide the complete address of
-                                                            your farm?</p>
+                                                        <p class='answer'>{{__('messages.complete_farm_Address')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -262,8 +260,7 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>What is the total area of your farm in
-                                                            acres?</p>
+                                                        <p class='answer'>{{__('messages.total_Farm_Area_Acres')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -273,7 +270,7 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Does your farm have any deras?</p>
+                                                        <p class='answer'>{{__('messages.farm_have_Any_deras')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -286,8 +283,7 @@
 
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Please enter the number of deras in your
-                                                            farm.</p>
+                                                        <p class='answer'>{{__('messages.enter_no_of_Deras_farm')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">
@@ -297,13 +293,12 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>Please enter the number of acres in each
-                                                            dera.</p>
+                                                        <p class='answer'>{{__('messages.acres_in_each_Dera')}}</p>
                                                     </div>
 
                                                     @foreach($deraAcres as $index => $deraAcre)
                                                     <div class="d-flex justify-content-start">
-                                                        <p class='question'><strong>Dera {{$loop->iteration}} :
+                                                        <p class='question'><strong>{{__('messages.next')}}Dera {{$loop->iteration}} :
                                                                 {{$deraAcre}}</strong></p>
                                                     </div>
                                                     @endforeach
@@ -311,8 +306,7 @@
                                                     @endif
 
                                                     <div class="d-flex justify-content-end">
-                                                        <p class='answer'>If there is any additional information that
-                                                            you want to provide to us, please share.</p>
+                                                        <p class='answer'>{{__('messages.additional_info')}}</p>
                                                     </div>
 
                                                     <div class="d-flex justify-content-start">

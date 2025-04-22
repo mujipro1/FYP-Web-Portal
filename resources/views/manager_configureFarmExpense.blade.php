@@ -68,21 +68,21 @@
                                         d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                 </svg>
                             </a>
-                            <h3 class="flex-grow-1 text-center mb-0">Configure 
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.configure')}} 
                             @if ($id=='FARM')
-                            Farm
+                            {{__('messages.farm')}}
                             @else
-                            Crop
+                            {{__('messages.crop')}}
                             @endif     
-                            Expenses</h3>
+                            {{__('messages.expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
 
                         <div class="row px-4">
                             <div class="col-md-6 my-4">
-                                <p class='fsmall light'>Add New Expenses</p>
+                                <p class='fsmall light'>{{__('messages.add_new_expenses')}}</p>
                                 <div class="d-flex">
-                                    <label for="expense" class="w-25 mx-2 form-label">Expense</label>
+                                    <label for="expense" class="w-25 mx-2 form-label">{{__('messages.expense')}}</label>
                                     <input type="text" class="form-control" id="expense" name="expense">
                                     <button type="button" class="mx-3 btn btn-primary" id="addExpense">+</button>
                                 </div>
@@ -92,21 +92,21 @@
                         <div class="row my-3 px-4">
                             <div class="col-md-8 mt-2">
                                 <div class="box-cont">
-                                    <h5 class="text-center">Added Expenses</h5>
+                                    <h5 class="text-center">{{__('messages.added_expenses')}}</h5>
                                     <div id="addedExpenses" class="row mt-4 px-4">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 mt-2">
                                 <div class="box-cont">
-                                    <h5 class="text-center">Removed Expenses</h5>
+                                    <h5 class="text-center">{{__('messages.removed_expenses')}}</h5>
                                     <div id="removedExpenses" class="mt-4 px-4">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="text-center my-3 mt-5">
-                                <button type="submit" class="btn btn-brown">Save</button>
+                                <button type="submit" class="btn btn-brown">{{__('messages.save')}}</button>
                             </div>
                         </div>
                     </form>

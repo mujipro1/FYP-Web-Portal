@@ -84,8 +84,8 @@
                                         <img src="{{ asset('images/SingleCrop.png') }}" alt="single" style='width:100px;'>
                                     </div>
                                     <div class="col-md-7">
-                                        <h5 class="card-title">Single Crop Analytics</h5>
-                                        <p class="mt-2 card-text">View analytics of any single crop</p>
+                                        <h5 class="card-title">{{__('messages.Single_Crop_Analytics')}}</h5>
+                                        <p class="mt-2 card-text">{{__('messages.view_Analytics')}}</p>
                                     </div>
                                     <div class="col-md-2">
                                         <div
@@ -112,8 +112,8 @@
                                         <img src="{{ asset('images/DoubleCrop.png') }}" alt="compare" style='width:100px;'>
                                     </div>
                                     <div class="col-md-7">
-                                        <h5 class="card-title">Compare Two Crops</h5>
-                                        <p class="mt-2 card-text">Compare analytics of two crops</p>
+                                        <h5 class="card-title">{{__('messages.compare_two_crops')}}</h5>
+                                        <p class="mt-2 card-text">{{__('messages.compare_two_crops_analytics')}}</p>
                                     </div>
                                     <div class="col-md-2">
                                         <div
@@ -137,25 +137,25 @@
 
                     <hr class="my-4">
 
-                    <h3 class='text-center' >Farm Analytics</h3>
+                    <h3 class='text-center' >{{__('messages.farm_analytics')}}</h3>
 
                     <div class="container">
                         <form  method="POST">
                             @csrf
                             <div class="row">
                                 <input type="hidden" name="farm_id" value="{{ $farm_id }}">
-                                <p class="mx-2 light">Apply any filter to view expenses</p>
+                                <p class="mx-2 light">{{__('messages.apply_filter')}}</p>
 
                                 <div class="col-md-3">
                                     <div class="d-flex ">
-                                        <label class='mx-2' for="from_date">From</label>
+                                        <label class='mx-2' for="from_date">{{__('messages.from')}}</label>
                                         <input type="date" id="from_date" name="from_date" class="form-control" value="" style="margin:0px;">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="d-flex ">
-                                        <label class='mx-2' for="to_date">To</label>
+                                        <label class='mx-2' for="to_date">{{__('messages.to')}}</label>
                                         <input type="date" id="to_date" name="to_date" class="form-control" value="" style="margin:0px;">
                                     </div>
                                 </div>
@@ -174,7 +174,7 @@
 
                         <div class="row">
                             <div class="d-flex light">
-                                <h5>Expenses from {{Carbon\Carbon::parse($from_date)->format('d M, Y')}} to {{Carbon\Carbon::parse($to_date)->format('d M, Y')}}</h5>
+                                <h5>{{__('messages.expenses_from')}} {{Carbon\Carbon::parse($from_date)->format('d M, Y')}} {{__('messages.expenses_to')}} {{Carbon\Carbon::parse($to_date)->format('d M, Y')}}</h5>
                             </div>
                         </div>
 
@@ -184,7 +184,7 @@
                         <div class="col-md-6" >
                             @if ($chart2 == [])
                                 <div class="box-cont d-flex justify-content-center align-items-center" style='height: 50vh;'>
-                                    <h6 class="light">No data available for Farm Expenses<br> in given time span</h6>
+                                    <h6 class="light">{{__('messages.no_data_message')}}<br> {{__('messages.given_time_msg')}}</h6>
                                 </div>
                             @else    
                                 <div class="box-cont" style='height: 70vh;'>
@@ -211,10 +211,10 @@
 
                     <div class="col-md-6">
                         <div class="labelcontainer">
-                            <label class="label w-50">Expense Type</label>
+                            <label class="label w-50">{{__('messages.expense_type')}}</label>
                             <!-- drop down -->
                             <select class="form-select" id="expenseType" name="expenseType">
-                                <option value="">Select Expense Type</option>
+                                <option value="">{{__('messages.select_expense_type')}}</option>
                                 @foreach ($expenseTypes as $expenseType)
                                 <option value="{{ $expenseType }}">{{ $expenseType }}</option>
                                 @endforeach

@@ -77,7 +77,7 @@
                                 <div class='d-flex mt-2 text-center'>
                                     <button class='btn btn-orange  mx-1 or-width p-1 d-flex'
                                         data-tooltip='Manager Expense and Sales Workers' onclick='handleWorkerClick()'>
-                                        <div class=' mx-2'> Workers</div>
+                                        <div class=' mx-2'>{{__('messages.workers')}}</div>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="svg" data-name="Layer 1"
                                             viewBox="0 0 24 24">
                                             <path
@@ -87,7 +87,7 @@
                                     <button class='btn btn-orange2  or-width mx-1 d-flex'
                                         data-tooltip="Configure your farm's expense and dera settings"
                                         onclick='handleConfiguration()'>
-                                        <div class=" mx-3">Config.</div>
+                                        <div class=" mx-3">{{__('messages.configure')}}.</div>
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="svg" x="0px"
                                             y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
@@ -105,21 +105,21 @@
 
                             <div class="col-md-8 mt-4">
                                 <div class="box-cont p-4">
-                                    <p class='light'>Farm Status</p>
+                                    <p class='light'>{{__('messages.farm_status')}}</p>
                                         <div class='d-flex w-100'>
                                             <div class="smallCard  w-100 d-flex justify-content-between p-3 mx-1 pr3">
-                                                <div>Crops</div>
+                                                <div>{{__('messages.crops')}}</div>
                                                 <h4 class='mt-2'>{{$farm->crops->where('active', 1)->count()}}</h4>
                                             </div>
                                             <div class="smallCard w-100 d-flex justify-content-between p-3 pr2 mx-1">
-                                                <div>Deras</div>
+                                                <div>{{__('messages.deras')}}</div>
                                                 <h4 class='mt-2'>{{$farm->deras->count()}}</h4>
                                             </div>
                                         </div>
                                         <div class='d-flex mt-3'>
                                             <button data-tooltip='Add New Crops in your farm'
                                                 class='btn  or-width  mx-1 btn-orange'
-                                                onclick='handleAddCrop()'>Add Crop
+                                                onclick='handleAddCrop()'>{{__('messages.add_crops')}}
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="m-1 svg"
                                                     data-name="Layer 1" viewBox="0 0 24 24">
                                                     <path
@@ -128,7 +128,7 @@
                                             </button>
                                             <button data-tooltip='View previously sown and harvested crops'
                                                 class='btn  or-width mx-1 btn-orange2'
-                                                onclick='handleActivity()'>History
+                                                onclick='handleActivity()'>{{__('messages.history')}}
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-1 svg"
                                                     viewBox="0 0 24 24" width="512" height="512">
                                                     <path
@@ -145,7 +145,7 @@
                                     <div class="row" style='height:29vh;overflow-y:scroll'>
                                         @if($farm->crops->count() == 0)
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <h5 class='light'>No crops added</h5>
+                                            <h5 class='light'>{{__('messages.no_crops_added')}}</h5>
                                         </div>
                                         @endif
                                         @foreach($farm->crops as $crop)
@@ -159,7 +159,7 @@
                                                 @if ($crop['variety'] != null)
                                                 <div class='mx-2 fsmall light'>{{$crop['variety']}}</div>
                                                 @else
-                                                <div class='mx-2 fsmall light'>No variety</div>
+                                                <div class='mx-2 fsmall light'>{{__('messages.no_variety_found')}}</div>
                                                 @endif
                                             </div>
                                         </div>
@@ -174,7 +174,7 @@
                                             <div class="svgDiv">
                                                 <img src="{{ asset('images/expense.png') }}">
                                             </div>
-                                            <h5 class='text-light my-2 mx-3'>Expenses</h5>
+                                            <h5 class='text-light my-2 mx-3'>{{__('messages.expenses')}}</h5>
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex mx-3">
                                                     <div class="circle1"></div>
@@ -199,7 +199,7 @@
                                             <div class="svgDiv">
                                                 <img src="{{ asset('images/sales.png') }}">
                                             </div>
-                                            <h5 class='text-light my-2 mx-3'>Sales</h5>
+                                            <h5 class='text-light my-2 mx-3'>{{__('messages.sales')}}</h5>
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex mx-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class=" svg"
@@ -226,7 +226,7 @@
                                                 <div class="svgDiv">
                                                     <img src="{{ asset('images/analytics.png') }}">
                                                 </div>
-                                                <h5 class='text-light my-2 mx-3'>Analytics</h5>
+                                                <h5 class='text-light my-2 mx-3'>{{__('messages.analytics')}}</h5>
                                                 <div class="d-flex justify-content-between">
                                                     <div class="d-flex mx-3">
                                                         <svg class='mx-1 svg'
@@ -256,7 +256,7 @@
                                     class="box-cont " style='height:55.5vh;'>
                                     @if($map_info == 'EMPTY')
                                     <div class="" style='cursor:pointer;'>
-                                        <h6 class='light'>Click to configure your farm on map</h6>
+                                        <h6 class='light'>{{__('messages.click_config_on_map')}}</h6>
                                         <img src="{{asset('images/world-map.png')}}" class='img-fluid' />
                                     </div>
                                     @else

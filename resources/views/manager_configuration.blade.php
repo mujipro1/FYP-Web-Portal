@@ -68,7 +68,7 @@
                                     d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                             </svg>
                         </a>
-                        <h3 class="flex-grow-1 text-center mb-0">Farm Configuration</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.farm_configuration')}}</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
 
@@ -83,10 +83,10 @@
                                     </div>
                                     <div class="text-center pt-2 ">
                                         <h4>Edit Crops</h4>
-                                        <p class='fsmall'>Click here to edit crops</p>
+                                        <p class='fsmall'>{{__('messages.click_to_edit')}}</p>
                                     </div>
                                     <div class="text-center ">
-                                        <button onclick="handleEditCrop()" class='btn or-width btn-orange'>Edit Crops</button>
+                                        <button onclick="handleEditCrop()" class='btn or-width btn-orange'>{{__('messages.edit_Crops')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -101,11 +101,11 @@
                                         <div class="line"></div>
                                     </div>
                                     <div class="text-center pt-2 ">
-                                        <h4>Edit Deras</h4>
-                                        <p class='fsmall'>Click here to edit deras</p>
+                                        <h4>{{__('messages.edit_Deras')}}</h4>
+                                        <p class='fsmall'>{{__('messages.click_to_edit_deras')}}</p>
                                     </div>
                                     <div class="text-center">
-                                        <button onclick="handleEditDeras()" class='btn or-width btn-orange'>Edit Deras</button>
+                                        <button onclick="handleEditDeras()" class='btn or-width btn-orange'>{{__('messages.edit_Deras')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -121,10 +121,10 @@
                                     </div>
                                     <div class="text-center pt-2 ">
                                         <h4>Config. Expenses</h4>
-                                        <p class='fsmall'>Click here to configure Expenses</p>
+                                        <p class='fsmall'>{{__('messages.click_to_configure_expenses')}}</p>
                                     </div>
                                     <div class="text-center ">
-                                        <button onclick="handleConfigureExpenses()" class='btn or-width btn-orange'>Configure
+                                        <button onclick="handleConfigureExpenses()" class='btn or-width btn-orange'>{{__('messages.configure')}}
                                             </button>
                                     </div>
                                 </div>

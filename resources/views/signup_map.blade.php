@@ -91,8 +91,8 @@
 
                                     <div id="map"></div>
                                     <div class="mx-2">
-                                        <button class='btn btn-orange or-width my-2' id="draw-button">Draw</button>
-                                        <button class='btn btn-orange2 or-width my-2' id="save-button">Save</button>
+                                        <button class='btn btn-orange or-width my-2' id="draw-button">{{__('messages.draw')}}</button>
+                                        <button class='btn btn-orange2 or-width my-2' id="save-button">{{__('messages.save')}}</button>
                                     </div>
                                 </div>
                             </div>

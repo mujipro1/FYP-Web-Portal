@@ -72,7 +72,7 @@
                             class="back-button">
                                     <svg xmlns="http://www.w3.org/2000/svg"  class='svg'  viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                                 </a>
-                                <h3 class="flex-grow-1 text-center mb-0">Sales</h3>
+                                <h3 class="flex-grow-1 text-center mb-0">{{__('messages.sales')}}</h3>
                                 <div style='visibility:hidden;' class="invisible"></div>
                                 
                         </div>
@@ -86,11 +86,11 @@
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="farm_id" value="{{$farm_id}}">
-                                            <p class='mx-2 light'>Apply any filter to view expenses</p>
+                                            <p class='mx-2 light'>{{__('messages.apply_filter_view_expenses')}}</p>
                                             <div class="col-md-3">
                                                 <select class="form-select" id="crop_id" name="crop_id"
                                                     aria-label="Default select example">
-                                                    <option value='' selected>Select Crop</option>
+                                                    <option value='' selected> {{__('messages.select_a_crop')}}</option>
                                                     @foreach ($crops as $crop)
                                                     <option value="{{$crop->id}}">{{$crop->identifier}}</option>
                                                     @endforeach
@@ -132,11 +132,11 @@
                                             <table id='cropexpensetable' class="table table-scroll table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Date</th>
-                                                        <th scope="col">Crop</th>
-                                                        <th scope="col">Weight(Kgs)</th>
-                                                        <th scope="col">Amount</th>
-                                                        <th scope="col">Description</th>
+                                                        <th scope="col">{{__('messages.date')}}</th>
+                                                        <th scope="col">{{__('messages.crop')}}</th>
+                                                        <th scope="col">{{__('messages.weight_kgs')}}</th>
+                                                        <th scope="col">{{__('messages.amount')}}</th>
+                                                        <th scope="col">{{__('messages.description')}}</th>
 
                                                     </tr>
                                                 </thead>

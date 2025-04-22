@@ -83,12 +83,12 @@
                                 </svg>
                             </a>
                             @endif
-                            <h3 class="flex-grow-1 text-center mb-0">Sales</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.sales')}}</h3>
                         </div>
 
                         <div class="d-flex justify-content-between mx-3">
-                            <p class='light'>Select a crop to add sales</p>
-                            <button class='btn-orange2 or-width p-1' onclick="handleViewSales()">View Sales</button>
+                            <p class='light'>{{__('messages.select_Crop_add_Sales')}}</p>
+                            <button class='btn-orange2 or-width p-1' onclick="handleViewSales()">{{__('messages.view_sales')}} </button>
                         </div>
 
 
@@ -97,7 +97,7 @@
                             <div class="row">
                                 @if($crops == null)
                                 <div class="d-flex align-items-center justify-content-center">
-                                    <h5 class='light'>No crops added</h5>
+                                    <h5 class='light'>{{__('messages.no_crops_added')}}</h5>
                                 </div>
                                 @endif
                                 @foreach($crops as $crop)
@@ -110,7 +110,7 @@
                                         @if ($crop['variety'] != null)
                                         <div class='mx-2 fsmall light'>{{$crop['variety']}}</div>
                                         @else
-                                        <div class='mx-2 fsmall light'>No variety</div>
+                                        <div class='mx-2 fsmall light'>{{__('messages.no_variety_found')}} </div>
                                         @endif
                                     </div>
                                 </div>

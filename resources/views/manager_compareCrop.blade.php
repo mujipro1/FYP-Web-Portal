@@ -80,7 +80,7 @@
                             </svg>
                         </button>
                         </form>
-                        <h3 class="flex-grow-1 text-center mb-0">Crop Comparison</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.crop_Comparison')}}</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
 
@@ -92,9 +92,9 @@
                             <div class="col-md-5">
                                 
                                 <div class="labelcontainer">
-                                    <label class='w-50' for="crop1">Select Crop</label>
+                                    <label class='w-50' for="crop1">{{__('messages.selectCrop')}}</label>
                                     <select class="form-select" id="crop1" name="crop1" required>
-                                    <option value=" ">Select a crop</option>
+                                    <option value=" ">{{__('messages.select_a_crop')}}</option>
                                         @foreach($crops as $crop)
                                         <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }}</option>
                                         @endforeach
@@ -105,9 +105,9 @@
                             <div class="col-md-6">
 
                                 <div class="labelcontainer">
-                                    <label class='w-50' for="crop2">Select Crop</label>
+                                    <label class='w-50' for="crop2">{{__('messages.selectCrop')}}</label>
                                     <select class="form-select" id="crop2" name="crop2" required>
-                                    <option value=" ">Select a crop</option>
+                                    <option value=" ">{{__('messages.select_a_crop')}}</option>
                                         @foreach($crops as $crop)
                                         <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }}</option>
                                         @endforeach
@@ -135,7 +135,7 @@
                         @if ($id == 0)
                         <div class="row mt-5">
                             <div class="d-flex light">
-                                Select crops to view analytics
+                                {{__('messages.view_crop_analytics')}}
                             </div>
                         </div>
 
@@ -144,11 +144,11 @@
                             <div class="col-md-7 d-flex justify-content-center">
                                 <div class="popular-crop p-4" style="background-color:white;box-shadow: 0px 0px 10px #dddddd;">
                                     <h5 class="text-start text-success">PKR {{$totalExpenses1}}/-</h5>
-                                    <div class='fsmall'>Total expenses of {{$crop1->identifier}}</div>
+                                    <div class='fsmall'>{{__('messages.total_expenses_of')}} {{$crop1->identifier}}</div>
                                 </div>
                                 <div class="popular-crop p-4" style="background-color:white;box-shadow: 0px 0px 10px #dddddd;">
                                     <h5 class="text-start text-success">PKR {{$totalExpenses2}}/-</h5>
-                                    <div class='fsmall'>Total expenses of {{$crop2->identifier}}</div>
+                                    <div class='fsmall'>{{__('messages.total_expenses_of')}} {{$crop2->identifier}}</div>
                                 </div>
                             </div>
                             <div class="col-md-5 d-flex align-items-center justify-content-center m-auto">
@@ -196,10 +196,10 @@
                             <div class="col-md-6 p-3">
                                 <div class="box-cont">
                                     <div class="d-flex justify-content-center">
-                                        <h5 class="w-75">{{ $expenseType }} Expenses</h5>
+                                        <h5 class="w-75">{{ $expenseType }} {{__('messages.expenses')}}</h5>
                                         <select class="form-select w-25 chart-toggle" data-expense-type="{{ $expenseType }}">
-                                            <option value="Amounts">Amounts</option>
-                                            <option value="Quantity">Quantity</option>
+                                            <option value="Amounts">{{__('messages.amounts')}}</option>
+                                            <option value="Quantity">{{__('messages.quantity')}}</option>
                                         </select>
                                     </div>
                                     <div class="chart-container" id="amountChart-{{ $expenseType }}">

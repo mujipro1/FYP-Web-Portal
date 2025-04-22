@@ -75,13 +75,13 @@
                                 </svg>
                             </a>
                             @if($map_info == 'EMPTY')
-                            <h3 class="flex-grow-1 text-center mb-0">Map Configuration</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.map_configuration')}}</h3>
                             @else
-                            <h3 class="flex-grow-1 text-center mb-0">Maps</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.maps')}}</h3>
                             @endif
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
-                        <p class=' mx-3 light'>You can edit the visualizations on map</p>
+                        <p class=' mx-3 light'>{{__('messages.you_can_edit_visual_map')}}</p>
 
 
                             <div class="col-md-12">
@@ -94,8 +94,8 @@
                                 </form>
 
                                     <div id="map"></div>
-                                    <button class='btn btn-orange or-width my-2' id="draw-button">Draw</button>
-                                    <button class='btn btn-orange2 or-width my-2' id="save-button">Save</button>
+                                    <button class='btn btn-orange or-width my-2' id="draw-button">{{__('messages.draw')}}</button>
+                                    <button class='btn btn-orange2 or-width my-2' id="save-button">{{__('messages.save')}}</button>
                                 </div>
                             </div>
 

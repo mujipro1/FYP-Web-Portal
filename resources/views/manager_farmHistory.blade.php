@@ -70,7 +70,7 @@
                                     d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                             </svg>
                         </a>
-                        <h3 class="flex-grow-1 text-center mb-0">Farm History</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.farm_history')}}</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
 
@@ -87,12 +87,12 @@
 
                 @if($cropsGroupedByYear->isEmpty())
                     <div class="alert alert-info">
-                        No History Found
+                    {{__('messages.no_history_found')}}
                     </div>
                 @endif
                 @foreach($cropsGroupedByYear as $year => $cropsOfYear)
                     <div class="box-cont my-3">
-                        <h4 class='light m-3 my-4'>Crops of {{ $year }}</h4>
+                        <h4 class='light m-3 my-4'>{{__('messages.crops_of')}}  {{ $year }}</h4>
                         @foreach($cropsOfYear as $crop)
                         <div class="col-md-3 my-3 crop {{ $crop['active'] == '1' ? 'active-crop' : 'passive-crop' }}" style='display:inline-block;'>
                             <div class="selected-crop" style="background-color:#f1f1f1"
@@ -105,7 +105,7 @@
                                     <div class="greenCircle mx-2"></div>
                                     @endif
                                 </div>
-                                <div class="light mx-2 fsmall">{{$crop['acres']}} Acres</div>
+                                <div class="light mx-2 fsmall">{{$crop['acres']}} {{__('messages.acres')}}</div>
                             </div>
                         </div>
                         @endforeach

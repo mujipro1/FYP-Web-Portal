@@ -74,7 +74,7 @@
                                         d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                 </svg>
                             </a>
-                            <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                             @else
                             <a href="{{ route('expense_farmer') }}" class="back-button">
@@ -84,7 +84,7 @@
                                         d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                 </svg>
                             </a>
-                            <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
 
                             @endif
@@ -93,9 +93,9 @@
                         <div class="row">
                             <div class="p-3">
                                 <div class="button-cont px-4">
-                                    <button class="tab-button" onclick="handlecropExpenseClick()">Crop Expense</button>
-                                    <button class="deselect" onclick="handlefarmExpenseClick()">Farm Expense</button>
-                                    <button class="deselect" onclick="handleReconClick()">Reconciliation</button>
+                                    <button class="tab-button" onclick="handlecropExpenseClick()">{{__('messages.crop_expenses')}} </button>
+                                    <button class="deselect" onclick="handlefarmExpenseClick()">{{__('messages.farm_expenses')}} </button>
+                                    <button class="deselect" onclick="handleReconClick()">{{__('messages.reconciliation')}}</button>
 
                                 </div>
 
@@ -106,7 +106,7 @@
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="farm_id" value="{{$farm_id}}">
-                                            <p class='mx-2 light'>Apply any filter to view expenses</p>
+                                            <p class='mx-2 light'>{{__('messages.apply_filter_view_expenses')}}</p>
 
                                             <div class="row mb-3">
                                                 <div class="col-md-3">
@@ -115,17 +115,17 @@
 
                                                         @if(isset($active_passive))
                                                         <option value="0"
-                                                            {{ $active_passive == '0' ? 'selected' : '' }}>Active Crops
+                                                            {{ $active_passive == '0' ? 'selected' : '' }}>{{__('messages.active_Crops')}}  
                                                         </option>
                                                         <option value="1"
-                                                            {{ $active_passive == '1' ? 'selected' : '' }}>Passive Crops
+                                                            {{ $active_passive == '1' ? 'selected' : '' }}>{{__('messages.passive_Crops')}}  
                                                         </option>
                                                         <option value="2"
-                                                            {{ $active_passive == '2' ? 'selected' : '' }}>All</option>
+                                                            {{ $active_passive == '2' ? 'selected' : '' }}>{{__('messages.all')}} </option>
                                                         @else
-                                                        <option value="0">Active Crops</option>
-                                                        <option value="1">Passive Crops</option>
-                                                        <option value="2">All</option>
+                                                        <option value="0">{{__('messages.active_Crops')}}  </option>
+                                                        <option value="1">{{__('messages.passive_Crops')}}  </option>
+                                                        <option value="2">{{__('messages.all')}} </option>
                                                         @endif
                                                     </select>
                                                 </div>
@@ -152,7 +152,7 @@
                                                 <div class="col-md-3">
                                                     <select class="form-select" id="crop_id" name="crop_id"
                                                         aria-label="Default select example">
-                                                        <option value='' selected>Select Crop</option>
+                                                        <option value='' selected>{{__('messages.select_a_crop')}}  </option>
                                                         @foreach ($crops as $crop)
                                                         <option value="{{ $crop->id }}">
                                                             {{ $crop->identifier }}{{ $crop->variety ? ' (' . $crop->variety . ')' : '' }}
@@ -164,7 +164,7 @@
                                                 <div class="col-md-3">
                                                     <select class="form-select" id="expense_type" name="expense_type"
                                                         aria-label="Default select example">
-                                                        <option value='' selected>Select Expense</option>
+                                                        <option value='' selected>{{__('messages.select_expense_type')}}  </option>
                                                     </select>
                                                 </div>
 
@@ -176,7 +176,7 @@
 
                                                 <div class="col-md-2 offset-md-1">
                                                     <button class="btn btn-orange2 or-width" style="display:none"
-                                                        id="delete-expenses">Delete</button>
+                                                        id="delete-expenses">{{__('messages.delete')}}</button>
                                                 </div>
 
                                                 <div class="col-md-4">
@@ -198,14 +198,14 @@
                                             <table id='cropexpensetable' class="table table-scroll table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Select</th>
-                                                        <th scope="col">Expense Date</th>
-                                                        <th scope="col">Crop</th>
-                                                        <th scope="col">Expense</th>
-                                                        <th scope="col">Subtype</th>
-                                                        <th scope="col">Amount</th>
-                                                        <th scope="col">Description</th>
-                                                        <th scope="col">System Entry Date</th>
+                                                        <th scope="col">{{__('messages.select')}} </th>
+                                                        <th scope="col">{{__('messages.expense_Date')}}  </th>
+                                                        <th scope="col">{{__('messages.crop')}} </th>
+                                                        <th scope="col">{{__('messages.expense')}} </th>
+                                                        <th scope="col">{{__('messages.subtype')}} </th>
+                                                        <th scope="col">{{__('messages.amount')}} </th>
+                                                        <th scope="col">{{__('messages.description')}} </th>
+                                                        <th scope="col">{{__('messages.system_entry_date')}}</th>
 
                                                     </tr>
                                                 </thead>
@@ -231,7 +231,7 @@
                                                         @else
                                                         <td onclick="handleExpenseRowClick({{$expense->id}})"
                                                             data-expense="{{$expense->id}}" style='cursor:pointer;'>
-                                                            <label class='text-danger'><i>Not Found</i></label></td>
+                                                            <label class='text-danger'><i>{{__('messages.not_found')}}</i></label></td>
                                                         @endif
                                                         <td onclick="handleExpenseRowClick({{$expense->id}})"
                                                             data-expense="{{$expense->id}}" style='cursor:pointer;'>
@@ -247,7 +247,7 @@
                                                         @else
                                                         <td onclick="handleExpenseRowClick({{$expense->id}})"
                                                             data-expense="{{$expense->id}}" style='cursor:pointer;'>
-                                                            <label class='text-danger'><i>Not Found</i></label></td>
+                                                            <label class='text-danger'><i>{{__('messages.not_found')}}</i></label></td>
                                                         @endif
                                                         <td onclick="handleExpenseRowClick({{$expense->id}})"
                                                             data-expense="{{$expense->id}}" style='cursor:pointer;'>

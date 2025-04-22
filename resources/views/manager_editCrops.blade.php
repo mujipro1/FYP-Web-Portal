@@ -68,7 +68,7 @@
                                     d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                             </svg>
                         </a>
-                        <h3 class="flex-grow-1 text-center mb-0">Edit Crops</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.edit_Crops')}}</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
 
@@ -98,7 +98,7 @@
                                                     </div>
                                                     <div class="text-center py-2 ">
                                                         <h4>{{$crop->identifier}}</h4>
-                                                        <p>{{$crop->acres}} Acres</p>
+                                                        <p>{{$crop->acres}} {{__('messages.acres')}} </p>
                                                     </div>
 
                                                     <div class="text-center">
@@ -108,8 +108,8 @@
                                                             data-crop-acres="{{ $crop->acres }}"
                                                             data-crop-deras='@json($crop->deras)'
                                                             data-crop-status = '{{ $crop->active }}'
-                                                            data-crop-identifier="{{ $crop->identifier }}">Select
-                                                            Crop</button>
+                                                            data-crop-identifier="{{ $crop->identifier }}">{{__('messages.selectCrop')}}
+                                                            </button>
 
                                                     </div>
                                                 </div>
@@ -123,12 +123,12 @@
                             <button class="carousel-control-prev" type="button"
                                 data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
+                                <span class="visually-hidden">{{__('messages.previous')}}</span>
                             </button>
                             <button class="carousel-control-next" type="button"
                                 data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                <span class="visually-hidden">{{__('messages.next')}}</span>
                             </button>
                         </div>
 
@@ -139,33 +139,33 @@
                             <div class="row my-2">
                                 <div class="col-md-7">
                                     <div class="labelcontainer2 my-2">
-                                        <label class='w-25' for="cropname">Crop Name</label>
+                                        <label class='w-25' for="cropname">{{__('messages.crop_name')}}</label>
                                         <label id="cropnameLabel"></label>
                                         <input type="text" hidden id="cropname" name="cropname" class="form-control"
                                             readonly>
                                     </div>
 
                                     <div class="labelcontainer2 mb-2">
-                                        <label class='w-25' for="acres">Total Acres</label>
+                                        <label class='w-25' for="acres">{{__('messages.total_acres')}}</label>
                                         <label id="acresLabel"></label>
                                         <input hidden type="number" step='any' id="acres" name="acres" class="form-control">
                                     </div>
                                     <div class="labelcontainer">
-                                        <label class='w-75' for="deras">Deras</label>
+                                        <label class='w-75' for="deras">{{__('messages.deras')}}</label>
                                         <select id="deras" name="deras" class="form-select">
-                                            <option value="">Select a dera</option>
+                                            <option value="">{{__('messages.select_dera')}}</option>
                                         </select>
 
                                     </div>
 
                                     <div class="labelcontainer">
-                                        <label class='w-75' for="deraAcres">Dera Acres</label>
+                                        <label class='w-75' for="deraAcres">{{__('messages.dera_acres')}}</label>
                                         <input type="number" step='any' id="deraAcres" name="deraAcres" class="form-control">
                                     </div>
                                     <div class=" mt-4 d-flex">
-                                            <label class="w-75" for="status">Change Status</label>
+                                            <label class="w-75" for="status">{{__('messages.change_status')}}</label>
                                             <select class="form-select" name="status" id="status">
-                                                <option value="">Select Status</option>
+                                                <option value="">{{__('messages.select_status')}}</option>
                                             </select>
                                         </div>
                                      
@@ -178,11 +178,11 @@
                                 <div class="col-md-4 offset-md-1 px-4">
                                     <div class="box-cont">
                                         <div class="text-center">
-                                            Remove Crop From Dera
+                                        {{__('messages.rem_crop_from_dera')}}
                                             <hr class="hr2">
-                                            <button id="removeBtn" type='button' class="btn my-3 btn-danger">Remove </button>
+                                            <button id="removeBtn" type='button' class="btn my-3 btn-danger">{{__('messages.remove')}} </button>
                                             <input hidden type="text" name="remove" id='remove' value="0">
-                                            <p id='removeCropP' class='fsmall'>Click to remove crop from dera</p>
+                                            <p id='removeCropP' class='fsmall'>{{__('messages.click_remove_crop_dera')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
                             </div>
 
                             <div class="text-center my-3">
-                                <button  type='button' id='saveBtn' class="btn btn-primary">Save Changes</button>
+                                <button  type='button' id='saveBtn' class="btn btn-primary">{{__('messages.save')}}</button>
                             </div>
                         </form>
                     </div>

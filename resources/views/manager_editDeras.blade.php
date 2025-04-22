@@ -67,7 +67,7 @@ const farm_id = @json($farm_id);
                 class="back-button">
                         <svg xmlns="http://www.w3.org/2000/svg"  class='svg' viewBox="0 0 24 24" width="512" height="512"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
                     </a>
-                    <h3 class="flex-grow-1 text-center mb-0">Edit Deras</h3>
+                    <h3 class="flex-grow-1 text-center mb-0">{{__('messages.edit_deras')}}</h3>
                     <div style='visibility:hidden;' class="invisible"></div>
                 </div>
 
@@ -88,7 +88,7 @@ const farm_id = @json($farm_id);
                                                 <path
                                                     d="M17,12c0,.553-.448,1-1,1h-3v3c0,.553-.448,1-1,1s-1-.447-1-1v-3h-3c-.552,0-1-.447-1-1s.448-1,1-1h3v-3c0-.553,.448-1,1-1s1,.447,1,1v3h3c.552,0,1,.447,1,1Zm7-7v14c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5V5C0,2.243,2.243,0,5,0h14c2.757,0,5,2.243,5,5Zm-2,0c0-1.654-1.346-3-3-3H5c-1.654,0-3,1.346-3,3v14c0,1.654,1.346,3,3,3h14c1.654,0,3-1.346,3-3V5Z" />
                                             </svg>
-                                            <strong class='py-2'>Add Deras</strong></span>
+                                            <strong class='py-2'>{{__('messages.add_Dera')}}</strong></span>
                                     </div>
                                     <div class="col-auto">
                                         <button id='drop1' class="btn">
@@ -121,17 +121,17 @@ const farm_id = @json($farm_id);
                                             </div>
 
                                             <div class="labelcontainer">
-                                                <label class='form-label w-50' for="deraName">Dera Name</label>
+                                                <label class='form-label w-50' for="deraName">{{__('messages.dera_name')}}</label>
                                                 <input class='form-control' type="text" id="deraName" name="deraName" required>
                                             </div>
 
                                             <div class="labelcontainer">
-                                                <label class='form-label w-50' for="acres">Acres</label>
+                                                <label class='form-label w-50' for="acres">{{__('messages.acres')}}</label>
                                                 <input class='form-control' type="number" step='any' id="acres" name="acres" required>
                                             </div>
 
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-brown my-4">Add</button>
+                                                <button type="submit" class="btn btn-brown my-4">{{__('messages.add')}}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +151,7 @@ const farm_id = @json($farm_id);
                                                     <path
                                                         d="M22.73,19.05l-.98-.55c.15-.48,.26-.98,.26-1.5s-.1-1.03-.26-1.5l.98-.55c.48-.27,.65-.88,.39-1.36-.27-.48-.88-.66-1.36-.39l-.98,.55c-.71-.82-1.67-1.42-2.77-1.65v-1.1c0-.55-.45-1-1-1s-1,.45-1,1v1.1c-1.1,.22-2.06,.83-2.77,1.65l-.98-.55c-.48-.27-1.09-.1-1.36,.39-.27,.48-.1,1.09,.39,1.36l.98,.55c-.15,.48-.26,.98-.26,1.5s.1,1.03,.26,1.5l-.98,.55c-.48,.27-.65,.88-.39,1.36,.18,.33,.52,.51,.87,.51,.17,0,.33-.04,.49-.13l.98-.55c.71,.82,1.67,1.42,2.77,1.65v1.1c0,.55,.45,1,1,1s1-.45,1-1v-1.1c1.1-.22,2.06-.83,2.77-1.65l.98,.55c.15,.09,.32,.13,.49,.13,.35,0,.69-.18,.87-.51,.27-.48,.1-1.09-.39-1.36Zm-5.73,.95c-1.65,0-3-1.35-3-3s1.35-3,3-3,3,1.35,3,3-1.35,3-3,3Zm-6.23-9.75l.98,.55c.15,.09,.32,.13,.49,.13,.35,0,.69-.18,.87-.51,.27-.48,.1-1.09-.39-1.36l-.98-.55c.15-.48,.26-.98,.26-1.5s-.1-1.03-.26-1.5l.98-.55c.48-.27,.65-.88,.39-1.36-.27-.48-.88-.66-1.36-.39l-.98,.55c-.71-.82-1.67-1.42-2.77-1.65V1c0-.55-.45-1-1-1s-1,.45-1,1v1.1c-1.1,.22-2.06,.83-2.77,1.65l-.98-.55c-.48-.27-1.09-.1-1.36,.39-.27,.48-.1,1.09,.39,1.36l.98,.55c-.15,.48-.26,.98-.26,1.5s.1,1.03,.26,1.5l-.98,.55c-.48,.27-.65,.88-.39,1.36,.18,.33,.52,.51,.87,.51,.17,0,.33-.04,.49-.13l.98-.55c.71,.82,1.67,1.42,2.77,1.65v1.1c0,.55,.45,1,1,1s1-.45,1-1v-1.1c1.1-.22,2.06-.83,2.77-1.65Zm-3.77-.25c-1.65,0-3-1.35-3-3s1.35-3,3-3,3,1.35,3,3-1.35,3-3,3Z" />
                                                 </svg>
-                                            <strong class='py-2'>Edit Deras</strong></span>
+                                            <strong class='py-2'>{{__('messages.edit_deras')}}</strong></span>
                                     </div>
                                     <div class="col-auto">
                                         <button id='drop2' class="btn">
@@ -183,26 +183,26 @@ const farm_id = @json($farm_id);
                                             </div>
 
                                             <div class="labelcontainer">
-                                                <label class='form-label w-50' for="deraName">Select Dera</label>
+                                                <label class='form-label w-50' for="deraName">{{__('messages.select_dera')}}</label>
                                                 <select class="form-select" aria-label="Default select example" id="deraDropDown" name="deraDropDown">
-                                                    <option disabled selected>Select Dera</option>
+                                                    <option disabled selected>{{__('messages.select_dera')}}</option>
                                                     @foreach($deras as $dera)
                                                     <option value='{{$dera->id}}'>{{$dera->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="labelcontainer">
-                                                <label class='form-label w-50' for="deraNameEdit">Dera Name</label>
+                                                <label class='form-label w-50' for="deraNameEdit">{{__('messages.dera_name')}}</label>
                                                 <input class='form-control' type="text" id="deraNameEdit" name="deraNameEdit" required>
                                             </div>
 
                                             <div class="labelcontainer">
-                                                <label class='form-label w-50' for="acres">Acres</label>
+                                                <label class='form-label w-50' for="acres">{{__('messages.acres')}}</label>
                                                 <input class='form-control' type="number" id="addacres" step='any' name="acres" value='0'
                                                 >
                                             </div>
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-brown my-4">Save</button>
+                                                <button type="submit" class="btn btn-brown my-4">{{__('messages.save')}}</button>
                                             </div>
                                         </div>
                                     </div>

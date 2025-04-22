@@ -53,9 +53,9 @@
             <div class="col-md-6" id="form-container">
                 <div id="get-started" style="height:100%">
                     <div class="d-flex justify-content-center align-items-center flex-column" style="height:100%">
-                        <h3>Get Registered!</h3>
-                        <p class='text-center p-3'>Register your farm with us by answering some short questions by our agent Hina!</p>
-                        <button class="btn btn-orange or-width" onclick="handleGetStartedClick()">Start</button>
+                        <h3>{{__('messages.get_registered')}}</h3>
+                        <p class='text-center p-3'>{{__('messages.answer_ques_agent')}}</p>
+                        <button class="btn btn-orange or-width" onclick="handleGetStartedClick()">{{__('messages.start')}}</button>
                     </div>
                 </div>
                 <div id="questionnaire" class="d-none">
@@ -63,17 +63,17 @@
                         <div class="row">
                             <div class="d-flex justify-content-start mb-3 align-items-center">
                                 <img src='images/profile.jpg' alt="Hina" id='profile-image' />
-                                <h6 class='mx-3 mt-2'>Hina</h6>
+                                <h6 class='mx-3 mt-2'>{{__('messages.hakeem')}}</h6>
                             </div>
                             <div class="questionnaire" id="chat-container">
                                 <div class="d-flex justify-content-start">
-                                    <p class='question'>Hello, I am Hina and I will be asking you some questions, So lets get started!</p>
+                                    <p class='question'>{{__('messages.hello_hakeem')}}</p>
                                 </div>
                             </div>
                             <form id="question-form" class='fixed-form' onsubmit="handleNextQuestion(event)">
                                 <div class="d-flex justify-content-end">
                                     <input type="text" id="answer-input" autofocus />
-                                    <button type="submit" class='btn btn-orange'>Next</button>
+                                    <button type="submit" class='btn btn-orange'>{{__('messages.next')}}</button>
                                 </div>
                             </form>
                             <form id="signup-form" class='d-none' action="{{route('submit_answers')}}" method='post'>

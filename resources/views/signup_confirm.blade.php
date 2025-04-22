@@ -47,8 +47,8 @@
 
     <div class="container my-5">
         <div class="text-center">
-            <h4>Sign Up Confirmation</h4>
-            <p class='fsmall light'>Preview and edit your details</p>
+            <h4>{{__('messages.sign_up_confirmation')}} </h4>
+            <p class='fsmall light'>{{__('messages.preview_And_Edit_your_details')}} </p>
         </div>
 
         <form id="confirmation-form" class="mt-4" action="{{ route('save_preview_changes') }}" method="POST">
@@ -57,54 +57,54 @@
                 <div class="col-md-12">
 
                     <div class="box-cont mx-1 row p-5">
-                        <h4 class='light'>Form</h4>
+                        <h4 class='light'>{{__('messages.form')}} </h4>
                  
                         <div class="col-md-6">
                             <div class="labelcontainer">
-                                <label for='name' class='form-label w-50'>Name</label>
+                                <label for='name' class='form-label w-50'>{{__('messages.name')}} </label>
                                 <input type='text' class='form-control' id='name' name='farmerName'
                                     value="{{ $data['farmerName'] }}" disabled>
                             </div>
                             <div class="labelcontainer">
-                                <label for='email' class='form-label w-50'>Email</label>
+                                <label for='email' class='form-label w-50'>{{__('messages.email')}} </label>
                                 <input type='email' class='form-control' id='email' name='email'
                                     value="{{ $data['email'] }}" disabled>
                             </div>
                             <div class="labelcontainer">
-                                <label for='phone' class='form-label w-50'>Phone</label>
+                                <label for='phone' class='form-label w-50'>{{__('messages.phone')}} </label>
                                 <input type='text' class='form-control' id='phone' name='phone'
                                     value="{{ $data['phone'] }}" disabled>
                             </div>
                             <div class="labelcontainer">
-                                <label for='farmName' class='form-label w-50'>Farm Name</label>
+                                <label for='farmName' class='form-label w-50'>{{__('messages.farm_name')}}  </label>
                                 <input type='text' class='form-control' id='farmName' name='farmName'
                                     value="{{ $data['farmName'] }}" disabled>
                             </div>
                             <div class="labelcontainer">
-                                <label for='farmCity' class='form-label w-50'>Farm City</label>
+                                <label for='farmCity' class='form-label w-50'>{{__('messages.farm_city')}} </label>
                                 <select class='form-control' id='farmCity' name='farmCity' disabled></select>
                             </div>
                             <div class="labelcontainer">
-                                <label for='farmAddress' class='form-label w-50'>Farm Address</label>
+                                <label for='farmAddress' class='form-label w-50'>{{__('messages.farm_Address')}}  </label>
                                 <input type='text' class='form-control' id='farmAddress' name='farmAddress'
                                     value="{{ $data['farmAddress'] }}" disabled>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="labelcontainer">
-                                <label for='acres' class='form-label w-50'>Farm Area</label>
+                                <label for='acres' class='form-label w-50'>{{__('messages.farm_Area')}}</label>
                                 <input type='number' step='any' class='form-control' id='acres' name='acres'
                                     value="{{ $data['acres'] }}" disabled>
                             </div>
                             <div class="labelcontainer">
-                                <label for='has_deras' class='form-label w-50'>Has Deras</label>
+                                <label for='has_deras' class='form-label w-50'>{{__('messages.has_Deras')}} </label>
                                 <select class='form-control' id='has_deras' name='has_deras' disabled>
-                                    <option value="0" {{ $data['has_deras'] == 0 ? 'selected' : '' }}>No</option>
-                                    <option value="1" {{ $data['has_deras'] == 1 ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $data['has_deras'] == 0 ? 'selected' : '' }}>{{__('messages.no')}} </option>
+                                    <option value="1" {{ $data['has_deras'] == 1 ? 'selected' : '' }}>{{__('messages.yes')}} </option>
                                 </select>
                             </div>
                             <div class="labelcontainer deras-info" id="deras-info">
-                                <label for='deras' class='form-label w-50'>No of Deras</label>
+                                <label for='deras' class='form-label w-50'>{{__('messages.no_of_deras')}} </label>
                                 <input type='number' class='form-control' id='deras' name='deras'
                                     value="{{ $data['deras'] }}" disabled min='0' max="20">
                             </div>
@@ -112,14 +112,14 @@
                                 <!-- Dynamic Dera Acres Fields will be inserted here -->
                             </div>
                             <div class="labelcontainer">
-                                <label for='remarks' class='form-label w-50'>Remarks</label>
+                                <label for='remarks' class='form-label w-50'>{{__('messages.remarks')}} </label>
                                 <input type='text' class='form-control' id='remarks' name='remarks'
                                     value="{{ $data['remarks'] }}" disabled>
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            <button type="button" id="edit-btn" class="btn btn-orange  or-width mt-3">Edit</button>
-                            <button type="submit" id="save-btn" class="btn btn-orange2 or-width  mt-3">Save</button>
+                            <button type="button" id="edit-btn" class="btn btn-orange  or-width mt-3">{{__('messages.edit')}} </button>
+                            <button type="submit" id="save-btn" class="btn btn-orange2 or-width  mt-3">{{__('messages.save')}} </button>
                         </div>
                     </div>
                 </div>

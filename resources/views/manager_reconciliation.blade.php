@@ -83,7 +83,7 @@
                                 </svg>
                             </a>
                             @endif
-                            <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
 
@@ -91,9 +91,9 @@
                         <div class="row">
                             <div class="p-3">
                                 <div class="button-cont px-4">
-                                    <button class="deselect" onclick="handlecropExpenseClick()">Crop Expense</button>
-                                    <button class="deselect" onclick="handlefarmExpenseClick()">Farm Expense</button>
-                                    <button class="tab-button">Reconciliation</button>
+                                    <button class="deselect" onclick="handlecropExpenseClick()">{{__('messages.crop_expenses')}} </button>
+                                    <button class="deselect" onclick="handlefarmExpenseClick()">{{__('messages.farm_expenses')}} </button>
+                                    <button class="tab-button">{{__('messages.reconciliation')}}</button>
 
                                 </div>
 
@@ -104,8 +104,8 @@
                                     <div class="row">
                                         @if ($worker == 0)
                                         <div class="d-flex justify-content-between">
-                                            <p class="mb-3 light">Manage your worker's wallets here</p>
-                                            <button class="btn btn-orange2 mb-2 or-width" onclick="handleRecHistory()">History</button>
+                                            <p class="mb-3 light">{{__('messages.manage_worker_wallets')}}</p>
+                                            <button class="btn btn-orange2 mb-2 or-width" onclick="handleRecHistory()">{{__('messages.history')}}</button>
                                         </div>
                                         @foreach($workers as $workerx)
                                         <div class="col-md-6">
@@ -124,29 +124,29 @@
 
                                                 @if ($workerx->reconcile)
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Date</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_date')}}</label>
                                                     <label class='w-50' for="wallet">{{\Carbon\Carbon::parse($workerx->reconcile->date)->format('d M Y')}}</label>
                                                     
                                                 </div>
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Amount</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_amount')}} </label>
                                                     <label class='w-50' for="wallet">{{$workerx->reconcile->amount}}</label>
                                                 </div>
 
                                                 
                                                 @else
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Date</label>
-                                                    <label class='w-50 light' for="wallet">No Record</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_date')}}Reconcile Date</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.no_record')}} </label>
                                                 </div>
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Amount</label>
-                                                    <label class='w-50 light' for="wallet">No Record</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_amount')}}Reconcile Amount</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.no_record')}} </label>
                                                 </div>
 
                                                 @endif
                                                 <div class="d-flex my-3 px-4">
-                                                    <label class='w-50 light' for="wallet">Wallet</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.wallet')}}</label>
                                                     <label class='w-50' for="wallet"><strong>{{$workerx->wallet}}</strong></label>
                                                 </div>
                                             </div>
@@ -183,28 +183,28 @@
 
                                                 @if ($workerx->reconcile)
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Date</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_date')}} </label>
                                                     <label class='w-50' for="wallet">{{\Carbon\Carbon::parse($workerx->reconcile->date)->format('d M Y')}}</label>
                                                 </div>
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Amount</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_amount')}} </label>
                                                     <label class='w-50' for="wallet">{{$workerx->reconcile->amount}}</label>
                                                 </div>
 
                                                 
                                                 @else
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Date</label>
-                                                    <label class='w-50 light' for="wallet">No Record</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_date')}} </label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.no_record')}}</label>
                                                 </div>
                                                 <div class="d-flex px-4">
-                                                    <label class='w-50 light' for="wallet">Reconcile Amount</label>
-                                                    <label class='w-50 light' for="wallet">No Record</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.reconcile_amount')}} </label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.no_record')}}</label>
                                                 </div>
 
                                                 @endif
                                                 <div class="d-flex my-3 px-4">
-                                                    <label class='w-50 light' for="wallet">Wallet</label>
+                                                    <label class='w-50 light' for="wallet">{{__('messages.wallet')}}</label>
                                                     @php
 
                                                     $workerx = App\Models\FarmWorker::where('user_id', $workerx->id)->first()
@@ -228,16 +228,16 @@
                                             <input hidden name="farm_id" value="{{$farm_id}}">
                                             
                                         <div class="col-md-7 my-2 d-flex justify-content-start">
-                                            <label class='w-50' for="date">Date</label>
+                                            <label class='w-50' for="date">{{__('messages.date')}}</label>
                                             <label class='w-50' for="date">{{ date('d M Y') }}</label>
                                             <input type="hidden" name="date" value="{{ date('Y-m-d') }}">
                                         </div>
 
                                         <div class="d-flex col-md-7 my-2">
-                                            <label class='w-50' for="workerSelect">Select Worker</label>
+                                            <label class='w-50' for="workerSelect">{{__('messages.select_worker')}}</label>
                                             <select class="w-50 form-select" id="workerSelect" name="workerSelect" required
                                                 aria-label="Default select example">
-                                                <option value='' disabled selected>Select Worker</option>
+                                                <option value='' disabled selected>{{__('messages.select_worker')}} </option>
                                                 @foreach($workers as $workerx)
                                                 <option value="{{$workerx->id}}">{{$workerx->user->name}}</option>
                                                 @endforeach
@@ -246,12 +246,12 @@
                                         </div>
                                         <!-- add cash -->
                                         <div class="d-flex col-md-7 my-2">
-                                            <label class='w-50' for="cash">Add Cash</label>
+                                            <label class='w-50' for="cash">{{__('messages.add_cash')}} </label>
                                             <input type="number" class="w-50 form-control" id="cash" required name="cash" min="0">
                                         </div>
 
                                         <div class="col-md-7 mt-4 text-center">
-                                            <button class="btn btn-brown" id="addCash">Add Cash</button>
+                                            <button class="btn btn-brown" id="addCash">{{__('messages.add_cash')}} </button>
                                         </div>
                                         </form>
 

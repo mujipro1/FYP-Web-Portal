@@ -73,9 +73,9 @@
                         </button>
                         </form>
                         @if ($id == 0)
-                        <h3 class="flex-grow-1 text-center mb-0">Crop Analytics</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.crop_analytics')}} </h3>
                         @else
-                        <h3 class="flex-grow-1 text-center mb-0">Crop Analytics <span class="light">|</span> {{$crop->identifier}}</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.crop_analytics')}}<span class="light">|</span> {{$crop->identifier}}</h3>
                         @endif
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
@@ -88,9 +88,9 @@
                             <input type="hidden" name="farm_id" value="{{ $farm_id }}">
                             <div class="col-md-7">
                                 <div class="labelcontainer">
-                                    <label class='w-50' for="crop">Select Crop</label>
+                                    <label class='w-50' for="crop">{{__('messages.select_a_crop')}} </label>
                                     <select class="form-select" id="crop" name="crop">
-                                    <option value="">Select a crop</option>
+                                    <option value="">{{__('messages.select_a_crop')}} </option>
                                         @foreach($crops as $cropx)
                                         <option value="{{ $cropx->id }}">{{ $cropx->identifier }}</option>
                                         @endforeach
@@ -116,7 +116,7 @@
 
                     <div class="row mt-5">
                         <div class="d-flex light">
-                            Select a crop to view analytics
+                        {{__('messages.select_a_crop_view_analytics')}}
                         </div>
                     </div>
 
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="">
                                     <h5 class="text-start text-success">PKR {{$totalExpenses}}/-</h5>
-                                    <div class='fsmall'>Total Expenses of {{$crop->identifier}}</div>
+                                    <div class='fsmall'>{{__('messages.total_expenses_of')}} {{$crop->identifier}}</div>
                                 </div>
                             </div>
                         </div>
@@ -174,10 +174,10 @@
                         <div class="col-md-6 p-3">
                             <div class="box-cont">
                                 <div class="d-flex justify-content-center">
-                                    <h5 class="w-75">{{ $expenseType }} Expenses</h5>
+                                    <h5 class="w-75">{{ $expenseType }} {{__('messages.expenses')}} </h5>
                                     <select class="form-select w-25 chart-toggle" data-expense-type="{{ $expenseType }}">
-                                        <option value="Amounts">Amounts</option>
-                                        <option value="Quantity">Quantity</option>
+                                        <option value="Amounts">{{__('messages.amount')}}</option>
+                                        <option value="Quantity">{{__('messages.quantity')}}</option>
                                     </select>
                                 </div>
                                 <div class="chart-container" id="amountChart-{{ $expenseType }}">

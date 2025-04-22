@@ -57,18 +57,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Enter Crop Details</h5>
+                <h5 class="modal-title" id="confirmationModalLabel">  {{__('messages.enter_Crop_Details')}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to proceed?
+            {{__('messages.sure_want_to_proceed')}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('messages.cancel')}}</button>
                 <form id="confirmationForm" method="POST" action="">
                 @csrf
                 <input type="hidden" name='farm_id' value='{{$farm_id}}'>
-                <button type="submit" class="btn btn-primary">Confirm</button>
+                <button type="submit" class="btn btn-primary">{{__('messages.confirm')}}</button>
                 </form>
             </div>
         </div>
@@ -97,7 +97,7 @@
                                         d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                 </svg>
                             </a>
-                            <h3 class="flex-grow-1 text-center mb-0">Workers</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.workers')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
 
@@ -127,9 +127,9 @@
 
                                     <div class=" text-center fw-bold py-2">
                                         @if ($worker->access == 1)
-                                        <label class='px-3 text-success'>Access Granted</label>
+                                        <label class='px-3 text-success'>{{__('messages.access_granted')}} </label>
                                         @else
-                                        <label class='px-3 text-danger'>Access Revoked</label>
+                                        <label class='px-3 text-danger'>{{__('messages.access_revoked')}} </label>
                                         @endif
                                     </div>
 
@@ -140,9 +140,9 @@
                                     <div class="text-center my-3">
                                         <button class="btn btn-orange px-2 or-width" onclick="confirmAction('revoke', {{$worker->id}})">
                                         @if ($worker->access == 1)  
-                                        Revoke Access
+                                        {{__('messages.revoke_Access')}}
                                         @else
-                                        Grant Access
+                                        {{__('messages.grant_Access')}}
                                         @endif
                                         </button>
                                         <button class="btn btn-orange2 px-3" onclick="confirmAction('delete', {{$worker->id}})"
@@ -157,39 +157,39 @@
                             <div class="col-md-6 offset-md-1">
                                 <div class="box-cont p-4">
                                     <div class="text-center">
-                                        <h4 class="mb-5">Add Worker</h4>
+                                        <h4 class="mb-5"> {{__('messages.add_worker')}}</h4>
                                     </div>
 
                                     <form action="{{route('manager.addworker')}}" method="POST">
                                         @csrf
                                         <input hidden name="farm_id" value="{{$farm_id}}">
                                         <div class="labelcontainer mt-3 px-3">
-                                            <label class='w-50' for="name">Name</label>
+                                            <label class='w-50' for="name">{{__('messages.add_worker')}}</label>
                                             <input type="text" class="form-control" id="name" name="name" required>
                                         </div>
                                         <div class="labelcontainer px-3">
-                                            <label class='w-50' for="name">Role</label>
+                                            <label class='w-50' for="name">{{__('messages.role')}}</label>
                                             <select class="form-control" id="role" name="role" required>
-                                                <option disabled value='' selected>Select Role</option>
-                                                <option value="1">Expense Worker</option>
-                                                <option value="2">Sales Worker</option>
+                                                <option disabled value='' selected>{{__('messages.select_role')}} </option>
+                                                <option value="1">{{__('messages.exp_worker')}} </option>
+                                                <option value="2">{{__('messages.sales_worker')}} </option>
                                             </select>
                                         </div>
                                         <div class="labelcontainer px-3">
-                                            <label class='w-50' for="phone">Phone </label>
+                                            <label class='w-50' for="phone">{{__('messages.phone')}} </label>
                                             <input type="number" class="form-control" id="phone" name="phone" required>
                                         </div>
                                         <div class="labelcontainer px-3">
-                                            <label class='w-50' for="email">Email</label>
+                                            <label class='w-50' for="email">{{__('messages.email')}}</label>
                                             <input type="email" class="form-control" id="email" name="email" required autoComplete="new-email">
                                         </div>
                                         <div class="labelcontainer px-3">
-                                            <label class='w-50' for="password">Password</label>
+                                            <label class='w-50' for="password">{{__('messages.password')}}</label>
                                             <input type="password" class="form-control" id="password" name="password" required autoComplete="new-password">
                                         </div>
 
                                         <div class="text-center mt-4 mb-3">
-                                            <button type="submit" class="btn w-25 btn-orange">Add</button>
+                                            <button type="submit" class="btn w-25 btn-orange">{{__('messages.add')}}</button>
                                         </div>
                                         
 

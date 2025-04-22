@@ -53,7 +53,7 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="container">
                     <div class="row">
-                        <div class='text-center my-3'><h3>Farms</h3></div>
+                        <div class='text-center my-3'><h3>{{__('messages.farms')}}</h3></div>
                         <div class="row section">
                         @foreach($farms as $farm)
                             <div class="col-md-4 my-2">
@@ -68,7 +68,7 @@
 
                         @if (count($farms) == 0)
                                 <div class="mx-3 text-center">
-                                    <p class=''>No farms found</p>
+                                    <p class=''>{{__('messages.no_farms_found')}}</p>
                                 </div>
                         @endif
                         </div>

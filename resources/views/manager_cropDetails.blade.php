@@ -82,7 +82,7 @@
                         </a>
                         @endif
 
-                        <h3 class="flex-grow-1 text-center mb-0">Crop Details</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.crop_details')}}</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
 
@@ -93,51 +93,51 @@
 
 
                                 <div class="d-flex">
-                                    <label class="w-50" for="crop">Crop Name</label>
+                                    <label class="w-50" for="crop">{{__('messages.crop_name')}}</label>
                                     <label class="w-50" for="crop_value">{{ $crop['identifier']}}</label>
                                 </div>
 
 
                                 <div class="d-flex">
-                                    <label class="w-50" for="crop">Acres</label>
+                                    <label class="w-50" for="crop">{{__('messages.acres')}}</label>
                                     <label class="w-50" for="crop_value">{{ $crop['acres']}}</label>
                                 </div>
 
                                 <div class="d-flex">
-                                    <label class="w-50" for="crop">Sowing Date</label>
+                                    <label class="w-50" for="crop">{{__('messages.sowing_date')}}</label>
                                     <label class="w-50"
-                                        for="crop_value">{{ $crop['sow_date'] ? \Carbon\Carbon::parse($crop['sow_date'])->format('d M Y') : 'Date not available' }}</label>
+                                        for="crop_value">{{ $crop['sow_date'] ? \Carbon\Carbon::parse($crop['sow_date'])->format('d M Y') : __('messages.date_not_available') }}</label>
                                 </div>
 
                                 <div class="d-flex">
-                                    <label class="w-50" for="crop">Harvest Date</label>
-                                    <label class="w-50" for="crop_value">{{ $crop['harvest_date'] ? \Carbon\Carbon::parse($crop['harvest_date'])->format('d M Y') : 'Date not available' }}</label>
+                                    <label class="w-50" for="crop">{{__('messages.harvest_date')}}</label>
+                                    <label class="w-50" for="crop_value">{{ $crop['harvest_date'] ? \Carbon\Carbon::parse($crop['harvest_date'])->format('d M Y') :__('messages.date_not_available') }}</label>
                                 </div>
 
                                 <div class="d-flex">
-                                    <label class="w-50" for="crop">Variety</label>
+                                    <label class="w-50" for="crop">{{__('messages.variety')}}</label>
                                     <label class="w-50" for="crop_value">{{ $crop['variety']}}</label>
                                 </div>
 
                                 <div class="d-flex">
-                                    <label class="w-50" for="crop">Status</label>
-                                    <label class="w-50" for="crop_value">{{ $crop['active'] == 1 ? 'Active' : 'Passive'}}</label>
+                                    <label class="w-50" for="crop">{{__('messages.status')}}</label>
+                                    <label class="w-50" for="crop_value">{{ $crop['active'] == 1 ? __('messages.active') : __('messages.passive')}}</label>
                                 </div>
 
                                 <div class="d-flex">
-                                    <label class="w-50" for="crop">Description</label>
+                                    <label class="w-50" for="crop">{{__('messages.description')}}</label>
                                     <label class="w-50" for="crop_value">{{ $crop['description']}}</label>
                                 </div>
 
                                 @if (count($crop->deras) > 0)
                                 <hr class="my-4 w-75">
                                 <div class="text-start my-3 fw-bold">
-                                    Deras
+                                {{__('messages.deras')}}
                                 </div>
                                     @foreach($crop->deras as $dera)
                                     <div class="d-flex">
                                         <label class="w-50" for="crop_value">{{ $dera['name']}}</label>
-                                        <label class="w-50" for="crop">{{ $dera['pivot']['acres']}} Acres</label>
+                                        <label class="w-50" for="crop">{{ $dera['pivot']['acres']}} {{__('messages.acres')}}</label>
                                     </div>
                                     @endforeach
                                 @endif
@@ -147,18 +147,18 @@
 
                                 @if($crop['name'] == 'Sugarcane')
                                     @if ($all_versions == [])
-                                    <p class='light my-3' >No Previous Versions of {{$crop['identifier']}}</p>
+                                    <p class='light my-3' >{{__('messages.no_prev_ver_of')}} {{$crop['identifier']}}</p>
                                     @else
-                                    <p class='light my-3' >Previous Versions of {{$crop['identifier']}}</p>
+                                    <p class='light my-3' >{{__('messages.prev_ver_of')}} {{$crop['identifier']}}</p>
                                         @foreach($all_versions as $version)
                                         <h4 class="my-3">{{$version->identifier}}</h4>
                                         <div class="d-flex">
-                                            <label class="w-50" >Sowing Date</label>
-                                            <label class="w-50" >{{$crop['sow_date'] ? \Carbon\Carbon::parse($crop['sow_date'])->format('d M Y') : 'Date not available'}}</label>
+                                            <label class="w-50" >{{__('messages.sowing_date')}} </label>
+                                            <label class="w-50" >{{$crop['sow_date'] ? \Carbon\Carbon::parse($crop['sow_date'])->format('d M Y') :  __('messages.date_not_available')}}</label>
                                         </div>
                                         <div class="d-flex">
-                                            <label class="w-50" >Harvest Date</label>
-                                            <label class="w-50" >{{$crop['harvest_date'] ? \Carbon\Carbon::parse($crop['harvest_date'])->format('d M Y') : 'Date not available'}}</label>
+                                            <label class="w-50" >{{__('messages.harvest_date')}} </label>
+                                            <label class="w-50" >{{$crop['harvest_date'] ? \Carbon\Carbon::parse($crop['harvest_date'])->format('d M Y') :  __('messages.date_not_available')}}</label>
                                         </div>
                                         @endforeach
                                     @endif
@@ -171,14 +171,14 @@
                                         <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}"
                                         alt="" class="img-fluid">
                                     </div>
-                                        <button class="btn btn-orange2 or-width" id='harvest'>Harvest Crop</button>
+                                        <button class="btn btn-orange2 or-width" id='harvest'>{{__('messages.harvest_crop')}} </button>
                                         <div class="d-none box-cont p-4" id="harvest-cont">
                                             <form action="{{ route('manager.harvest_crop', ['crop_id' => $crop['id']]) }}" method="POST">
                                                 @csrf
                                                 <input hidden type="text" name="crop_id" value="{{$crop['id']}}">
-                                                <p class="light">Add Harvesting Date</p>
+                                                <p class="light">{{__('messages.add_harvesting_date')}}</p>
                                             <div class="d-flex mt-3">
-                                                <label class='form-label w-50' for="harvest_date">Date</label>
+                                                <label class='form-label w-50' for="harvest_date">{{__('messages.date')}}</label>
                                                 <input class='form-control' type="date" name="harvest_date" id="harvest_date" 
                                                 value="{{ $crop['harvest_date'] ? Carbon\Carbon::parse($crop['harvest_date'])->format('Y-m-d') : Carbon\Carbon::now()->format('Y-m-d') }}">
                                             </div>
@@ -186,14 +186,14 @@
                                             <div class="d-flex my-3 justify-content-start">
                                                 @if ($crop->active == '1')
                                                 <input class='form-check form-check-input' type="checkbox" name="passive" id="passive" checked>
-                                                <label class='form-label m-3' for="passive">Mark as Passive</label>
+                                                <label class='form-label m-3' for="passive">{{__('messages.mark_as_passive')}}</label>
                                                 @else
                                                 <input disabled class='form-check form-check-input' type="checkbox" name="passive" id="passive" checked>
-                                                <label class='form-label form-check light m-3' for="passive">Mark as Passive</label>
+                                                <label class='form-label form-check light m-3' for="passive">{{__('messages.mark_as_passive')}}</label>
                                                 @endif
                                             </div>
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-orange2 or-width" id='harvest'>Save</button>
+                                                <button type="submit" class="btn btn-orange2 or-width" id='harvest'>{{__('messages.save')}}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -203,12 +203,12 @@
 
                             @if ($cropMap == 'Empty')
                             <div class="section d-flex justify-content-center align-items-center">
-                                <div class="light text-center"><h3>No map data available for this crop.</h2></div>
+                                <div class="light text-center"><h3>{{__('messages.no_map_data')}}</h2></div>
                             </div>
                             @else
                             <div class="row">
                                 <div class="box-cont">
-                                    <p class="light">Visualization of {{$crop['identifier']}} on map.</p>
+                                    <p class="light">{{__('messages.visualization_of')}}  {{$crop['identifier']}} {{__('messages.on_map')}}</p>
                                         <div id='map' style='height:60vh'></div>
                                     </div>
                                 </div>

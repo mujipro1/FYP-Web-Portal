@@ -67,7 +67,7 @@
                                         d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                 </svg>
                             </a>
-                            <h3 class="flex-grow-1 text-center mb-0">Configure Expenses</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.configure_expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
 
@@ -80,11 +80,11 @@
                                         <div class="line"></div>
                                     </div>
                                     <div class="text-center pt-2 ">
-                                        <h4>Farm Expenses</h4>
-                                        <p class='fsmall'>Click here to configure your farm expenses</p>
+                                        <h4>{{__('messages.farm_expenses')}}</h4>
+                                        <p class='fsmall'>{{__('messages.click_to_configure_farm_expenses')}}</p>
                                     </div>
                                     <div class="text-center ">
-                                        <button onclick="handleFarmExpenseConfig()" class='btn btn-primary'>Configure</button>
+                                        <button onclick="handleFarmExpenseConfig()" class='btn btn-primary'>{{__('messages.configure')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -97,11 +97,11 @@
                                         <div class="line"></div>
                                     </div>
                                     <div class="text-center pt-2 ">
-                                        <h4>Crop Expenses</h4>
-                                        <p class='fsmall'>Click here to configure your crop expenses</p>
+                                        <h4>{{__('messages.crop_expenses')}}</h4>
+                                        <p class='fsmall'>{{__('messages.click_to_configure_crop_expenses')}}</p>
                                     </div>
                                     <div class="text-center ">
-                                        <button onclick="handleCropExpenseConfig()" class='btn btn-primary'>Configure</button>
+                                        <button onclick="handleCropExpenseConfig()" class='btn btn-primary'>{{__('messages.configure')}}</button>
                                     </div>
                                 </div>
                             </div>

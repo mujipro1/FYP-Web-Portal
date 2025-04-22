@@ -84,24 +84,24 @@
                             </a>
                         @endif
 
-                        <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         
                         </div>
                         <div class="row">
                             <div class="p-3">
                             <div class="button-cont px-4">
-                                <button class="deselect" onclick = "handleExpenseClick()">Crop Expense</button>
+                                <button class="deselect" onclick = "handleExpenseClick()">{{__('messages.crop_expenses')}}</button>
                                 <button class="tab-button">Farm Expense</button>
-                                <button class="deselect" onclick="handleReconClick()">Reconciliation</button>
+                                <button class="deselect" onclick="handleReconClick()">{{__('messages.reconciliation')}}</button>
                                 
                             </div>
                             
                             <div class="box-cont p-5">
                                 <div class="d-flex justify-content-between align-items-center">
-                                <p class="light">Add your operational expenses here</p>
+                                <p class="light">{{__('messages.add_operational_expenses')}}</p>
                                 <button class="btn btn-brown" onclick = "handleViewExpenseClick()"
-                                id="addexpense">View Expenses</button>
+                                id="addexpense">{{__('messages.view_expenses')}}</button>
                             </div>
 
 
@@ -111,7 +111,7 @@
                                     <input hidden name="farm_id" value="{{$farm_id}}">
                                     <div class="col-md-7">
                                         <div class="labelcontainer">
-                                            <label class='w-50' for="date">Date</label>
+                                            <label class='w-50' for="date">{{__('messages.date')}}</label>
                                             <input type="date" id="date" name="date" class="form-control"
                                                 value="{{$latest_expense_date}}" style='margin:0px;'>
                                         </div>
@@ -124,18 +124,18 @@
 
                                     <div class='col-md-7'>
                                         <div class="labelcontainer">
-                                            <label class='w-50' for="head">Expense Type</label>
+                                            <label class='w-50' for="head">{{__('messages.expense_type')}}</label>
                                             <select class='form-select' id="head" name="head" required>
-                                                <option value="">Select Expense Type</option>
+                                                <option value="">{{__('messages.select_expense_type')}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class='col-md-7 hidden' id="subhead-container">
                                         <div class="labelcontainer">
 
-                                            <label class='w-50' for="subhead">Subtype</label>
+                                            <label class='w-50' for="subhead">{{__('messages.expenses')}}Subtype</label>
                                             <select class='form-select' id="subhead" name="subhead">
-                                                <option value="">Select Subtype</option>
+                                                <option value="">{{__('messages.expenses')}}Select Subtype</option>
                                             </select>
                                         </div>
                                     </div>
@@ -148,13 +148,13 @@
                                     @if($worker == 1)
                                     <div class='col-md-7 m-2 mt-4 hidden ' id='paidByOwner'>
                                         <input type="checkbox" id="paidbyowner" class='form-check-input' style='cursor:pointer;' name="paidbyowner" value="1">
-                                        <label class='w-50 mx-3' for="paidbyowner" style='cursor:pointer;'>Paid By Owner</label>
+                                        <label class='w-50 mx-3' for="paidbyowner" style='cursor:pointer;'>{{__('messages.expenses')}}Paid By Owner</label>
                                     </div>
                                     @endif
 
 
                                     <div id='submitdiv' class="hidden text-center mt-4">
-                                        <button class='btn btn-brown' type="submit">Submit</button>
+                                        <button class='btn btn-brown' type="submit">{{__('messages.expenses')}}Submit</button>
                                     </div>
                                     @php 
                                     if($worker == 0){

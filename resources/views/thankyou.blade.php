@@ -45,14 +45,14 @@
                                 </svg>
                             </div>
                             <div class="text-center">
-                                <h1>Thank You !</h1>
-                                <p>Your request has been submitted successfully! You will hear from us as soon as it gets accepted!</p>
+                                <h1>{{__('messages.thankyou')}}</h1>
+                                <p>{{__('messages.thankyou_register')}}</p>
                             </div>
                         </div>
                                             
                         
                         <div class="text-center">
-                            <button onclick="home()" class="btn btn-orange2 or-width shadow-md mt-3">Go to Home</button>
+                            <button onclick="home()" class="btn btn-orange2 or-width shadow-md mt-3">{{__('messages.go_to_home')}}</button>
                         </div>
                     </div>
                 </div>

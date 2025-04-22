@@ -61,7 +61,7 @@
                                     d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                             </svg>
                         </a>
-                        <h3 class="flex-grow-1 text-center mb-0">Requests</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">{{__('messages.requests')}}</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
                 
@@ -71,9 +71,9 @@
                                 <div class="mx-4 labelcontainer">
                                     <label class='w-25'>Status</label>
                                     <select id='request-filter' class='form-control ml-3' value="" onChange="">
-                                        <option selected value='all'>All</option>
-                                        <option value='pending'>Pending</option>
-                                        <option value='approved'>Approved</option>
+                                        <option selected value='all'>{{__('messages.all')}}</option>
+                                        <option value='pending'>{{__('messages.pending')}}</option>
+                                        <option value='approved'>{{__('messages.approved')}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,29 +95,29 @@
                                                 <h5 class='px-3 pt-3'>{{$request['user_info']['farmerName']}}</h5>
                                                 <p class=' px-3 text-success'>{{$request['created_at']}}</p>
                                                 <div class="px-3 labelcontainer1">
-                                                    <label class=' light w-25'>Farm Name</label>
+                                                    <label class=' light w-25'>{{__('messages.farm_name')}}</label>
                                                     <label>{{$request['farm_info']['farmName']}}</label>
                                                 </div>
                                                 <div class="px-3 labelcontainer1">
-                                                    <label class=' light w-25'>City</label>
+                                                    <label class=' light w-25'>{{__('messages.city')}}</label>
                                                     <label>{{$request['farm_info']['farmCity']}}</label>
                                                 </div>
                                                 <div class="px-3 labelcontainer1">
-                                                    <label class=' light w-25'>Acres</label>
+                                                    <label class=' light w-25'>{{__('messages.acres')}}</label>
                                                     <label>{{$request['farm_info']['acres']}}</label>
                                                 </div>
                                                 <div class="px-3 labelcontainer1">
-                                                    <label class=' light w-25'>Has Deras</label>
+                                                    <label class=' light w-25'>{{__('messages.has_Deras')}} </label>
                                                     <label>{{$request['farm_info']['deras'] == 0 ? 'No' : 'Yes'}}</label>
                                                 </div>
                                                 @if($request['farm_info']['deras'] > 0)
                                                 <div class="px-3 labelcontainer1">
-                                                    <label class=' light w-25'>No of Deras</label>
+                                                    <label class=' light w-25'>{{__('messages.no_of_deras')}}</label>
                                                     <label>{{$request['farm_info']['deras']}}</label>
                                                 </div>
                                                 @endif
                                                 <div class="px-3 labelcontainer1">
-                                                    <label class=' light w-25'>Address</label>
+                                                    <label class=' light w-25'>{{__('messages.address')}}</label>
                                                     <label>{{$request['farm_info']['farmAddress']}}</label>
                                                 </div>
                                             </div>
@@ -144,7 +144,7 @@
                                                     @csrf
                                                     <input type="hidden" name="request_Id" value="{{$request['id']}}">
                                                     <button type="submit" class="btn text-light btn-brown">
-                                                        Create Farm
+                                                        {{__('messages.create_farm')}} 
                                                     </button>
                                                 </form>
                                                 @endif

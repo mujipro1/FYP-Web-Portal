@@ -85,7 +85,7 @@
                             </a>
 
                             @endif
-                            <h3 class="flex-grow-1 text-center mb-0">Expenses</h3>
+                            <h3 class="flex-grow-1 text-center mb-0">{{__('messages.expenses')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
 
@@ -93,14 +93,14 @@
                             <div class="p-3">
                                 <div class="button-cont px-4">
                                     @if (!isset($expense->farm))
-                                    <button class="tab-button" onclick="handlecropExpenseClick()">Crop Expense</button>
-                                    <button class="deselect" onclick="handlefarmExpenseClick()">Farm Expense</button>
+                                    <button class="tab-button" onclick="handlecropExpenseClick()">{{__('messages.crop_expenses')}}</button>
+                                    <button class="deselect" onclick="handlefarmExpenseClick()"> {{__('messages.farm_expenses')}}</button>
                                     @else
-                                    <button class="deselect" onclick="handlecropExpenseClick()">Crop Expense</button>
+                                    <button class="deselect" onclick="handlecropExpenseClick()">{{__('messages.crop_expenses')}}</button>
                                     <button class="tab-button
-                                        " onclick="handlefarmExpenseClick()">Farm Expense</button>
+                                        " onclick="handlefarmExpenseClick()">{{__('messages.farm_expenses')}} </button>
                                     @endif
-                                    <button class="deselect" onclick="handleReconClick()">Reconciliation</button>
+                                    <button class="deselect" onclick="handleReconClick()">{{__('messages.reconciliation')}}</button>
                                 </div>
 
 
@@ -120,13 +120,13 @@
                                                         d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                                                 </svg>
                                             </a>
-                                            <h3 class="flex-grow-1 text-center mb-0">Expense Details</h3>
+                                            <h3 class="flex-grow-1 text-center mb-0"> {{__('messages.exp_Details')}}</h3>
                                             <div style='visibility:hidden;' class="invisible"></div>
                                     </div>
                                     <div class="px-5 py-4">
-                                        <button class='btn btn-orange or-width' id="expense-edit-button">Edit</button>
+                                        <button class='btn btn-orange or-width' id="expense-edit-button">{{__('messages.edit')}}</button>
                                         <button class='btn btn-orange2 or-width'
-                                            id="expense-delete-button">Delete</button>
+                                            id="expense-delete-button">{{__('messages.delete')}}</button>
                                     </div>
 
                                     <form id="delete-expense-form" action="{{ route('manager.deleteExpense') }}"
@@ -146,7 +146,7 @@
                                                 <input hidden name='expense_id' value="{{$expense->id}}" />
                                                 <input hidden name='farm_id' value="{{$farm_id}}" />
                                                 <div class="d-flex">
-                                                    <label class="w-50" for="date">Date</label>
+                                                    <label class="w-50" for="date">{{__('messages.date')}}</label>
                                                     <label id='changeDateFormat' class='w-50'
                                                     for="crop_value">{{\Carbon\Carbon::parse($expense->date)->format('d M Y')}}</label>
                                                 </div>
@@ -160,12 +160,12 @@
                                                 </div>
                                                 @endif
                                                 <div class="d-flex">
-                                                    <label class="w-50" for="expense_type">Expense Type</label>
+                                                    <label class="w-50" for="expense_type"> {{__('messages.select_expense_type')}}</label>
                                                     <label class="w-50"
                                                         for="expense_type_value">{{ $expense->expense_type }}</label>
                                                 </div>
                                                 <div class="d-flex ">
-                                                    <label class="w-50" for="expense_subtype">Expense Subtype</label>
+                                                    <label class="w-50" for="expense_subtype"> {{__('messages.expense_subtype')}}</label>
                                                     <label class="w-50"
                                                         for="expense_subtype_value">{{ $expense->expense_subtype }}</label>
                                                 </div>
@@ -181,14 +181,14 @@
                                                     @if ($value != null)
                                                     <label class="w-50" for="{{ $key }}_value">{{ $value }}</label>
                                                     @else
-                                                    <label class="text-danger w-50" for="{{ $key }}_value"><i>Not
-                                                            found</i></label>
+                                                    <label class="text-danger w-50" for="{{ $key }}_value"><i>
+                                                    {{__('messages.not_found')}}</i></label>
                                                     @endif
                                                 </div>
                                                 @endif
                                                 @endforeach
                                                 <div class="d-flex my-3">
-                                                    <label class="w-50" for="amount">Amount</label>
+                                                    <label class="w-50" for="amount">{{__('messages.amount')}}</label>
                                                     <label class="w-50  fw-bold" for="amount_value">{{ $expense->total }}</label>
                                                 </div>
 
@@ -198,7 +198,7 @@
                                                     $desc = $description->description ?? null;
                                                     @endphp
                                                     @if($desc)
-                                                    <label for='description' class="w-50">Description</label>
+                                                    <label for='description' class="w-50">{{__('messages.description')}}</label>
                                                     <textarea id="description" class="w-50 form-control"
                                                         name="description" disabled>{{$desc}}</textarea>
                                                     @endif
@@ -207,7 +207,7 @@
 
                                             <div class="text-center mt-5">
                                                 <button class="btn btn-orange or-width" disabled
-                                                    type='submit'>Save</button>
+                                                    type='submit'>{{__('messages.save')}}</button>
                                             </div>
                                         </form>
                                     </div>

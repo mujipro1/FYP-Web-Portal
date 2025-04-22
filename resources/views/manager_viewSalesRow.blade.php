@@ -78,7 +78,7 @@
                                 </a>
                                 
                             @endif
-                            <h3 class="flex-grow-1 text-center mb-0">Sale Details</h3>
+                            <h3 class="flex-grow-1 text-center mb-0"> {{__('messages.sale_Details')}}</h3>
                             <div style='visibility:hidden;' class="invisible"></div>
                         </div>
 
@@ -90,14 +90,14 @@
                                         <div class="col-md-8">
 
                                             <div class="d-flex">
-                                                <label class="w-50" for="date">Date</label>
+                                                <label class="w-50" for="date"> {{__('messages.date')}}</label>
                                                 <label class="w-50" for="date_value">
                                                     <!-- use carbon to set format -->
                                                     {{ \Carbon\Carbon::parse($sale->date)->format('d M Y') }}</label>
                                             </div>
                                                                                         
                                             <div class="d-flex">
-                                                <label class="w-50" for="crop">Crop</label>
+                                                <label class="w-50" for="crop"> {{__('messages.crop')}}</label>
                                                 <label class="w-50"
                                                     for="crop_value">{{ $sale->crop['identifier']}}</label>
                                             </div>
@@ -113,7 +113,7 @@
                                             </div>
                                             @endforeach
                                             <div class="d-flex my-3">
-                                                <label class="w-50" for="amount">Amount</label>
+                                                <label class="w-50" for="amount"> {{__('messages.amount')}}</label>
                                                 <label class="w-50  fw-bold" for="amount_value">{{ $sale->amount }}</label>
                                             </div>
                                         </div>

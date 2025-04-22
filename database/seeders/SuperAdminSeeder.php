@@ -15,14 +15,14 @@ class SuperAdminSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('users')->insert([
-        //     'name' => 'Super Admin',
-        //     'email' => 'superadmin@example.com',
-        //     'password' => Hash::make('password'), // Make sure to hash the password
-        //     'role' => 'superadmin',
-        //     'created_at' => now(),
-        //     'updated_at' => now(),
-        // ]);
+        DB::table('users')->insert([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@example.com',
+            'password' => Hash::make('password'), // Make sure to hash the password
+            'role' => 'superadmin',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         DB::table('kleio')->insert([
             'recommendation' => 'To improve wheat yield, consider using certified seeds and adopting modern irrigation techniques like drip irrigation. Timely fertilizer application and proper pest control can significantly boost productivity. Additionally, crop rotation with legumes can enhance soil fertility and reduce disease risk.',
