@@ -1,3 +1,5 @@
+@extends('layouts.chatbot-layout') 
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 
@@ -15,7 +17,7 @@
     <script src="{{ asset('js/alert.js') }}"></script>
     <script src="{{ asset('js/chatbot.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
-
+    
 </head>
 <script>
 const farm_id = @json($farm_id);
@@ -91,14 +93,18 @@ const farm_id = @json($farm_id);
                         <div class="labelcontainer mb-3">
                             <textarea style="max-height: 100px" rows="2" type="text" class="form-control chatbot-typer"
                                 id="chatbot-text" placeholder="Type a Message..." required></textarea>
-                            <button class="btn mx-3 " id="chatbot-send-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1"
+                                <button class="btn mx-2" id="chatbot-send-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1"
                                     viewBox="0 0 24 24" width="25" height="25">
                                     <path
-                                        d="m.172,3.708C-.216,2.646.076,1.47.917.713,1.756-.041,2.951-.211,3.965.282l18.09,8.444c.97.454,1.664,1.283,1.945,2.273H4.048L.229,3.835c-.021-.041-.04-.084-.057-.127Zm3.89,9.292L.309,20.175c-.021.04-.039.08-.054.122-.387,1.063-.092,2.237.749,2.993.521.467,1.179.708,1.841.708.409,0,.819-.092,1.201-.279l18.011-8.438c.973-.456,1.666-1.288,1.945-2.28H4.062Z" />
+                                    d="m.172,3.708C-.216,2.646.076,1.47.917.713,1.756-.041,2.951-.211,3.965.282l18.09,8.444c.97.454,1.664,1.283,1.945,2.273H4.048L.229,3.835c-.021-.041-.04-.084-.057-.127Zm3.89,9.292L.309,20.175c-.021.04-.039.08-.054.122-.387,1.063-.092,2.237.749,2.993.521.467,1.179.708,1.841.708.409,0,.819-.092,1.201-.279l18.011-8.438c.973-.456,1.666-1.288,1.945-2.28H4.062Z" />
                                 </svg>
-
                             </button>
+                            <button class="btn mx-2" id="mic-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" width="35" height="35" data-name="Layer 1" viewBox="0 0 24 24">
+                                <path d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-2,7c0-1.105.895-2,2-2s2,.895,2,2v5c0,1.105-.895,2-2,2s-2-.895-2-2v-5Zm3,10.916v2.084h-2v-2.084c-2.834-.477-5-2.948-5-5.916h2c0,2.206,1.794,4,4,4s4-1.794,4-4h2c0,2.968-2.166,5.439-5,5.916Z"/>
+                                </svg>
+                                </button>
                         </div>
                     </div>
                 </div>
@@ -116,7 +122,17 @@ const farm_id = @json($farm_id);
 
 </body>
 <script src="{{ asset('js/ManagerSidebar.js') }}"></script>
+<script src="{{ asset('js/speech.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
-
+<script type="text/javascript">
+        function googleTranslateElementInit() {
+            console.log("Google Translate Element Initialized");
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ur',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
 </html>

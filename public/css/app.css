@@ -847,3 +847,61 @@ nav .dropdown-item:active{
     transform: translate(200px, -280px);
   }
 }
+
+
+.cost-saver{
+  background:linear-gradient(45deg, #4e0060,  #00676c, #006480ed);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(168, 168, 168, 0.1);
+  padding: 10px;
+  margin: 10px;
+  padding:20px;
+  min-height: 250px;
+}
+
+.cost-save-inner{
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 230px;
+  width: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.189);
+  box-shadow: 0 0 10px rgba(168, 168, 168, 0.1);
+  backdrop-filter: blur(15px);
+}
+
+.cost-saver-img{
+  width: 200px;
+}
+
+/* in your CSS file (e.g. app.css or inline <style>) */
+.cost-saver-canvas {
+  height: 600px !important; /* or whatever height you want */
+  width: 100%; /* optional */
+}
+
+#mic-btn, #chatbot-send-btn{
+  z-index:12313;
+}
+
+.chatbot-speak-btn {
+  background-color: #693600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.chatbot-speak-btn:hover {
+  background-color: #4f2900;
+}
+
+body > .skiptranslate {
+  display: none !important;
+}
+
+/* Prevent top padding from being added */
+body {
+  top: 0px !important;
+}

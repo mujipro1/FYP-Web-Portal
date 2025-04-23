@@ -6,6 +6,7 @@ return [
     'about' => 'About',
     'services' => 'Services',
     'contact' => 'Contact',
+    'dashboard' => 'Dashboard',
 
     // home page
     'welcome' => 'Welcome!',

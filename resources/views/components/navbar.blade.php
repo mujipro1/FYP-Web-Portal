@@ -23,8 +23,9 @@
                         <li class="nav-item">
                             <a id='home' class="nav-link" href="/home">{{__('messages.home')}}</a>
                         </li>
+
                         <li class="nav-item">
-                            <a id='home' class="nav-link" href="/manager/farms">Dashboard</a>
+                            <a id='home' class="nav-link" href="/manager/farms">{{__('messages.dashboard')}}</a>
                         </li>
                         <li class="nav-item">
                             <a id='services' class="nav-link" href="/services">{{__('messages.services')}}</a>
@@ -52,8 +53,12 @@
                             <li><a class="dropdown-item" href="#">My profile</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" onclick='logout()'>Logout</a></li>
-                            <li class="nav-item"><a class="dropdown-item" href="{{url('lang/en')}}">EN</a></li>
-                            <li class="nav-item"><a class="dropdown-item" href="{{url('lang/ur')}}">UR</a></li>
+                            <li><div onclick="translateToUrdu()" class="dropdown-item">Urdu</div></li>
+                            <li><div onclick="resetTranslation()" class="dropdown-item">English</div></li>
+                        <li><div onclick="translateToPashto()" class="dropdown-item">Pashto</div></li>
+                        <li><div onclick="translateToSindhi()" class="dropdown-item">Sindhi</div></li>
+
+
                         </ul>
                     </li>
                         
@@ -69,5 +74,30 @@
 <script>
     function logout(){
         window.location.href = "{{ route('logout') }}";
+    }
+</script>
+<script>
+     function translateToUrdu() {
+        // Set cookie so Google knows the translation preference
+        document.cookie = "googtrans=/en/ur; path=/";
+        location.reload();
+    }
+    function translateToPashto() {
+        // Set cookie so Google knows the translation preference
+        document.cookie = "googtrans=/en/ps; path=/";
+        location.reload();
+    }
+    function translateToSindhi() {
+        // Set cookie so Google knows the translation preference
+        document.cookie = "googtrans=/en/sd; path=/";
+        location.reload();
+    }
+  
+    function resetTranslation() {
+        const iframe = document.querySelector('iframe.goog-te-banner-frame');
+        if (iframe) iframe.remove(); // Just in case it’s still in DOM
+
+        document.cookie = "googtrans=/en/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        location.reload();
     }
 </script>

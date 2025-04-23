@@ -342,9 +342,32 @@
                                     <img src="{{ asset('images/barns/barn1.png') }}" class='img-fluid' id='barn'>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="col-md-8 p-3 my-4">
+                            <div class="cost-saver" style="cursor:pointer;">
+                                <div class="cost-save-inner">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="col-md-4 d-flex justify-content-start mb-1">
+                                            <img src="{{ asset('images/cost-saver.png') }}" class='cost-saver-img'>
+                                        </div>
+                                            
+                                            <div class="col-md-8 px-2 text-white" onClick="handleCostSaver()">
+                                                <h3 class="text-white">Smart Spend</h3>
+                                                <p class="mt-4">Know your spending before it grows, compare this season’s expenses with past years and make smarter farming decisions</p>
 
-
+                                                <div class="d-flex justify-content-end">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="mx-3 svg"
+                                                        style='fill:white;height:30px;width:30px;' viewBox="0 0 24 24"
+                                                        width="512" height="512">
+                                                        <path
+                                                            d="M18,12h0a2,2,0,0,0-.59-1.4l-4.29-4.3a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42L15,11H5a1,1,0,0,0,0,2H15l-3.29,3.29a1,1,0,0,0,1.41,1.42l4.29-4.3A2,2,0,0,0,18,12Z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -407,6 +430,10 @@ function handleActivity() {
 
 function map_click() {
     window.location.href = "{{ route('manager.maps' , ['farm_id' => $farm['id']] )}}"
+}
+
+function handleCostSaver() {
+    window.location.href = "{{ route('manager.costsaver' , ['farm_id' => $farm['id']] )}}"
 }
 
 

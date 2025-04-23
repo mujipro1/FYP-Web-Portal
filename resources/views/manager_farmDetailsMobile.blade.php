@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- CSRF Token -->
     <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navBar.css') }}">
@@ -32,28 +32,28 @@
             </div>
             @yield('content')
         </div>
+
         <div class='alertDiv fade justify-content-center align-items-center' id="alertDiv"></div>
-        
+
         @if(Session::get('success') || Session::get('error'))
-            @if(Session::get('success'))
-                <script>
-                    showAlert("{{ Session::get('success') }}", 'success', 9000);
-                    </script>
-                @php
-                Session::forget('success');
-                @endphp
-                @endif
-                
-                @if(Session::get('error'))
-                <script>
-                    showAlert("{{ Session::get('error') }}", 'error', 9000);
-            </script>
-                @php
-                    Session::forget('error');
-                @endphp
-            @endif
+        @if(Session::get('success'))
+        <script>
+        showAlert("{{ Session::get('success') }}", 'success', 9000);
+        </script>
+        @php
+        Session::forget('success');
+        @endphp
         @endif
 
+        @if(Session::get('error'))
+        <script>
+        showAlert("{{ Session::get('error') }}", 'error', 9000);
+        </script>
+        @php
+        Session::forget('error');
+        @endphp
+        @endif
+        @endif
 
 
         <div class="container-fluid">
@@ -62,20 +62,22 @@
                     <div class="ManagerSidebar sidebar"></div>
                 </div>
                 <div class="overlay" id="overlay"></div>
-                <div class="col-md-10 offset-md-1 ">
+                <div class="col-md-11 offset-md-1" style='padding-right:50px;'>
 
 
                     <div class="container">
-                            <div class="row">
-                                <div class="d-flex ">
-                                    <img src="{{ asset('images/smart-farm.png') }}" style="height:80px; margin-right: 10px;">
-                                    <div>
-                                        <h3 class="mt-3 mb-0">{{$farm['name']}}</h3>
-                                        <div class='mx-2'>{{$farm['address']}}, {{$farm['city']}}</div>
+                        <div class="row">
+                            <div class="d-flex justify-content-between align-items-center my-2">
+                                <div class='d-flex mx-2'>
+                                    <img src="{{ asset('images/smart-farm.png') }}" style='height:80px;'>
+                                    <div class='mx-4'>
+                                        <h3 class="mx-3 mt-3">{{$farm['name']}}</h3>
+                                        <div class="mx-3">{{$farm['address']}}, {{$farm['city']}}</div>
                                     </div>
                                 </div>
-                                <div class='d-flex mt-2 text-center'>
-                                    <button class='btn btn-orange  mx-1 or-width p-1 d-flex'
+
+                                <div class='d-flex'>
+                                    <button class='btn btn-orange tooltip-container mx-1 or-width p-1 d-flex'
                                         data-tooltip='Manager Expense and Sales Workers' onclick='handleWorkerClick()'>
                                         <div class=' mx-2'> Workers</div>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="svg" data-name="Layer 1"
@@ -84,7 +86,7 @@
                                                 d="m19,6h0c0,.552-.448,1-1,1H6c-.552,0-1-.448-1-1h0c0-.552.448-1,1-1h.023C6.262,2.365,8.366.261,11,.023v2.977c0,.552.448,1,1,1h0c.552,0,1-.448,1-1V.023c2.634.239,4.738,2.343,4.977,4.977h.023c.552,0,1,.448,1,1Zm-12.998,3.146c.078,3.241,2.738,5.854,5.998,5.854s5.92-2.613,5.998-5.854l.002-.146H6l.002.146Zm14.99,13.73c-.415-3.645-4.277-6.876-8.992-6.876s-8.577,3.231-8.992,6.876c-.032.285.053.571.243.786.189.215.463.338.75.338h16c.287,0,.56-.123.75-.338.19-.215.275-.501.243-.786Z" />
                                         </svg>
                                     </button>
-                                    <button class='btn btn-orange2  or-width mx-1 d-flex'
+                                    <button class='btn btn-orange2 tooltip-container or-width mx-1 d-flex'
                                         data-tooltip="Configure your farm's expense and dera settings"
                                         onclick='handleConfiguration()'>
                                         <div class=" mx-3">Config.</div>
@@ -100,25 +102,93 @@
                                     </button>
                                 </div>
 
+                            </div>
 
+
+                            <div class="col-md-12 p-0 m-0 mt-4">
+                                <div class="recommender">
+                                    <div class="item-1-rec"></div>
+                                    <div class="item-2-rec"></div>
+                                    <div class="item-3-rec"></div>
+                                    <div class="inner-recommender">
+                                        <div class="row p-2">
+                                            <div class="col-md-6">
+                                                <h4 class="text-light">Insights by Chacha Ameer</h4>
+                                                @php
+
+                                                $kleio_data->fun_fact = json_decode('"' . $kleio_data->fun_fact . '"');
+
+                                                @endphp
+                                                <div class="recommender-1 text-light p-4">
+                                                    {{$kleio_data->recommendation}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('images/kleio.png') }}" class='kleio'>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="fun-fact text-light">
+                                                    <h4>Today's Fun Fact</h4>
+                                                    <div class="yellow-fun text-dark p-4">
+                                                        {{$kleio_data->fun_fact}}
+                                                    </div>
+                                                </div>
+                                                <div class="timer d-flex justify-content-center align-items-center">
+                                                    <div class="time-value" id="time"></div>
+                                                    <script>
+                                                    function startTime() {
+                                                        var today = new Date();
+                                                        var h = today.getHours();
+                                                        var m = today.getMinutes();
+                                                        var s = today.getSeconds();
+                                                        m = checkTime(m);
+                                                        s = checkTime(s);
+
+                                                        // convert to 12 hours format
+                                                        if (h > 12) {
+                                                            h = h - 12;
+                                                        }
+                                                        if (h == 0) {
+                                                            h = 12;
+                                                        }
+                                                        document.getElementById('time').innerHTML = h + ":" + m + ":" +
+                                                            s;
+                                                        var t = setTimeout(startTime, 500);
+                                                    }
+
+                                                    function checkTime(i) {
+                                                        if (i < 10) {
+                                                            i = "0" + i
+                                                        }; // add zero in front of numbers < 10
+                                                        return i;
+                                                    }
+                                                    startTime();
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <div class="col-md-8 mt-4">
                                 <div class="box-cont p-4">
                                     <p class='light'>Farm Status</p>
-                                        <div class='d-flex w-100'>
-                                            <div class="smallCard  w-100 d-flex justify-content-between p-3 mx-1 pr3">
+                                    <div class="d-flex my-2 justify-content-between">
+                                        <div class='d-flex'>
+                                            <div class="smallCard d-flex justify-content-between p-3 pr3">
                                                 <div>Crops</div>
                                                 <h4 class='mt-2'>{{$farm->crops->where('active', 1)->count()}}</h4>
                                             </div>
-                                            <div class="smallCard w-100 d-flex justify-content-between p-3 pr2 mx-1">
+                                            <div class="smallCard  d-flex justify-content-between p-3 pr2 mx-2">
                                                 <div>Deras</div>
                                                 <h4 class='mt-2'>{{$farm->deras->count()}}</h4>
                                             </div>
                                         </div>
-                                        <div class='d-flex mt-3'>
+                                        <div>
                                             <button data-tooltip='Add New Crops in your farm'
-                                                class='btn  or-width  mx-1 btn-orange'
+                                                class='btn tooltip-container or-width btn-orange'
                                                 onclick='handleAddCrop()'>Add Crop
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="m-1 svg"
                                                     data-name="Layer 1" viewBox="0 0 24 24">
@@ -127,7 +197,7 @@
                                                 </svg>
                                             </button>
                                             <button data-tooltip='View previously sown and harvested crops'
-                                                class='btn  or-width mx-1 btn-orange2'
+                                                class='btn tooltip-container or-width btn-orange2'
                                                 onclick='handleActivity()'>History
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-1 svg"
                                                     viewBox="0 0 24 24" width="512" height="512">
@@ -139,8 +209,9 @@
 
 
                                             </button>
+                                        </div>
                                     </div>
-                                    <hr class='w-100'>
+                                    <hr class='w-100 my-4'>
 
                                     <div class="row" style='height:29vh;overflow-y:scroll'>
                                         @if($farm->crops->count() == 0)
@@ -151,7 +222,8 @@
                                         @foreach($farm->crops as $crop)
                                         @if($crop['active'] == 1)
                                         <div class="col-md-4">
-                                            <div data-tooltip='Active crop' class="selected-crop " style='background-color:#f3f3f3;box-shadow:none;'
+                                            <div data-tooltip='Active crop' class="selected-crop tooltip-container"
+                                                style='background-color:#f3f3f3;box-shadow:none;width:100%;margin-bottom:17px;'
                                                 onclick="handleCropClick('{{$crop['id']}}')">
                                                 <img
                                                     src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}">
@@ -168,9 +240,10 @@
                                     </div>
                                 </div>
 
-                                <div class="row m-3 mt-5 card-container">
-                                    <div>
-                                        <div class="bigCard a pr4" >
+                                <div class="row m-3 mt-4 ">
+                                    <div class="col-md-4  tooltip-container"
+                                        data-tooltip='Add or View Expenses of your farm'>
+                                        <div class="bigCard pr4" onclick='handleExpenseClick()'>
                                             <div class="svgDiv">
                                                 <img src="{{ asset('images/expense.png') }}">
                                             </div>
@@ -194,8 +267,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div >
-                                        <div class="bigCard b  pr3" onclick="handleSalesClick()">
+                                    <div class="col-md-4 tooltip-container" data-tooltip='Add or View your crop sales'>
+                                        <div class="bigCard  pr3" onclick='handleSalesClick()'>
                                             <div class="svgDiv">
                                                 <img src="{{ asset('images/sales.png') }}">
                                             </div>
@@ -219,10 +292,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <form action="{{route('manager.analytics')}}" method='post' id='analytics-form'>
+                                    <div class="col-md-4 tooltip-container"
+                                        data-tooltip='View your past trends and analytics'>
+                                        <form action="{{route('manager.analytics')}}" method='POST' id='analytics-form'>
                                             @csrf
-                                            <div class="bigCard c pr2">
+                                            <div class="bigCard pr2" onclick='handleAnalytics()'>
                                                 <div class="svgDiv">
                                                     <img src="{{ asset('images/analytics.png') }}">
                                                 </div>
@@ -253,7 +327,7 @@
 
                             <div class="col-md-4 mt-4" onclick="map_click()">
                                 <div data-tooltip='Click on Map section to configure maps.'
-                                    class="box-cont " style='height:55.5vh;'>
+                                    class="box-cont tooltip-container" style='height:58vh;'>
                                     @if($map_info == 'EMPTY')
                                     <div class="" style='cursor:pointer;'>
                                         <h6 class='light'>Click to configure your farm on map</h6>
@@ -306,7 +380,11 @@ function handleConfiguration() {
 }
 
 function handleExpenseClick() {
-    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm['id'] ])}}"
+    window.location.href = "{{ route('manager.render_cropexpense' , ['farm_id' => $farm['id']])}}"
+}
+
+function handleSalesClick() {
+    window.location.href = "{{ route('manager.render_sales_page' , ['farm_id' => $farm['id']])}}"
 }
 
 function handleWorkerClick() {
@@ -326,11 +404,6 @@ function handleAddCrop() {
 function handleActivity() {
     window.location.href = "{{ route('manager.farm_history' , ['farm_id' => $farm['id']] )}}"
 }
-
-function handleSalesClick(){
-    window.location.href = "{{ route('manager.render_sales_page' , ['farm_id' => $farm['id']])}}"
-}
-
 
 function map_click() {
     window.location.href = "{{ route('manager.maps' , ['farm_id' => $farm['id']] )}}"
@@ -363,7 +436,7 @@ mapdata = JSON.parse(@json($map_info));
 map_var = 1
 
 
-document.querySelectorAll('.').forEach(function(container) {
+document.querySelectorAll('.tooltip-container').forEach(function(container) {
     container.addEventListener('mouseenter', function() {
         const tooltipText = container.getAttribute('data-tooltip');
         let tooltip = document.createElement('div');
@@ -383,76 +456,69 @@ document.querySelectorAll('.').forEach(function(container) {
 </script>
 <script src="{{ asset('js/common_map.js') }}"></script>
 
-<style>
-    .card-container{
-        position: relative;
-        height: 60vh;
-        margin-top: 2vh;
-    }
-
-    .bigCard{
-        position: absolute;
-        height: 90%;
-        width: 85%;
-        top:0;
-        transition: all 0.5s;
-    }
-    .a{
-        transform: rotate(-15deg);
-        transition: all 0.5s;
-    }
-    .c{
-        transition: all 0.5s;
-        transform: rotate(15deg);
-    }
-
-    .index{
-        z-index: 1;
-        transition: all 0.5s;
-    }
-
-    </style>
 <script>
-    // onclick on a b c cards, their z-index will be changed to 1 and others to 0
-    // on click to the card at top, it would be redirected to the respective page
+    function checkTimeAndSendRequest() {
+        
+        const kleioDataDate = new Date("{{ $kleio_data->record_date }}");
+        const today = new Date();
 
-    a = document.querySelector('.a');
-    b = document.querySelector('.b');
-    c = document.querySelector('.c');
+        kleioDataDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        
+        if (today > kleioDataDate) {
+            queryData = @json($queryData);
+            getRecommendation();
+        }
+    }
 
-    a.addEventListener('click',()=>{
-        a.classList.add('index');
-        a.style.transform = 'rotate(-15deg)';
-        b.classList.remove('index');
-        c.classList.remove('index');
-        a.addEventListener('click',()=>{
-            handleExpenseClick();
+    
+    farm_id = @json($farm['id']);
+    
+    async function getRecommendation() {
+        try {
+        const response = await fetch('https://10.3.16.62:443/recommendations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query: queryData }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sendRequest(data.response);
+    } catch (err) {
+        console.error('Fetch Error:', err); // Improved error logging
+        return `Sorry, something went wrong. Error: ${err.message}`;
+    }
+    }
+
+    function sendRequest(data) {
+        fetch("{{ route('daily.task') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                farm_id: farm_id,
+                data: Array.isArray(data) ? data : [data] // Ensure it's an array
+            })
         })
-    })
-
-    b.addEventListener('click',()=>{
-        b.classList.add('index');
-        a.classList.remove('index');
-        c.classList.remove('index');
-        b.style.transform = 'rotate(0deg)';
-        b.addEventListener('click',()=>{
-
-        })
-    })
-
-    c.addEventListener('click',()=>{
-        c.classList.add('index');
-        a.classList.remove('index');
-        b.classList.remove('index');
-        c.style.transform = 'rotate(15deg)';
-        c.addEventListener('click',()=>{
-            handleAnalytics();
-        })
-    })
+        .then(response => response.json())
+        .then(data => console.log("Request sent successfully:", data))
+        .catch(error => console.error("Error:", error));
 
 
+    }
 
+    // Start checking time on page load
+    checkTimeAndSendRequest();
 
 </script>
-</html>
 
+</html>

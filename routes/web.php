@@ -88,6 +88,8 @@ Route::middleware('is_manager')->group(function () {
     Route::get('/manager/maps/{farm_id}', 'App\Http\Controllers\ManagerMapController@render_map_page')->name("manager.maps");
     Route::post('/manager/mapsave', 'App\Http\Controllers\ManagerMapController@map_save')->name('manager.map.save');
 
+    Route::get('/manager/smartspend/{farm_id}', 'App\Http\Controllers\ManagerExpenseController@costsaver')->name("manager.costsaver");
+    Route::post('/manager/cost-saver', 'App\Http\Controllers\ManagerExpenseController@costsaverPost')->name("manager.costsaverPost");
 
     // sales
 

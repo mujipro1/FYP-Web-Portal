@@ -8,29 +8,21 @@
     <!-- Add your stylesheets -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/chatbot.css') }}">
 
     <script type="text/javascript">
         function googleTranslateElementInit() {
             console.log("Google Translate Element Initialized");
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                includedLanguages: 'en,ur,ps,sd',
+                includedLanguages: 'en,ur',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
     </script>
-    
-
-
 
 </head>
 <body>
     @yield('content')
-
-    @include('components.chatbot')
-    <!-- Add your scripts -->
-    <script src="{{ asset('js/chatbot.js') }}"></script>
 
 </body>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

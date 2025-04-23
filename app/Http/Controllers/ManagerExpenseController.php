@@ -13,6 +13,7 @@ use App\Models\Worker;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ManagerExpenseController extends Controller
 {
@@ -477,6 +478,78 @@ public function deleteCropExpenses(Request $request)
         'success' => false,
         'message' => 'No expenses selected for deletion.'
     ]);
+}
+
+public function costsaver($farm_id){
+    // fetch unique crop names and send to frontend
+    $security_check = $this->route_security($farm_id);
+    if ($security_check) { return $security_check; }
+
+    $crops = Crop::where('farm_id', $farm_id)
+                ->where('active', 1)
+                 ->get();
+
+    return view("manager_costsaver", ['farm_id' => $farm_id, 'crops' => $crops]);
+}
+
+    public function costsaverPost(Request $req){
+
+        // if no crop or cost-saver-expense then return error msg
+        if (!$req->input('crop') || !$req->input('cost-saver-expense')) {
+            return redirect()->back()->with('error', 'Please select a crop and Expense Type.');
+        }
+
+        $selectedCrop = $req->input('crop');
+        $selectedExpense = $req->input('cost-saver-expense');
+        $selectedSubtype = $req->input('cost-saver-subtype'); // might be null
+    
+        // Step 2: Read CSV file
+        try {
+            $fileContent = Storage::get('data/monthly_percentage_data.csv');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Expense data file not found.');
+        }
+    
+        $rows = array_map('str_getcsv', explode("\n", trim($fileContent)));
+        $headers = array_map('trim', $rows[0]);
+        $dataRows = array_slice($rows, 1);
+    
+        $currentMonth = date('n');
+        $currentYear = date('Y');
+    
+        $filtered = [];
+    
+        foreach ($dataRows as $row) {
+            $rowData = array_combine($headers, $row);
+    
+            if (
+                $rowData['crop_name'] === $selectedCrop &&
+                $rowData['expense_type'] === $selectedExpense &&
+                (empty($selectedSubtype) || $rowData['expense_subtype'] === $selectedSubtype) &&
+                (int)$rowData['month'] === (int)$currentMonth 
+            ) {
+                $filtered[] = $rowData;
+            }
+        }
+    
+        // Step 3: Handle result
+        if (empty($filtered)) {
+            return redirect()->back()->with('error', 'No matching data found for the current month.');
+        }
+
+        $farm_id = $req->input('farm_id');
+
+        $crops = Crop::where('farm_id', $farm_id)
+                ->where('active', 1)
+                 ->get();
+        return view('manager_costsaver', [
+            'filtered' => $filtered,
+            'selectedCrop' => $selectedCrop,
+            'selectedExpense' => $selectedExpense,
+            'selectedSubtype' => $selectedSubtype,
+            'farm_id' => $req->input('farm_id'),
+            'crops' => $crops,
+        ]);
 }
 
 }

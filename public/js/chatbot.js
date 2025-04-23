@@ -151,126 +151,129 @@ document.addEventListener('DOMContentLoaded', () => {
         return markdownConverter.makeHtml(markdown);
     };
 
-    // Function to add bot message to the chat
-    // Function to add bot message to the chat with typing animation
-const addBotMessage = (message) => {
-    // Remove the thinking/compiling indicator
-    const typingIndicatorWrapper = document.querySelector(".typing-indicator-container");
-    if (typingIndicatorWrapper) {
-        typingIndicatorWrapper.remove();
-    }
-
-    // Create new message elements
-    const botMessageOuter = document.createElement('div');
-    const pfp = document.createElement('div');
-    const botMessage = document.createElement('div');
-    const messageContent = document.createElement('div');
-    const timeElement = document.createElement('div');
-
-    // Add classes for styling
-    botMessage.classList.add("chatbot-bot-msg");
-    botMessageOuter.classList.add("chatbot-bot-msg-outer");
-    timeElement.classList.add("chatbot-bot-time");
-    pfp.classList.add("bot-pfp");
-    messageContent.classList.add("chatbot-message-content");
-
-    // Set time text
-    const now = new Date();
-    const formattedTime = formatTime(now);
-    timeElement.textContent = formattedTime;
-
-    // Append elements but leave messageContent empty for now
-    botMessageOuter.appendChild(pfp);
-    botMessageOuter.appendChild(botMessage);
-    botMessage.appendChild(messageContent);
-    botMessage.appendChild(timeElement);
-    chatbotMessages.appendChild(botMessageOuter);
-
-    // Scroll to the bottom
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-
-    // Parse markdown
-    const parsedMessage = parseMarkdown(message);
-    
-    // Insert the full HTML content immediately
-    messageContent.style.textAlign = 'left';
-    messageContent.innerHTML = parsedMessage;
-    
-    // Find all text nodes
-    const textNodes = [];
-    const getTextNodes = (node) => {
-        if (node.nodeType === 3 && node.nodeValue.trim() !== '') {  // Text node with content
-            textNodes.push(node);
-        } else if (node.nodeType === 1) {  // Element node
-            for (let i = 0; i < node.childNodes.length; i++) {
-                getTextNodes(node.childNodes[i]);
-            }
+    // Function to add bot message to the chat with Speak and Translate buttons
+    const addBotMessage = (message) => {
+        // Remove the thinking/compiling indicator
+        const typingIndicatorWrapper = document.querySelector(".typing-indicator-container");
+        if (typingIndicatorWrapper) {
+            typingIndicatorWrapper.remove();
         }
-    };
     
-    getTextNodes(messageContent);
+        // Create new message elements
+        const botMessageOuter = document.createElement('div');
+        const pfp = document.createElement('div');
+        const botMessage = document.createElement('div');
+        const messageContent = document.createElement('div');
+        const timeElement = document.createElement('div');
+        const speakButton = document.createElement('button'); // Create the Speak button
     
-    // Hide all text initially
-    textNodes.forEach(node => {
-        node.originalText = node.nodeValue;
-        node.nodeValue = '';
-    });
+        // Add classes for styling
+        botMessage.classList.add("chatbot-bot-msg");
+        botMessageOuter.classList.add("chatbot-bot-msg-outer");
+        timeElement.classList.add("chatbot-bot-time");
+        pfp.classList.add("bot-pfp");
+        messageContent.classList.add("chatbot-message-content");
+        speakButton.classList.add("chatbot-speak-btn"); // Add a class for the Speak button
     
-    // Improved typing animation with faster speed
-    const typingSpeed = 250; // Higher number = faster typing (characters per second)
-    let lastTypedTime = Date.now();
+        // Set time text
+        const now = new Date();
+        const formattedTime = formatTime(now);
+        timeElement.textContent = formattedTime;
     
-    // Function to reveal characters at a consistent rate
-    const revealText = () => {
-        const now = Date.now();
-        const elapsed = now - lastTypedTime;
-        const charsToType = Math.floor(elapsed * typingSpeed / 1000);
+        // Set Speak button text
+        speakButton.textContent = "🔊 Speak";
         
-        if (charsToType <= 0) {
-            requestAnimationFrame(revealText);
-            return;
-        }
-        
-        let charsTyped = 0;
-        let allDone = true;
-        
-        // Type characters across all text nodes
-        for (let i = 0; i < textNodes.length; i++) {
-            const node = textNodes[i];
-            const remaining = node.originalText.length - node.nodeValue.length;
-            
-            if (remaining > 0) {
-                allDone = false;
-                const charsToAdd = Math.min(remaining, charsToType - charsTyped);
-                if (charsToAdd <= 0) continue;
-                
-                const nextPortion = node.originalText.substr(
-                    node.nodeValue.length, 
-                    charsToAdd
-                );
-                node.nodeValue += nextPortion;
-                charsTyped += charsToAdd;
-                
-                if (charsTyped >= charsToType) break;
-            }
-        }
-        
-        // Update time and scroll position
-        lastTypedTime = now;
+        // Append elements but leave messageContent empty for now
+        botMessageOuter.appendChild(pfp);
+        botMessageOuter.appendChild(botMessage);
+        botMessage.appendChild(messageContent);
+        botMessage.appendChild(speakButton); // Append the Speak button
+        botMessage.appendChild(timeElement);
+        chatbotMessages.appendChild(botMessageOuter);
+    
+        // Scroll to the bottom
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-        
-        // Continue animation if not done
-        if (!allDone) {
-            requestAnimationFrame(revealText);
-        }
+    
+        // Parse markdown
+        const parsedMessage = parseMarkdown(message);
+    
+        // Insert the full HTML content immediately
+        messageContent.style.textAlign = 'left';
+        messageContent.innerHTML = parsedMessage;
+    
+        // Add event listener to the Speak button
+        speakButton.addEventListener('click', () => {
+            speak(message, speakButton); // Pass the button to toggle its text
+        });
+    
+        // Typing animation logic (optional, if needed)
+        const textNodes = [];
+        const getTextNodes = (node) => {
+            if (node.nodeType === 3 && node.nodeValue.trim() !== '') { // Text node with content
+                textNodes.push(node);
+            } else if (node.nodeType === 1) { // Element node
+                for (let i = 0; i < node.childNodes.length; i++) {
+                    getTextNodes(node.childNodes[i]);
+                }
+            }
+        };
+    
+        getTextNodes(messageContent);
+    
+        // Hide all text initially
+        textNodes.forEach(node => {
+            node.originalText = node.nodeValue;
+            node.nodeValue = '';
+        });
+    
+        const typingSpeed = 250; // Higher number = faster typing (characters per second)
+        let lastTypedTime = Date.now();
+    
+        const revealText = () => {
+            const now = Date.now();
+            const elapsed = now - lastTypedTime;
+            const charsToType = Math.floor(elapsed * typingSpeed / 1000);
+    
+            if (charsToType <= 0) {
+                requestAnimationFrame(revealText);
+                return;
+            }
+    
+            let charsTyped = 0;
+            let allDone = true;
+    
+            for (let i = 0; i < textNodes.length; i++) {
+                const node = textNodes[i];
+                const remaining = node.originalText.length - node.nodeValue.length;
+    
+                if (remaining > 0) {
+                    allDone = false;
+                    const charsToAdd = Math.min(remaining, charsToType - charsTyped);
+                    if (charsToAdd <= 0) continue;
+    
+                    const nextPortion = node.originalText.substr(
+                        node.nodeValue.length,
+                        charsToAdd
+                    );
+                    node.nodeValue += nextPortion;
+                    charsTyped += charsToAdd;
+    
+                    if (charsTyped >= charsToType) break;
+                }
+            }
+    
+            lastTypedTime = now;
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    
+            if (!allDone) {
+                requestAnimationFrame(revealText);
+            }
+        };
+    
+        lastTypedTime = Date.now();
+        requestAnimationFrame(revealText);
     };
-    
-    // Start the animation
-    lastTypedTime = Date.now();
-    requestAnimationFrame(revealText);
-};
-    
-    
+
     // Function to format time
     const formatTime = (date) => {
         const hours = date.getHours();
@@ -284,7 +287,7 @@ const addBotMessage = (message) => {
     // Function to fetch chatbot response
     const fetchChatbotResponse = async (userMessage) => {
         try {
-            const response = await fetch('https://10.3.16.61:443/query', {
+            const response = await fetch('https://10.3.16.71:443/query', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -336,3 +339,34 @@ const addBotMessage = (message) => {
             });
     };
 });
+
+
+const speak = (text, button) => {
+    const synth = window.speechSynthesis;
+
+    // If already speaking, stop the speech and reset the button
+    if (synth.speaking) {
+        synth.cancel();
+        button.textContent = "🔊 Speak";
+        return;
+    }
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'en-US';
+
+    // Update button text to "Stop Speaking" while speaking
+    button.textContent = "⏹ Stop Speaking";
+
+    // Reset button text when speaking ends
+    utter.onend = () => {
+        button.textContent = "🔊 Speak";
+    };
+
+    // Handle errors during speech synthesis
+    utter.onerror = () => {
+        console.error("Speech synthesis error occurred.");
+        button.textContent = "🔊 Speak";
+    };
+
+    synth.speak(utter);
+};

@@ -6,6 +6,7 @@ return [
     'about' => 'ہمارے بارے میں',
     'services' => 'سروسز',
     'contact' => 'رابطہ کریں',
+    'dashboard' => 'ڈیش بورڈ',
 
     // home page
     'welcome' => '!خوش آمدید',
