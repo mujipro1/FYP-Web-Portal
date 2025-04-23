@@ -206,7 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
             speak(message, speakButton); // Pass the button to toggle its text
         });
     
-        // Typing animation logic (optional, if needed)
+        // Commented out the animation logic
+        /*
         const textNodes = [];
         const getTextNodes = (node) => {
             if (node.nodeType === 3 && node.nodeValue.trim() !== '') { // Text node with content
@@ -272,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         lastTypedTime = Date.now();
         requestAnimationFrame(revealText);
+        */
     };
 
     // Function to format time
