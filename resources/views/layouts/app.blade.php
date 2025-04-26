@@ -20,13 +20,8 @@
             }, 'google_translate_element');
         }
     </script>
-    
-
-
-
 </head>
 <body>
-    @yield('content')
 
     @include('components.chatbot')
     <!-- Add your scripts -->

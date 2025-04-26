@@ -27,12 +27,6 @@
                         <li class="nav-item">
                             <a id='home' class="nav-link" href="/manager/farms">{{__('messages.dashboard')}}</a>
                         </li>
-                        <li class="nav-item">
-                            <a id='services' class="nav-link" href="/services">{{__('messages.services')}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id='contact' class="nav-link" href="/contact" style="margin-right:35px;">{{__('messages.contact')}}</a>
-                        </li>
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center"
                             href="#"
@@ -77,23 +71,33 @@
     }
 </script>
 <script>
+    function storechat(){
+        const chatHistory = document.getElementById("chatbot-messages");
+        if (!chatHistory) return;
+        const chatHistoryContent = chatHistory.innerHTML;
+        localStorage.setItem("chatBackup", chatHistoryContent);
+    }
      function translateToUrdu() {
+        storechat();
         // Set cookie so Google knows the translation preference
         document.cookie = "googtrans=/en/ur; path=/";
         location.reload();
     }
     function translateToPashto() {
+        storechat();
         // Set cookie so Google knows the translation preference
         document.cookie = "googtrans=/en/ps; path=/";
         location.reload();
     }
     function translateToSindhi() {
+        storechat();
         // Set cookie so Google knows the translation preference
         document.cookie = "googtrans=/en/sd; path=/";
         location.reload();
     }
   
     function resetTranslation() {
+        storechat();
         const iframe = document.querySelector('iframe.goog-te-banner-frame');
         if (iframe) iframe.remove(); // Just in case it’s still in DOM
 

@@ -264,7 +264,7 @@ body{
   position: absolute;
   z-index: 1100;
   width: 250px;
-  left: 4%;
+  left: 6%;
   opacity: 0;
 }
 
@@ -652,8 +652,8 @@ nav .dropdown-item:active{
 .alertDiv{
   position: fixed;
   z-index: 10000;
-  top: 20px;
-  right: 10%;
+  top: 40px;
+  right: 14%;
   min-height: 10vh;
   padding: 20px;
   min-width: 350px;

@@ -31,10 +31,10 @@
 }
 .chacha-pura{
     position: absolute;
-    left: 0%;
+    left: 2%;
     bottom: 20px;
-    z-index:232313;
-    width: 300px;
+    z-index:1920;
+    width: 250px;
     height: auto;
 }
 
@@ -209,7 +209,7 @@
     background-color: white;
     padding:20px;
     border-radius: 20px;
-    z-index: 2002;
+    z-index: 1900;
 }
 .chatbot-typer:focus{
     outline: none;

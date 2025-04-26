@@ -14,7 +14,7 @@
             console.log("Google Translate Element Initialized");
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                includedLanguages: 'en,ur',
+                includedLanguages: 'en,ur,ps,sd',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
@@ -22,7 +22,6 @@
 
 </head>
 <body>
-    @yield('content')
 
 </body>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

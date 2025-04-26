@@ -132,6 +132,8 @@
     no_of_deras = @json($no_of_deras);
     mapdata = @json($map_info);
     mapdata = JSON.parse(JSON.parse(mapdata));
+
+    cropMaps = @json($cropMaps);
 </script>
 <script src="{{ asset('js/map.js') }}"></script>
 

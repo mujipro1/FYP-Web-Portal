@@ -126,13 +126,14 @@ const farm_id = @json($farm_id);
 <script src="{{ asset('bootstrap/bootstrap.bundle.js') }}"></script>
 <script src="{{ asset('bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
-        function googleTranslateElementInit() {
-            console.log("Google Translate Element Initialized");
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,ur',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
-    </script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const savedChat = localStorage.getItem("chatBackup");
+    if (savedChat) {
+        document.getElementById("chatbot-messages").innerHTML = savedChat;
+        document.getElementById("temp-msg-chatbot-parent").style.display = "none"; // Hide the default message
+        localStorage.removeItem("chatBackup"); // Optional: clear after restoring
+    }
+});
+</script>
+
 </html>

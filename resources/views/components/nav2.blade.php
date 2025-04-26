@@ -1,6 +1,6 @@
 <div class="container pb-4">
     <div class="row">
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg" style='z-index:12313'>
             <div class="container">
                 <a class="navbar-brand" href="/home">Cultivating Profits</a>
 
@@ -25,16 +25,10 @@
                         <li class="nav-item">
                             <a id='home' class="nav-link" href="/manager/farms">{{__('messages.dashboard')}}</a>
                         </li>
-                        <li class="nav-item">
-                            <a id='services' class="nav-link" href="/services">{{__('messages.services')}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id='contact' class="nav-link" href="/contact" style="margin-right:35px;">{{__('messages.contact')}}</a>
-                        </li>
-                        <li><div onclick="translateToUrdu()" class="dropdown-item">Urdu</div></li>
-                        <li><div onclick="resetTranslation()" class="dropdown-item">English</div></li>
-                        <li><div onclick="translateToPashto()" class="dropdown-item">Pashto</div></li>
-                        <li><div onclick="translateToSindhi()" class="dropdown-item">Sindhi</div></li>
+                        <li class="nav-item"><a class="nav-link" onclick="translateToUrdu()" class="dropdown-item">Urdu</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="resetTranslation()" class="dropdown-item">English</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="translateToPashto()" class="dropdown-item">Pashto</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="translateToSindhi()" class="dropdown-item">Sindhi</a></li>
 
                     </ul>
                 </div>

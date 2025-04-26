@@ -8,6 +8,10 @@ var deraCount = 0;
 form = document.getElementById('map-form');
 deraDetailsinput = document.getElementById('deraDetails');
 
+if (cropMaps && cropMaps !== 'EMPTY') {
+    cropMapdata = JSON.parse(cropMaps);
+}
+
 function initializeMap(lat, lng) {
     map = L.map('map').setView([lat, lng], 13);
 
@@ -65,7 +69,7 @@ function initializeMap(lat, lng) {
                 allowIntersection: false,
                 showArea: true,
                 color: '#000',
-                maxPolygons: no_of_deras - deras.length // Limit number of polygons based on Deras
+                maxPolygons: no_of_deras - deras.length
             } : {
                 allowIntersection: false,
                 showArea: true,
@@ -94,15 +98,12 @@ function initializeMap(lat, lng) {
                     delete existingLabels[layer._leaflet_id];
                 }
                 usedIndices.splice(deraIndex, 1);
-
-                // Renumber the remaining deras
                 updateDeraLabels();
             }
         });
     });
 
     if (has_deras === 1) {
-        // Load existing deras from mapdata
         mapdata.forEach((data, index) => {
             var layer = L.polygon(data.coordinates, {
                 color: colors[index % colors.length]
@@ -127,17 +128,17 @@ function initializeMap(lat, lng) {
             usedIndices.push(index + 1);
         });
 
-        // Fit the map to the bounding boxes
         if (deras.length > 0) {
             var group = new L.featureGroup(deras);
             map.fitBounds(group.getBounds(), { padding: [20, 20] });
         }
     }
+
     document
-    .getElementById("draw-button")
-    .addEventListener("click", function () {
-        drawControl._toolbars.draw._modes.polygon.handler.enable();
-    });
+        .getElementById("draw-button")
+        .addEventListener("click", function () {
+            drawControl._toolbars.draw._modes.polygon.handler.enable();
+        });
 
     document.getElementById('save-button').addEventListener('click', function () {
         var deraData = deras.map(function (layer, index) {
@@ -149,19 +150,37 @@ function initializeMap(lat, lng) {
         deraDetailsinput.value = JSON.stringify(deraData);
         form.submit();
     });
+
+    // 🔹ADDED FOR CROPS
+    if (Array.isArray(cropMapdata)) {
+        cropMapdata.forEach(cropArray => {
+            cropArray.forEach(crop => {
+                const coords = crop.coordinates.map(c => [c.lat, c.lng]);
+                const polygon = L.polygon(coords, {
+                    color: '#FFB703',
+                    weight: 2,
+                    dashArray: '4',
+                    fillOpacity: 0.4
+                }).addTo(map);
+
+                const label = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'crop-label'
+                })
+                .setLatLng(polygon.getBounds().getCenter())
+                .setContent(crop.name || 'Crop')
+                .addTo(map);
+            });
+        });
+    }
 }
 
-// Helper function to update labels after deletion
 function updateDeraLabels() {
     deras.forEach((layer, index) => {
         var center = layer.getBounds().getCenter();
-        if (has_deras === 1) {
+        var deraName = has_deras === 1 ? 'Dera ' + (index + 1) : 'Farm';
 
-            var deraName = 'Dera ' + (index + 1);
-        }
-        else{
-            var deraName = 'Farm'
-        }
         if (existingLabels[layer._leaflet_id]) {
             existingLabels[layer._leaflet_id].setLatLng(center).setContent(deraName);
         } else {
@@ -170,9 +189,9 @@ function updateDeraLabels() {
                 direction: 'center',
                 className: 'label'
             })
-                .setLatLng(center)
-                .setContent(deraName)
-                .addTo(map);
+            .setLatLng(center)
+            .setContent(deraName)
+            .addTo(map);
 
             existingLabels[layer._leaflet_id] = label;
         }
@@ -191,19 +210,17 @@ function onPolygonChange(e) {
             drawnItems.addLayer(layer);
         }
 
-        // Check if the layer is already in the deras array
         var deraIndex = deras.findIndex(d => d._leaflet_id === layer._leaflet_id);
         if (deraIndex > -1) {
-            deras[deraIndex] = layer; // Update existing dera
+            deras[deraIndex] = layer;
         } else {
-            // Add new Dera
             if (has_deras === 1 && deras.length >= no_of_deras) {
                 alert('You cannot create more than ' + no_of_deras + ' Deras.');
                 drawnItems.removeLayer(layer);
                 return;
             }
             deras.push(layer);
-            usedIndices.push(deras.length); // Keep track of the dera index
+            usedIndices.push(deras.length);
 
             if (has_deras === 1) {
                 var deraName = 'Dera ' + usedIndices[deras.indexOf(layer)];
@@ -213,19 +230,18 @@ function onPolygonChange(e) {
                     direction: 'center',
                     className: 'label'
                 })
-                    .setLatLng(center)
-                    .setContent(deraName)
-                    .addTo(map);
+                .setLatLng(center)
+                .setContent(deraName)
+                .addTo(map);
 
                 existingLabels[layer._leaflet_id] = label;
             }
         }
 
+        var areaInAcres = L.GeometryUtil.geodesicArea(polygonCoordinates[0]) / 4046.86;
         if (has_deras === 1) {
-            var areaInAcres = L.GeometryUtil.geodesicArea(polygonCoordinates[0]) / 4046.86;
             console.log('Dera ' + (deraIndex + 1) + ' updated:', polygonCoordinates, 'Area: ' + areaInAcres.toFixed(2) + ' acres');
         } else {
-            var areaInAcres = L.GeometryUtil.geodesicArea(polygonCoordinates[0]) / 4046.86;
             console.log('Bounding Box updated:', polygonCoordinates, 'Area: ' + areaInAcres.toFixed(2) + ' acres');
         }
     }
@@ -236,7 +252,7 @@ function getCurrentLocationAndInitializeMap() {
         navigator.geolocation.getCurrentPosition(function (position) {
             initializeMap(position.coords.latitude, position.coords.longitude);
         }, function () {
-            initializeMap(40.7128, -74.0060); // Default location (New York City)
+            initializeMap(40.7128, -74.0060);
         });
     } else {
         initializeMap(40.7128, -74.0060);
@@ -244,3 +260,4 @@ function getCurrentLocationAndInitializeMap() {
 }
 
 getCurrentLocationAndInitializeMap();
+    

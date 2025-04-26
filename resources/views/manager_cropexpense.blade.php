@@ -140,7 +140,8 @@
                                                 <div class="labelcontainer" id="farmdera-container">
                                                     <label class='w-50' for="head">Dera</label>
                                                     <select class='form-select' id="dera" name="dera">
-                                                        <option value="">Select Dera</option>
+                                                        <option disabled selected value="">Select Dera</option>
+                                                        <option value="N/A">N/A</option>
                                                     </select>
                                                 </div>
                                             </div>

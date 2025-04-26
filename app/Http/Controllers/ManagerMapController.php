@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Map;
 use App\Models\Farm;
+use App\Models\CropMap;
 
 class ManagerMapController extends Controller
 {
@@ -22,8 +23,21 @@ class ManagerMapController extends Controller
             $map_info = $map_info->toArray();
             $map_info = $map_info[0]['coords'];
         }
+
+        $cropMaps = CropMap::where('farm_id', $farm_id)->get(); 
+        if($cropMaps->isEmpty()){
+            $cropMaps = 'EMPTY';
+        }
+        else{
+            // for all crops, get the coords in json format
+            $cropMaps = $cropMaps->toArray();
+            $cropMaps = array_map(function($cropMap) {
+                return json_decode($cropMap['coords'], true);
+            }, $cropMaps);
+            $cropMaps = json_encode($cropMaps);
+        }
         
-        return view('manager_maps',['map_info'=>$map_info, 'farm_id'=>$farm_id, 'has_deras'=>$has_deras, 'no_of_deras'=>$no_of_deras]);
+        return view('manager_maps',['map_info'=>$map_info, 'farm_id'=>$farm_id, 'has_deras'=>$has_deras, 'no_of_deras'=>$no_of_deras, 'cropMaps'=>$cropMaps]);
     }
 
     public function map_save(Request $request){

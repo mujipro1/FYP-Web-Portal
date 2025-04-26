@@ -1,3 +1,4 @@
+@extends('layouts.chatbot-layout')
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 
@@ -21,7 +22,7 @@
         <div id="navbar">
         @include('components.nav2')
         </div>
-        @yield('content')
+        
     </div>
 
     <div class='alertDiv fade justify-content-center align-items-center' id="alertDiv"></div>
