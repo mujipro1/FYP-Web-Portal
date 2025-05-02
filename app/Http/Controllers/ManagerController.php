@@ -8,6 +8,7 @@ use Session;
 
 use App\Models\Farm;
 use App\Models\User;
+use App\Models\Chatting;
 use App\Models\CropDera;
 use App\Models\Crop;
 use App\Models\Map;
@@ -125,7 +126,7 @@ Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_
         }
 
         if ($agent->isMobile()) {
-            return view('manager_farmDetailsMobile', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info]);
+            return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info, 'kleio_data' => $kleio_data, 'queryData' => $queryData]);
         } else {
             return view('manager_farmDetails', ['farm' => $farm, 'workers' => $users, 'map_info'=>$map_info, 'kleio_data' => $kleio_data, 'queryData' => $queryData]);
         }
@@ -144,7 +145,7 @@ Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_
             $crop_identifier = $cropData['name'] . " " . $cropData['year'];
             $cropData['name'] = str_replace(' ', '', $cropData['name']);
 
-            if ($cropData['name'] == 'Sugarcane') {
+            if ($cropData['name'] == 'TEST') {
                 $month = date('M', strtotime($cropData['sowingDate']));
                 $cropyear = substr($cropData['year'], -2);
                 $crop_identifier = "{$cropData['name']} $month $cropyear";
@@ -181,9 +182,6 @@ Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_
                 }
             }
             
-            
-            
-
             $crop = new Crop();
             $crop->name = $cropData['name'];
             $crop->year = $cropData['year'];
@@ -198,7 +196,7 @@ Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_
             $crop->active = $cropData['status'];
             $crop->description = $cropData['desc'];
 
-            if ($cropData['name'] == 'Sugarcane'){
+            if ($cropData['name'] == 'TEST'){
                 $crop->sugarcane_id = $sugarcane_id;
             }
 
@@ -691,7 +689,7 @@ Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_
             return redirect()->back()->with('error', 'Crop not found');
         }
 
-        if ($crop['name'] == 'Sugarcane') {
+        if ($crop['name'] == 'TEST') {
             $sugarcaneId = $crop->sugarcane_id ?? '';
             $sugarcaneIdParts = explode("-", $sugarcaneId);
             $prevCrop = $sugarcaneIdParts[0];
@@ -777,4 +775,103 @@ Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_
     public function lucifer($farm_id){
         return view('chatbotseperate', ['farm_id'=>$farm_id]);
     }
+
+    public function kisaanlink($farm_id){
+        $user_id = Farm::find($farm_id)->user_id;
+        
+        // Get all unique users this manager has chatted with
+        $chatUsers = Chatting::where('from', $user_id)
+            ->orWhere('to', $user_id)
+            ->get(['from', 'to'])
+            ->map(function ($chat) use ($user_id) {
+                return $chat->from == $user_id ? $chat->to : $chat->from;
+            })
+            ->unique()
+            ->values();
+    
+        // Get user details for all chat participants
+        $userDetails = User::whereIn('id', $chatUsers)->get()
+            ->mapWithKeys(function ($user) {
+                return [$user->id => [
+                    'name' => $user->name,
+                    'email' => $user->email
+                ]];
+            });
+    
+        // Get all chats with user details
+        $chats = Chatting::where('from', $user_id)
+            ->orWhere('to', $user_id)
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ->map(function ($chat) use ($user_id, $userDetails) {
+                $isFromCurrentUser = $chat->from == $user_id;
+                $otherUserId = $isFromCurrentUser ? $chat->to : $chat->from;
+                
+                return [
+                    'message' => $chat->message,
+                    'created_at' => $chat->created_at,
+                    'from' => $isFromCurrentUser ? 1 : 0,
+                    'user_id' => $otherUserId,
+                    'user_name' => $userDetails[$otherUserId]['name'] ?? 'Unknown',
+                    'user_email' => $userDetails[$otherUserId]['email'] ?? ''
+                ];
+            });
+    
+        // Group chats by user for the sidebar
+        $chatsByUser = $chats->groupBy('user_id')->map(function ($userChats) {
+            return [
+                'user_name' => $userChats->first()['user_name'],
+                'user_email' => $userChats->first()['user_email'],
+                'last_message' => $userChats->last()['message'],
+                'last_time' => $userChats->last()['created_at']
+            ];
+        });
+
+        $allUsers = User::get();
+    
+        return view('manager_kisaanlink', [
+            'farm_id' => $farm_id, 
+            'chats' => $chats->toJson(),
+            'chatsByUser' => $chatsByUser->toJson()
+            , 'allUsers' => $allUsers->toJson()
+            ,'loggedInUser' => $user_id
+        ]);
+    }
+
+    public function sendMessage(Request $req){
+        $farm_id = $req->input('from');
+
+        $from = Farm::find($farm_id)->user_id;
+        $message = $req->input('message');
+        $to = $req->input('to');
+
+        $chat = new Chatting();
+        $chat->from = $from;
+        $chat->to = $to;
+        $chat->message = $message;
+        $chat->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function getMessage($id)
+    {
+        $user_id = Farm::find($id)->user_id;
+        // Get the user details
+        $user = User::find($user_id);
+
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    
+        // Get all chat messages where user is sender or receiver
+        $chats = Chatting::where('from', $user_id)
+            ->orWhere('to', $user_id)
+            ->orderBy('created_at', 'asc')
+            ->get();
+    
+        return response()->json($chats);
+    }
+    
 }

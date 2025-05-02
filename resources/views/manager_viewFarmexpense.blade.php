@@ -181,7 +181,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($expenses as $expense)
-                                                <tr>
+                                                <tr data-expense="{{$expense->id}}">
                                                     <td><input type="checkbox" name="expense_id[]" value="{{$expense->id}}"></td>
                                                     <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{\Carbon\Carbon::parse($expense->date)->format('d M Y')}}</td>
                                                     <td onclick="handleExpenseRowClick({{$expense->id}})" data-expense="{{$expense->id}}" style='cursor:pointer;'>{{$expense->expense_type}}</td>

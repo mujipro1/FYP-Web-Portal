@@ -117,7 +117,7 @@
                                             style="backgroundColor:#f4f4f4;cursor:pointer;">
                                                 <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}" class="selected-crop-image" />
                                                 <h5 class="m-2 mt-3">{{$crop['identifier']}}</h5>
-                                                <p class="mx-2  fsmall light pt-1">{{$crop['variety'] ? $crop['variety'] : 'No Variety Found' }}</p>
+                                                <p class="mx-2  fsmall light pt-1">{{$crop->acres}} Acres - {{$crop['variety'] ? $crop['variety'] : 'No Variety Found' }}</p>
                                             </div>
                                         </div>
                                         @endforeach

@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -16,7 +16,7 @@
     <script src="{{ asset('js/alert.js') }}"></script>
 
     <script>
-        farm_id = @json($farm_id);
+    farm_id = @json($farm_id);
     </script>
 </head>
 
@@ -31,45 +31,67 @@
         </div>
 
         <div class='alertDiv fade justify-content-center align-items-center' id="alertDiv"></div>
-        
+
         @if(Session::get('success') || Session::get('error'))
-            @if(Session::get('success'))
-                <script>
-                    showAlert("{{ Session::get('success') }}", 'success', 9000);
-                    </script>
-                @php
-                Session::forget('success');
-                @endphp
-                @endif
-                
-                @if(Session::get('error'))
-                <script>
-                    showAlert("{{ Session::get('error') }}", 'error', 9000);
-            </script>
-                @php
-                    Session::forget('error');
-                @endphp
-            @endif
+        @if(Session::get('success'))
+        <script>
+        showAlert("{{ Session::get('success') }}", 'success', 9000);
+        </script>
+        @php
+        Session::forget('success');
+        @endphp
+        @endif
+
+        @if(Session::get('error'))
+        <script>
+        showAlert("{{ Session::get('error') }}", 'error', 9000);
+        </script>
+        @php
+        Session::forget('error');
+        @endphp
+        @endif
         @endif
 
         <div class="container-fluid">
-        <div class="row">
+            <div class="row">
                 <div class="mt-3 sidebarcol">
                     <div class="ManagerSidebar sidebar"></div>
                 </div>
                 <div class="overlay" id="overlay"></div>
-                    <div class="col-md-10 offset-md-1 ">
+                <div class="col-md-10 offset-md-1 ">
 
 
                     <div class="d-flex justify-content-between align-items-center my-3">
                         <a href="{{ route('manager.configuration', ['farm_id' => $farm_id]) }}" class="back-button">
-                            <svg xmlns="http://www.w3.org/2000/svg"  class='svg' viewBox="0 0 24 24" width="512" height="512">
+                            <svg xmlns="http://www.w3.org/2000/svg" class='svg' viewBox="0 0 24 24" width="512"
+                                height="512">
                                 <path
                                     d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
                             </svg>
                         </a>
                         <h3 class="flex-grow-1 text-center mb-0">Edit Crops</h3>
                         <div style='visibility:hidden;' class="invisible"></div>
+                    </div>
+
+                    <div class="row mx-4">
+                        <div class="col-md-5">
+                            <div class="d-flex justify-content-start">
+                                <label class="w-50">Select Crop</label>
+                                <select class="form-select" onchange="handleSelectCrop(this)">
+                                    <option selected disabled>Select Crop</option>
+                                    @foreach($crops as $crop)
+                                    <option data-crop-id="{{ $crop->id }}" data-crop-name="{{ $crop->name }}"
+                                        data-crop-acres="{{ $crop->acres }}" data-crop-deras='@json($crop->deras)'
+                                        data-crop-status='{{ $crop->active }}'
+                                        data-crop-identifier="{{ $crop->identifier }}">{{$crop->identifier}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <p class="text-secondary my-3">or choose from carousal</p>
                     </div>
 
 
@@ -107,10 +129,10 @@
                                                             data-crop-name="{{ $crop->name }}"
                                                             data-crop-acres="{{ $crop->acres }}"
                                                             data-crop-deras='@json($crop->deras)'
-                                                            data-crop-status = '{{ $crop->active }}'
-                                                            data-crop-identifier="{{ $crop->identifier }}">Select
+                                                            data-crop-status='{{ $crop->active }}'
+                                                            data-crop-identifier="{{ $crop->identifier }}"
+                                                            data-identifier="{{ $crop->identifier }}">Select
                                                             Crop</button>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -148,7 +170,8 @@
                                     <div class="labelcontainer2 mb-2">
                                         <label class='w-25' for="acres">Total Acres</label>
                                         <label id="acresLabel"></label>
-                                        <input hidden type="number" step='any' id="acres" name="acres" class="form-control">
+                                        <input hidden type="number" step='any' id="acres" name="acres"
+                                            class="form-control">
                                     </div>
                                     <div class="labelcontainer">
                                         <label class='w-75' for="deras">Deras</label>
@@ -160,15 +183,16 @@
 
                                     <div class="labelcontainer">
                                         <label class='w-75' for="deraAcres">Dera Acres</label>
-                                        <input type="number" step='any' id="deraAcres" name="deraAcres" class="form-control">
+                                        <input type="number" step='any' id="deraAcres" name="deraAcres"
+                                            class="form-control">
                                     </div>
                                     <div class=" mt-4 d-flex">
-                                            <label class="w-75" for="status">Change Status</label>
-                                            <select class="form-select" name="status" id="status">
-                                                <option value="">Select Status</option>
-                                            </select>
-                                        </div>
-                                     
+                                        <label class="w-75" for="status">Change Status</label>
+                                        <select class="form-select" name="status" id="status">
+                                            <option value="">Select Status</option>
+                                        </select>
+                                    </div>
+
                                     <input type="hidden" id="selectedCropId" name="selectedCropId" value="">
                                 </div>
 
@@ -180,7 +204,8 @@
                                         <div class="text-center">
                                             Remove Crop From Dera
                                             <hr class="hr2">
-                                            <button id="removeBtn" type='button' class="btn my-3 btn-danger">Remove </button>
+                                            <button id="removeBtn" type='button' class="btn my-3 btn-danger">Remove
+                                            </button>
                                             <input hidden type="text" name="remove" id='remove' value="0">
                                             <p id='removeCropP' class='fsmall'>Click to remove crop from dera</p>
                                         </div>
@@ -190,7 +215,7 @@
                             </div>
 
                             <div class="text-center my-3">
-                                <button  type='button' id='saveBtn' class="btn btn-primary">Save Changes</button>
+                                <button type='button' id='saveBtn' class="btn btn-primary">Save Changes</button>
                             </div>
                         </form>
                     </div>
@@ -215,44 +240,85 @@
 let selectedCropId = null;
 let cropDeras = []; // To hold the Deras information for the selected crop
 
-function handleSelectCrop(button) {
+function handleSelectCrop(element) {
+    // For select dropdown, we need to get the selected option
+    let selectedOption;
+    if (element.tagName === 'SELECT') {
+        selectedOption = element.options[element.selectedIndex];
+    } else {
+        // For buttons, use the element directly
+        selectedOption = element;
+    }
 
-
-    if (JSON.parse(button.getAttribute('data-crop-deras')).length <= 1) {
+    if (JSON.parse(selectedOption.getAttribute('data-crop-deras')).length <= 1) {
         document.getElementById('removeBtn').disabled = true;
     } else {
         document.getElementById('removeBtn').disabled = false;
     }
 
+    const cropId = selectedOption.getAttribute('data-crop-id');
+    const cropName = selectedOption.getAttribute('data-crop-name');
+    const cropIdentifier = selectedOption.getAttribute('data-crop-identifier');
+    const cropAcres = selectedOption.getAttribute('data-crop-acres');
+    const cropStatus = selectedOption.getAttribute('data-crop-status');
+    cropDeras = JSON.parse(selectedOption.getAttribute('data-crop-deras'));
 
-    const cropId = button.getAttribute('data-crop-id');
-    const cropName = button.getAttribute('data-crop-name');
-    const cropIdentifier = button.getAttribute('data-crop-identifier');
-    const cropAcres = button.getAttribute('data-crop-acres');
-    const cropStatus = button.getAttribute('data-crop-status');
-    cropDeras = JSON.parse(button.getAttribute('data-crop-deras'));
+    // For buttons, handle the card selection styling
+    if (element.tagName === 'BUTTON') {
+        const cards = document.querySelectorAll('.mycard');
+        const buttons = document.querySelectorAll('.mycard button');
 
-    const cards = document.querySelectorAll('.mycard');
-    const buttons = document.querySelectorAll('.mycard button');
+        cards.forEach(card => card.classList.remove('mycard-selected'));
+        buttons.forEach(btn => {
+            btn.textContent = 'Select Crop';
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-primary');
+        });
 
-    cards.forEach(card => card.classList.remove('mycard-selected'));
-    buttons.forEach(btn => {
-        btn.textContent = 'Select Crop';
-        btn.classList.remove('btn-danger');
-        btn.classList.add('btn-primary');
-    });
+        if (selectedCropId === cropId) {
+            selectedCropId = null;
+            clearFormFields();
+            return;
+        }
 
-    if (selectedCropId === cropId) {
-        selectedCropId = null;
-        clearFormFields();
-        return;
+        const selectedCard = element.closest('.mycard');
+        selectedCard.classList.add('mycard-selected');
+        element.textContent = 'Deselect Crop';
+        element.classList.remove('btn-primary');
+        element.classList.add('btn-danger');
+        
+        // Update dropdown to match the selected carousel item
+        const dropdown = document.querySelector('.form-select');
+        for (let i = 0; i < dropdown.options.length; i++) {
+            if (dropdown.options[i].getAttribute('data-crop-identifier') === cropIdentifier) {
+                dropdown.selectedIndex = i;
+                break;
+            }
+        }
+    } else if (element.tagName === 'SELECT') {
+        // If selection came from dropdown, find and select corresponding carousel item
+        const buttons = document.querySelectorAll('.mycard button');
+        const cards = document.querySelectorAll('.mycard');
+        
+        // First, clear all selections
+        cards.forEach(card => card.classList.remove('mycard-selected'));
+        buttons.forEach(btn => {
+            btn.textContent = 'Select Crop';
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-primary');
+        });
+        
+        // Then find and select the matching carousel item
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-crop-identifier') === cropIdentifier) {
+                const selectedCard = btn.closest('.mycard');
+                selectedCard.classList.add('mycard-selected');
+                btn.textContent = 'Deselect Crop';
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-danger');
+            }
+        });
     }
-
-    const selectedCard = button.closest('.mycard');
-    selectedCard.classList.add('mycard-selected');
-    button.textContent = 'Deselect Crop';
-    button.classList.remove('btn-primary');
-    button.classList.add('btn-danger');
 
     selectedCropId = cropId;
     document.getElementById('selectedCropId').value = selectedCropId;
@@ -264,10 +330,9 @@ function handleSelectCrop(button) {
     document.getElementById('cropnameLabel').textContent = cropIdentifier;
     document.getElementById('acresLabel').textContent = cropAcres;
 
-
     // Populate Deras select box
     const derasSelect = document.getElementById('deras');
-    derasSelect.innerHTML = '<option value="">Select a dera</option>'; // Clear existing options
+    derasSelect.innerHTML = '<option value="">Select a dera</option>';
     cropDeras.forEach(dera => {
         const option = document.createElement('option');
         option.value = dera.id;
@@ -291,7 +356,6 @@ function handleSelectCrop(button) {
     } else {
         statusSelect.value = '0';
     }
-
 }
 
 function clearFormFields() {
@@ -367,7 +431,7 @@ document.getElementById('saveBtn').addEventListener('click', function() {
     //     alert('Please enter dera acres');
     //     return;
     // }
-    else{
+    else {
         document.getElementById('editCropForm').submit();
     }
 });
@@ -375,9 +439,6 @@ document.getElementById('saveBtn').addEventListener('click', function() {
 
 document.getElementById('deras').addEventListener('change', handleDeraChange);
 document.getElementById('removeBtn').addEventListener('click', handleRemoveFromDera);
-
-
-
 </script>
 
 

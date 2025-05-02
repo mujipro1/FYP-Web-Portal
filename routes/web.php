@@ -91,6 +91,10 @@ Route::middleware('is_manager')->group(function () {
     Route::get('/manager/smartspend/{farm_id}', 'App\Http\Controllers\ManagerExpenseController@costsaver')->name("manager.costsaver");
     Route::post('/manager/cost-saver', 'App\Http\Controllers\ManagerExpenseController@costsaverPost')->name("manager.costsaverPost");
 
+    Route::get('/manager/kisaanlink/{farm_id}', 'App\Http\Controllers\ManagerController@kisaanlink')->name("manager.kisaanlink");
+    Route::post('/kisaan-link/send-message', 'App\Http\Controllers\ManagerController@sendMessage');
+    Route::get('/kisaan-link/get-message/{id}', 'App\Http\Controllers\ManagerController@getMessage');
+
     // sales
 
     Route::get('/fetch-sugarcane/{farm_id}', 'App\Http\Controllers\ManagerController@fetch_sugarcane')->name('fetch_sugarcane');

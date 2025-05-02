@@ -499,9 +499,9 @@ public function costsaver($farm_id){
             return redirect()->back()->with('error', 'Please select a crop and Expense Type.');
         }
 
-        $selectedCrop = $req->input('crop');
+        list($cropId, $selectedCrop) = explode('|', $req->input('crop'));
         $selectedExpense = $req->input('cost-saver-expense');
-        $selectedSubtype = $req->input('cost-saver-subtype'); // might be null
+        $selectedSubtype = $req->input('cost-saver-subtype');
     
         // Step 2: Read CSV file
         try {
@@ -531,7 +531,73 @@ public function costsaver($farm_id){
                 $filtered[] = $rowData;
             }
         }
-    
+
+        $yearly_historic_average = 0;
+        foreach ($filtered as $row) {
+            $yearly_historic_average += $row['total_yearly'];
+        }
+        $yearly_historic_average /= count($filtered);
+        $yearly_historic_average = round($yearly_historic_average, 2);
+
+        $monthly_historic_average = 0;
+        foreach ($filtered as $row) {
+            $monthly_historic_average += $row['total_monthly'];
+        }
+        $monthly_historic_average /= count($filtered);
+        $monthly_historic_average = round($monthly_historic_average, 2);
+
+
+
+        $crop = Crop::find($cropId);
+
+        if ($selectedSubtype) {
+            $expense = Expense::where('crop_id', $cropId)
+                ->where('expense_subtype', $selectedSubtype)
+                ->where('expense_type', $selectedExpense)
+                ->whereMonth('date', date('m'))
+                ->whereYear('date', date('Y'))
+                ->get();
+        } else {
+            $expense = Expense::where('crop_id', $cropId)
+                ->where('expense_type', $selectedExpense)
+                ->whereMonth('date', date('m'))
+                ->whereYear('date', date('Y'))
+                ->get();
+        }
+        if (!$expense) {
+            $totalExpenseMonthly = 0;
+        }
+        else{
+            $totalExpenseMonthly = 0;
+            foreach ($expense as $exp) {
+                $totalExpenseMonthly += $exp->total;
+            }
+        }
+
+        $totalExpenseYearly = 0;
+        
+        if ($selectedSubtype) {
+            $expense = Expense::where('crop_id', $cropId)
+                ->where('expense_subtype', $selectedSubtype)
+                ->where('expense_type', $selectedExpense)
+                ->whereYear('date', date('Y'))
+                ->get();
+        } else {
+            $expense = Expense::where('crop_id', $cropId)
+                ->where('expense_type', $selectedExpense)
+                ->whereYear('date', date('Y'))
+                ->get();
+        }
+
+        if ($expense) {
+            foreach ($expense as $exp) {
+                $totalExpenseYearly += $exp->total;
+            }
+        }
+        else{
+            $totalExpenseYearly = 0;
+        }
+
         // Step 3: Handle result
         if (empty($filtered)) {
             return redirect()->back()->with('error', 'No matching data found for the current month.');
@@ -549,6 +615,10 @@ public function costsaver($farm_id){
             'selectedSubtype' => $selectedSubtype,
             'farm_id' => $req->input('farm_id'),
             'crops' => $crops,
+            'totalExpenseMonthly' => $totalExpenseMonthly,
+            'totalExpenseYearly' => $totalExpenseYearly,
+            'yearly_historic_average' => $yearly_historic_average,
+            'monthly_historic_average' => $monthly_historic_average,
         ]);
 }
 

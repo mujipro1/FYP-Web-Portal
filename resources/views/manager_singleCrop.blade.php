@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -23,26 +23,26 @@
 <body>
     <div class="c1">
 
-    <div class='alertDiv fade justify-content-center align-items-center' id="alertDiv"></div>
-        
+        <div class='alertDiv fade justify-content-center align-items-center' id="alertDiv"></div>
+
         @if(Session::get('success') || Session::get('error'))
-            @if(Session::get('success'))
-                <script>
-                    showAlert("{{ Session::get('success') }}", 'success', 9000);
-                    </script>
-                @php
-                Session::forget('success');
-                @endphp
-                @endif
-                
-                @if(Session::get('error'))
-                <script>
-                    showAlert("{{ Session::get('error') }}", 'error', 9000);
-            </script>
-                @php
-                    Session::forget('error');
-                @endphp
-            @endif
+        @if(Session::get('success'))
+        <script>
+        showAlert("{{ Session::get('success') }}", 'success', 9000);
+        </script>
+        @php
+        Session::forget('success');
+        @endphp
+        @endif
+
+        @if(Session::get('error'))
+        <script>
+        showAlert("{{ Session::get('error') }}", 'error', 9000);
+        </script>
+        @php
+        Session::forget('error');
+        @endphp
+        @endif
         @endif
 
         <div class="container mb-4">
@@ -63,19 +63,20 @@
 
                     <div class="d-flex  justify-content-between align-items-center my-4">
                         <form action="{{route('manager.analytics')}}" method='post' id='analytics-form'>
-                        @csrf
-                        <button type='button' class="btn back-button"  onclick='handleAnalytics()'>
-                            <svg xmlns="http://www.w3.org/2000/svg" class='svg' viewBox="0 0 24 24" width="512"
-                                height="512">
-                                <path
-                                    d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
-                            </svg>
-                        </button>
+                            @csrf
+                            <button type='button' class="btn back-button" onclick='handleAnalytics()'>
+                                <svg xmlns="http://www.w3.org/2000/svg" class='svg' viewBox="0 0 24 24" width="512"
+                                    height="512">
+                                    <path
+                                        d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z" />
+                                </svg>
+                            </button>
                         </form>
                         @if ($id == 0)
                         <h3 class="flex-grow-1 text-center mb-0">Crop Analytics</h3>
                         @else
-                        <h3 class="flex-grow-1 text-center mb-0">Crop Analytics <span class="light">|</span> {{$crop->identifier}}</h3>
+                        <h3 class="flex-grow-1 text-center mb-0">Crop Analytics <span class="light">|</span>
+                            {{$crop->identifier}}</h3>
                         @endif
                         <div style='visibility:hidden;' class="invisible"></div>
                     </div>
@@ -90,12 +91,15 @@
                                 <div class="labelcontainer">
                                     <label class='w-50' for="crop">Select Crop</label>
                                     <select class="form-select" id="crop" name="crop">
-                                    <option value="">Select a crop</option>
-                                        @foreach($crops as $cropx)
-                                        <option value="{{ $cropx->id }}">{{ $cropx->identifier }}</option>
+                                        <option value="">Select a crop</option>
+                                        @foreach($crops->sortByDesc('year') as $cropx)
+                                        <option value="{{ $cropx->id }}">
+                                            {{ $cropx->identifier }}{{ $cropx->variety ? ' (' . $cropx->variety . ')' : '' }}
+                                        </option>
                                         @endforeach
+
                                     </select>
-                                    <button disabled  class="btn specialSubmitButton mx-4" type='submit'>
+                                    <button disabled class="btn specialSubmitButton mx-4" type='submit'>
                                         <svg xmlns="http://www.w3.org/2000/svg" class='svg'
                                             xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px"
                                             y="0px" viewBox="0 0 513.749 513.749"
@@ -125,7 +129,8 @@
                         <div class="col-md-5">
                             <div class="popular-cropz d-flex justify-content-start p-2">
                                 <div>
-                                    <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}" class='anal-img img-fluid'/>
+                                    <img src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}"
+                                        class='anal-img img-fluid' />
                                 </div>
                                 <div class="">
                                     <h5 class="text-start text-success">PKR {{$totalExpenses}}/-</h5>
@@ -136,12 +141,16 @@
                     </div>
 
                     <div class="my-4 text-center">
-                        <button class="btn btn-orange2 or-width csv-export" onclick=" window.location.href = '/export-csv/{{$crop->id}}'">Export Data
-                            <svg xmlns="http://www.w3.org/2000/svg" id="svg1" data-name="Layer 1" viewBox="0 0 24 24" ><path d="M24,24H0v-2H24v2Zm-9.86-4.89l9.82-10.11h-6.95V0H7V9H.07l9.8,10.11h0c.57,.58,1.32,.89,2.12,.89h0c.8,0,1.56-.31,2.13-.89Z"/></svg>
+                        <button class="btn btn-orange2 or-width csv-export"
+                            onclick=" window.location.href = '/export-csv/{{$crop->id}}'">Export Data
+                            <svg xmlns="http://www.w3.org/2000/svg" id="svg1" data-name="Layer 1" viewBox="0 0 24 24">
+                                <path
+                                    d="M24,24H0v-2H24v2Zm-9.86-4.89l9.82-10.11h-6.95V0H7V9H.07l9.8,10.11h0c.57,.58,1.32,.89,2.12,.89h0c.8,0,1.56-.31,2.13-.89Z" />
+                            </svg>
                         </button>
                     </div>
 
-                       
+
                     <div class="row mt-5">
                         <div class="col-md-6">
                             <div class="box-cont">
@@ -155,10 +164,10 @@
                         </div>
                     </div>
 
-                    
+
                     @if ($quantityChart != 'empty')
                     <hr class="my-4">
-                        
+
                     <div class="col-md-12">
                         <div class="box-cont">
                             {!! $quantityChart->container() !!}
@@ -175,7 +184,8 @@
                             <div class="box-cont">
                                 <div class="d-flex justify-content-center">
                                     <h5 class="w-75">{{ $expenseType }} Expenses</h5>
-                                    <select class="form-select w-25 chart-toggle" data-expense-type="{{ $expenseType }}">
+                                    <select class="form-select w-25 chart-toggle"
+                                        data-expense-type="{{ $expenseType }}">
                                         <option value="Amounts">Amounts</option>
                                         <option value="Quantity">Quantity</option>
                                     </select>
@@ -183,7 +193,8 @@
                                 <div class="chart-container" id="amountChart-{{ $expenseType }}">
                                     {!! $chartx['amountChart']->container() !!}
                                 </div>
-                                <div class="chart-container" id="quantityChart-{{ $expenseType }}" style="display: none;">
+                                <div class="chart-container" id="quantityChart-{{ $expenseType }}"
+                                    style="display: none;">
                                     {!! $chartx['qChart']->container() !!}
                                 </div>
                             </div>
@@ -222,7 +233,7 @@
 {!! $chartx['qChart']->script() !!}
 @endforeach
 @if ($quantityChart != 'empty')
-    {!! $quantityChart->script() !!}
+{!! $quantityChart->script() !!}
 @endif
 @endif
 
@@ -266,8 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-
 </script>
 
 </html>

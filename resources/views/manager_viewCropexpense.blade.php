@@ -211,7 +211,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($expenses as $expense)
-                                                    <tr>
+                                                    <tr data-expense="{{$expense->id}}">
                                                         <td><input type="checkbox" name="expense_id[]"
                                                                 value="{{$expense->id}}"></td>
                                                         <td onclick="handleExpenseRowClick({{$expense->id}})"
@@ -331,6 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const isCropMatch = cropId ? expense.crop_id == cropId : true;
             const isExpenseTypeMatch = expenseType ? expense.expense_type == expenseType : true;
             const isDateMatch = date ? expense.date == date : true;
+
 
             // Check if all selected filters match
             if (isCropMatch && isExpenseTypeMatch && isDateMatch) {

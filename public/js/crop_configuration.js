@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
         page2.classList.remove("d-none");
 
         if (currentCrop === null) return;
-        if (currentCrop.name == 'Sugarcane'){
+        if (currentCrop.name == 'TEST'){
             
             async function getSugarcaneData() {
                 try {
@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sameSeed = null;
         sugarcanePreviousCrop = null;
-        if (currentCrop.name == 'Sugarcane'){
+        if (currentCrop.name == 'TEST'){
             sameSeed = document.getElementById('sameSeed').checked ? 1 : 0;
             sugarcanePreviousCrop = document.getElementById('sugarcanePreviousCrop').value;
         }

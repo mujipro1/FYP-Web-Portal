@@ -145,7 +145,7 @@
 
                                 <hr class="my-4 w-75">
 
-                                @if($crop['name'] == 'Sugarcane')
+                                @if($crop['name'] == 'TEST')
                                     @if ($all_versions == [])
                                     <p class='light my-3' >No Previous Versions of {{$crop['identifier']}}</p>
                                     @else
@@ -206,7 +206,7 @@
                                 <div class="light text-center"><h3>No map data available for this crop.</h2></div>
                             </div>
                             @else
-                            <div class="row">
+                            <div class="row mt-5">
                                 <div class="box-cont">
                                     <p class="light">Visualization of {{$crop['identifier']}} on map.</p>
                                         <div id='map' style='height:60vh'></div>

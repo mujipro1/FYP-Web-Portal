@@ -95,11 +95,10 @@
                                     <label class='w-50' for="crop1">Select Crop</label>
                                     <select class="form-select" id="crop1" name="crop1" required>
                                     <option value=" ">Select a crop</option>
-                                        @foreach($crops as $crop)
-                                        <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }}</option>
+                                    @foreach($crops->sortByDesc('year') as $crop)
+                                        <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }} {{ $crop->variety ? ' (' . $crop->variety . ')' : '' }}</option>
                                         @endforeach
                                     </select>
-                                    
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -108,8 +107,8 @@
                                     <label class='w-50' for="crop2">Select Crop</label>
                                     <select class="form-select" id="crop2" name="crop2" required>
                                     <option value=" ">Select a crop</option>
-                                        @foreach($crops as $crop)
-                                        <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }}</option>
+                                        @foreach($crops->sortByDesc('year') as $crop)
+                                        <option data-name='{{$crop->name}}' value="{{ $crop->id }}">{{ $crop->identifier }} {{ $crop->variety ? ' (' . $crop->variety . ')' : '' }}</option>
                                         @endforeach
                                     </select>
                                     <button disabled type='submit' id='submit' class='btn mx-3 specialSubmitButton' >
