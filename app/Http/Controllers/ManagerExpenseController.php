@@ -624,7 +624,7 @@ public function costsaver($farm_id){
 
     public function download_expenses($farm_id){
 
-        $crops = Crop::all();
+        $crops = Crop::orderBy('year', 'desc')->get();
         return view("manager_downloadExpenses", ['farm_id'=>$farm_id, 'crops'=>$crops, 'data'=>[]]);
     }
 
@@ -731,7 +731,7 @@ public function costsaver($farm_id){
     
         return view("manager_downloadExpenses", [
             'farm_id' => $farmId,
-            'crops' => Crop::all(),
+            'crops' => Crop::orderBy('year', 'desc')->get(),
             'data' => $combined,
         ]);
     }

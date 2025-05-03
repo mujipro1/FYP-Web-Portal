@@ -98,14 +98,17 @@
                         </div>
 
                         <h4 class="my-3 mt-5">Crops</h4>
-                        <div id="cropCheckboxes">
-                            @foreach($crops as $crop)
-                            <div class="crop-checkbox my-2" data-year="{{$crop->year}}" data-status="{{ $crop->active }}">
-                            <input class="form-check-input" type="checkbox" name="crops[]" value="{{ $crop->id }}" id="crop_{{ $crop->id }}" />
-                                <label for="crop_{{ $crop->id }}">{{ $crop->identifier }}</label>
+                            <div id="cropCheckboxes" class="row">
+                                @foreach($crops as $crop)
+                                <div class="col-md-3 col-sm-6 my-2">
+                                    <div class="crop-checkbox" data-year="{{ $crop->year }}" data-status="{{ $crop->active }}">
+                                        <input class="form-check-input" type="checkbox" name="crops[]" value="{{ $crop->id }}" id="crop_{{ $crop->id }}" />
+                                        <label for="crop_{{ $crop->id }}">{{ $crop->identifier }}</label>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
+
 
                         <div class="d-flex justify-content-center">
                             <p class="my-2 text-secondary">Data Export Options</p>
