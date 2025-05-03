@@ -334,12 +334,17 @@ Expense Type: ' . $expense->expense_type . ', Total Amount: ' . $expense->total_
         }
 
         $crop->active = $status;
+        if($request->has('cropAcresTotal')){
+            $crop->acres = $request->input('cropAcresTotal');
+        }
         $crop->save();
 
         $dera_id = $request->input('deras');
         if ($dera_id == NULL){
             return redirect()->back()->with('success', 'Crop updated successfully');
         }
+
+ 
         // cropdera table
         $cropDera = CropDera::where('crop_id', $crop->id)->where('dera_id', $dera_id)->first();
 

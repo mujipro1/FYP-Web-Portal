@@ -116,6 +116,9 @@ Route::middleware('is_manager_and_expense_farmer')->group(function () {
     Route::post('/manager/saveEditExpenses', 'App\Http\Controllers\ManagerExpenseController@saveEditExpenses')->name('manager.saveEditExpenses');
     Route::post('/manager/deleteExpense', 'App\Http\Controllers\ManagerExpenseController@deleteExpense')->name('manager.deleteExpense');
     
+    Route::get('/manager/download_expenses/{farm_id}', 'App\Http\Controllers\ManagerExpenseController@download_expenses')->name('manager.download_expenses');
+    Route::post('/download-expenses', 'App\Http\Controllers\ManagerExpenseController@downloadExpenses')->name('download.expenses');
+
     Route::get('/manager/lucifer/{farm_id}', 'App\Http\Controllers\ManagerController@lucifer')->name('lucifer');
 });
 

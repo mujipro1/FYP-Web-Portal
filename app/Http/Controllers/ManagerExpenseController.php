@@ -622,4 +622,118 @@ public function costsaver($farm_id){
         ]);
 }
 
+    public function download_expenses($farm_id){
+
+        $crops = Crop::all();
+        return view("manager_downloadExpenses", ['farm_id'=>$farm_id, 'crops'=>$crops, 'data'=>[]]);
+    }
+
+    public function downloadExpenses(Request $request)
+    {
+        $validated = $request->validate([
+            'farm_id' => 'required|integer',
+            'crops' => 'nullable|array',
+            'status' => 'nullable|string',
+            'year' => 'nullable|string',
+            'include_farm_expenses' => 'nullable',
+            'expense_type' => 'nullable|string',         // crop expense type
+            'farm_expense_type' => 'nullable|string',    // farm expense type
+            'from_date' => 'nullable|date',
+            'to_date' => 'nullable|date',
+        ]);
+    
+        $farmId = $validated['farm_id'];
+    
+        // Get crop IDs for the farm
+        $cropIds = Crop::where('farm_id', $farmId)->pluck('id');
+    
+        // Crop expenses
+        $cropQuery = Expense::with('crop')->whereIn('crop_id', $cropIds);
+    
+        if (!empty($validated['crops'])) {
+            $cropQuery->whereIn('crop_id', $validated['crops']);
+        }
+    
+        if (!empty($validated['status'])) {
+            $cropQuery->where('active', $validated['status'] === 'active' ? 1 : 0);
+        }
+    
+        if (!empty($validated['year'])) {
+            $cropQuery->where('year', $validated['year']);
+        }
+    
+        if (!empty($validated['expense_type']) && $validated['expense_type'] !== 'all') {
+            $cropQuery->where('expense_type', $validated['expense_type']);
+        }
+    
+        if (!empty($validated['from_date'])) {
+            $cropQuery->where('date', '>=', $validated['from_date']);
+        }
+    
+        if (!empty($validated['to_date'])) {
+            $cropQuery->where('date', '<=', $validated['to_date']);
+        }
+    
+        $cropExpenses = $cropQuery->get()->map(function ($item) {
+            return [
+                'type' => 'crop',
+                'id' => $item->id,
+                'crop_identifier' => optional($item->crop)->identifier,
+                'expense_type' => $item->expense_type,
+                'expense_subtype' => $item->expense_subtype,
+                'total' => $item->total,
+                'date' => $item->date,
+                'status' => optional($item->crop)->active == 1 ? 'Active Crop' : 'Passive Crop',
+                'details' => $item->details ?? '',
+            ];
+        });
+    
+        // Farm expenses
+        $farmExpenses = collect();
+        if (!empty($validated['include_farm_expenses']) && $validated['include_farm_expenses'] === 'on') {
+            $farmQuery = FarmExpense::where('farm_id', $farmId);
+    
+            if (!empty($validated['status'])) {
+                $farmQuery->where('status', $validated['status'] === 'active' ? 1 : 0);
+            }
+    
+            if (!empty($validated['farm_expense_type']) && $validated['farm_expense_type'] !== 'all') {
+                $farmQuery->where('expense_type', $validated['farm_expense_type']);
+            }
+    
+            if (!empty($validated['year'])) {
+                $farmQuery->whereYear('date', $validated['year']);
+            }
+    
+            if (!empty($validated['from_date'])) {
+                $farmQuery->where('date', '>=', $validated['from_date']);
+            }
+    
+            if (!empty($validated['to_date'])) {
+                $farmQuery->where('date', '<=', $validated['to_date']);
+            }
+    
+            $farmExpenses = $farmQuery->get()->map(function ($item) {
+                return [
+                    'type' => 'farm',
+                    'id' => $item->id,
+                    'expense_type' => $item->expense_type,
+                    'expense_subtype' => $item->expense_subtype,
+                    'total' => $item->total,
+                    'date' => $item->date,
+                    'status' => $item->status,
+                    'details' => $item->details ?? '',
+                ];
+            });
+        }
+    
+        $combined = $cropExpenses->merge($farmExpenses)->sortByDesc('date')->values();
+    
+        return view("manager_downloadExpenses", [
+            'farm_id' => $farmId,
+            'crops' => Crop::all(),
+            'data' => $combined,
+        ]);
+    }
+    
 }

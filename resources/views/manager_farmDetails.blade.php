@@ -229,7 +229,7 @@
                                                     src="{{asset('images/crops/'. str_replace(' ', '', $crop['name']) .'.jpg')}}">
                                                 <div class='mx-2 fw-bold mt-1'>{{$crop['identifier']}}</div>
                                                 @if ($crop['variety'] != null)
-                                                <div class='mx-2 fsmall light'>{{$crop['variety']}}</div>
+                                                <div class='mx-2 fsmall light'>{{$crop['acres']}} Acres - {{$crop['variety']}}</div>
                                                 @else
                                                 <div class='mx-2 fsmall light'>No variety</div>
                                                 @endif

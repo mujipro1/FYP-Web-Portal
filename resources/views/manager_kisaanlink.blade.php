@@ -274,6 +274,20 @@ document.addEventListener('DOMContentLoaded', function () {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
+    function updateUIAfterReceive(message, timestamp) {
+        const div = document.createElement('div');
+        div.className = 'message received';
+        div.innerHTML = `
+            <div class="message-content">
+                ${message}
+                <span class="message-time">${formatTime(new Date(timestamp))}</span>
+            </div>
+        `;
+        messagesContainer.appendChild(div);
+        messageInput.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
     function formatTime(date) {
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
@@ -292,34 +306,110 @@ document.addEventListener('DOMContentLoaded', function () {
     if (firstUser) firstUser.click();
 
     // Refresh messages every 3 seconds
+   // Refresh messages every 3 seconds
     setInterval(() => {
-    if (!currentUserId) return;
+        if (!currentUserId) return;
 
-    fetch(`/kisaan-link/get-message/${farm_id}`)
-        .then(res => res.json())
-        .then(data => {
-            const incomingChats = data || [];
-            
-            incomingChats.forEach(chat => {
-            if (chat.from == currentUserId) {
-                const chatData = {
-                    message: chat.message,
-                    created_at: chat.created_at,
-                    from: chat.from,
-                    user_id: chat.to,
-                };
+        fetch(`/kisaan-link/get-message/${farm_id}`)
+            .then(res => res.json())
+            .then(data => {
+                const incomingChats = data || [];
+                let hasNewMessages = false;
+                
+                incomingChats.forEach(chat => {
+                    if (chat.from == currentUserId) {
+                        const chatData = {
+                            message: chat.message,
+                            created_at: chat.created_at,
+                            from: 0, // Mark as received message (0 = received, 1 = sent)
+                            user_id: currentUserId
+                        };
 
-                if (!chatsByUser[chatData.user_id]) chatsByUser[chatData.user_id] = [];
-                chatsByUser[chatData.user_id].push(chatData);
-                console.log()
-                updateUIAfterSend(chatData, chatData.created_at);
-            }   
+                        if (!chatsByUser[currentUserId]) {
+                            chatsByUser[currentUserId] = [];
+                        }
+                        
+                        // Check if chatData already exists based on message content and timestamp
+                        if (!chatsByUser[currentUserId].some(existingChat => 
+                            existingChat.message === chatData.message && 
+                            existingChat.created_at === chatData.created_at
+                        )) {
+                            chatsByUser[currentUserId].push(chatData);
+                            
+                            // If currently viewing this user, update UI immediately
+                            if (currentUserId == chat.from) {
+                                updateUIAfterReceive(chatData.message, chatData.created_at);
+                                hasNewMessages = true;
+                            }
+                        }
+                    }
+                    else{
+
+                        const messageTime = new Date(chat.created_at);
+                        const currentTime = new Date();
+                        const timeDifferenceMinutes = (currentTime - messageTime) / (1000 * 60);
+                    
+                        if (timeDifferenceMinutes <= 10) {
+                            updateNewMessage(chat.from, chat.message, chat.created_at);
+                        }
+
+                    }
+                });
+                
+                // Only reload all messages if we didn't individually add them
+                if (hasNewMessages && !incomingChats.length) {
+                    loadUserMessages(currentUserId);
+                }
+            })
+            .catch(err => console.error('Fetching error:', err));
+    }, 3000);
+
+
+    function updateNewMessage(incomingUser, incomingMessage, incomingTime){
+        usersList.innerHTML = '';
+        enrichedUsers.forEach(user => {
+            const userDiv = document.createElement('div');
+            userDiv.className = `user-item  ${incomingUser == user.id ? 'highlighted' : ''}`;
+            userDiv.dataset.userId = user.id;
+
+            const time = user.last_time ? formatTime(new Date(user.last_time)) : '';
+            const message = user.last_message ? truncateText(user.last_message, 30) : 'No messages yet';
+
+            userDiv.innerHTML = `
+                <img src="{{asset('images/profile.jpg')}}" class="user-avatar" alt="User">
+                <div class="user-info">
+                    <div class="user-name">${user.name}</div>
+                    <div class="last-message">${incomingUser == user.id ?  incomingMessage : message}</div>
+                </div>
+                <small class="message-time">${incomingUser == user.id ?  formatTime(new Date(incomingTime)) : time}</small>
+            `;
+            usersList.appendChild(userDiv);
+        });
+
+        // Handle user click
+        usersList.querySelectorAll('.user-item').forEach(item => {
+            item.addEventListener('click', () => {
+                usersList.querySelectorAll('.user-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                currentUserId = item.dataset.userId;
+
+                const selectedUser = enrichedUsers.find(u => u.id == currentUserId);
+                
+                // Update chat header with selected user info
+                chatHeader.innerHTML = `
+                    <img src="{{asset('images/profile.jpg')}}" class="user-avatar me-2" alt="Selected User">
+                    <div>
+                        <div class="user-name mb-1 fw-semibold">${selectedUser.name}</div>
+                        <small class="user-status text-success">Online</small>
+                    </div>
+                `;
+                
+                loadUserMessages(currentUserId);
             });
+        });
+    }
 
-            loadUserMessages(currentUserId);
-        })
-        .catch(err => console.error('Fetching error:', err));
-}, 3000);
 
 });
 </script>

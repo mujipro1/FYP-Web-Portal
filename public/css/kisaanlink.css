@@ -125,3 +125,8 @@
       height: calc(100% - 200px);
   }
 }
+
+
+.highlighted{
+  background-color: rgb(195, 204, 201);
+}

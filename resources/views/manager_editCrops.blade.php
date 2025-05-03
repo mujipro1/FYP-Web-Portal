@@ -173,7 +173,7 @@
                                         <input hidden type="number" step='any' id="acres" name="acres"
                                             class="form-control">
                                     </div>
-                                    <div class="labelcontainer">
+                                    <div class="labelcontainer" id="dera-con">
                                         <label class='w-75' for="deras">Deras</label>
                                         <select id="deras" name="deras" class="form-select">
                                             <option value="">Select a dera</option>
@@ -181,11 +181,18 @@
 
                                     </div>
 
-                                    <div class="labelcontainer">
+                                    <div class="labelcontainer"  id="dera-con2">
                                         <label class='w-75' for="deraAcres">Dera Acres</label>
                                         <input type="number" step='any' id="deraAcres" name="deraAcres"
                                             class="form-control">
                                     </div>
+
+                                    <div class="labelcontainer"  id="crop-con" style="display:none">
+                                        <label class='w-75' for="cropAcresTotal">Crop Acres</label>
+                                        <input type="number" step='any' id="cropAcresTotal" name="cropAcresTotal"
+                                            class="form-control">
+                                    </div>
+
                                     <div class=" mt-4 d-flex">
                                         <label class="w-75" for="status">Change Status</label>
                                         <select class="form-select" name="status" id="status">
@@ -262,6 +269,22 @@ function handleSelectCrop(element) {
     const cropAcres = selectedOption.getAttribute('data-crop-acres');
     const cropStatus = selectedOption.getAttribute('data-crop-status');
     cropDeras = JSON.parse(selectedOption.getAttribute('data-crop-deras'));
+
+    document.getElementById('cropAcresTotal').value = cropAcres;
+    if (cropDeras.length == 0) {
+        document.getElementById('dera-con').style.display = 'none';
+        document.getElementById('dera-con2').style.display = 'none';
+        document.getElementById('crop-con').style.display = 'flex';
+    }
+
+    document.getElementById('cropAcresTotal').addEventListener('input', () => {
+        if (document.getElementById('cropAcresTotal').value == ''){
+            document.getElementById('acresLabel').textContent = cropAcres;
+        }
+        else{
+            document.getElementById('acresLabel').textContent = document.getElementById('cropAcresTotal').value;
+        }
+    })
 
     // For buttons, handle the card selection styling
     if (element.tagName === 'BUTTON') {
@@ -378,7 +401,8 @@ function clearFormFields() {
 function handleDeraChange() {
     const selectedDeraId = document.getElementById('deras').value;
     const deraAcresInput = document.getElementById('deraAcres');
-
+    const totalAcresInput = document.getElementById('cropAcresTotal');
+    
     if (selectedDeraId) {
         const selectedDera = cropDeras.find(dera => dera.id == selectedDeraId);
         if (selectedDera) {
@@ -392,6 +416,35 @@ function handleDeraChange() {
 
     // Reset the remove field
     document.getElementById('remove').value = '0';
+    
+    // Add event listener to update total when deraAcres changes
+    deraAcresInput.addEventListener('input', updateTotalAcres);
+    
+    // Initial calculation of total acres
+    updateTotalAcres();
+}
+
+function updateTotalAcres() {
+    const selectedDeraId = document.getElementById('deras').value;
+    const deraAcresInput = document.getElementById('deraAcres');
+    const totalAcresInput = document.getElementById('cropAcresTotal');
+    
+    // Calculate total of all other deras (excluding the currently selected one)
+    let totalOtherAcres = 0;
+    cropDeras.forEach(dera => {
+        if (dera.id != selectedDeraId) {
+            totalOtherAcres += parseFloat(dera.pivot.acres) || 0;
+        }
+    });
+    
+    // Add current dera acres to the total
+    const currentDeraAcres = parseFloat(deraAcresInput.value) || 0;
+    const totalAcres = totalOtherAcres + currentDeraAcres;
+    
+    // Update the total acres field
+    totalAcresInput.value = totalAcres.toFixed(2);
+    document.getElementById('acresLabel').textContent = totalAcres.toFixed(2);
+
 }
 
 function handleRemoveFromDera() {
