@@ -228,9 +228,14 @@ function applyFilters() {
 
         const yearMatch = (selectedYear === 'all') || (selectedYear === year);
 
-        div.style.display = (statusMatch && yearMatch) ? 'block' : 'none';
+        if (statusMatch && yearMatch) {
+            div.style.display = 'block'; // Show the crop
+        } else {
+            div.style.display = 'none'; // Hide the crop and remove it from the flow
+        }
     });
 }
+
 
 // Bind the new unified filter to both dropdowns
 document.getElementById('statusFilter').addEventListener('change', applyFilters);
