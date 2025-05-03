@@ -115,7 +115,7 @@
                             <!-- Include Farm Expenses Checkbox -->
                             <div class="col-md-3">
                                 <label>
-                                    <input type="checkbox" id="includeFarmExpenses" class="form-check-input" />
+                                    <input type="checkbox" id="includeFarmExpenses" name="includeFarmExpenses"  class="form-check-input" />
                                     Include Farm Expenses
                                 </label>
                             </div>
@@ -125,7 +125,7 @@
                                 <!-- Expense Type Filter -->
                                 <div class="col-md-3">
                                     <label class="my-2" for="expenseTypeFilter">Expense Types:</label>
-                                    <select id="expenseTypeFilter" class="form-select">
+                                    <select id="expenseTypeFilter" name="expenseTypeFilter"  class="form-select">
                                         <option value="all">All</option>
 
                                     </select>
@@ -133,7 +133,7 @@
 
                                 <div class="col-md-3" id="farmTypeFilterMain">
                                     <label class="my-2" for="expenseTypeFilter">Farm Expense Types:</label>
-                                    <select id="farmTypeFilter" class="form-select">
+                                    <select id="farmTypeFilter" name="farmTypeFilter" class="form-select">
                                         <option value="all">All</option>
 
                                     </select>
@@ -142,12 +142,12 @@
 
                             <!-- Expenses Date Range Filter -->
                             <div class="col-md-4 my-3">
-                                <label class="my-2" for="fromDate">Expenses from:</label>
-                                <input type="date" id="fromDate" class="form-control" />
+                                <label class="my-2" for="from_date">Expenses from:</label>
+                                <input type="date" name="from_date" id="from_date" class="form-control" />
                             </div>
                             <div class="col-md-4 my-3 ">
-                                <label class="my-2" for="toDate">to:</label>
-                                <input type="date" id="toDate" class="form-control" />
+                                <label class="my-2" for="to_date">to:</label>
+                                <input type="date" name="to_date" id="to_date" class="form-control" />
                             </div>
                         </div>
 

@@ -635,9 +635,9 @@ public function costsaver($farm_id){
             'crops' => 'nullable|array',
             'status' => 'nullable|string',
             'year' => 'nullable|string',
-            'include_farm_expenses' => 'nullable',
-            'expense_type' => 'nullable|string',         // crop expense type
-            'farm_expense_type' => 'nullable|string',    // farm expense type
+            'includeFarmExpenses' => 'nullable',
+            'expenseTypeFilter' => 'nullable|string',         // crop expense type
+            'farmTypeFilter' => 'nullable|string',    // farm expense type
             'from_date' => 'nullable|date',
             'to_date' => 'nullable|date',
         ]);
@@ -662,8 +662,8 @@ public function costsaver($farm_id){
             $cropQuery->where('year', $validated['year']);
         }
     
-        if (!empty($validated['expense_type']) && $validated['expense_type'] !== 'all') {
-            $cropQuery->where('expense_type', $validated['expense_type']);
+        if (!empty($validated['expenseTypeFilter']) && $validated['expenseTypeFilter'] !== 'all') {
+            $cropQuery->where('expense_type', $validated['expenseTypeFilter']);
         }
     
         if (!empty($validated['from_date'])) {
@@ -687,18 +687,20 @@ public function costsaver($farm_id){
                 'details' => $item->details ?? '',
             ];
         });
+
+        dd($request->all());
     
         // Farm expenses
         $farmExpenses = collect();
-        if (!empty($validated['include_farm_expenses']) && $validated['include_farm_expenses'] === 'on') {
+        if (!empty($validated['includeFarmExpenses']) && $validated['includeFarmExpenses'] === 'on') {
             $farmQuery = FarmExpense::where('farm_id', $farmId);
     
             if (!empty($validated['status'])) {
                 $farmQuery->where('status', $validated['status'] === 'active' ? 1 : 0);
             }
     
-            if (!empty($validated['farm_expense_type']) && $validated['farm_expense_type'] !== 'all') {
-                $farmQuery->where('expense_type', $validated['farm_expense_type']);
+            if (!empty($validated['farmTypeFilter']) && $validated['farmTypeFilter'] !== 'all') {
+                $farmQuery->where('expense_type', $validated['farmTypeFilter']);
             }
     
             if (!empty($validated['year'])) {
