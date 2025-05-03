@@ -111,7 +111,7 @@
 
 
                         <div class="d-flex justify-content-center">
-                            <p class="my-2 text-secondary">Data Export Options</p>
+                            <p class="my-3 text-secondary">Data Export Options</p>
                         </div>
                         <div class="row mt-4">
                             <!-- Include Farm Expenses Checkbox -->
