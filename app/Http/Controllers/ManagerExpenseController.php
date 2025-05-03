@@ -687,8 +687,6 @@ public function costsaver($farm_id){
                 'details' => $item->details ?? '',
             ];
         });
-
-        dd($request->all());
     
         // Farm expenses
         $farmExpenses = collect();
