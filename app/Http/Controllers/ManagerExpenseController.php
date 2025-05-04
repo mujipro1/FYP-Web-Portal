@@ -686,7 +686,6 @@ public function costsaver($farm_id){
             'type' => 'crop',
             'id' => $item->id,
             'crop_identifier' => optional($item->crop)->identifier,
-            'crop_name' => optional($item->crop)->name,
             'expense_type' => $item->expense_type,
             'expense_subtype' => $item->expense_subtype,
             'total' => $item->total,
@@ -730,14 +729,13 @@ public function costsaver($farm_id){
                 'type' => 'farm',
                 'id' => $item->id,
                 'crop_identifier' => null,
-                'crop_name' => null,
                 'expense_type' => $item->expense_type,
                 'expense_subtype' => $item->expense_subtype,
                 'total' => $item->total,
                 'date' => $item->date,
-                'status' => $item->status == 1 ? 'Active' : 'Inactive',
+                'status' => null,
                 'details' => $item->details ?? '',
-            ];
+            ];  
         });
     }
 

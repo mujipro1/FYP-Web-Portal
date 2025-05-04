@@ -152,9 +152,52 @@
                         </div>
 
                         <div class="d-flex justify-content-center my-3 align-items-center">
-                            <button type="submit" class="btn btn-brown">Download</button>
+                            <button type="submit" class=" mx-2 btn btn-brown">Submit</button>
                         </div>
                     </form>
+                    
+                    <button type="button" class="btn btn-brown my-3" onclick="handleDownload()">Download</button>
+
+                    @if(count($data) > 0)
+                        <div class="d-flex justify-content-center">
+                            <div class="table-responsive" style="max-height: 400px; overflow-y: auto; width: 100%;">
+                                <table class="table table-hover download-table ">
+                                    <thead class="table-dark sticky-top">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Type</th>
+                                            <th>Crop</th>
+                                            <th>Expense Type</th>
+                                            <th>Expense SubType</th>
+                                            <th>Total</th>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($data as $row)
+                                        @php
+                                            $details = json_decode($row['details'], true);
+                                            $description = $details['description'] ?? 'N/A';
+                                        @endphp
+                                        <tr style="height:10px;max-height: 100px;cursor:pointer;"  onclick="handleExpenseDownloadClick({{$row['id']}}, '{{$row['type']}}')">
+                                            <td>{{ $row['id'] }}</td>
+                                            <td>{{ $row['type'] }}</td>
+                                            <td>{{ $row['crop_identifier'] }}</td>
+                                            <td>{{ $row['expense_type'] }}</td>
+                                            <td>{{ $row['expense_subtype'] }}</td>
+                                            <td>{{ $row['total'] }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($row['date'])->format('d M Y') }}</td>
+                                            <td>{{ $description }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>  
+                        </div>
+                        @endif
+
+
 
                 </div>
             </div>
@@ -176,6 +219,17 @@
 
 
 <script>
+
+function handleExpenseDownloadClick(expense_id, type) {
+    console.log(type);
+    if (type == 'crop'){
+        window.location.href = `/manager/view_cropexpense_details/{{$farm_id}}/${expense_id}`;
+    }
+    else{
+        window.location.href = `/manager/view_farmexpense_details/{{$farm_id}}/${expense_id}`;
+    }
+}
+
 expenseData = cropExpenseData;
 
 document.getElementById('farmTypeFilterMain').style.display = 'none';
@@ -252,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyFilters();
 }); 
 
-    document.addEventListener("DOMContentLoaded", function () {
+    function handleDownload () {
         const data = @json($data);
 
         if (data && data.length > 0) {
@@ -285,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.click();
             document.body.removeChild(link);
         }
-    });
+    };
 </script>
 
 
