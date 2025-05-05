@@ -536,14 +536,18 @@ public function costsaver($farm_id){
         foreach ($filtered as $row) {
             $yearly_historic_average += $row['total_yearly'];
         }
-        $yearly_historic_average /= count($filtered);
+        if (count($filtered)>0){
+            $yearly_historic_average /= count($filtered);
+        }
         $yearly_historic_average = round($yearly_historic_average, 2);
 
         $monthly_historic_average = 0;
         foreach ($filtered as $row) {
             $monthly_historic_average += $row['total_monthly'];
         }
-        $monthly_historic_average /= count($filtered);
+        if (count($filtered)>0){
+            $monthly_historic_average /= count($filtered);
+        }
         $monthly_historic_average = round($monthly_historic_average, 2);
 
 
