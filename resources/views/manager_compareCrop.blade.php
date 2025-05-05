@@ -199,6 +199,8 @@
                                         <select class="form-select w-25 chart-toggle" data-expense-type="{{ $expenseType }}">
                                             <option value="Amounts">Amounts</option>
                                             <option value="Quantity">Quantity</option>
+                                            <option value="AmountPerAcre">Amount Per Acre</option>
+                                            <option value="QuantityPerAcre">Quantity Per Acre</option>
                                         </select>
                                     </div>
                                     <div class="chart-container" id="amountChart-{{ $expenseType }}">
@@ -206,6 +208,12 @@
                                     </div>
                                     <div class="chart-container" id="quantityChart-{{ $expenseType }}" style="display: none;">
                                         {!! $chartx['qChart']->container() !!}
+                                    </div>
+                                    <div class="chart-container" id="quantityPerAcreChart-{{ $expenseType }}" style="display: none;">
+                                        {!! $chartx['quantityPerAcreChart']->container() !!}
+                                    </div>
+                                    <div class="chart-container" id="amountPerAcreChart-{{ $expenseType }}" style="display: none;">
+                                        {!! $chartx['amountPerAcreChart']->container() !!}
                                     </div>
                                 </div>
                             </div>
@@ -240,6 +248,8 @@
 @foreach ($charts as $chartx)
 {!! $chartx['amountChart']->script() !!}
 {!! $chartx['qChart']->script() !!}
+{!! $chartx['quantityPerAcreChart']->script() !!}
+{!! $chartx['amountPerAcreChart']->script() !!}
 @endforeach
 @if ($quantityChart != null)
 {!! $quantityChart->script() !!}
@@ -317,16 +327,34 @@ document.addEventListener('DOMContentLoaded', function() {
         dropdown.addEventListener('change', function() {
             const expenseType = this.dataset.expenseType;
             const selectedValue = this.value;
-
             const amountChart = document.getElementById(`amountChart-${expenseType}`);
             const quantityChart = document.getElementById(`quantityChart-${expenseType}`);
+            const quantityPerAcreChart = document.getElementById(`quantityPerAcreChart-${expenseType}`);
+            const amountPerAcreChart = document.getElementById(`amountPerAcreChart-${expenseType}`);
 
             if (selectedValue === 'Amounts') {
                 amountChart.style.display = 'block';
                 quantityChart.style.display = 'none';
-            } else {
+                quantityPerAcreChart.style.display = 'none';
+                amountPerAcreChart.style.display = 'none';
+
+            } else if (selectedValue === 'Quantity') {
                 amountChart.style.display = 'none';
                 quantityChart.style.display = 'block';
+                quantityPerAcreChart.style.display = 'none';
+                amountPerAcreChart.style.display = 'none';
+
+            } else if (selectedValue === 'AmountPerAcre') {
+                amountChart.style.display = 'none';
+                quantityChart.style.display = 'none';
+                quantityPerAcreChart.style.display = 'none';
+                amountPerAcreChart.style.display = 'block';
+            }
+            else if (selectedValue === 'QuantityPerAcre') {
+                amountChart.style.display = 'none';
+                quantityChart.style.display = 'none';
+                quantityPerAcreChart.style.display = 'block';
+                amountPerAcreChart.style.display = 'none';
             }
         });
     });

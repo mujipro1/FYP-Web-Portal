@@ -604,34 +604,42 @@ class ManagerAnalyticsController extends Controller
         $expenses1 = Expense::where('crop_id', $crop_id1)
             ->where('expense_type', $expenseType)
             ->get();
-
+    
         $expenses2 = Expense::where('crop_id', $crop_id2)
             ->where('expense_type', $expenseType)
             ->get();
-
-
+    
         $subtypeData1 = $this->calculateSubtypeData($expenses1);
         $subtypeData2 = $this->calculateSubtypeData($expenses2);
-
+    
         $subtypeQData1 = $this->calculateSubtypeQData($expenses1);
         $subtypeQData2 = $this->calculateSubtypeQData($expenses2);
-        
-
+    
         $crop1 = Farm::findOrFail($farm_id)->crops->where('id', $crop_id1)->first();
         $crop2 = Farm::findOrFail($farm_id)->crops->where('id', $crop_id2)->first();
-
+    
         $crop1_name = $crop1->identifier;
         $crop2_name = $crop2->identifier;
-
+    
+        $acres1 = $crop1->acres ?? 1;
+        $acres2 = $crop2->acres ?? 1;
+    
         $subtypeNames = array_unique(array_merge(array_keys($subtypeData1), array_keys($subtypeData2)));
-
+    
         $subtypeAmounts1 = $this->getExpenseAmounts($subtypeNames, $subtypeData1);
         $subtypeAmounts2 = $this->getExpenseAmounts($subtypeNames, $subtypeData2);
-        
+    
         $subtypeQuantity1 = $this->getExpenseAmounts($subtypeNames, $subtypeQData1);
         $subtypeQuantity2 = $this->getExpenseAmounts($subtypeNames, $subtypeQData2);
-        
-
+    
+        // Calculate per-acre values
+        $amountsPerAcre1 = array_map(fn($amt) => round($acres1 > 0 ? $amt / $acres1 : 0, 2), $subtypeAmounts1);
+        $amountsPerAcre2 = array_map(fn($amt) => round($acres2 > 0 ? $amt / $acres2 : 0, 2), $subtypeAmounts2);
+    
+        $quantitiesPerAcre1 = array_map(fn($qty) => round($acres1 > 0 ? $qty / $acres1 : 0, 2), $subtypeQuantity1);
+        $quantitiesPerAcre2 = array_map(fn($qty) => round($acres2 > 0 ? $qty / $acres2 : 0, 2), $subtypeQuantity2);
+    
+        // Original charts
         $expenseChartAmount = LarapexChart::setType('bar')
             ->setXAxis($subtypeNames)
             ->setDataset([
@@ -644,8 +652,8 @@ class ManagerAnalyticsController extends Controller
                     'data' => $subtypeAmounts2
                 ]
             ]);
-
-            $expenseChartQ = LarapexChart::setType('bar')
+    
+        $expenseChartQ = LarapexChart::setType('bar')
             ->setXAxis($subtypeNames)
             ->setDataset([
                 [
@@ -657,10 +665,43 @@ class ManagerAnalyticsController extends Controller
                     'data' => $subtypeQuantity2
                 ]
             ]);
-
     
-        return ['amountChart'=> $expenseChartAmount, 'qChart'=>$expenseChartQ];
+        // New: Amount per Acre Chart
+        $amountPerAcreChart = LarapexChart::setType('bar')
+            ->setXAxis($subtypeNames)
+            ->setDataset([
+                [
+                    'name' => $crop1_name . ' Amount per Acre',
+                    'data' => $amountsPerAcre1
+                ],
+                [
+                    'name' => $crop2_name . ' Amount per Acre',
+                    'data' => $amountsPerAcre2
+                ]
+            ]);
+    
+        // New: Quantity per Acre Chart
+        $quantityPerAcreChart = LarapexChart::setType('bar')
+            ->setXAxis($subtypeNames)
+            ->setDataset([
+                [
+                    'name' => $crop1_name . ' Quantity per Acre',
+                    'data' => $quantitiesPerAcre1
+                ],
+                [
+                    'name' => $crop2_name . ' Quantity per Acre',
+                    'data' => $quantitiesPerAcre2
+                ]
+            ]);
+    
+        return [
+            'amountChart' => $expenseChartAmount,
+            'qChart' => $expenseChartQ,
+            'amountPerAcreChart' => $amountPerAcreChart,
+            'quantityPerAcreChart' => $quantityPerAcreChart,
+        ];
     }
+    
 
     private function calculateSubtypeQData($expenses){
         $subtypeData = [];

@@ -201,10 +201,10 @@
                                 </div>
                                 <div class="chart-container" id="quantityPerAcreChart-{{ $expenseType }}"
                                     style="display: none;">
-                                    {!! $chartx['amountPerAcreChart']->container() !!}
+                                    {!! $chartx['quantityPerAcreChart']->container() !!}
                                 </div><div class="chart-container" id="amountPerAcreChart-{{ $expenseType }}"
                                     style="display: none;">
-                                    {!! $chartx['quantityPerAcreChart']->container() !!}
+                                    {!! $chartx['amountPerAcreChart']->container() !!}
                                 </div>
                             </div>
                         </div>
