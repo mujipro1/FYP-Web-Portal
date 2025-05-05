@@ -63,7 +63,10 @@
 
                     <div class="col-md-11 kisaan-link ">
                     <div class="container-fluid py-4">
-                                    <h3 class="text-light mb-4">Kisaan Link</h3>
+                        <div class="d-flex justify-content-start">
+                            <div onclick="handleHome()" class="text-light mx-3">Back</div>
+                            <h3 class="text-light mb-4">Kisaan Link</h3>
+                        </div>
                                     <div class="chat-container shadow-lg rounded-4">
                                         <!-- Sidebar -->
                                         <aside class="users-sidebar p-3">
@@ -412,6 +415,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+function handleHome(){
+        window.location.href = "{{ route('manager.farmdetails' , ['farm_id' => $farm_id] )}}"
+
+    }
 </script>
 
 </html>
