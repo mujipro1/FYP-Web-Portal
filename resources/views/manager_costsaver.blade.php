@@ -70,6 +70,12 @@
                                 </div>
 
                                 <!-- three dropdowns input boxes for Crop, expense type and subtype -->
+                            @if(isset($filtered) && $filtered == true)
+                                <div class="d-flex justify-content-center">
+                                    <button onClick="handleHome()" class="btn btn-brown mx-2">Back to Home</button>
+                                    <button onClick="handleCostSaver()" class="btn btn-brown">Run Smart Spend Again</button>
+                                </div>
+                            @else
                                 <form action="{{ route('manager.costsaverPost') }}" method="POST" id="cost-saver-form">
                                     <div class="row mt-4">
                                         @csrf
@@ -113,7 +119,7 @@
                                     </div>
                                 </form>
                                 
-                                
+                                @endif
                             <!-- CHECK IF variable filtered exists from backend -->
                             @if(isset($filtered) && $filtered == true)
                             <div class="col-md-12 mt-4">
@@ -396,4 +402,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endif
+<script>
+    function handleCostSaver() {
+        window.location.href = "{{ route('manager.costsaver' , ['farm_id' => $farm_id]] )}}"
+    }
+    function handleHome(){
+        window.location.href = "{{ route('manager.farmdetails' , ['farm_id' => $farm_id]] )}}"
+
+    }
+</script>
 </html>
