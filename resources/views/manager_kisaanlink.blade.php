@@ -64,7 +64,7 @@
                     <div class="col-md-11 kisaan-link ">
                     <div class="container-fluid py-4">
                         <div class="d-flex justify-content-start">
-                            <div onclick="handleHome()" class="text-light mx-3">Back</div>
+                            <div onclick="handleHome()" style="transform:translateY(-10px);cursor:pointer" class="text-light mx-4">Back</div>
                             <h3 class="text-light mb-4">Kisaan Link</h3>
                         </div>
                                     <div class="chat-container shadow-lg rounded-4">

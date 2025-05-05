@@ -87,10 +87,14 @@ class ManagerAnalyticsController extends Controller
             ->where('expense_type', $expenseType)
             ->whereBetween('date', [$from_date, $to_date])
             ->get();
+
+        $acres = Farm::where('id', $farm_id)->value('number_of_acres');
     } elseif ($id > 0) {
         $expenses = Expense::where('crop_id', $crop_id)
             ->where('expense_type', $expenseType)
             ->get();
+
+        $acres = Crop::where('id', $crop_id)->value('acres');
     } else {
         throw new InvalidArgumentException('Invalid ID value provided.');
     }
@@ -121,13 +125,22 @@ class ManagerAnalyticsController extends Controller
     $subtypeAmounts = array_column($subtypeData, 'amount');
     $subtypeQuantities = array_column($subtypeData, 'quantity');
 
-    // Create the bar chart for subtypes
+    // Calculate per-acre values
+    $amountsPerAcre = [];
+    $quantitiesPerAcre = [];
+
+    foreach ($subtypeData as $subtype => $data) {
+        $amountsPerAcre[] = $acres > 0 ? round($data['amount'] / $acres, 2) : 0;
+        $quantitiesPerAcre[] = $acres > 0 ? round($data['quantity'] / $acres, 2) : 0;
+    }
+
+    // Original charts
     $chart = LarapexChart::barChart()
         ->setTitle("Expenses for $expenseType")
         ->setDataset([
             [
                 'name' => 'Amount',
-                'data' => $subtypeAmounts, 
+                'data' => $subtypeAmounts,
             ],
         ])
         ->setXAxis($subtypeNames);
@@ -136,14 +149,42 @@ class ManagerAnalyticsController extends Controller
         ->setTitle("Quantity for $expenseType")
         ->setDataset([
             [
-                'name' => 'Quantity', // Corrected name
-                'data' => $subtypeQuantities, 
+                'name' => 'Quantity',
+                'data' => $subtypeQuantities,
             ],
         ])
         ->setXAxis($subtypeNames);
 
-    return ['amountChart' => $chart, 'qChart' => $chart2];
+    // New chart: Amount per Acre
+    $chart3 = LarapexChart::barChart()
+        ->setTitle("Amount per Acre for $expenseType")
+        ->setDataset([
+            [
+                'name' => 'Amount per Acre',
+                'data' => $amountsPerAcre,
+            ],
+        ])
+        ->setXAxis($subtypeNames);
+
+    // New chart: Quantity per Acre
+    $chart4 = LarapexChart::barChart()
+        ->setTitle("Quantity per Acre for $expenseType")
+        ->setDataset([
+            [
+                'name' => 'Quantity per Acre',
+                'data' => $quantitiesPerAcre,
+            ],
+        ])
+        ->setXAxis($subtypeNames);
+
+    return [
+        'amountChart' => $chart,
+        'qChart' => $chart2,
+        'amountPerAcreChart' => $chart3,
+        'quantityPerAcreChart' => $chart4,
+    ];
 }
+
 
     public function singlecrop($farm_id){
         $farm = Farm::findOrFail($farm_id);
