@@ -404,10 +404,10 @@ document.addEventListener('DOMContentLoaded', function() {
 @endif
 <script>
     function handleCostSaver() {
-        window.location.href = "{{ route('manager.costsaver' , ['farm_id' => $farm_id]] )}}"
+        window.location.href = "{{ route('manager.costsaver' , ['farm_id' => $farm_id] )}}"
     }
     function handleHome(){
-        window.location.href = "{{ route('manager.farmdetails' , ['farm_id' => $farm_id]] )}}"
+        window.location.href = "{{ route('manager.farmdetails' , ['farm_id' => $farm_id] )}}"
 
     }
 </script>
