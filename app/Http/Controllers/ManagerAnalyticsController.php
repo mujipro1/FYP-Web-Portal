@@ -735,7 +735,101 @@ class ManagerAnalyticsController extends Controller
         return $subtypeData;
     }
     
-    
+    public function exportCsvCompare($crop_id1, $crop_id2)
+{
+    $crop1 = Crop::find($crop_id1);
+    $crop2 = Crop::find($crop_id2);
+
+    if (!$crop1 || !$crop2) {
+        return response()->json(['error' => 'One or both crops not found'], 404);
+    }
+
+    $expenses1 = Expense::where('crop_id', $crop_id1)->get();
+    $expenses2 = Expense::where('crop_id', $crop_id2)->get();
+
+    if ($expenses1->isEmpty() && $expenses2->isEmpty()) {
+        return response()->json(['error' => 'No expenses found for either crop'], 404);
+    }
+
+    $total1 = $expenses1->sum('total');
+    $total2 = $expenses2->sum('total');
+
+    $count1 = $expenses1->count();
+    $count2 = $expenses2->count();
+
+    $perAcre1 = $crop1->acres > 0 ? $total1 / $crop1->acres : 0;
+    $perAcre2 = $crop2->acres > 0 ? $total2 / $crop2->acres : 0;
+
+    // Group and map data
+    $groupData = function ($expenses) {
+        return $expenses->groupBy('expense_type')->map(function ($group) {
+            return [
+                'total' => $group->sum('total'),
+                'subtypes' => $group->groupBy('expense_subtype')->map(function ($subgroup) {
+                    return [
+                        'amount' => $subgroup->sum('total'),
+                        'quantity' => $subgroup->sum(function ($expense) {
+                            $details = json_decode($expense->details, true);
+                            return $details['quantity'] ?? 0;
+                        }),
+                    ];
+                }),
+            ];
+        });
+    };
+
+    $data1 = $groupData($expenses1);
+    $data2 = $groupData($expenses2);
+
+    $allTypes = array_unique(array_merge($data1->keys()->toArray(), $data2->keys()->toArray()));
+
+    $csvData = [
+        ['Crop Comparison'],
+        ['Crop Name', $crop1->identifier, $crop2->identifier],
+        ['Total Expense', $total1, $total2],
+        ['Number of Expenses', $count1, $count2],
+        ['Per Acre Expense', $perAcre1, $perAcre2],
+        [''],
+        ['Expense Type', 'Subtype', $crop1->identifier . ' Amount', $crop2->identifier . ' Amount', $crop1->identifier . ' Quantity', $crop2->identifier . ' Quantity'],
+    ];
+
+    foreach ($allTypes as $type) {
+        $subtypes1 = $data1[$type]['subtypes'] ?? collect();
+        $subtypes2 = $data2[$type]['subtypes'] ?? collect();
+        $allSubtypes = array_unique(array_merge(array_keys($subtypes1->toArray()), array_keys($subtypes2->toArray())));
+
+        foreach ($allSubtypes as $subtype) {
+            $row = [
+                $type,
+                $subtype ?? 'No Subtype Found',
+                $subtypes1[$subtype]['amount'] ?? 0,
+                $subtypes2[$subtype]['amount'] ?? 0,
+                $subtypes1[$subtype]['quantity'] ?? 0,
+                $subtypes2[$subtype]['quantity'] ?? 0,
+            ];
+            $csvData[] = $row;
+        }
+
+        $csvData[] = ['', 'Total for ' . $type, $data1[$type]['total'] ?? 0, $data2[$type]['total'] ?? 0, '', ''];
+        $csvData[] = ['']; // spacer
+    }
+
+    // Generate and return CSV
+    $filename = 'Comparison_' . $crop1->identifier . '_vs_' . $crop2->identifier . '.csv';
+    $headers = [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+    ];
+
+    return Response::stream(function () use ($csvData) {
+        $file = fopen('php://output', 'w');
+        foreach ($csvData as $row) {
+            fputcsv($file, $row);
+        }
+        fclose($file);
+    }, 200, $headers);
+}
+
     public function exportCsv($crop_id)
 {
     $crop = Crop::where('id', $crop_id)->first();

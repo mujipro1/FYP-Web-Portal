@@ -123,6 +123,7 @@ Route::middleware('is_manager_and_expense_farmer')->group(function () {
 });
 
 Route::get('/export-csv/{crop_id}', 'App\Http\Controllers\ManagerAnalyticsController@exportCsv');
+Route::get('/export-csv-double/{crop_id1}/{crop_id2}', 'App\Http\Controllers\ManagerAnalyticsController@exportCsvCompare');
 
 
 Route::middleware('is_superadmin')->group(function () {
