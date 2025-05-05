@@ -374,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'total_expense_this_month': 'PKR {{ $totalExpenseMonthly }}',
         'total_expense_this_year': 'PKR {{ $totalExpenseYearly }}',
         'monthly_historic_average': 'PKR {{ $monthly_historic_average }}',
-        'crop': '{{ $crop->name }}',
+        'crop': '{{ $selectedCrop}}',
         'expense_type': '{{ $selectedExpense }}',
         'expense_subtype': '{{ $selectedSubtype }}',
     };
